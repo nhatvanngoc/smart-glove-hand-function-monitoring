@@ -1,0 +1,25 @@
+{
+  "project": "Adaptive Air Cushion + Eye-Tracking AAC",
+  "student": "Văn Ngọc Nhật Anh — Lớp 11A2 — THPT Quảng Trị",
+  "year": "2026-2027",
+  "field": "Hệ thống nhúng (Embedded Systems)",
+  "ars_pipeline_version": "academic-research-suite v3.12.0",
+  "generated_at": "2026-06-14 01:31:34",
+  "checks": {
+    "docs/01_RQ_Brief.md": true,
+    "docs/02_Literature_Review.md": true,
+    "docs/03_Methodology_Blueprint.md": true,
+    "docs/04_System_Architecture.md": true,
+    "docs/05_Hardware_Design.md": true,
+    "docs/06_Software_Design.md": true,
+    "docs/07_ML_Models.md": true,
+    "docs/08_Experimental_Protocol.md": true,
+    "docs/09_Risk_Register.md": true,
+    "docs/10_References.md": true,
+    "diagrams_count": 10,
+    "src_py_files": 16,
+    "experiment_files": 8,
+    "pipeline_stages": 6,
+    "experiments_passed": 7
+  }
+}
