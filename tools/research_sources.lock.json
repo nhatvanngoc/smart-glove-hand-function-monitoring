@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "captured_on": "2026-08-16",
+  "policy": "Read-only, shallow/partial third-party checkouts. Commits are pinned for reproducibility; update this file only after review.",
+  "repositories": [
+    {
+      "name": "academic-research-skills",
+      "url": "https://github.com/Imbad0202/academic-research-skills.git",
+      "ref": "main",
+      "commit": "6837b4dfeaabd5a6da886e199b44ae7b52e8b931",
+      "purpose": "Research, paper, reviewer, and pipeline methodology; prompt content is treated as third-party input."
+    },
+    {
+      "name": "PlotNeuralNet",
+      "url": "https://github.com/HarisIqbal88/PlotNeuralNet.git",
+      "ref": "master",
+      "commit": "e96bc852189c2089dd500527a0a01a5a36e8977e",
+      "purpose": "Generate TikZ neural-network diagrams; rendering requires a TeX runtime."
+    },
+    {
+      "name": "caffe",
+      "url": "https://github.com/BVLC/caffe.git",
+      "ref": "master",
+      "commit": "9b891540183ddc834a02b2bd81b31afae71b2153",
+      "purpose": "Legacy/reference framework and PlotNeuralNet architecture examples; source-only by default."
+    },
+    {
+      "name": "pgf",
+      "url": "https://github.com/pgf-tikz/pgf.git",
+      "ref": "master",
+      "commit": "0a859c80b47a1f3e07b8164aec6de861c4118e2a",
+      "purpose": "PGF/TikZ upstream source reference; use the TeX-distribution package for normal rendering."
+    },
+    {
+      "name": "miktex",
+      "url": "https://github.com/MiKTeX/miktex.git",
+      "ref": "next",
+      "commit": "76d1b3bd2b69857f30133c62ff9ab66c83dcf80f",
+      "purpose": "MiKTeX upstream source reference only; this checkout is not a pdflatex runtime."
+    }
+  ]
+}
