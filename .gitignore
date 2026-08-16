@@ -21,3 +21,15 @@ Thumbs.db
 # Local build / output artifacts (keep generated figures/reports if needed)
 # outputs/figures/
 # outputs/reports/
+
+# Third-party research/toolchain checkouts (managed by scripts/bootstrap_research_tooling.sh)
+.tools/
+
+# Local Claude Code skill links created by the tooling bootstrap
+.claude/skills/
+
+# Local query bodies, downloaded papers, caches, and generated research artifacts
+research/queries/private/
+research/cache/
+research/downloads/
+research/generated/
