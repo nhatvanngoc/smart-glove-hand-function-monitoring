@@ -1,0 +1,74 @@
+{
+  "EXP-01 Hybrid Calibration": {
+    "ok": true,
+    "result": {
+      "rmse_vel": "3.3861417528939355",
+      "rmse_hyb": "3.678291943917157",
+      "drift_vel": "21.96",
+      "drift_hyb": "11.316045035471145"
+    }
+  },
+  "EXP-02 PTI Engine": {
+    "ok": true,
+    "result": {
+      "lead_mean_min": "0.011666666666666665",
+      "lead_std_min": "0.008923543557893895",
+      "tp": "244",
+      "fp": "76",
+      "fpr": "0.2375"
+    }
+  },
+  "EXP-03 CNN-LSTM Forecaster": {
+    "ok": true,
+    "result": {
+      "mae": "0.5005520462989808",
+      "rmse": "0.5005520555955143",
+      "auc": "nan",
+      "n_samples": "45"
+    }
+  },
+  "EXP-04 Eye-Tracking Accuracy": {
+    "ok": true,
+    "result": {
+      "top1_all": "1.0",
+      "top1_no_drift": "1.0",
+      "mean_angular_error": "0.9924665529805747",
+      "median_angular_error": "0.9498281923491093"
+    }
+  },
+  "EXP-05 Cushion Control": {
+    "ok": true,
+    "result": {
+      "passive": {
+        "mean_sacrum": "27.94558952099822",
+        "max_peak": "41.70879616510182",
+        "tot_pct": "13.463541666666668"
+      },
+      "adaptive_pti": {
+        "mean_sacrum": "24.09100180571088",
+        "max_peak": "36.523610980101566",
+        "tot_pct": "1.7447916666666667"
+      }
+    }
+  },
+  "EXP-06 AAC Sentence Quality": {
+    "ok": true,
+    "result": {
+      "bleu_h": "0.0009004237345183148",
+      "bleu_q": "0.0009004237345183148",
+      "chrf_h": "0.8142219148731844",
+      "chrf_q": "0.8142219148731844",
+      "lat_mean": "0.002887959990403033",
+      "lat_p95": "0.003574800018668611"
+    }
+  },
+  "EXP-07 Self-Improving Loop": {
+    "ok": true,
+    "result": {
+      "delta_pct": 839.5959236449347,
+      "variance_drop": "0.03266800915822428",
+      "first_mean": "0.07171089251608245",
+      "last_mean": "0.6737926228905112"
+    }
+  }
+}
