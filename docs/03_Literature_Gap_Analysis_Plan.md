@@ -63,12 +63,12 @@ Một khoảng trống chỉ được claim khi **cả 3** điều kiện sau c�
 | Nhóm | Số nguồn candidate | Số VERIFIED | Phát hiện chính | Ảnh hưởng novelty (E/D/A/B/C) | Trạng thái |
 |---|---|---|---|---|---|
 | 1 Velostat+plantar | 0 | 0 | — | — | CHƯA LÀM |
-| 2 3D-GRF | 0 | 0 | — | — | CHƯA LÀM |
+| 2 3D-GRF | 1 | 1 | Zhang et al. 2025: low-cost CapSense+IMU + attention, đối chiếu force plate, ước lượng 3D-GRF | Generic GRF regression: OVERLAP; không chứng minh E/D | SƠ BỘ — xem review 2026-08-25 |
 | 3 COP | 0 | 0 | — | — | CHƯA LÀM |
-| 4 drift/hysteresis | 0 | 0 | — | — | CHƯA LÀM |
-| 5 cross-session | 0 | 0 | — | — | CHƯA LÀM |
+| 4 drift/hysteresis | 2 | 2 | Velostat có đặc trưng hysteresis/time-history; piezoresistive insole 2026 báo drift/stabilization khi cycling | A: generic correction không đủ; E vẫn UNRESOLVED | SƠ BỘ — xem review 2026-08-25 |
+| 5 cross-session | 1 | 1 | Có test–retest pressure insole/force-plate; chưa xác minh multi-day 3D-GRF + separation | B/E: UNRESOLVED | SƠ BỘ — xem review 2026-08-25 |
 | 6 personal calib | 0 | 0 | — | — | CHƯA LÀM |
-| 7 longitudinal | 0 | 0 | — | — | CHƯA LÀM |
+| 7 longitudinal | 2 | 2 | Longitudinal wearable monitoring và plantar-pressure individuality đã có nhưng khác thiết bị/population | D high-level: OVERLAP; E device-specific: UNRESOLVED | SƠ BỘ — xem review 2026-08-25 |
 | 8 knee OA | 0 | 0 | — | — | CHƯA LÀM |
 | 9 GNN/ST-GCN | 0 | 0 | — | — | CHƯA LÀM |
 | 10 edge/INT8 | 0 | 0 | — | — | CHƯA LÀM |

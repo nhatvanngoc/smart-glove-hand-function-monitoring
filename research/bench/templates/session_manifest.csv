@@ -1,0 +1,1 @@
+bench_session_id,utc_start,sensor_unit_id,firmware_hash,layout_revision,conditioning_revision,adc_reference_v,scan_order,reference_device_id,reference_device_calibration_locator,operator_code,ambient_temperature_c,ambient_humidity_pct,notes
