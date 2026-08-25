@@ -36,12 +36,14 @@
 - Ghi quyết định đổi hướng vào `DECISION_LOG.md` (DEC-TOPIC-001; đóng các quyết định kiến trúc cũ).
 - Tạo `docs/30_TOPIC_PIVOT_Smart_Insole.md`, `research/protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md`, `research/reviews/2026-08-25_smart_insole_redteam.md`.
 - Cập nhật `README.md`, `AGENTS.md`, `PROJECT_SNAPSHOT.md`, `INDEX.md`, `research/README.md`, `build_context_bundle.py`.
-- **Đổi tên repo GitHub** → `smart-insole-edge-ai` (xem mục 1.4).
+- **Đổi tên repo GitHub** → đã **thử** với tên `smart-insole-edge-ai` nhưng bị GitHub từ chối (HTTP 403: token agent không có quyền Administration). Chờ chủ dự án tự đổi tên; xem mục 1.4.
 
-### 1.4 Đổi tên GitHub
+### 1.4 Đổi tên GitHub (CHỜ CHỦ DỰ ÁN THỰC HIỆN)
 
 - Tên cũ: `nhatvanngoc/adaptive_cushion_aac`.
-- Tên mới: `nhatvanngoc/smart-insole-edge-ai`.
+- Tên đề xuất mới: `nhatvanngoc/smart-insole-edge-ai`.
+- **Trạng thái:** đổi tên bị **chặn** — token GitHub của agent không có quyền Administration (HTTP 403 "Resource not accessible by integration"). Repo hiện vẫn là `adaptive_cushion_aac`.
+- **Cách thực hiện (chủ dự án):** `gh repo rename smart-insole-edge-ai --repo nhatvanngoc/adaptive_cushion_aac --yes`, hoặc GitHub web → Settings → Repository name.
 - Branch làm việc của phiên giữ nguyên: `arena/01a0372f-adaptive-cushion-aac` (ràng buộc nền tảng; không đổi tên branch).
 
 ### 1.5 Mở — chờ thông tin tiếp theo từ chủ dự án
