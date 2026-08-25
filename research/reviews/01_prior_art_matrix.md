@@ -77,6 +77,29 @@ Direct attacks on the exact combination surfaced **no** plantar-insole system wi
 
 **Consequence:** the novelty may **not** be framed as "monitor integrity to suppress false alerts" or "abstain under uncertainty" — both are established. It must be framed as the **specific transfer**: a *perturbation-injection* measurement-integrity estimator for a low-cost plantar insole, evaluated against a *longitudinal biological-change false-alert* endpoint with an explicit coverage/selective-risk trade-off.
 
+## C31–C40 — conceptual near-neighbour attack (2026-08-26)
+
+Goal: actively try to **kill `CLM-NOV-003`** by finding one paper that already combines perturbation-injection measurement-integrity estimation + longitudinal biological-change false-alert endpoint + coverage/abstention in a plantar-sensing setting. Five conceptual families were searched (sensor quality, fault diagnosis, measurement validity, context/distribution shift, longitudinal alerting). New records are in `research/evidence/SOURCE_LEDGER.csv`.
+
+| Family | What the search returned | Closest neighbour | Kills CLM-NOV-003? |
+|---|---|---|---|
+| A — Sensor quality | Only hardware-development and review papers (screen-printed, TRIPS diabetic, optoelectronic, hemiplegic, textile, insole-systems review) | none on quality assessment | No |
+| B — Fault diagnosis | No insole sensor-fault-diagnosis paper; IMU integration-drift removal by signal processing (`SRC-DRIFT-2024-IMU`) | `SRC-DRIFT-2024-IMU` (drift ≠ integrity) | No |
+| C — Measurement validity | Rich ICC/Bland-Altman/**MDC**/SDC literature (`SRC-MDC-2023-INSOLE`, XSENSOR, Pedar-X, `SRC-LIU-2025-RELIABILITY`) | **MDC** = static "true change vs measurement error" threshold | No (but MDC is the mandatory baseline) |
+| D — Context/distribution shift | Mature general ML: OOD survey, domain-adaptation theory, DWLR wearable label shift, sleep-quality domain shift (-18.54 pp) | domain adaptation / personalization | No |
+| E — Longitudinal alerting | Longitudinal gait-change monitoring at scale (`SRC-ESPAY-2017-PD-LONGIT`, `SRC-ALS-2023-REMOTE-LONGIT`, `SRC-PILLONI-2025-GAITHUB`); induced-perturbation gait-change detection (`SRC-ACM-2025-GAITCHANGE`); fall-risk gait alerts (`SRC-DIGBIOM-2026-CHALLENGES`); context gating in FoG (`SRC-FOG-CONTEXT-GATE`) | `SRC-ACM-2025-GAITCHANGE` | No |
+
+**Disposition: no paper found that kills `CLM-NOV-003`.** The claim survives this attack.
+
+### What C31–C40 adds to the novelty constraint (strengthen, not kill)
+
+1. **MDC/SDC is the established, mandatory baseline.** Insole research already separates "true change vs measurement error" with the minimal-detectable-change threshold (`SRC-MDC-2023-INSOLE`, `SRC-LIU-2025-RELIABILITY`). The candidate must beat a fixed-MDC gate, not just "raw pressure".
+2. **Distinguish measurement perturbation from biological perturbation.** `SRC-ACM-2025-GAITCHANGE` detects gait change from *induced* perturbations (added weight, shoe elevation) — but treats them as **real** gait change to be detected. The candidate injects perturbations to estimate **measurement-system** state. The protocol and manuscript must state this distinction explicitly.
+3. **The general alert/gating pattern is even broader than recorded before.** Fall-risk gait alerts, context-gated FoG detection, and valid-wear-time data-quality screens (`SRC-DIGBIOM-2026-CHALLENGES`, `SRC-FOG-CONTEXT-GATE`, `SRC-JMIR-2026-WEARABLE-REVIEW`) all pre-date the candidate. None is a plantar measurement-integrity estimator.
+4. **Longitudinal gait-change monitoring is mature** (PD ~17 months; ALS 24 weeks; GAIT-HUB), so "we monitor gait longitudinally" carries no novelty on its own.
+
+The defensible contribution remains the specific combination — **perturbation-injection measurement-integrity estimation for a low-cost plantar insole, evaluated against a longitudinal false-gait-change-alert endpoint with an explicit coverage/selective-risk trade-off, benchmarked against a fixed-MDC gate** — and nothing verified so far occupies it.
+
 ## Kill-test conclusion as of this checkpoint (2026-08-26)
 
 **No PRIOR ART FOUND (kill), and no GAP CONFIRMED (proof of absence).** All 20 read-scope rows and all 9 C21–C29 candidates plus the C30 map were verified; none carries the full six-criterion combination. Three direct adversarial searches on the exact mechanism found the *general* integrity→alert-suppression pattern in other domains but not in a plantar insole with perturbation injection and a coverage endpoint.
