@@ -1,7 +1,8 @@
 # Phản biện 5 ghế — Smart Insole Edge-AI (3D-GRF & COP)
 
-> **Ngày:** 2026-08-25 · **Áp dụng cho:** đề tài Smart Insole (docs/30).
+> **Ngày:** 2026-08-25 · **Áp dụng cho:** đề tài Smart Insole (`docs/01_Topic_Definition.md`).
 > **Bổ sung cho:** `research/protocols/ISEF_REVIEW_ORCHESTRATION.md` (6-lane tổng quát). Giao thức 5 ghế này chuyên cho đề tài hiện tại.
+> **Cập nhật lần 2 (tinh chỉnh novelty):** trọng tâm phản biện là **longitudinal drift-robust kinetic monitoring** (tách Δ_biology khỏi Δ_sensor/Δ_environment) và **killer experiment** (drift correction → cross-session error ≈ const + false-change rate ↓). Phản biện "chỉ đo GRF" không còn là đích — đích là **giữ ổn định qua phiên**.
 > **Quy tắc độc lập (bắt buộc):** nếu host không tách được sub-agent/model độc lập thật sự thì các ghế chạy **tuần tự trong cùng context** và phải ghi rõ **"sequential role review; không phải independent multi-agent verification"**. Không được gọi là xác minh đa agent độc lập.
 
 ---
@@ -48,9 +49,21 @@
 
 ### Q5. "Cảm biến giá rẻ có đủ tin cậy để kết luận gì về sức khoẻ? Thử nghiệm trên người có đúng quy trình?"
 
-- **Trả lời trung thực:** **Không** đưa kết luận y khoa/chẩn đoán. Đây là **nguyên mẫu đo lường cơ sinh học**. Không thử người trước **IRB/SRC pre-approval** của hội thi trực thuộc.
+- **Trả lời trung thực:** **Không** đưa kết luận y khoa/chẩn đoán. Đây là **nguyên mẫu đo lường cơ sinh học** hỗ trợ **theo dõi** thay đổi chức năng & đáp ứng phục hồi. Không thử người trước **IRB/SRC pre-approval** của hội thi trực thuộc; nghiên cứu theo tầng (healthy/phantom → force plate → gait → OA nếu đủ điều kiện).
 - **Bằng chứng giải quyết:** hồ sơ IRB/SRC, consent/assent, đánh giá rủi ro; thử nghiệm bench/mannequin trước.
 - **Dự phòng:** nếu chưa được duyệt, toàn bộ phần người tham gia giữ nguyên trạng thái "tạm dừng" và dùng dữ liệu bench.
+
+---
+
+## 2b. Killer experiment — mục tiêu phản biện trung tâm (tinh chỉnh lần 2)
+
+Mỗi ghế G1–G5 phải kiểm tra đề tài có chứng minh được chuỗi sau hay không (không chỉ RMSE một phiên):
+
+1. **Không** drift correction → cross-session error **tăng** theo số phiên.
+2. **Có** drift correction → cross-session error ≈ hằng số.
+3. **False change detection giảm** trên dữ liệu "không có thay đổi sinh học thật".
+
+Nếu đề tài chỉ báo "RMSE 5% trên một phiên" mà không có 3 mục trên, novelty (E + D) **chưa được chứng minh** — G5 phải hạ bậc tuyên bố novelty.
 
 ---
 

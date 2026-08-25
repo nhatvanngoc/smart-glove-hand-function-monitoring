@@ -97,3 +97,83 @@ Sau đó nén cuộc trò chuyện này, lưu trữ vào github. Rồi đổi t�
 - **Khôi phục ngữ cảnh:** đọc mục 1, sau đó mở `DECISION_LOG.md` + `PROJECT_SNAPSHOT.md`.
 - **Truy xuất nguồn gốc:** mục 2 (nguyên văn) là nguồn chuẩn cho mọi diễn giải ở mục 1; nếu khác nhau, nguyên văn thắng.
 - **Cập nhật:** khi chủ dự án gửi thông tin mới, append tệp hội thoại mới `CONVERSATION_YYYY-MM-DD.md` và cập nhật DECISION_LOG/SNAPSHOT, không sửa ngược lịch sử.
+
+---
+
+## 4. Phần 2 — thông tin bổ sung (cùng ngày 2026-08-25)
+
+> **Lưu ý định danh tài liệu:** phần 1 dẫn tới `docs/30_TOPIC_PIVOT_Smart_Insole.md`; file đó đã được thay thế bằng `docs/01_Topic_Definition.md` (tinh chỉnh). Mọi tài liệu đề tài cũ đã bị xóa theo DEC-TOPIC-003.
+
+### 4.1 Tóm tắt nén (compressed)
+
+1. **Định nghĩa đề tài (tinh chỉnh):** "Lót giày Edge-AI ước lượng liên tục 3D-GRF & COP, drift-robust, để phát hiện sớm thay đổi động học dáng đi & theo dõi đáp ứng phục hồi ở người nguy cơ/mắc knee OA."
+2. **Novelty (insight quan trọng nhất):** KHÔNG coi "3D-GRF estimation" là novelty chính — literature 2025–2026 đã có. Trọng tâm mới = **longitudinal, drift-robust kinetic monitoring** (tách Δ_biology khỏi Δ_sensor/Δ_environment).
+3. **Chuyển hướng mục tiêu:** không "chẩn đoán OA bằng AI" mà "theo dõi dọc sự thay đổi động học dáng đi của một cá nhân, phân biệt thay đổi sinh học thật với drift cảm biến & biến thiên giữa các ngày".
+4. **Mục tiêu tối thượng:** biến phép đo force-plate trong lab thành **wearable liên tục ổn định theo thời gian** ("mang phòng lab đi cùng người bệnh").
+5. **Liên hệ knee OA:** chuỗi `Gait → GRF/COP → Knee loading pattern`; KHÔNG claim `GRF ⇒ OA`, không chẩn đoán/điều trị/thay thế bác sĩ/X-ray/MRI/force plate.
+6. **RQ 2 tầng:** (1) duy trì 3D-GRF/COP đủ ổn định qua nhiều phiên để phân biệt thay đổi động học thật với drift & biến thiên? (2) thay đổi phát hiện có theo dõi được suy giảm/cải thiện chức năng liên quan knee OA?
+7. **Killer experiment:** không drift correction → error↑; có → error≈const; **false change detection↓**.
+8. **Ứng viên novelty A–E; chọn E (biology-vs-sensor) + D (longitudinal change detection).**
+9. **Phần cứng tái sử dụng:** Velostat (ma trận cảm biến) + Arduino Mega (acquisition/scanning/sampling) + Orange Pi 5 Pro/RK3588 (edge GNN, INT8).
+10. **Nghiên cứu theo tầng (giảm IRB):** healthy/phantom → force-plate validation → gait patterns → (nếu đủ điều kiện) knee OA.
+11. **Bước tiếp theo bắt buộc:** literature gap analysis 2025–2026 (10 nhóm chủ đề) — ĐỪNG vội build hardware.
+12. **Yêu cầu thao tác:** đọc, cập nhật, viết cơ sở lí thuyết, xóa file đề tài cũ.
+
+### 4.2 Nguyên văn chỉ thị (provenance)
+
+<details>
+<summary>Raw owner message — phần 2 (2026-08-25)</summary>
+
+```
+Hệ thống lót giày Edge-AI ước lượng liên tục 3D-GRF và COP có khả năng chống trôi dạt để phát hiện sớm sự thay đổi động học dáng đi và theo dõi đáp ứng phục hồi ở người có nguy cơ hoặc mắc thoái hóa khớp gối.
+
+Trong đó:
+
+3D-GRF — Continuous 3D Ground Reaction Forces: Fx: lực trước–sau; Fy: lực trái–phải; Fz: lực thẳng đứng.
+COP — Center of Pressure trajectory: quỹ đạo tâm áp lực dưới bàn chân.
+Edge-AI: xử lý/suy luận ngay trên thiết bị, hướng tới RK3588/Orange Pi 5 Pro.
+Drift-resistant: giải quyết hiện tượng trôi cảm biến, đặc biệt quan trọng với Velostat.
+Ultimate application: theo dõi thay đổi cơ học của dáng đi theo thời gian; hỗ trợ phát hiện sớm thay đổi bất thường liên quan đến knee OA; theo dõi đáp ứng phục hồi.
+
+2. Vì sao đề tài này xuất hiện?
+Trước đó đã thử rất nhiều hướng: phantom hồi sức sơ sinh; cầm máu cấp cứu; hỗ trợ giao tiếp người hạn chế vận động; hỗ trợ nuôi ăn; tactile sensing; orthosis; rehabilitation; smart phantom. Vấn đề chung: human impact tốt nhưng novelty chưa đủ mạnh, hoặc clinical proxy khó, IRB/participant khó, mechanical complexity, direct neighbors trong literature quá nhiều, khó chứng minh "cái này tốt hơn cái đang có".
+Sau khi reverse-engineer các dự án ISEF/ViSEF, thống nhất không nên bắt đầu bằng "người yếu thế cần gì?" mà bằng: bottleneck khó → biến ẩn khó đo → phương pháp mới → benchmark định lượng → impact.
+
+3. Insight quan trọng nhất: không nên coi "3D-GRF estimation" là novelty chính. Literature 2025–2026 đã có: smart insole + ML ước lượng 3D-GRF; pressure insole + IMU + ML; spatiotemporal GCN cho continuous 3D-GRF; GRF liên quan knee OA. "Em dùng Velostat + GNN để dự đoán 3D-GRF" chưa đủ mới — nguy cơ rơi về ~70–80 điểm.
+
+4. Cú chuyển hướng quan trọng: thay vì "chẩn đoán thoái hóa khớp gối bằng AI" → "theo dõi liên tục sự thay đổi động học dáng đi của một cá nhân trong thời gian dài, đồng thời phân biệt thay đổi sinh học thật với drift của cảm biến và biến thiên giữa các ngày." Trọng tâm khoa học = Longitudinal, drift-robust kinetic monitoring.
+
+5. Mục tiêu tối thượng: không phải đo GRF (GRF là phương tiện) mà biến phép đo động học trong phòng lab (force plate) thành wearable liên tục, đủ ổn định theo thời gian để phát hiện thay đổi thật trong dáng đi của từng cá nhân — "mang phòng lab đi cùng người bệnh": smart insole → GRF + COP → hàng nghìn bước → nhiều ngày/tuần → gait trajectory theo thời gian.
+
+6. Tại sao liên quan knee OA: knee OA liên quan cách chịu tải, phân bố lực, braking/propulsion, bất đối xứng hai chân, biến đổi COP, gait mechanics. Chuỗi: Gait → GRF/COP → Knee loading pattern. KHÔNG claim GRF⇒OA hay "hệ thống chẩn đoán thoái hóa khớp".
+
+7. Cách đặt mục tiêu y sinh an toàn: khoa học = continuous drift-robust 3D kinetic estimation from wearable plantar sensing; ứng dụng = longitudinal detection of abnormal gait changes; y sinh = hỗ trợ theo dõi thay đổi chức năng vận động & đáp ứng phục hồi ở người nguy cơ/mắc knee OA. Không tuyên bố: chẩn đoán/điều trị OA, thay thế bác sĩ/X-ray/MRI/force plate.
+
+8. Tại sao force plate quan trọng: so sánh predicted 3D-GRF ↔ force plate ground truth; predicted COP ↔ force plate COP; báo RMSE/MAE/NRMSE/R²/COP error/temporal alignment/drift/cross-session error — ground truth sạch cho Embedded/Engineering.
+
+9. "Drift" có thể trở thành contribution chính: baseline drift, hysteresis, sensitivity change, calibration drift, fitting change, nhiệt/tải change, session variation. ΔCOP = Δ_biology + Δ_sensor + Δ_environment — tách Δ_biology khỏi Δ_sensor là bài toán thú vị nhất.
+
+10. Pipeline dự kiến: Velostat pressure → ADC/Arduino → spatial pressure map → spatio-temporal graph → Edge-AI/GNN → 3D-GRF + COP → drift correction → personal baseline → longitudinal deviation → gait change detection → rehabilitation monitoring.
+
+11. Có thể phát triển closed-loop: Measure→Detect→Intervene→Measure (baseline gait → phát hiện bất thường → can thiệp phục hồi → đi lại bằng insole → GRF/COP thay đổi? → đánh giá đáp ứng). Không tự claim "điều trị" — hỗ trợ theo dõi & đánh giá đáp ứng can thiệp.
+
+12. Beneficiary: ưu tiên người nguy cơ/mắc knee OA trong theo dõi phục hồi. Nghiên cứu theo tầng: GĐ1 healthy/phantom/controlled loading; GĐ2 validation force plate; GĐ3 gait patterns; GĐ4 (nếu đủ điều kiện đạo đức & đối tác) người knee OA — giảm đáng kể rủi ro IRB.
+
+13. Điểm mạnh: ground truth tốt (force plate); embedded tự nhiên (sensor/acquisition/signal processing/edge inference/real-time); ML thật (P(x,y,t) phù hợp graph/spatiotemporal); có biomechanics; human impact; mở rộng (stroke, Parkinson, gait asymmetry, sports, fall-risk).
+
+14. Điểm yếu lớn nhất: novelty chưa đủ nếu chỉ Velostat→GNN→3D-GRF→OA. Ứng viên mạnh: A drift-resistant estimation; B cross-session generalization; C personal baseline; D longitudinal change detection; E biology-vs-sensor separation. E + D hấp dẫn nhất.
+
+15. Killer experiment: không drift correction → error↑; có → error≈constant; false change detection↓. Giả thuyết: sau 30 ngày, phương pháp giảm sai lệch liên-session và giảm false gait-change detection đáng kể so với calibration thường.
+
+16. Điểm dự kiến (heuristic chiến lược, không phải điểm ban giám khảo): Smart insole 3D-GRF/COP + drift robustness: tốt 78–82, ceiling 90–93+; các đề tài cũ 58–89.
+
+17. DNA: wearable pressure sensing → 3D-GRF+COP → drift-aware estimation → personal baseline → longitudinal kinetic change → early functional warning → rehabilitation monitoring.
+
+18. Phần cứng sẵn có tái sử dụng: Velostat (pressure sensing matrix), Arduino Mega (acquisition/scanning/sampling/preprocessing), Orange Pi 5 Pro/RK3588 (signal processing, GNN inference, INT8, real-time edge, logging).
+
+19. RQ cuối nên hướng tới: (1) hệ thống lót giày cảm nhận áp lực có duy trì 3D-GRF/COP đủ ổn định qua nhiều phiên để phân biệt thay đổi động học thật với drift & biến thiên? (2) thay đổi phát hiện có dùng để theo dõi suy giảm/cải thiện chức năng liên quan knee OA?
+
+20. Pitch ngắn nhất (cho giáo viên) + nguyên tắc quan trọng nhất: ĐỪNG vội build hardware — bước tiếp theo là literature gap analysis 2025–2026 quanh: Velostat+plantar pressure, 3D-GRF, COP, drift/hysteresis, cross-session generalization, personal calibration, longitudinal gait monitoring, knee OA biomechanics, GNN/ST-GCN gait, Edge/INT8 deployment.
+```
+
+</details>
