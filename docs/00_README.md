@@ -1,6 +1,8 @@
 # Adaptive Air Cushion + Eye-Tracking AAC — Dự án Khoa học Kỹ thuật
 
-> **Đề tài:** Nghiên cứu và phát triển hệ thống đệm khí thích ứng dựa trên mô hình áp suất – thời gian tích hợp giao tiếp hỗ trợ người hạn chế vận động trong phòng ngừa loét tì đè
+> ⚠️ **ĐÃ ĐỔI HƯỚNG (2026-08-25):** Đề tài đã chuyển sang **Smart Insole Edge-AI (3D-GRF & COP)**. Tài liệu này thuộc đề tài cũ và chỉ còn giá trị **lưu trữ lịch sử**. Xem [`docs/30_TOPIC_PIVOT_Smart_Insole.md`](30_TOPIC_PIVOT_Smart_Insole.md) và [`README.md`](../README.md).
+
+> **Đề tài (cũ):** Nghiên cứu và phát triển hệ thống đệm khí thích ứng dựa trên mô hình áp suất – thời gian tích hợp giao tiếp hỗ trợ người hạn chế vận động trong phòng ngừa loét tì đè
 >
 > **Học sinh:** Văn Ngọc Nhật Anh — Lớp 11A2, THPT Quảng Trị
 > **Lĩnh vực:** Hệ thống nhúng (Embedded Systems)

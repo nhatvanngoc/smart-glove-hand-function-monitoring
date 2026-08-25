@@ -11,9 +11,12 @@ research/
 ├── context/DECISION_LOG.md                  # quyết định có ngày, chủ sở hữu, trạng thái
 ├── evidence/SOURCE_LEDGER.csv               # nguồn thật/candidate và trạng thái verification
 ├── protocols/ISEF_REVIEW_ORCHESTRATION.md  # vai trò phản biện + quality gates
+├── protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md # phản biện 5 ghế cho đề tài Smart Insole
 ├── prompts/REVIEWER_DISPATCH_TEMPLATE.md    # prompt dispatch role độc lập/adjudicator
 ├── queries/QUERY_LOG.jsonl                  # log truy vấn audit được
-├── reviews/2026-08-16_baseline_intake.md   # rà soát sơ bộ tài liệu đầu vào
+├── reviews/2026-08-16_baseline_intake.md   # rà soát sơ bộ tài liệu đầu vào (đề tài cũ)
+├── reviews/2026-08-25_smart_insole_redteam.md # red-team phản biện đầu tiên cho đề tài mới
+├── context/CONVERSATION_2026-08-25.md       # bản nén hội thoại đổi hướng đề tài
 └── tooling/{SETUP_STATUS,SMOKE_TESTS}.md     # trạng thái runtime và kiểm thử
 ```
 
@@ -52,6 +55,7 @@ Các đường dẫn `research/cache/`, `downloads/`, `generated/`, và `queries
 - “Không tìm thấy trong một truy vấn” chỉ cho phép gắn `UNVERIFIED`, không chứng minh nguồn không tồn tại.
 - Kết quả synthetic luôn kèm nhãn synthetic/simulation.
 - Mọi con số y khoa, hiệu suất, latency, accuracy, cost và novelty phải có source/evidence ID.
-- `32 mmHg` không phải universal cutoff.
+- `32 mmHg` không phải universal cutoff (thuộc đề tài đệm khí cũ — nay là archive).
+- Với đề tài Smart Insole: dP/dt chỉ **giảm** drift offset, không "triệt tiêu"; mọi giá trị GRF/COP là kết quả hiệu chuẩn so với chuẩn vàng, không phải hằng số vật liệu.
 - Không thử nghiệm người tham gia trước IRB/SRC pre-approval hợp lệ.
 - Không gọi review nội tuyến hoặc nhiều vai trò trong cùng context là “independent multi-agent review”.
