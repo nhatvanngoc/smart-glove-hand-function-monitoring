@@ -45,8 +45,44 @@
 | C29 | *Real-World Gait Detection Using a Wrist-Worn Inertial Sensor*, 2024, PMCID `PMC11097052` | Explicit TP/FP/FN and specificity trade-off | Transfer only decision-metric logic, not device claims |
 | C30 | *Device-dependent variability …* companion citations and calibration standards | Citation chasing from C25 | Locate primary pressure-insole measurement-state studies |
 
-## Kill-test conclusion as of this checkpoint
+## C21–C30 — verification result (2026-08-26)
 
-**No GAP CONFIRMED.** No read/verified row above has established the full proposed combination; this is not evidence that no such work exists. Candidate C21–C30 must be read before Gate 1 can pass.
+All nine primary/review candidates were identity-verified (title/authors/venue/year/DOI) and read to abstract or selected full-text. Full records are in `research/evidence/SOURCE_LEDGER.csv`. `—` still means "not verified in declared scope", never "absent".
 
-A near-neighbor kills this candidate if it has all of: controlled sensor/system perturbations; explicit integrity/state estimate or quality gate; longitudinal/held-out-session evaluation; false biological-change or equivalent decision endpoint; abstention/coverage (or an equivalent selective-decision evaluation); and a comparable plantar-sensing setting.
+| ID | Verified source | Controlled perturbation | Longitudinal / repeated session | Integrity state / quality gate | False gait-change endpoint | Abstention / coverage | Kills candidate? |
+|---|---|---|---|---|---|---|---|
+| C21 | `SRC-CARTER-2024-GRF` (PeerJ 12:e17896) | Subject/condition variation, not injected measurement perturbation | LOSO across subjects, not sessions | — | — | — | No |
+| C22 | `SRC-JLASSI-2026-OUTDOOR` (Sensors 26(1):232) | — | — | — | — | — | No (classification task) |
+| C23 | `SRC-HARON-2024-SHEAR-CALIB` (PLOS ONE 19(9):e0309514) | Yes — indenter area/location, up to 80%/90% reading change | Two 15-min sessions, 1 diabetic + 1 healthy | Calibration procedure, not a runtime integrity estimate | — | — | No (closest calibration-perturbation neighbour) |
+| C24 | `SRC-BURNIE-2024-PRESSURE-REVIEW` (Foot 59:102094) | Review of calibration suitability | Review | Review recommends, does not build | — | — | No (map only; venue corrected from J Biomech) |
+| C25 | `SRC-CHOCKALINGAM-2026-DEVICE-THRESH` (Gait Posture 126:110128) | Device/system differences | Cross-device, single condition | No integrity estimator; recommends device-specific thresholds | Threshold misclassification (5.4% agreement), not longitudinal change | — | No (closest clinical-decision neighbour) |
+| C26 | `SRC-WANG-2025-SELFPOWERED` (Sci Adv 11:eadu1598) | 180k-cycle durability ≠ measurement perturbation | — | — | — | — | No |
+| C27 | `SRC-LATSCH-2026-INSOLE-REVIEW` (IEEE Sensors J 26(3):3577-3596) | Frames "measurement disturbance" | Review | Recommends calibration/verification discipline | — | — | No (motivates the gap) |
+| C28 | `SRC-PILLONI-2025-GAITHUB` (Digit Biomark 9(1):140-154) | Placement/supervision protocol | 3 weekly home sessions + clinic baseline | Cross-device agreement, not integrity state | — | — | No (longitudinal reliability only) |
+| C29 | `SRC-KLUGE-2024-WRIST-GAIT` (JMIR Form Res 8:e50035) | — | — | — | Gait-event TP/FP/FN (different task) | Implicit in detection metrics | No (wrist IMU; transfer metrics only) |
+| C30 | Citation chasing from C25/C27 | — | — | — | — | — | Map only; `SRC-LATSCH-2026-INSOLE-REVIEW` reports 9/41 insoles use a reference for both sensor test and gait |
+
+**C21–C30 disposition: none kills the candidate.** No verified source combines all six criteria.
+
+## Adversarial pattern check — the danger is over-claiming, not a single kill paper
+
+Direct attacks on the exact combination surfaced **no** plantar-insole system with the full set, but surfaced a strong *general* pattern that constrains how novelty may be worded:
+
+| Pattern source | What it establishes | Domain |
+|---|---|---|
+| `SRC-INDUS-SHM-ALERT-PATTERN` (GE Vernova APM SmartSignal, non-academic vendor page) | "Monitor sensor health → suppress alerts driven by unhealthy data → reduce false-positive alerts" is an already-deployed engineering pattern (via analytic redundancy/residuals, not injected perturbations) | Rotating machinery / industrial asset performance |
+| `SRC-SHM-REVIEW-2025` (PMC11902730) | Quantifying operational/environmental conditions to normalize data "preventing benign changes from being misinterpreted as damage … reducing false alarms (Type I)" is a standard performance criterion | Structural health monitoring |
+| `SRC-SKDH-2025-GAIT-ATTRIB` (JMIR 27:e72831) | Longitudinal changes "must be confidently attributed to underlying clinical status rather than algorithmic error" — the exact problem framing, in IMU gait | Wearable IMU gait |
+| Selective Conformal Risk Control (arXiv:2512.12844); conformal abstention; ICCM (arXiv:2608.18397) | Abstention/coverage (selective risk vs coverage) is mature ML machinery already applied to wearable signal-quality gating | General ML / wearables |
+
+**Consequence:** the novelty may **not** be framed as "monitor integrity to suppress false alerts" or "abstain under uncertainty" — both are established. It must be framed as the **specific transfer**: a *perturbation-injection* measurement-integrity estimator for a low-cost plantar insole, evaluated against a *longitudinal biological-change false-alert* endpoint with an explicit coverage/selective-risk trade-off.
+
+## Kill-test conclusion as of this checkpoint (2026-08-26)
+
+**No PRIOR ART FOUND (kill), and no GAP CONFIRMED (proof of absence).** All 20 read-scope rows and all 9 C21–C29 candidates plus the C30 map were verified; none carries the full six-criterion combination. Three direct adversarial searches on the exact mechanism found the *general* integrity→alert-suppression pattern in other domains but not in a plantar insole with perturbation injection and a coverage endpoint.
+
+This is a **bounded screen, not a systematic review**: it establishes that no kill paper was found in the declared scope, not that none exists. Per `AGENTS.md`, "not found" ≠ "does not exist".
+
+A near-neighbour kills this candidate if it has all of: controlled sensor/system perturbations; explicit integrity/state estimate or quality gate; longitudinal/held-out-session evaluation; false biological-change or equivalent decision endpoint; abstention/coverage (or an equivalent selective-decision evaluation); and a comparable plantar-sensing setting. None verified so far does.
+
+**Gate 1 disposition: OPEN — candidate not killed, novelty framing narrowed.** The candidate may proceed to bench/falsification work, but any novelty statement must cite the industrial-SHM and conformal-abstention prior patterns and claim only the plantar perturbation-injection + longitudinal-false-alert + coverage combination.

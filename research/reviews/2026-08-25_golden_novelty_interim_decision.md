@@ -80,3 +80,20 @@ A locked protocol must contain:
 ## Current project positioning
 
 The defensible title-level framing remains **longitudinal drift-robust kinetic monitoring**, but the candidate contribution is narrowed to **measurement integrity and false-change control**, conditional on the above validation. Knee OA remains an eventual application context only; it is not the ground truth, diagnostic target, or evidence source for this phase.
+
+## Addendum 2026-08-26 — C21–C30 completed + adversarial pattern check
+
+The 30-paper attack set is now complete (see `research/reviews/01_prior_art_matrix.md`). All nine C21–C29 candidates were identity-verified and read to abstract/selected full text; C30 is a citation-chasing map.
+
+**Kill-test result: no prior art kills the candidate, and no GAP CONFIRMED (proof of absence) is claimed.** No verified source combines controlled perturbations + integrity state + held-out-session longitudinal evaluation + false biological-change endpoint + abstention/coverage in a plantar-sensing setting.
+
+**Important novelty constraint discovered (see `CLM-NOV-003`).** The adversarial searches showed that the *general* pattern "monitor measurement integrity → suppress data-driven false alerts" is already established outside plantar sensing:
+
+- industrial sensor-health monitoring / APM (e.g. GE Vernova SmartSignal) suppresses alerts driven by unhealthy sensors to cut false positives;
+- structural health monitoring treats operational/environmental normalization as a criterion to avoid misreading benign change as damage (`SRC-SHM-REVIEW-2025`);
+- longitudinal gait work explicitly frames attributing change to clinical status rather than algorithmic error (`SRC-SKDH-2025-GAIT-ATTRIB`);
+- abstention/coverage is mature ML machinery (selective conformal risk control, conformal abstention, wearable signal-quality gates).
+
+Therefore the novelty **must not** be stated as "monitor integrity to suppress false alerts" or "abstain under uncertainty". It must be stated as the specific transfer: a **perturbation-injection** measurement-integrity estimator for a low-cost plantar insole, evaluated against a **longitudinal biological-change false-alert** endpoint with an explicit coverage/selective-risk trade-off, versus raw-pressure / recalibration / contact-IMU baselines.
+
+**Revised golden-filter scores (conservative):** Novelty 6 → 6 (unchanged: no kill found, but the conceptual neighbourhood is now known to be crowded, so the ceiling on novelty rests on the specific plantar perturbation-injection + longitudinal-false-alert combination, not on the abstract idea). Mean remains **8.0 — candidate passes triage, still not confirmed**. Gate 1 stays **OPEN**.
