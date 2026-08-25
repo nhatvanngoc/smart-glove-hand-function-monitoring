@@ -177,3 +177,56 @@ Sau khi reverse-engineer các dự án ISEF/ViSEF, thống nhất không nên b�
 ```
 
 </details>
+
+---
+
+## 5. Chỉ thị chiến lược bổ sung — săn “golden novelty” (2026-08-25)
+
+### Tóm tắt bền vững
+
+Chủ dự án yêu cầu đổi cách tìm novelty: **reverse-engineering literature**, không brainstorm tính năng/phần cứng. Định nghĩa làm việc:
+
+`important unsolved bottleneck + reason existing methods fail + plausible new mechanism + killer experiment`.
+
+Quy trình bắt buộc: vẽ technology landscape; đọc Limitations/Discussion/Future Work/Methods/Dataset; chuyển từng failure thành Gap Card; tìm contradiction “works / fails under condition B”; xác định hidden variable; chỉ sau đó xét Velostat/Mega/RK3588 có phục vụ hypothesis không.
+
+Trọng tâm ưu tiên: **measurement reliability/fidelity under time, condition and person variation**, đặc biệt câu hỏi liệu hệ thống có thể phân biệt thay đổi gait với thay đổi measurement system. Không coi “Velostat + RK3588 + GNN” là novelty.
+
+Yêu cầu đầu ra kế tiếp: **Gap Matrix 20–30 paper (2020–2026)**; mỗi paper bóc: đã làm gì, failure, limitation tác giả tự nêu, ai đã giải tiếp, gap còn lại, và độ khớp hardware. Chỉ giữ gap có điểm cao theo importance/novelty/depth/measurability/ground truth/feasibility/ISEF impact/ceiling.
+
+### Kiểm chứng ban đầu từ dẫn liệu chủ dự án
+
+- Lead “Reliable Vertical Ground Reaction Force Estimation with Smart Insole During Walking” được xác minh là **arXiv preprint 2025** (`arXiv:2501.07748`), không phải paper năm 2021. Nó là close prior art cho IMU + contact-geometry (center of pressed sensors) + ML để giảm lệ thuộc magnitude pressure trong vGRF; chưa phải bằng chứng separation biology-vs-sensor nhiều session.
+- CoP paper 2022 xác minh calibration task-match, vertical force, và số pressure cells ảnh hưởng accuracy; benchmark 2019 xác minh placement/stacking insole ảnh hưởng accuracy. Đây là candidate hidden variables/controlled interventions, chưa phải novelty confirmed.
+
+### Artifact liên quan
+
+`research/reviews/2026-08-25_golden_novelty_hunt.md`; `research/evidence/SOURCE_LEDGER.csv`; `research/queries/QUERY_LOG.jsonl`.
+
+---
+
+## 6. Hypothesis lock and pre-model gates (2026-08-25)
+
+Owner directed that the project stop brainstorming and test one hypothesis:
+
+> Can controlled measurement perturbations estimate measurement integrity in a low-cost plantar sensing system and reduce false longitudinal gait-change alerts without substantially increasing missed true changes?
+
+Owner required three pre-model artifacts: a 30–50-paper prior-art kill matrix; a precise perturbation protocol (placement, loading history, calibration mismatch, footwear/context); and a falsification plan. The primary endpoint is false longitudinal gait-change alert rate; missed changes, coverage, selective risk, session error and abstention are secondary/guardrail metrics. Abstention cannot be treated as success without a coverage–risk analysis.
+
+GO/NO-GO gates: no full near-neighbor; 2–3 bench perturbations cause reproducible degradation beyond noise; simple baseline produces false alerts; proposed method improves false alerts without unacceptable missed alerts/low coverage. No full system/GNN work before these gates. Human testing remains subject to ISEF/IRB/SRC requirements.
+
+Artifacts: `research/reviews/01_prior_art_matrix.md`, `research/protocols/02_perturbation_protocol.md`, `research/protocols/03_falsification_plan.md`.
+
+---
+
+## 7. Engineering baseline and owner experience (2026-08-25)
+
+Owner reports that direct GPIO UART/serial between Orange Pi 5 Pro and Arduino Mega is already functioning. The plan must not treat basic communication as unresolved; it must document the actual UART device/pins, voltage-interface/level-shifting method, common ground, baud rate and measured logic levels before research acquisition. USB remains an optional diagnostic fallback.
+
+Owner also reports prior participation in 2 Vietnamese science-and-engineering (KHKT) competitions and 5 engineering competitions. This is planning/background context only and is not evidence for prototype readiness, validation, or future competition outcome.
+
+---
+
+## 8. Owner-reported Mega ↔ Orange Pi diagnostic run (2026-08-25)
+
+Owner reports a GPIO UART diagnostic run: Mega configured at 115200 baud, 16 channels × 100-Hz frame target, ADC prescaler 64, 11,511 sent frames and no reported Mega errors. Orange Pi reports 11,510 received frames, zero CRC failures/gaps, one disconnect/reconnect, CPU 47.153 C, and 54.13 fps across 212.6 s. Owner explains firmware deliberately alternates 60-s send and 60-s no-send states; 11,510/212.6 ≈ 54.1 frames/s, so the reported whole-runtime average is expected. This is owner-reported status pending raw-log reprocessing; it is a deliberate transport-disconnect test, not continuous 100-Hz validation or sensor/ADC-quality evidence.
