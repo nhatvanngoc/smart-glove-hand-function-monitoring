@@ -24,10 +24,14 @@ FULL_SOURCES = [
     "research/claims/CLAIM_LEDGER.csv",
     "research/evidence/SOURCE_LEDGER.csv",
     "research/reviews/2026-08-16_baseline_intake.md",
+    "research/reviews/2026-08-25_smart_insole_redteam.md",
     "research/protocols/ISEF_REVIEW_ORCHESTRATION.md",
+    "research/protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md",
+    "docs/30_TOPIC_PIVOT_Smart_Insole.md",
 ]
 OUTLINE_SOURCES = [
     "research/tooling/SMOKE_TESTS.md",
+    # Air-cushion (historical archive) — kept for provenance, not current architecture:
     "docs/01_RQ_Brief.md",
     "docs/02_Literature_Review.md",
     "docs/03_Methodology_Blueprint.md",

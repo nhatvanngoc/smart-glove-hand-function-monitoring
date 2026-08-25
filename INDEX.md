@@ -1,10 +1,31 @@
 # 📑 INDEX — Giải thích từng file trong dự án
 
-> **Dự án:** Adaptive Air Cushion + Eye-Tracking AAC — Hệ thống đệm khí thích ứng + Giao tiếp bằng ánh mắt
+> **Dự án (hiện tại):** Smart Insole Edge-AI — Ước lượng 3D-GRF & quỹ đạo COP từ lót giày Velostat giá rẻ
 > **Học sinh:** Văn Ngọc Nhật Anh — THPT Quảng Trị
-> **Ngày:** 2026-06-14
+> **Cập nhật:** 2026-08-25 (đổi hướng đề tài từ "đệm khí thích ứng + AAC")
 
 ---
+
+## ⚠️ THÔNG BÁO ĐỔI HƯỚNG (2026-08-25)
+
+Đề tài đã chuyển từ **"đệm khí thích ứng + AAC"** sang **"Smart Insole Edge-AI (3D-GRF & COP)"**. Các mô tả file bên dưới (docs/00–29, cad/, simulation/, diagrams/, src/aac_assistant, src/eye_tracking…) thuộc **đề tài cũ** và được giữ nguyên làm **kho lưu trữ lịch sử** — đừng coi chúng là kiến trúc hiện tại.
+
+### 📁 Tệp MỚI của đề tài Smart Insole
+
+| Tệp | Vai trò |
+|---|---|
+| `docs/30_TOPIC_PIVOT_Smart_Insole.md` | Thông báo đổi hướng, RQ nháp, kiến trúc phần cứng, giả thuyết dP/dt + ST-GNN, kế hoạch kiểm chứng |
+| `research/protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md` | Phản biện 5 ghế (Cơ sinh học, Nhúng, AI, Đạo đức, Devil's Advocate) + 5 câu hỏi chí mạng |
+| `research/reviews/2026-08-25_smart_insole_redteam.md` | Lượt red-team phản biện đầu tiên (8 findings, blocker) |
+| `research/context/CONVERSATION_2026-08-25.md` | Bản nén hội thoại ra quyết định đổi hướng (lưu trên GitHub) |
+| `research/context/PROJECT_SNAPSHOT.md` | Snapshot ngữ cảnh mới (2026-08-25) |
+| `research/context/DECISION_LOG.md` | DEC-TOPIC-001, DEC-INSOLE-001..003 (quyết định chính thức) |
+
+---
+
+## 🗂️ Tổng quan cấu trúc (KHO LƯU TRỮ LỊCH SỬ — đề tài cũ)
+
+Dự án có **72 files** chia thành 7 nhóm:
 
 ## 🗂️ Tổng quan cấu trúc
 
