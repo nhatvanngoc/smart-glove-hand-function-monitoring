@@ -58,4 +58,19 @@ Các script trên là smoke/reference experiments; kết quả mặc định là
 
 ## Lưu ý về đổi tên repo
 
-Repo đã đổi tên từ `nhatvanngoc/adaptive_cushion_aac` → `nhatvanngoc/smart-insole-edge-ai` (2026-08-25). Branch làm việc của phiên giữ nguyên tên `arena/01a0372f-adaptive-cushion-aac` do ràng buộc nền tảng.
+Đã **chuẩn bị đổi tên** repo `nhatvanngoc/adaptive_cushion_aac` → `nhatvanngoc/smart-insole-edge-ai` (2026-08-25), nhưng token GitHub của phiên agent **không có quyền Administration** nên chưa thực hiện được. Chủ dự án tự đổi tên bằng một trong hai cách:
+
+```bash
+# Cách 1: dùng gh với tài khoản có quyền admin trên repo
+gh repo rename smart-insole-edge-ai --repo nhatvanngoc/adaptive_cushion_aac --yes
+```
+
+Cách 2: GitHub web → repo → **Settings** → mục **Repository name** → đổi thành `smart-insole-edge-ai` → Rename.
+
+Sau khi đổi tên, cập nhật remote cục bộ (nếu cần):
+
+```bash
+git remote set-url origin https://github.com/nhatvanngoc/smart-insole-edge-ai.git
+```
+
+Branch làm việc của phiên giữ nguyên tên `arena/01a0372f-adaptive-cushion-aac` do ràng buộc nền tảng.
