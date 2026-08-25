@@ -23,27 +23,15 @@ FULL_SOURCES = [
     "research/context/DECISION_LOG.md",
     "research/claims/CLAIM_LEDGER.csv",
     "research/evidence/SOURCE_LEDGER.csv",
-    "research/reviews/2026-08-16_baseline_intake.md",
     "research/reviews/2026-08-25_smart_insole_redteam.md",
     "research/protocols/ISEF_REVIEW_ORCHESTRATION.md",
     "research/protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md",
-    "docs/30_TOPIC_PIVOT_Smart_Insole.md",
+    "docs/01_Topic_Definition.md",
+    "docs/02_Theoretical_Foundation.md",
 ]
 OUTLINE_SOURCES = [
-    "research/tooling/SMOKE_TESTS.md",
-    # Air-cushion (historical archive) — kept for provenance, not current architecture:
-    "docs/01_RQ_Brief.md",
-    "docs/02_Literature_Review.md",
-    "docs/03_Methodology_Blueprint.md",
-    "docs/04_System_Architecture.md",
-    "docs/05_Hardware_Design.md",
-    "docs/08_Experimental_Protocol.md",
-    "docs/10_References.md",
-    "docs/11_Academic_Review.md",
-    "docs/19_Final_Matrix_Lock_5x9_50mm.md",
-    "docs/27_Co_So_Ly_Thuyet.md",
-    "docs/28_Anti_Hallucination_ARS_Protocol.md",
-    "docs/29_Velostat_Evidence_Audit_ARSSkill.md",
+    "docs/03_Literature_Gap_Analysis_Plan.md",
+    "research/tooling/SETUP_STATUS.md",
 ]
 RISK_PATTERN = re.compile(
     r"(?i)(synthetic|simulation|mô phỏng|chưa|không được|warning|cảnh báo|risk|rủi ro|"

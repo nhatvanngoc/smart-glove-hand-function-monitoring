@@ -1,16 +1,37 @@
-# Smart Insole Edge-AI — Ước lượng 3D-GRF & quỹ đạo COP
+# Smart Insole Edge-AI — Drift-Robust 3D-GRF & COP Monitoring
 
-Nghiên cứu hệ thống **lót giày thông minh (Smart Insole)** dùng **Edge-AI** để ước lượng **lực phản lực mặt đất 3 chiều (3D-GRF: Fx, Fy, Fz)** và **quỹ đạo tâm áp lực (COP)** từ ma trận cảm biến áp lực giá rẻ **Velostat**, chạy suy luận trực tiếp trên **Orange Pi 5 Pro**.
+Hệ thống **lót giày thông minh (Smart Insole)** dùng **Edge-AI** ước lượng **liên tục** lực phản lực mặt đất 3 chiều (**3D-GRF: Fx, Fy, Fz**) và quỹ đạo tâm áp lực (**COP**) từ ma trận cảm biến áp lực giá rẻ **Velostat**, với khả năng **chống trôi dạt (drift-robust)** — để phát hiện sớm thay đổi động học dáng đi và theo dõi đáp ứng phục hồi ở người có nguy cơ/mắc **thoái hóa khớp gối (knee OA)**.
 
-> **Trạng thái bằng chứng:** đây là giai đoạn **định hướng + chuẩn bị hạ tầng**. Repository chưa có kết quả phần cứng/lâm sàng. Các ý tưởng về dP/dt, ST-GNN và "khoảng trống nghiên cứu" đang ở mức **giả thuyết** — phải được kiểm chứng trước khi ghi thành claim `SUPPORTED`. Xem `research/context/PROJECT_SNAPSHOT.md`.
+> **Trạng thái bằng chứng:** giai đoạn **định hướng + chuẩn bị hạ tầng**. Chưa có đo đạc phần cứng, chưa có chuẩn vàng, chưa có kết quả rà soát tài liệu. Mọi ý tưởng (dP/dt, ST-GNN, novelty) là **giả thuyết cần kiểm chứng**. Không tuyên bố chẩn đoán/điều trị. Xem `research/context/PROJECT_SNAPSHOT.md`.
 
-## Chuyển hướng chiến lược (2026-08-25)
+## Trọng tâm novelty
 
-Dự án đã **từ bỏ** ý tưởng "đệm khí thích ứng (adaptive air cushion) + AAC" do rủi ro cơ khí, cảm biến và kiểm chứng lâm sàng quá cao, chuyển sang đề tài Smart Insole. Chi tiết: [`docs/30_TOPIC_PIVOT_Smart_Insole.md`](docs/30_TOPIC_PIVOT_Smart_Insole.md). Toàn bộ tài liệu/hình vẽ CAD của đề tài cũ được giữ làm **kho lưu trữ lịch sử**, không hợp nhất vào kiến trúc mới.
+> ❌ "Velostat + GNN để dự đoán 3D-GRF" **chưa đủ mới** (literature 2025–2026 đã có).
+
+Trọng tâm thật sự là **longitudinal, drift-robust kinetic monitoring**: tách thay đổi sinh học thật khỏi drift cảm biến —
+
+```
+Δ(đo lường dọc) = Δ_biology + Δ_sensor + Δ_environment
+```
+
+Chi tiết: [`docs/01_Topic_Definition.md`](docs/01_Topic_Definition.md).
+
+## Tài liệu
+
+| Tài liệu | Nội dung |
+|---|---|
+| [`docs/01_Topic_Definition.md`](docs/01_Topic_Definition.md) | Đề tài, RQ 2 tầng, novelty, pipeline, killer experiment, lộ trình theo tầng |
+| [`docs/02_Theoretical_Foundation.md`](docs/02_Theoretical_Foundation.md) | **Cơ sở lí thuyết**: cơ sinh học, Velostat, drift, dP/dt, GNN, metrics, edge |
+| [`docs/03_Literature_Gap_Analysis_Plan.md`](docs/03_Literature_Gap_Analysis_Plan.md) | Kế hoạch rà soát khoảng trống 2025–2026 (10 nhóm chủ đề) |
+| [`research/protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md`](research/protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md) | Phản biện 5 ghế + 5 câu hỏi chí mạng |
+| [`research/protocols/ISEF_REVIEW_ORCHESTRATION.md`](research/protocols/ISEF_REVIEW_ORCHESTRATION.md) | Điều phối phản biện 6-lane + adjudication |
+| [`research/context/DECISION_LOG.md`](research/context/DECISION_LOG.md) | Nhật ký quyết định chính thức |
+| [`research/context/PROJECT_SNAPSHOT.md`](research/context/PROJECT_SNAPSHOT.md) | Snapshot ngữ cảnh hiện tại |
+| [`research/context/CONVERSATION_2026-08-25.md`](research/context/CONVERSATION_2026-08-25.md) | Bản nén hội thoại (đổi hướng + tinh chỉnh) |
 
 ## Thiết lập nhanh
 
-Yêu cầu: Git, Python 3.10+, và Bash.
+Yêu cầu: Git, Python 3.10+, Bash.
 
 ```bash
 python3 -m venv .venv
@@ -25,52 +46,26 @@ bash scripts/bootstrap_research_tooling.sh
 python scripts/check_research_environment.py
 ```
 
-MiKTeX (để render sơ đồ PlotNeuralNet/TikZ) không phải Git repo — cài **installer chính thức** trên máy làm việc (https://miktex.org/download). Trên Debian 12 có thể thử:
-
-```bash
-bash scripts/install_miktex_debian.sh
-```
-
-Clone source MiKTeX trong `.tools/sources/miktex` **không phải** MiKTeX runtime.
+MiKTeX (render sơ đồ PlotNeuralNet/TikZ) cần **installer chính thức** trên máy làm việc (https://miktex.org/download); trên Debian 12 có thể thử `bash scripts/install_miktex_debian.sh`. Clone source MiKTeX trong `.tools/sources/miktex` **không phải** MiKTeX runtime.
 
 ## Quy trình nghiên cứu có kiểm chứng
 
-- Tổng quan và lệnh: [`research/README.md`](research/README.md)
-- Snapshot ngữ cảnh: [`research/context/PROJECT_SNAPSHOT.md`](research/context/PROJECT_SNAPSHOT.md)
-- Nhật ký quyết định: [`research/context/DECISION_LOG.md`](research/context/DECISION_LOG.md)
-- Claim ledger: [`research/claims/CLAIM_LEDGER.csv`](research/claims/CLAIM_LEDGER.csv)
-- Chuyển hướng đề tài: [`docs/30_TOPIC_PIVOT_Smart_Insole.md`](docs/30_TOPIC_PIVOT_Smart_Insole.md)
-- Phản biện 5 ghế (Cơ sinh học, Nhúng, AI, Đạo đức, Devil's Advocate): [`research/protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md`](research/protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md)
-- Điều phối phản biện ISEF (6-lane + adjudication): [`research/protocols/ISEF_REVIEW_ORCHESTRATION.md`](research/protocols/ISEF_REVIEW_ORCHESTRATION.md)
-- Red-team đề tài mới: [`research/reviews/2026-08-25_smart_insole_redteam.md`](research/reviews/2026-08-25_smart_insole_redteam.md)
-- Bản nén hội thoại đổi hướng: [`research/context/CONVERSATION_2026-08-25.md`](research/context/CONVERSATION_2026-08-25.md)
+Mọi agent tuân thủ [`AGENTS.md`](AGENTS.md). Quy trình mỗi phiên: đọc snapshot → log truy vấn (`scripts/research_log.py`, `scripts/tinyfish_search.py`) → cập nhật claim/source ledger → chạy review protocol khi có thay đổi lớn → cập nhật snapshot → `python scripts/build_context_bundle.py`.
 
-Mọi agent phải tuân thủ [`AGENTS.md`](AGENTS.md): phân biệt dữ liệu synthetic với đo đạc thực, không tự nâng cấp độ bằng chứng, và yêu cầu IRB/SRC trước thử nghiệm có người tham gia.
+**Bước tiếp theo bắt buộc (trước khi build hardware):** literature gap analysis 2025–2026 theo `docs/03`.
 
-## Chạy smoke experiments
+## Lưu ý đổi tên repo
+
+Đã **chuẩn bị đổi tên** `nhatvanngoc/adaptive_cushion_aac` → `nhatvanngoc/smart-insole-edge-ai`, nhưng token GitHub của phiên agent **không có quyền Administration** (HTTP 403) nên chưa thực hiện được. Chủ dự án tự đổi:
 
 ```bash
-. .venv/bin/activate
-for f in experiments/exp0*.py; do PYTHONPATH=. python "$f"; done
-```
-
-Các script trên là smoke/reference experiments; kết quả mặc định là **synthetic**, không phải clinical/hardware validation.
-
-## Lưu ý về đổi tên repo
-
-Đã **chuẩn bị đổi tên** repo `nhatvanngoc/adaptive_cushion_aac` → `nhatvanngoc/smart-insole-edge-ai` (2026-08-25), nhưng token GitHub của phiên agent **không có quyền Administration** nên chưa thực hiện được. Chủ dự án tự đổi tên bằng một trong hai cách:
-
-```bash
-# Cách 1: dùng gh với tài khoản có quyền admin trên repo
 gh repo rename smart-insole-edge-ai --repo nhatvanngoc/adaptive_cushion_aac --yes
 ```
 
-Cách 2: GitHub web → repo → **Settings** → mục **Repository name** → đổi thành `smart-insole-edge-ai` → Rename.
-
-Sau khi đổi tên, cập nhật remote cục bộ (nếu cần):
+hoặc GitHub web → **Settings → Repository name**. Sau đó (nếu cần):
 
 ```bash
 git remote set-url origin https://github.com/nhatvanngoc/smart-insole-edge-ai.git
 ```
 
-Branch làm việc của phiên giữ nguyên tên `arena/01a0372f-adaptive-cushion-aac` do ràng buộc nền tảng.
+Branch làm việc của phiên giữ nguyên `arena/01a0372f-adaptive-cushion-aac` (ràng buộc nền tảng).

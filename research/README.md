@@ -1,6 +1,6 @@
 # Research workspace
 
-Thư mục này giữ ngữ cảnh dài hạn, provenance truy vấn, claim/evidence ledger và quy trình phản biện. Mục tiêu là làm cho mỗi lần tiếp tục dự án có thể phục hồi trạng thái bằng artifact thay vì dựa vào trí nhớ hội thoại.
+Thư mục này giữ ngữ cảnh dài hạn, provenance truy vấn, claim/evidence ledger và quy trình phản biện. Mục tiêu: mỗi lần tiếp tục dự án có thể phục hồi trạng thái bằng artifact thay vì dựa vào trí nhớ hội thoại.
 
 ## Cấu trúc
 
@@ -9,22 +9,21 @@ research/
 ├── claims/CLAIM_LEDGER.csv                 # claim, cấp bằng chứng, trạng thái, hành động
 ├── context/PROJECT_SNAPSHOT.md             # bản nén ngữ cảnh do người/agent kiểm tra
 ├── context/DECISION_LOG.md                  # quyết định có ngày, chủ sở hữu, trạng thái
+├── context/CONVERSATION_2026-08-25.md      # bản nén hội thoại (đổi hướng + tinh chỉnh)
 ├── evidence/SOURCE_LEDGER.csv               # nguồn thật/candidate và trạng thái verification
-├── protocols/ISEF_REVIEW_ORCHESTRATION.md  # vai trò phản biện + quality gates
+├── protocols/ISEF_REVIEW_ORCHESTRATION.md  # vai trò phản biện 6-lane + quality gates
 ├── protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md # phản biện 5 ghế cho đề tài Smart Insole
 ├── prompts/REVIEWER_DISPATCH_TEMPLATE.md    # prompt dispatch role độc lập/adjudicator
 ├── queries/QUERY_LOG.jsonl                  # log truy vấn audit được
-├── reviews/2026-08-16_baseline_intake.md   # rà soát sơ bộ tài liệu đầu vào (đề tài cũ)
-├── reviews/2026-08-25_smart_insole_redteam.md # red-team phản biện đầu tiên cho đề tài mới
-├── context/CONVERSATION_2026-08-25.md       # bản nén hội thoại đổi hướng đề tài
-└── tooling/{SETUP_STATUS,SMOKE_TESTS}.md     # trạng thái runtime và kiểm thử
+├── reviews/2026-08-25_smart_insole_redteam.md # red-team phản biện đầu tiên
+└── tooling/SETUP_STATUS.md                   # trạng thái runtime và tooling
 ```
 
 Các đường dẫn `research/cache/`, `downloads/`, `generated/`, và `queries/private/` bị Git ignore. Không lưu API key, dữ liệu định danh người tham gia, consent form đã ký, hay raw health data vào Git.
 
 ## Quy trình mỗi phiên
 
-1. Đọc `context/PROJECT_SNAPSHOT.md`, các decision còn mở và claim `BLOCKED/CONFLICTED`.
+1. Đọc `context/PROJECT_SNAPSHOT.md`, các decision còn mở và claim `BLOCKED/CONFLICTED/UNVERIFIED`.
 2. Log truy vấn trước hoặc ngay sau khi tìm kiếm:
 
    ```bash
@@ -54,8 +53,9 @@ Các đường dẫn `research/cache/`, `downloads/`, `generated/`, và `queries
 
 - “Không tìm thấy trong một truy vấn” chỉ cho phép gắn `UNVERIFIED`, không chứng minh nguồn không tồn tại.
 - Kết quả synthetic luôn kèm nhãn synthetic/simulation.
-- Mọi con số y khoa, hiệu suất, latency, accuracy, cost và novelty phải có source/evidence ID.
-- `32 mmHg` không phải universal cutoff (thuộc đề tài đệm khí cũ — nay là archive).
-- Với đề tài Smart Insole: dP/dt chỉ **giảm** drift offset, không "triệt tiêu"; mọi giá trị GRF/COP là kết quả hiệu chuẩn so với chuẩn vàng, không phải hằng số vật liệu.
+- Mọi con số hiệu suất, latency, accuracy, cost và novelty phải có source/evidence ID.
+- Giá trị chuẩn giáo trình (GRF, phần trăm pha dáng đi…) phải đối chiếu chương/trang gốc trước khi trích dẫn trong bài nộp.
+- Với đề tài Smart Insole: dP/dt chỉ **giảm** drift offset, không "triệt tiêu"; mọi giá trị GRF/COP là kết quả hiệu chuẩn so với chuẩn vàng (force plate/load cell), không phải hằng số vật liệu.
+- Không tuyên bố chẩn đoán/điều trị OA; không "GRF ⇒ OA".
 - Không thử nghiệm người tham gia trước IRB/SRC pre-approval hợp lệ.
 - Không gọi review nội tuyến hoặc nhiều vai trò trong cùng context là “independent multi-agent review”.

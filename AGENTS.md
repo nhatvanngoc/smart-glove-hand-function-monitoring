@@ -16,19 +16,23 @@ Never promote a lower level to a higher one. In particular:
 
 - label every synthetic result as **simulation/synthetic**, never as hardware or clinical validation;
 - do not state that the prototype was fabricated, clinically effective, real-time, drift-free, or competition-ready without the corresponding evidence artifact;
-- Velostat resistance/ADC values must not be converted to trustworthy force/pressure (Fz, Fx, Fy, COP) until per-sensor calibration, hysteresis, creep, drift, temperature, and loading geometry have been evaluated against a gold-standard reference;
-- **dP/dt mitigates slow offset drift; it does not eliminate drift.** Do not use "loại bỏ/triệt tiêu drift" language unless a quantified, reference-checked residual-drift bound exists.
+- Velostat resistance/ADC values must not be converted to trustworthy force (Fz, Fx, Fy, COP) until per-sensor calibration, hysteresis, creep, drift, temperature, and loading geometry have been evaluated against a gold-standard reference (force plate / multi-axis load cell);
+- **dP/dt mitigates slow offset drift; it does not eliminate drift** (gain drift, hysteresis and creep remain). Use "giảm (attenuate) drift" with a quantified residual-drift bound, never "triệt tiêu/loại bỏ drift".
 
-## 2. Topic pivot is locked; new baseline is still open
+## 2. Topic is locked; validation baseline is still open
 
-On 2026-08-25 the owner abandoned the "adaptive air cushion + AAC" direction and redirected the project to the Smart Insole (3D-GRF & COP) — see `docs/30_TOPIC_PIVOT_Smart_Insole.md` and `research/context/DECISION_LOG.md` (DEC-TOPIC-001). The old air-cushion/AAC/eye-tracking artifacts are a **historical archive only**; do not merge them into the new architecture.
+The topic is fixed by owner directive (2026-08-25, parts 1–2):
+
+- Smart Insole Edge-AI for continuous **3D-GRF & COP** estimation with **drift robustness**, for longitudinal gait-change detection and rehabilitation-response monitoring in knee-OA risk/population.
+- Novelty must center on **longitudinal, drift-robust kinetic monitoring** (separating Δ_biology from Δ_sensor/Δ_environment) — **not** plain GRF regression ("Velostat + GNN → 3D-GRF" is insufficient).
+- All old air-cushion/AAC artifacts were deleted by DEC-TOPIC-003; they exist only in git history. Do not resurrect them.
 
 Still open (owner decision required before treating as locked):
 
-- sensor cell count / electrode layout in the insole and the ADC/multiplexing strategy (Arduino Mega has 16 analog inputs);
 - the **gold-standard reference** for Fx, Fy, Fz, COP (force plate / multi-axis load cell) — currently a hard blocker for validation;
+- sensor cell count / electrode layout and ADC/multiplexing strategy (Arduino Mega has 16 analog inputs);
 - whether ST-GNN is adopted **only after** simpler baselines (linear, CNN, LSTM) are run on the same split;
-- the final novelty scope, pending a systematic, logged literature review.
+- the final novelty scope, pending the 2025–2026 literature gap analysis (`docs/03`).
 
 ## 3. Claim and citation discipline
 
@@ -36,11 +40,14 @@ Still open (owner decision required before treating as locked):
 - A citation is not verified merely because a title appears plausible. Verify title, authors, venue, year, identifier/URL, and that the cited passage supports the exact claim.
 - Exact-title search misses mean **unverified**, not necessarily nonexistent. Record search provenance in `research/queries/QUERY_LOG.jsonl`.
 - Preserve uncertainty and conflicting evidence. Never invent a DOI, page number, sample size, result, quotation, or source.
+- Textbook/standard values (e.g., typical GRF magnitudes, gait-phase percentages) must be checked against the original chapter/page before being cited in a submission. Until then they are "standard reference — to verify", not established results.
 - Keep searches auditable with `scripts/research_log.py`; never log secrets or private participant data in tracked files.
 
 ## 4. ISEF and human-participant safety
 
-No recruitment, interaction, prototype testing, or data collection involving other human participants may begin until the applicable ISEF/affiliated-fair IRB/SRC pre-approval and consent process is complete. A mentor signature alone is not an IRB. Frame the device as a **biomechanics measurement prototype**, never a medical/diagnostic device, unless a qualified review says otherwise. Use mannequin/bench testing while approval is unresolved.
+- No recruitment, interaction, prototype testing, or data collection involving other human participants may begin until the applicable ISEF/affiliated-fair IRB/SRC pre-approval and consent process is complete. A mentor signature alone is not an IRB.
+- Frame the device as a **biomechanics measurement prototype**; prohibited claims: diagnosis of OA, treatment, replacing a physician, replacing X-ray/MRI/force plate, or any "GRF ⇒ OA" implication.
+- Prefer **staged** research (healthy/phantom → force-plate validation → gait patterns → knee-OA cohort only with ethics + partners). Use mannequin/bench testing while approval is unresolved.
 
 ## 5. Independent review
 
