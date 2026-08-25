@@ -64,10 +64,10 @@ Repository hiện ở giai đoạn **định hướng + chuẩn bị hạ tầng
 
 ## Immediate next actions
 
-1. Complete the **prior-art kill test** by verifying candidates C21–C30 and chasing their cited primary sources; update the matrix conservatively.
+1. ~~Complete the **prior-art kill test** for C21–C30~~ — **DONE 2026-08-26**: all C21–C29 identity-verified and read; C30 mapped; adversarial searches run. No kill paper found; no GAP CONFIRMED (bounded screen). Novelty framing narrowed per `CLM-NOV-003` (the "integrity → suppress false alerts" and abstention/coverage ideas are established in industrial SHM and ML; claim only the plantar perturbation-injection + longitudinal-false-alert + coverage combination). Gate 1 stays **OPEN**.
 2. Lock **force plate/load cell** access, axes, timing/synchronization and reference-load rig before kinetic/COP claims.
 3. Execute only the Phase-A **bench metrology** protocol first; evaluate perturbation viability before model development.
-4. Continue remaining literature groups (#1, #3, #6, #8, #9, #10) only insofar as they can kill/refine the locked hypothesis.
+4. Continue remaining literature groups (#1, #3, #6, #8, #9, #10) only insofar as they can kill/refine the locked hypothesis; a residual targeted adversarial re-search is still owed before any novelty claim is upgraded to SUPPORTED.
 3. Đặc trưng Velostat (drift/hysteresis/creep theo nhiệt/tải/thời gian) trên bench.
 4. Baseline tuyến tính/CNN/LSTM trước ST-GNN; leave-one-subject/session-out.
 5. Benchmark NPU INT8 (latency/throughput/công suất).
