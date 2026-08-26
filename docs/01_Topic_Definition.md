@@ -1,232 +1,65 @@
-# 01 — Định nghĩa đề tài (tinh chỉnh lần 2)
+# 01 — Định nghĩa đề tài (Hướng C — chốt cho ViSEF)
 
-> **Ngày cập nhật:** 2026-08-25 (chỉ thị chủ dự án, phần 2)
+> **Ngày cập nhật:** 2026-08-26
 > **Học sinh:** Văn Ngọc Nhật Anh — THPT Quảng Trị
-> **Nguồn gốc quyết định:** `research/context/CONVERSATION_2026-08-25.md` (phần 2) + `research/context/DECISION_LOG.md`.
-> **Trạng thái bằng chứng:** tài liệu **định hướng**. Mọi tuyên bố novelty, hiệu năng, độ chính xác đang ở mức **giả thuyết** cho đến khi có kiểm chứng. Không có gì ở đây là kết quả đã đo.
+> **Nguồn gốc quyết định:** `research/context/DECISION_LOG.md` (DEC-TOPIC-017) + `research/reviews/00_EXPLORATION_SUMMARY.md`.
+> **Trạng thái bằng chứng:** tài liệu **định hướng**. Mọi tuyên bố novelty/hiệu năng/độ chính xác là **giả thuyết** cho đến khi qua GATE experiment. Chưa có gì là kết quả đã đo.
 
 ---
 
 ## 1. Tên đề tài
 
-**Tiếng Việt:** Hệ thống lót giày Edge-AI ước lượng liên tục lực phản lực mặt đất 3 chiều (3D-GRF) và quỹ đạo tâm áp lực (COP) có khả năng chống trôi dạt, để phát hiện sớm sự thay đổi động học dáng đi và theo dõi đáp ứng phục hồi ở người có nguy cơ hoặc mắc thoái hóa khớp gối (knee OA).
+**Tiếng Việt:** Lót giày cảm biến áp lực Velostat giá rẻ **tự kiểm tra độ tin cậy** và **theo dõi độ cứng mô khu trú** ở gan chân, hỗ trợ **sàng lọc sớm nguy cơ loét bàn chân đái tháo đường** tại nhà.
 
-**Tiếng Anh:** Drift-robust wearable plantar sensing with Edge-AI for continuous 3D-GRF and COP estimation, toward longitudinal gait-change detection and rehabilitation-response monitoring in knee osteoarthritis.
+**Tiếng Anh:** A low-cost Velostat pressure-insole that **self-validates its own reliability** and **tracks localized plantar tissue stiffness**, toward **early home screening of diabetic-foot-ulcer (DFU) risk**.
 
-**Pitch 1 câu (nói với giáo viên):**
-> "Em không làm một chiếc lót giày chỉ để đo lực. Em muốn giải quyết **drift của cảm biến áp lực** để biến smart insole thành hệ thống đo động học **liên tục và ổn định theo thời gian**, từ đó theo dõi thay đổi thật của dáng đi qua nhiều ngày và hỗ trợ phát hiện sớm suy giảm chức năng cũng như đánh giá hiệu quả phục hồi ở người có nguy cơ thoái hóa khớp gối."
-
----
-
-## 2. Mục tiêu ba tầng + tuyên bố bị cấm
-
-| Tầng | Mục tiêu |
-|---|---|
-| **Khoa học** | Continuous **drift-robust** 3D kinetic estimation from wearable plantar sensing. |
-| **Ứng dụng** | Longitudinal detection of abnormal gait changes. |
-| **Y sinh** | Hỗ trợ theo dõi thay đổi chức năng vận động và đáp ứng phục hồi ở người có nguy cơ/mắc knee OA. |
-
-**Tuyên bố bị cấm (sẽ làm mất điểm + sai khoa học):**
-- ❌ chẩn đoán OA; ❌ điều trị OA; ❌ thay thế bác sĩ; ❌ thay thế X-ray/MRI/force plate; ❌ "GRF ⇒ OA".
-- ❌ "triệt tiêu drift" — chỉ được nói "giảm drift" kèm biên định lượng.
+**Pitch 1 câu (nói với giám khảo ViSEF):**
+> "Người đái tháo đường hay bị loét bàn chân rồi phải cắt cụt, mà mô đệm dưới gan chân **xơ cứng dần trước khi loét xuất hiện**. Em làm một tấm lót giày bằng **Velostat rẻ tiền** vừa **tự phát hiện khi nào cảm biến bị trôi/lão hóa để không báo sai**, vừa **đo độ cứng mô khu trú bằng đáp ứng áp lực động**, giúp **sàng lọc sớm nguy cơ ngay tại nhà** — thay vì phải đến bệnh viện đo bằng máy đàn hồi đắt tiền."
 
 ---
 
-## 3. Vì sao đề tài xuất hiện (tóm tắt lịch sử)
+## 2. Vấn đề (problem-first)
 
-Đã thử nhiều hướng (phantom hồi sức sơ sinh, cầm máu cấp cứu, AAC, hỗ trợ nuôi ăn, tactile sensing, orthosis, rehabilitation, smart phantom…). Vấn đề chung: **human impact tốt nhưng novelty yếu**, hoặc **clinical proxy khó / IRB khó / mechanical complexity / prior art quá đông / khó chứng minh "tốt hơn cái đang có"**.
+- Loét bàn chân đái tháo đường (DFU) là biến chứng nặng, thường dẫn đến **đoạn chi**; chi phí điều trị rất lớn.
+- **Trước khi loét xuất hiện**, mô đệm gan chân **tăng độ cứng** (do glycation/xơ hóa). **Độ cứng mô là biomarker nguy cơ DFU đã được y văn xác nhận** (không cần chứng minh lại).
+- Hiện đo độ cứng mô bằng **ultrasound elastography / MyotonPRO / IndentoPRO / TCM**: **đắt, cồng kềnh, chỉ ở phòng khám, đo một điểm** → không theo dõi tại nhà được.
 
-Sau khi reverse-engineer các dự án ISEF/ViSEF, nguyên tắc thống nhất là **không bắt đầu từ "người yếu thế cần gì?"** mà từ:
+## 3. Khoảng trống & ý tưởng
 
-> **Bottleneck khó → biến ẩn khó đo → phương pháp mới → benchmark định lượng → impact.**
+- **Khoảng trống:** chưa có công cụ **rẻ, dạng mảng, tại nhà** để theo dõi độ cứng mô gan chân theo thời gian.
+- **Ý tưởng:** dùng **Velostat** (rẻ, mềm, làm được dạng mảng) áp vào gan chân, **nén lặp (áp lực động)**; mô cứng hơn → đáp ứng lực–biến dạng/vòng trễ khác → suy ra **độ cứng khu trú**.
+- **Hai trụ hỗ trợ (làm đề tài vững, KHÔNG claim là mới):**
+  - **Self-validation:** thêm ô tham chiếu/đo trên nền cứng để phát hiện drift/lão hóa cảm biến → **báo lỗi thay vì báo sai**.
+  - **Longitudinal:** so sánh theo ngày/tuần; mảng Velostat rẻ cho phép đo liên tục tại nhà.
 
----
+## 4. Điểm mới (nói trung thực — theo đúng mức ViSEF)
 
-## 4. Insight quan trọng nhất (novelty)
-
-> ❌ **"Velostat + GNN để dự đoán 3D-GRF" chưa đủ mới.** Literature 2025–2026 đã có: smart insole + ML ước lượng 3D-GRF; pressure insole + IMU + ML; spatiotemporal GCN cho continuous 3D-GRF; GRF liên quan knee OA. Nếu chỉ làm vậy, dự án có nguy cơ rơi về ~70–80 điểm.
-
-Trọng tâm khoa học thật sự là:
-
-> **Longitudinal, drift-robust kinetic monitoring** — theo dõi liên tục sự thay đổi động học dáng đi của **một cá nhân trong thời gian dài**, đồng thời **phân biệt thay đổi sinh học thật với drift của cảm biến và biến thiên giữa các ngày**.
-
-Tức là tách:
-```
-ΔCOP = Δ_biology + Δ_sensor + Δ_environment
-```
-và tìm cách cô lập **Δ_biology** khỏi **Δ_sensor**.
-
----
-
-## 5. Mục tiêu tối thượng
-
-Không phải "đo GRF" (GRF chỉ là **phương tiện**). Mục tiêu là:
-
-> Biến phép đo động học vốn phải làm trong phòng lab bằng force plate thành **phép đo wearable liên tục**, đủ **ổn định theo thời gian** để phát hiện thay đổi thật trong dáng đi của từng cá nhân — *"mang phòng lab đi cùng người bệnh"*.
-
-| Trước (phòng lab) | Sau (đề xuất) |
-|---|---|
-| Người bệnh → phòng lab → force plate → vài bước → 1 phép đo | Smart insole → GRF+COP → **hàng nghìn bước** → **nhiều ngày/tuần** → gait trajectory theo thời gian |
-
----
-
-## 6. Liên hệ knee OA (và giới hạn suy luận)
-
-Knee OA không chỉ là hình ảnh cấu trúc khớp; còn liên quan đến cách chịu tải, phân bố lực, braking/propulsion, bất đối xứng hai chân, biến đổi COP, thay đổi gait mechanics. Chuỗi hợp lệ:
-
-```
-Gait → GRF/COP → Knee loading pattern
-```
-
-Nhưng **không** được claim `GRF ⇒ OA` hay "hệ thống chẩn đoán thoái hóa khớp" — claim quá mạnh. Mối liên hệ với tải khớp gối (vd qua Knee Adduction Moment — KAM) là **gián tiếp**; xem `docs/02_Theoretical_Foundation.md` mục 2.4.
-
----
-
-## 7. Câu hỏi nghiên cứu (2 tầng)
-
-**RQ1 (lõi — novelty nằm ở đây):**
-> Liệu một hệ thống lót giày dựa trên cảm nhận áp lực có thể duy trì ước lượng 3D-GRF/COP **đủ ổn định qua nhiều phiên sử dụng** để phân biệt **sự thay đổi động học thực sự của dáng đi** với **drift cảm biến** và **biến thiên thông thường** hay không?
-
-**RQ2 (ứng dụng):**
-> Liệu các thay đổi động học được phát hiện có thể được dùng để theo dõi sự **suy giảm hoặc cải thiện** chức năng vận động liên quan đến knee OA hay không?
-
----
-
-## 8. DNA của đề tài
-
-```
-Wearable pressure sensing
-        ↓
-3D-GRF + COP
-        ↓
-Drift-aware estimation
-        ↓
-Personal baseline
-        ↓
-Longitudinal kinetic change
-        ↓
-Early functional warning
-        ↓
-Rehabilitation monitoring
-```
-
----
-
-## 9. Pipeline dự kiến
-
-```
-        SMART INSOLE
-             │  Velostat pressure
-             ▼
-       ADC / Arduino (thu thập, quét, sampling, preprocessing)
-             ▼
-   Spatial pressure map P(x,y,t)
-             ▼
- Spatio-temporal graph
-             ▼
-       Edge-AI / GNN (INT8, RK3588)
-      ┌──────┴──────┐
-      ▼             ▼
-   3D-GRF          COP
-      │             │
-      └──────┬──────┘
-             ▼
-    Drift correction
-             ▼
-   Personal baseline
-             ▼
- Longitudinal deviation
-             ▼
-   Gait change detection
-             ▼
- Rehabilitation monitoring
-```
-
----
-
-## 10. Killer experiment (cốt lõi novelty — phải làm được để đứng vững)
-
-Không chỉ báo "RMSE 5%". Phải chứng minh được:
-
-| Điều kiện | Kết quả kỳ vọng |
-|---|---|
-| **Không** drift correction | error ↑ theo số phiên |
-| **Có** drift correction | error ≈ hằng số |
-| Quan trọng hơn | **False Change Detection ↓** |
-
-**Giả thuyết:** sau ~30 ngày sử dụng, phương pháp đề xuất giảm sai lệch liên-phiên và giảm false gait-change detection đáng kể so với calibration thông thường.
-
----
-
-## 11. Các ứng viên novelty (A–E) và lựa chọn
-
-| ID | Hướng | Ghi chú |
+| Thành phần | Mức mới | Ghi chú |
 |---|---|---|
-| A | Drift-resistant estimation | giữ accuracy sau nhiều session |
-| B | Cross-session generalization | train ngày 1 vẫn đúng ngày 30 |
-| C | Personal baseline | không retrain toàn bộ khi đổi người |
-| D | Longitudinal change detection | phát hiện thay đổi nhỏ trước ngưỡng rõ ràng |
-| E | Biology-vs-sensor change separation | tách "người đổi" khỏi "sensor đổi" |
+| **(1) Dynamic-pressure stiffness proxy** (dùng đáp ứng áp lực **động** để suy độ cứng mô / phát hiện callus) | **Điểm mới chính (vật lý)** | Đây là thứ duy nhất chưa bị chiếm; **GATE experiment phải xác nhận khả thi** |
+| (2) Self-validation bằng ô tham chiếu | **KHÔNG mới** | Đã là patent/prior art (personalized-baseline, reference-cell drift). Chỉ là execution tốt |
+| (3) Longitudinal tại nhà | **KHÔNG mới** | Đã có (gait/health longitudinal monitoring). Là giá trị ứng dụng, không phải novelty |
+| Mảng Velostat đo áp lực thuần | **KHÔNG mới** | Đã có nhiều |
 
-**Lựa chọn chiến lược:** **E + D** là hướng hấp dẫn nhất (theo chủ dự án). Novelty phải được xác lập bằng **literature gap analysis 2025–2026** trước khi claim — xem `docs/03`.
+> **Tuyên bố novelty (hẹp, trung thực):** *"Mảng lót giày Velostat tự đánh giá độ tin cậy và giám sát thay đổi cơ học khu trú tại gan chân"* — novelty nằm ở **góc vật lý (1)**; các phần còn lại là **cách kết hợp ở mức thực tiễn** cho ứng dụng DFU. **Đây là mức novelty phù hợp ViSEF** (chấm Creativity 20 + Execution + Presentation), **không** phải "phát minh thế giới".
 
----
+## 5. Tuyên bố bị cấm (mất điểm + sai khoa học)
 
-## 12. Phần cứng tái sử dụng & vai trò
+- ❌ Chẩn đoán / điều trị / tiên lượng loét; ❌ thay thế bác sĩ, thay thế elastography/lâm sàng.
+- ❌ "Velostat đo chính xác độ cứng tuyệt đối" — chỉ **sàng lọc/theo dõi nguy cơ**, và **phải qua GATE**.
+- ❌ Claim (2)/(3) là "mới" (đã có prior art).
+- ❌ Thử trên bệnh nhân khi chưa có IRB/SRC — giai đoạn đầu **chỉ bench/phantom**.
 
-| Thành phần | Vai trò dự kiến | Trạng thái kiểm chứng |
-|---|---|---|
-| **Velostat** | ma trận cảm nhận áp lực | cần đặc trưng drift/hysteresis/creep (chưa đo) |
-| **Arduino Mega** | acquisition, quét, sampling, preprocessing | 16 ngõ analog — nếu >16 ô phải multiplex (đánh đổi tần số) |
-| **Orange Pi 5 Pro / RK3588** | signal processing, GNN inference, INT8 quantization, real-time edge, logging | NPU ~6 TOPS là **spec**, chưa benchmark |
+## 6. Phạm vi & kiểm chứng
 
----
+- **Giai đoạn 1 (bench, không cần người):** GATE experiment — xem Velostat có phân biệt được độ cứng phantom **vượt trên drift của chính nó** không (`research/protocols/05_velostat_stiffness_GATE_experiment.md`).
+- **Giai đoạn 2 (healthy volunteers):** "mô phỏng bệnh" bằng đế/phantom độ cứng khác nhau; chứng minh phân biệt được "thay đổi mô giả" khỏi "drift thật".
+- **Giai đoạn 3 (tùy chọn, cần partner + IRB):** pilot 3–5 bệnh nhân, **chỉ feasibility**, không claim giá trị lâm sàng.
 
-## 13. Đối tượng & lộ trình nghiên cứu theo tầng (giảm rủi ro IRB)
+## 7. Phần cứng
 
-| Giai đoạn | Đối tượng | Mục tiêu |
-|---|---|---|
-| 1 | Healthy participants / phantom / controlled loading | đặc trưng cảm biến + dữ liệu |
-| 2 | Validation với force plate | sai số 3D-GRF/COP |
-| 3 | Nghiên cứu gait patterns | biến thiên liên-phiên |
-| 4 | (nếu đủ điều kiện đạo đức & đối tác) người có knee OA | theo dõi dọc |
+- **Velostat** (cảm biến áp lực, dạng mảng) + **Arduino Mega** (đọc ADC nhiều kênh) + **Orange Pi 5 Pro** (Edge-AI, xử lý/self-validation). Chi tiết bring-up: `research/protocols/04_orangepi5pro_mega2560_bringup_tests.md`.
 
-> Không nhất thiết tuyển bệnh nhân ngay từ đầu — điều này giảm đáng kể rủi ro IRB.
+## 8. Lịch sử (rút gọn)
 
----
-
-## 14. Điểm mạnh / điểm yếu
-
-**Mạnh:** (1) ground truth tốt (force plate → validation định lượng); (2) Embedded Systems rất tự nhiên (sensor → acquisition → signal processing → edge inference → real-time); (3) ML thật (dữ liệu P(x,y,t) phù hợp graph/spatiotemporal); (4) có biomechanics thật; (5) human impact (rehab + knee OA); (6) mở rộng được (stroke, Parkinson, gait asymmetry, sports, fall-risk).
-
-**Yếu (phải nhớ):** novelty **chưa đủ** nếu chỉ là "Velostat → GNN → 3D-GRF → OA".
-
----
-
-## 15. Điểm dự kiến (đánh giá chiến lược — KHÔNG phải điểm thật của ban giám khảo)
-
-| Đề tài | Tốt | Ceiling nếu làm cực tốt |
-|---|---|---|
-| Smart insole 3D-GRF/COP + drift robustness | 78–82 | 90–93+ |
-| (các đề tài cũ đã cân nhắc) | 58–80 | 80–89 |
-
-> Đây là đánh giá chiến lược novelty+validation+impact+feasibility, để định hướng ưu tiên — không trích dẫn làm kết quả.
-
----
-
-## 16. Bước tiếp theo (bắt buộc)
-
-**Đừng vội build hardware.** Việc kế tiếp là **literature gap analysis 2025–2026** quanh các chủ đề:
-
-Velostat + plantar pressure · 3D-GRF estimation · COP estimation · sensor drift/hysteresis · cross-session generalization · personal calibration · longitudinal gait monitoring · knee OA biomechanics · GNN/ST-GCN cho gait · Edge/INT8 deployment.
-
-Mục tiêu: tìm một **khoảng trống đủ sâu** để biến "smart insole" thành nghiên cứu khoa học, không phải sản phẩm IoT/AI. Quy trình & ma trận theo dõi: `docs/03_Literature_Gap_Analysis_Plan.md`.
-
----
-
-## 17. Tài liệu liên quan
-
-- `docs/02_Theoretical_Foundation.md` — cơ sở lí thuyết (cơ sinh học, cảm biến, drift, GNN, metrics, edge).
-- `docs/03_Literature_Gap_Analysis_Plan.md` — kế hoạch rà soát gap.
-- `research/protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md` — phản biện 5 ghế (đã cập nhật killer experiment).
-- `research/context/DECISION_LOG.md` — quyết định chính thức.
+Đề tài đã qua nhiều vòng săn novelty (đo 3D-GRF/COP + knee OA; measurement-integrity cho gait; assistive control; transfer learning…). Hầu hết **bị prior art loại**. Hướng C là hướng **sống sót** vì neo vào **góc vật lý** (độ cứng mô) thay vì ML-method. Toàn bộ lịch sử kill-test: `research/reviews/00_EXPLORATION_SUMMARY.md`.

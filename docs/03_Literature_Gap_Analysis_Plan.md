@@ -1,5 +1,8 @@
 # 03 — Kế hoạch phân tích khoảng trống nghiên cứu (2025–2026)
 
+> ⚠️ **LƯU Ý (2026-08-26):** Tài liệu này viết cho đề tài CŨ (3D-GRF/COP + knee OA). Đề tài hiện tại là **Hướng C** (Velostat theo dõi độ cứng mô gan chân / sàng lọc DFU) — xem `docs/01_Topic_Definition.md`. Nội dung dưới đây giữ làm **tham khảo nền**, sẽ viết lại khi cần.
+
+
 > **Ngày:** 2026-08-25 · **Trạng thái:** KẾ HOẠCH — **chưa có kết quả rà soát**. Đây là quy trình phải chạy **trước khi build hardware** và **trước khi claim bất kỳ novelty nào**.
 > **Nguyên tắc chống ảo giác:** "không tìm thấy trong một truy vấn" chỉ cho phép ghi `UNVERIFIED`, **không** chứng minh "chưa có ai làm". Mọi nguồn vào `research/evidence/SOURCE_LEDGER.csv` chỉ sau khi xác minh tiêu đề/tác giả/venue/năm/DOI/URL và đoạn văn hỗ trợ đúng claim.
 

@@ -1,5 +1,8 @@
 # 02 — Cơ sở lí thuyết (Theoretical Foundation)
 
+> ⚠️ **LƯU Ý (2026-08-26):** Tài liệu này viết cho đề tài CŨ (3D-GRF/COP + knee OA). Đề tài hiện tại là **Hướng C** (Velostat theo dõi độ cứng mô gan chân / sàng lọc DFU) — xem `docs/01_Topic_Definition.md`. Nội dung dưới đây giữ làm **tham khảo nền**, sẽ viết lại khi cần.
+
+
 > **Ngày:** 2026-08-25 · **Đề tài:** Smart Insole Edge-AI (3D-GRF & COP, drift-robust, knee-OA rehab monitoring).
 > **Quy ước bằng chứng (đọc trước khi dùng):**
 > - 🟢 **CHUẨN (standard):** kiến thức cơ bản đã được thiết lập rộng rãi trong giáo trình cơ sinh học/kỹ thuật. **Vẫn phải đối chiếu với tài liệu gốc (trang/chương) trước khi trích dẫn chính thức** trong bài nộp — không được ghi DOI/trang nếu chưa kiểm chứng.
