@@ -1,8 +1,8 @@
 # 📑 INDEX — Sơ đồ file của dự án
 
-> **Dự án:** Smart Insole Edge-AI — Drift-Robust 3D-GRF & COP Monitoring (theo dõi dọc dáng đi, knee OA)
+> **Dự án:** Smart Insole Edge-AI — Velostat tự kiểm tra & theo dõi độ cứng mô gan chân (sàng lọc sớm nguy cơ loét bàn chân đái tháo đường)
 > **Học sinh:** Văn Ngọc Nhật Anh — THPT Quảng Trị
-> **Cập nhật:** 2026-08-25 (tinh chỉnh đề tài + xóa toàn bộ file đề tài cũ)
+> **Cập nhật:** 2026-08-26 (chốt Hướng C cho ViSEF; ~16 báo cáo kill-test chuyển vào `research/reviews/archive/`)
 
 ---
 

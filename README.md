@@ -1,20 +1,20 @@
-# Smart Insole Edge-AI — Drift-Robust 3D-GRF & COP Monitoring
+# Smart Insole Edge-AI — Velostat tự kiểm tra & theo dõi độ cứng mô gan chân (sàng lọc DFU)
 
-Hệ thống **lót giày thông minh (Smart Insole)** dùng **Edge-AI** ước lượng **liên tục** lực phản lực mặt đất 3 chiều (**3D-GRF: Fx, Fy, Fz**) và quỹ đạo tâm áp lực (**COP**) từ ma trận cảm biến áp lực giá rẻ **Velostat**, với khả năng **chống trôi dạt (drift-robust)** — để phát hiện sớm thay đổi động học dáng đi và theo dõi đáp ứng phục hồi ở người có nguy cơ/mắc **thoái hóa khớp gối (knee OA)**.
+**Lót giày cảm biến áp lực Velostat giá rẻ**, dùng **Edge-AI**, **tự kiểm tra độ tin cậy của cảm biến** và **theo dõi độ cứng mô khu trú** ở gan chân — hỗ trợ **sàng lọc sớm nguy cơ loét bàn chân đái tháo đường (DFU) tại nhà**.
 
-> **Trạng thái bằng chứng:** giai đoạn **định hướng + chuẩn bị hạ tầng**. Chưa có đo đạc phần cứng, chưa có chuẩn vàng, chưa có kết quả rà soát tài liệu. Mọi ý tưởng (dP/dt, ST-GNN, novelty) là **giả thuyết cần kiểm chứng**. Không tuyên bố chẩn đoán/điều trị. Xem `research/context/PROJECT_SNAPSHOT.md`.
+> **Trạng thái bằng chứng:** giai đoạn **định hướng + prior-art**. **Chưa có kết quả thực nghiệm.** Đề tài **sống hay chết do GATE experiment** (chờ Velostat). Không tuyên bố chẩn đoán/điều trị; chỉ "sàng lọc/theo dõi nguy cơ". Xem `research/context/PROJECT_SNAPSHOT.md`.
 
-## Trọng tâm novelty
+## Vấn đề & ý tưởng
 
-> ❌ "Velostat + GNN để dự đoán 3D-GRF" **chưa đủ mới** (literature 2025–2026 đã có).
+- Người đái tháo đường hay bị **loét bàn chân → đoạn chi**; **mô đệm gan chân xơ cứng trước khi loét**. **Độ cứng mô là biomarker nguy cơ DFU đã được y văn xác nhận.**
+- Công cụ đo độ cứng hiện tại (elastography/MyotonPRO/TCM) **đắt, cồng kềnh, 1 điểm, chỉ ở phòng khám**.
+- **Ý tưởng:** mảng **Velostat** rẻ, **nén lặp (áp lực động)** → suy **độ cứng khu trú**; **self-validation** (ô tham chiếu phát hiện drift → báo lỗi thay vì báo sai) + **theo dõi dọc tại nhà**.
 
-Trọng tâm thật sự là **longitudinal, drift-robust kinetic monitoring**: tách thay đổi sinh học thật khỏi drift cảm biến —
+## Trọng tâm novelty (trung thực)
 
-```
-Δ(đo lường dọc) = Δ_biology + Δ_sensor + Δ_environment
-```
+> Điểm mới chính = **góc vật lý**: dùng **đáp ứng áp lực động** của Velostat để suy **độ cứng mô** (dynamic-pressure stiffness proxy). **Self-validation & longitudinal KHÔNG mới** (đã có prior art) — là execution. Đây là mức novelty **phù hợp ViSEF** (không phải "phát minh thế giới").
 
-Chi tiết: [`docs/01_Topic_Definition.md`](docs/01_Topic_Definition.md).
+Hành trình săn đề tài + lý do các hướng khác bị loại: [`research/reviews/00_EXPLORATION_SUMMARY.md`](research/reviews/00_EXPLORATION_SUMMARY.md). Chi tiết đề tài: [`docs/01_Topic_Definition.md`](docs/01_Topic_Definition.md). GATE experiment: [`research/protocols/05_velostat_stiffness_GATE_experiment.md`](research/protocols/05_velostat_stiffness_GATE_experiment.md).
 
 ## Tài liệu
 
