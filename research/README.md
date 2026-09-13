@@ -9,13 +9,16 @@ research/
 ├── claims/CLAIM_LEDGER.csv                 # claim, cấp bằng chứng, trạng thái, hành động
 ├── context/PROJECT_SNAPSHOT.md             # bản nén ngữ cảnh do người/agent kiểm tra
 ├── context/DECISION_LOG.md                  # quyết định có ngày, chủ sở hữu, trạng thái
-├── context/CONVERSATION_2026-08-25.md      # bản nén hội thoại (đổi hướng + tinh chỉnh)
+├── context/CONVERSATION_2026-08-25.md      # bản nén hội thoại (đề tài cũ — lịch sử)
+├── context/CONVERSATION_2026-09-13.md      # bản nén hội thoại (pivot sang găng tay)
 ├── evidence/SOURCE_LEDGER.csv               # nguồn thật/candidate và trạng thái verification
 ├── protocols/ISEF_REVIEW_ORCHESTRATION.md  # vai trò phản biện 6-lane + quality gates
-├── protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md # phản biện 5 ghế cho đề tài Smart Insole
+├── protocols/06_glove_hand_GATE_experiment.md # ⭐ GATE experiment CHO ĐỀ TÀI HIỆN TẠI
+├── protocols/04_* 05_*                      # ⚠️ DI SẢN đề tài đã bị loại — không dùng
 ├── prompts/REVIEWER_DISPATCH_TEMPLATE.md    # prompt dispatch role độc lập/adjudicator
 ├── queries/QUERY_LOG.jsonl                  # log truy vấn audit được
-├── reviews/2026-08-25_smart_insole_redteam.md # red-team phản biện đầu tiên
+├── reviews/00_EXPLORATION_SUMMARY.md        # tổng kết hành trình săn đề tài
+├── reviews/archive/                         # ~20 báo cáo kill-test (lịch sử)
 └── tooling/SETUP_STATUS.md                   # trạng thái runtime và tooling
 ```
 
