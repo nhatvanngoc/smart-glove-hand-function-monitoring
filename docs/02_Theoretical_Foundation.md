@@ -1,206 +1,212 @@
-# 02 — Cơ sở lí thuyết (Theoretical Foundation)
+# 02 — Cơ sở lý thuyết (Theoretical Foundation)
 
-> ⚠️ **LƯU Ý (2026-08-26):** Tài liệu này viết cho đề tài CŨ (3D-GRF/COP + knee OA). Đề tài hiện tại là **Hướng C** (Velostat theo dõi độ cứng mô gan chân / sàng lọc DFU) — xem `docs/01_Topic_Definition.md`. Nội dung dưới đây giữ làm **tham khảo nền**, sẽ viết lại khi cần.
-
-
-> **Ngày:** 2026-08-25 · **Đề tài:** Smart Insole Edge-AI (3D-GRF & COP, drift-robust, knee-OA rehab monitoring).
+> **Ngày:** 2026-09-13 · **Đề tài:** Găng tay thông minh hỗ trợ đánh giá & theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ.
+>
 > **Quy ước bằng chứng (đọc trước khi dùng):**
-> - 🟢 **CHUẨN (standard):** kiến thức cơ bản đã được thiết lập rộng rãi trong giáo trình cơ sinh học/kỹ thuật. **Vẫn phải đối chiếu với tài liệu gốc (trang/chương) trước khi trích dẫn chính thức** trong bài nộp — không được ghi DOI/trang nếu chưa kiểm chứng.
+> - 🟢 **CHUẨN (standard):** kiến thức đã được thiết lập rộng rãi. **Vẫn phải đối chiếu tài liệu gốc (trang/chương) trước khi trích dẫn chính thức.**
 > - 🟡 **GIẢ THUYẾT (hypothesis):** suy luận hợp lý của đề tài, **chưa** được thực nghiệm xác nhận.
 > - 🔵 **CẦN KIỂM CHỨNG (to verify):** giá trị/định lượng phải đo hoặc tra cứu, không được viện dẫn như sự thật.
+> - 📚 **TỪ Y VĂN (literature-derived):** số liệu lấy từ công bố khác, dùng làm tham chiếu — **phải đọc toàn văn và kiểm tra bảng số trước khi đưa vào báo cáo**.
 >
-> Không có con số nào trong tài liệu này là kết quả đo của dự án.
+> **Không có con số nào trong tài liệu này là kết quả đo của dự án.**
 
 ---
 
-## 1. Cơ sinh học dáng đi (gait biomechanics)
+## 1. Phục hồi vận động sau đột quỵ
 
-### 1.1 Chu kỳ dáng đi 🟢
-Chu kỳ dáng đi (gait cycle) gồm **pha trụ (stance, ≈ 60% chu kỳ)** và **pha đu (swing, ≈ 40%)** khi đi bộ thường. Các mốc chính trong stance: **heel strike (chạm gót) → foot flat → midstance (giữa trụ) → heel off → toe off (nhấc ngón)**. Trong đi bộ có các khoảng **double support** (cả hai chân chạm đất). Phần trăm thời gian từng pha thay đổi theo tốc độ — các giá trị cụ thể là 🔵.
+### 1.1 Di chứng vận động 🟢
+Đột quỵ gây tổn thương não cục bộ; hệ quả vận động thường gặp là **yếu/liệt nửa người đối bên**, trong đó chức năng bàn tay và bàn tay–ngón là một trong những phần **khôi phục chậm và kém nhất**. Phần lớn người bệnh sống sót còn di chứng vận động ở mức độ khác nhau — con số "~80% bệnh nhân có yếu tay" dùng trong `A1` phải được đối chiếu lại nguồn gốc trước khi nộp (🔵).
 
-### 1.2 Lực phản lực mặt đất 3 chiều (3D-GRF) 🟢
-Theo định luật III Newton, mặt đất tác dụng lại bàn chân một lực **bằng và ngược chiều** lực bàn chân tác dụng xuống. Trong hệ quy chiếu của đế/người:
+### 1.2 Cơ chế phục hồi 🟢
+Phục hồi sau đột quỵ dựa trên **tính mềm dẻo thần kinh (neuroplasticity)**, được thúc đẩy bởi **luyện tập lặp lại, có mục đích, đủ cường độ và đủ khó** (task-specific, high-repetition practice). Đây là cơ sở khoa học của liệu pháp vận động (motor therapy) và của các bài tập tại nhà.
 
-| Thành phần | Hướng | Vai trò sinh học |
+### 1.3 Hệ quả cho thiết kế hệ thống 🟡
+Vì phục hồi phụ thuộc vào **số lượng và chất lượng luyện tập**, thông tin có giá trị nhất để can thiệp sớm là **thay đổi theo thời gian** (tăng/giảm/đi ngang) chứ không phải một giá trị tuyệt đối tại một thời điểm. Đây chính là lý do hệ thống được thiết kế cho **longitudinal monitoring**, không phải cho chẩn đoán.
+
+---
+
+## 2. Công cụ đánh giá chức năng bàn tay hiện có
+
+### 2.1 Thang đo lâm sàng 🟢
+| Công cụ | Đo cái gì | Đặc điểm |
 |---|---|---|
-| **Fz** | thẳng đứng | nâng đỡ trọng lượng + gia tốc; dạng **"hình chữ M"** hai đỉnh (impact peak lúc chạm gót, push-off peak lúc đẩy đi) với thung lũng giữa trụ |
-| **Fx** | trước–sau | **braking** (hãm, lực hướng sau) đầu trụ → **propulsion** (đẩy, hướng trước) cuối trụ |
-| **Fy** | trái–phải (mediolateral) | cân bằng bên, biên độ nhỏ và nhiễu nhất |
+| **Fugl-Meyer Assessment – Upper Extremity (FMA-UE) / FMA-Hand** | Mức suy giảm vận động theo bậc thang (ordinal) | Chuẩn tham chiếu rộng rãi; dựa trên quan sát người đánh giá |
+| **Action Research Arm Test (ARAT)** | Khả năng thực hiện nhiệm vụ chi tiết (grasp, grip, pinch, gross movement) | Điểm rời rạc; có trần/sàn |
+| **Box and Block Test (BBT)** | Số khối chuyển được trong 60 giây | Nhanh, dễ làm, liên quan đến khéo léo thô |
+| **Nine Hole Peg Test (NHPT)** | Thời gian đặt/rút cọc | Nhạy với kỹ năng ngón |
+| **Grip / pinch dynamometry (Jamar, Camry…)** | Lực bóp tổng / lực chụm | Định lượng; phụ thuộc tư thế và động viên |
+| **Modified Ashworth Scale (MAS)** | Trương lực cơ (spasticity) | Khác trục với chức năng; phụ thuộc người đánh giá |
 
-**Độ lớn điển hình (đi bộ thường, 🔵 cần trích nguồn gốc):** Fz đỉnh ≈ **1.0–1.2 × trọng lượng cơ thể (BW)**; Fx đỉnh ≈ **0.15–0.2 BW**; Fy ≈ **0.05–0.1 BW** (biến thiên lớn giữa cá nhân). Đây là **giá trị tham khảo chuẩn**, không phải hằng số phổ quát.
+### 2.2 Ba hạn chế cấu trúc của bộ công cụ này 🟢
+1. **Rời rạc theo thời gian** — mỗi lần đo cho một "ảnh chụp"; không thấy được quá trình ở nhà.
+2. **Phụ thuộc người đánh giá** — đặc biệt với FMA/MAS; thay đổi nhỏ giữa hai lần khám dễ bị nhiễu bởi người chấm.
+3. **Tính khả dụng thấp ngoài cơ sở y tế** — thiết bị định lượng (dynamometer, E-Link, cảm biến lực ngón) đắt và thường cần người vận hành.
 
-### 1.3 Tâm áp lực (Center of Pressure, COP) 🟢
-COP là **điểm đặt của hợp lực** phản lực mặt đất lên mặt phẳng tiếp xúc. Với ma trận cảm biến rời rạc (n cell, lực pháp tuyến Fᵢ tại vị trí (xᵢ, yᵢ)):
+### 2.3 Ngưỡng thay đổi có ý nghĩa 📚
+Để một chỉ số dùng được cho việc theo dõi, nó phải có **MDC (Minimal Detectable Change)** nhỏ hơn mức thay đổi lâm sàng quan tâm. Giá trị MDC của ARAT cho bàn tay liệt do đột quỵ được báo cáo ở mức ~4 điểm trong một số nguồn (🔵 — phải đối chiếu lại đúng bảng số và bối cảnh trước khi trích dẫn).
 
-```
-COP_x = Σ Fᵢ·xᵢ / Σ Fᵢ ,   COP_y = Σ Fᵢ·yᵢ / Σ Fᵢ
-```
-
-- Quỹ đạo COP trong stance điển hình: vào ở gót, tiến dọc mép ngoài → giữa bàn chân → lệch vào trong ở khớp bàn–ngón → ra ở ngón cái.
-- ⚠️ **COP ≠ COM** (center of mass). COP là đại lượng đo trực tiếp từ phân bố áp lực; COM là đại lượng động học toàn thân. Nhầm lẫn này là lỗi phản biện thường gặp — ghi rõ trong bài nộp.
-
-### 1.4 Gait → GRF/COP → tải khớp gối (knee loading) 🟢/🟡
-- **Knee Adduction Moment (KAM)** là moment khép gối ở mặt phẳng trán (frontal plane), thường được dùng làm **đại lượng thay thế (surrogate)** cho tải lên khoang trong (medial compartment) khớp gối. KAM phụ thuộc vào **độ lớn GRF** và **cánh tay đòn** từ vector GRF tới tâm khớp gối — vì vậy GRF/COP là đầu vào gián tiếp, không phải bản thân tải khớp. 🟢
-- Ở người knee OA, các thay đổi dáng đi thường được báo cáo: **giảm tốc độ đi, rút ngắn sải chân, giảm gập gối, tăng KAM (một số nghiên cứu), bất đối xứng hai chân, thay đổi GRF/COP**. 🟡 — mức độ & hướng thay đổi tùy giai đoạn bệnh và cá nhân; **không suy diễn "GRF ⇒ OA"**.
-- Chuỗi hợp lệ: `Gait → GRF/COP → (gián tiếp) knee loading pattern`. Chuỗi bị cấm: `GRF ⇒ OA` hoặc "chẩn đoán".
+**Ý nghĩa cho đề tài:** chỉ số của găng tay chỉ hữu ích nếu **biến thiên lặp lại của nó nhỏ hơn** mức thay đổi mà bệnh nhân có thể đạt được trong vài tuần. Đây là lý do GATE C tồn tại.
 
 ---
 
-## 2. Cảm biến áp lực dẻo — Velostat/piezoresistive
+## 3. Cơ sinh học bàn tay liên quan đến cảm biến
 
-### 2.1 Nguyên lý piezoresistive 🟢/🔵
-Velostat (film carbon-impregnated polyolefin) là cảm biến **piezoresistive**: điện trở khối **giảm** khi chịu lực nén (hạt dẫn tiếp xúc tốt hơn khi vật liệu bị nén). Quan hệ điện trở–lực là **phi tuyến mạnh**, thường xấp xỉ dạng luỹ thừa giảm `R ∝ P^(−α)` với α phụ thuộc vật liệu/điện cực/nhiệt độ. 🔵 — tham số cụ thể phải đo trên chính mẫu cảm biến của dự án, **không suy từ datasheet chung**.
+### 3.1 Chuỗi khớp 🟢
+- Bốn ngón dài: **MCP** (khớp bàn–ngón) → **PIP** → **DIP**.
+- Ngón cái: **CMC** → **MCP** → **IP**; chuyển động quan trọng gồm **gập/duỗi** và **đối chiếu (opposition)**.
 
-### 2.2 Các phi tuyến tính cố hữu 🟢/🔵
-- **Hysteresis (trễ):** đường R–P khi tăng tải khác khi giảm tải → cùng áp lực, đọc khác nhau tùy lịch sử tải.
-- **Creep (chảy):** dưới tải **không đổi**, điện trở vẫn tiếp tục đổi theo thời gian.
-- **Drift (trôi):** tín hiệu "trôi" chậm theo phút/giờ/ngày do nhiệt, biến dạng, lão hoá vật liệu.
-- **Sensitivity/gain change:** độ nhạy thay đổi theo tải/nhiệt/chu kỳ → sai lệch **nhân (multiplicative)** chứ không chỉ cộng.
-- **Nhiệt độ:** điện trở nhạy nhiệt → baseline và gain đều đổi.
-- **Lắp ráp (fitting):** áp lực lắp đặt đế, điện cực, keo dẫn ảnh hưởng đáp ứng và độ lặp lại.
-- **Session-to-session variation:** cùng cảm biến, khác ngày/session → đáp ứng khác.
+### 3.2 Chuyển động quan tâm 🟢
+- **Flexion/extension** (gập/duỗi) — trục chính, quyết định khả năng cầm nắm.
+- **Opposition / abduction–adduction** — quyết định khả năng chụm ngón cái với các ngón khác.
+- **Bài tập chuẩn dùng cho giao thức đo (dự kiến):** gập–duỗi từng ngón, chụm ngón (pinch), bóp cả bàn tay (power grip), chạm ngón cái–đầu ngón (finger-thumb opposition), duỗi mở bàn tay (extension). 🔵 (phải chốt cùng KTVVLTL-PHCN)
 
-> Hệ quả: **đọc ADC/điện trở thô không thể đổi trực tiếp ra lực (Fz) tin cậy** nếu chưa hiệu chuẩn theo hệ thống; đây là giới hạn đo lường, không phải lỗi mã.
+### 3.3 Lực ngón và ý nghĩa lâm sàng 📚
+Từ y văn phục hồi chức năng, lực bóp và lực chụm có tương quan với các thang đo chức năng tổng thể ở mức trung bình–mạnh; BBT và ARAT cũng tương quan với FMA-UE. Các giá trị cụ thể (ví dụ nhóm giá trị tương quan r cho grip/pinch/BBT/ARAT so với FMA-UE tổng) **đã gặp trong quá trình tra cứu nhưng chưa đọc toàn văn** → ghi vào `SOURCE_LEDGER.csv` ở trạng thái `UNVERIFIED`, **không** đưa vào báo cáo cho đến khi kiểm chứng.
 
-### 2.3 Phân loại drift (mô hình đơn giản) 🟡
-Mô hình tuyến tính xấp xỉ của tín hiệu đo `r(t)`:
-
-```
-r(t) = (1 + g(t)) · r_true(t) + b(t)
-```
-
-- `b(t)`: **baseline/offset drift** (cộng thêm, chậm).
-- `g(t)`: **sensitivity/gain drift** (nhân, ảnh hưởng biên độ).
-
-Ngoài ra còn drift do **hysteresis** (phụ thuộc lịch sử) và **creep** (phụ thuộc thời gian tải) không nằm gọn trong mô hình tuyến tính trên.
-
-### 2.4 dP/dt — tác dụng và giới hạn 🟡/🟢
-- **Tác dụng:** đạo hàm theo thời gian `dP/dt` **loại bỏ thành phần offset `b(t)` nếu nó biến thiên chậm** (đạo hàm của hằng số chậm ≈ 0). Vì vậy dP/dt giảm nhiễu do **baseline drift chậm** (nhiệt độ trôi từ từ).
-- **Giới hạn (phải ghi rõ):**
-  1. **Không loại được gain drift `g(t)`** (đạo hàm vẫn bị nhân bởi gain).
-  2. **Không loại hysteresis/creep** — chúng tác động lên chính biên độ động học.
-  3. **Khuếch đại nhiễu tần số cao** — cần lọc (low-pass) trước/sau đạo hàm; chọn tần số cắt hợp lý.
-- ⚠️ Vì vậy từ ngữ đúng là **"giảm (attenuate) drift"**, **không** "triệt tiêu/loại bỏ drift".
+**Hệ quả thiết kế 🟡:** các chỉ số lực-hướng mà hệ thống hướng tới (biên độ lực, phân bố lực giữa các ngón, tốc độ sinh lực, độ mượt) đều là những đại lượng **có tiền lệ lâm sàng**, không phải chỉ số tùy ý.
 
 ---
 
-## 3. Xử lý tín hiệu & mô hình drift
+## 4. Vật liệu piezoresistive Velostat
 
-### 3.1 Ước lượng & trừ baseline 🟡
-- **Baseline không tải:** đo khi không tải (hoặc tải tham chiếu) trước/sau mỗi phiên để ước lượng `b(t)`.
-- **Reference cell:** một cell không chịu tải của người dùng làm tham chiếu nhiệt/bù trôi.
-- **Low-pass của baseline:** trích thành phần chậm của tín hiệu nghỉ rồi trừ.
+### 4.1 Bản chất vật liệu 🟢
+Velostat (còn gọi Linqstat) là **film polyolefin tẩm carbon** — một **vật liệu piezoresistive**: khi bị nén, các hạt carbon xích lại gần nhau, hình thành thêm đường dẫn điện → **điện trở giảm**. Đây là vật liệu, **không phải** một cảm biến hoàn chỉnh. Phải phân cấp thuật ngữ theo `docs/bao_cao/GLOSSARY.md`.
 
-### 3.2 Hiệu chuẩn (calibration) & personal baseline 🟡
-- **Per-sensor calibration:** ánh xạ R→F (hoặc ADC→F) riêng từng cell bằng tải đã biết.
-- **Personal baseline:** thiết lập ngưỡng/tham chiếu **riêng từng cá nhân** (đặc điểm dáng đi, trọng lượng, hình dạng chân) → deviation đo tương đối so với chính người đó, không so với dân số chung.
-- **Cross-session generalization:** mô hình huấn luyện ở phiên 1 phải giữ được sai số ở phiên N mà không retrain toàn bộ.
+### 4.2 Quan hệ điện trở–lực 🟢
+Quan hệ này **phi tuyến, phụ thuộc lịch sử tải**, và chịu ảnh hưởng của:
+- diện tích và hình dạng vùng tiếp xúc điện cực;
+- áp lực đặt trước (preload) và hình học đặt lực;
+- độ trễ (hysteresis): đường tăng tải và giảm tải không trùng nhau;
+- **creep**: dưới tải giữ không đổi, điện trở vẫn tiếp tục thay đổi chậm;
+- **drift dài hạn**: biến đổi chậm của điểm làm việc theo thời gian/chu kỳ;
+- **nhiệt độ** và độ ẩm;
+- **độ cứng/độ cong của nền** (substrate) mà sensing element được dán lên — đã có công bố cho thấy đáp ứng cảm biến phụ thuộc cơ tính của nền.
 
-### 3.3 Phát hiện thay đổi (change detection) — tách nguồn biến thiên 🟡
-Bài toán trung tâm:
+**Kết luận bắt buộc:** không được chuyển thẳng giá trị ADC thành lực Newton. Mọi suy luận phải là **tương đối** và **theo từng cá nhân** (personal baseline), và phải có **kiểm tra hợp lệ** trước khi kết luận.
 
+### 4.3 Cấu trúc sensing element 🟢
 ```
-Δ(đo lường dọc) = Δ_biology + Δ_sensor + Δ_environment
+Copper tape (điện cực trên)
+        ↓
+Velostat (lớp nhạy áp lực)
+        ↓
+Copper tape (điện cực dưới)
+   + lớp cơ khí giữ hình học ổn định
 ```
+Toàn bộ tổ hợp này mới là **sensing element**. Cơ khí (kéo trước, giới hạn hành trình, chống trượt) là phần quyết định độ lặp lại — không phải chỉ Velostat.
 
-- **Δ_biology:** thay đổi thật của dáng đi (bệnh tiến triển, phục hồi, mệt mỏi…).
-- **Δ_sensor:** drift/hysteresis/creep của Velostat, lắp ráp.
-- **Δ_environment:** nhiệt độ, độ ẩm, giày, bề mặt đi.
+### 4.4 Mạch đọc 🟢
+Cấu hình đơn giản nhất là **cầu phân áp**: `Vout = Vcc · R_f / (R_f + R_sensor)`. Hệ quả:
+- Độ nhạy `dV/dR` **đạt cực đại khi R_f ≈ R_sensor** → phải chọn R_f theo dải làm việc thực tế.
+- Vì R_sensor biến thiên nhiều bậc, hệ thống có **dải động bị nén**: phần tín hiệu gần hai đầu dải bị "bão hòa mềm". Vì vậy thiết kế trích xuất đặc trưng **tương đối** (tỷ lệ giữa các kênh, độ dốc theo thời gian), không phụ thuộc tuyến tính vào giá trị tuyệt đối. 🔵 (giá trị R_f và dải làm việc phải đo thực nghiệm)
 
-**Công cụ ứng viên (🟡, chưa chọn):** statistical process control (CUSUM/EWMA), change-point detection, so sánh phân phối liên-phiên, metric **false change detection** (số lần báo "thay đổi" sai trên dữ liệu không đổi).
+---
 
-### 3.4 Killer experiment (thiết kế kiểm chứng) 🟡
-| Nhánh | Dự đoán | Metric |
+## 5. Nguyên lý cơ khí của đề tài: cảm biến HƯỚNG qua vách khung
+
+### 5.1 Phát biểu nguyên lý 🟡
+Khung cứng (exoskeleton) được ép sát quanh mỗi lóng ngón với **khe hở nhỏ**. Khi lóng ngón dịch chuyển về phía vách X, nó **tì vào vách X** và nén sensing element đặt trên vách đó. Đọc được **kênh nào bị nén, mức bao nhiêu** ⇒ biết **hướng** và **độ lớn** của phản lực mà lóng ngón tác dụng lên khung.
+
+### 5.2 Từ trường lực-hướng đến hướng khớp 🟡
+Hướng khớp **không được đo trực tiếp**. Nó được **suy luận (infer)** từ mẫu kích hoạt trên chuỗi vách của nhiều lóng ngón:
+
+| Hiện tượng cơ học | Mẫu vách kích hoạt (dự kiến) | Suy luận |
 |---|---|---|
-| Không drift correction | error ↑ theo phiên | cross-session RMSE/MAE, drift rate |
-| Có drift correction | error ≈ hằng số | như trên |
-| So sánh change detection | false detection ↓ | false-change rate trên dữ liệu ổn định |
+| Gập ngón | Vách phía lòng bàn tay (flexor side) tăng tải | Flexion |
+| Duỗi ngón | Vách đối diện tăng tải, vách lòng bàn tay giảm tải | Extension |
+| Chụm/gập ngón cái | Vách bên của ngón cái + ngón đối diện cùng tăng | Opposition/pinch |
+| Bóp cả bàn tay | Nhiều ngón cùng tăng, có phân bố | Power grip |
 
----
+**Đây là bài toán ngược (inverse problem) và có thể không xác định duy nhất** — nhiều tổ hợp lực có thể cho cùng một trường đo. Do đó:
+- Trong báo cáo **phải dùng từ "suy luận/infer"**, không dùng "đo chính xác góc khớp".
+- Phải kiểm chứng bằng **GATE A** (phân biệt hướng) và **GATE B** (tái tạo 3D so với ground truth biết trước).
 
-## 4. Mô hình hoá không gian–thời gian (graph & GNN)
-
-### 4.1 Trường áp lực P(x,y,t) 🟢
-Ma trận cảm biến cho **trường áp lực dưới bàn chân theo thời gian** `P(x,y,t)`. Dữ liệu có cấu trúc **không gian** (vị trí giải phẫu) + **thời gian** (chuỗi) → phù hợp mô hình không gian–thời gian.
-
-### 4.2 Đồ thị giải phẫu bàn chân 🟡
-Biểu diễn bàn chân như **graph**: node = vùng cảm biến/gải phẫu (gót, vòm, các khớp bàn–ngón, ngón…); cạnh = quan hệ giải phẫu/lân cận (adjacency). Lợi ích dự kiến: mô hình "biết" quan hệ không gian giữa các vùng thay vì coi chúng độc lập.
-
-### 4.3 ST-GNN / GCN / ST-GCN 🟢/🟡
-- **GCN (Graph Convolutional Network):** học biểu diễn node bằng lan truyền thông điệp trên cạnh.
-- **ST-GCN:** kết hợp **spatial graph convolution** + **temporal convolution** (chuẩn trong nhận dạng hành động dựa trên skeleton).
-- **ST-GNN** tổng quát: mô hình graph động theo thời gian.
-- 🟡 **Cảnh báo quan trọng:** GNN/ST-GNN chỉ xứng đáng nếu **thắng baseline đơn giản hơn** trên cùng dữ liệu (xem 4.4). Với dữ liệu nhỏ, mô hình phức tạp dễ overfit.
-
-### 4.4 Baseline & nguyên tắc so sánh 🟢
-Thứ tự bắt buộc trước khi dùng GNN:
-1. **Tuyến tính/ridge** (hồi quy từ vector áp lực → Fx/Fy/Fz/COP).
-2. **CNN** (trên ảnh pressure map) và/hoặc **LSTM/TCN** (chuỗi thời gian).
-3. Chỉ khi 1–2 chưa đủ mới thêm ST-GNN; so sánh trên **cùng train/val/test split**, báo **uncertainty**.
-
-### 4.5 Uncertainty & chống leakage 🟢
-- **Chống leakage:** tách dữ liệu **theo người tham gia** (leave-one-subject-out) và **theo phiên** (leave-one-session-out) — không tách mẫu ngẫu nhiên, nếu không cross-session claim sẽ bị vô hiệu.
-- **Uncertainty:** báo khoảng tin cậy/độ phân tán, không chỉ điểm RMSE.
-
----
-
-## 5. Chuẩn vàng & metrics
-
-### 5.1 Force plate (chuẩn vàng) 🟢
-- **Force plate** (tấm đo lực đa trục) đo trực tiếp Fx, Fy, Fz và moment → cho **COP** và **GRF ground truth** với độ chính xác cao. Đây là **điểm mạnh nhất của đề tài**: so sánh trực tiếp predicted ↔ measured.
-- **Đối chiếu:** Predicted 3D-GRF ↔ force plate GRF; Predicted COP ↔ force plate COP.
-- **Blocker:** chưa có force plate/load cell đa trục thì mọi báo cáo sai số 3D-GRF là **không kiểm chứng được** (xem `DECISION_LOG` DEC-INSOLE-006).
-
-### 5.2 Metrics 🟢 (định nghĩa chuẩn — cần ghi rõ chuẩn hoá khi dùng)
-| Metric | Định nghĩa | Lưu ý |
+### 5.3 So sánh với các cách tiếp cận phổ biến 🟢
+| Cách tiếp cận | Ưu | Nhược |
 |---|---|---|
-| **RMSE** | √(mean((ŷ−y)²)) | cùng đơn vị với y |
-| **MAE** | mean(|ŷ−y|) | ít nhạy outlier hơn RMSE |
-| **NRMSE** | RMSE / (đại lượng chuẩn hoá) | ⚠️ **phải ghi rõ chuẩn hoá theo gì** (range, mean, hay max) — NRMSE khác nhau theo cách chuẩn hoá |
-| **R²** | 1 − SS_res/SS_tot | có thể âm khi mô hình tệ |
-| **COP error** | khoảng cách Euclid ŷ_COP−y_COP (per-sample) và/hoặc theo quỹ đạo | báo cả bias hướng |
-| **Temporal alignment** | độ lệch thời gian (lag) giữa chuỗi dự đoán & chuỗi thật | cross-correlation |
-| **Drift** | residual sau tải tĩnh dài / tốc độ trôi baseline | đơn vị & khoảng thời gian cụ thể |
-| **Cross-session error** | sai số trên phiên giữ lại (held-out session) | metric chính cho RQ1 |
+| IMU (nhiều module) | Đo được góc khớp trực tiếp | Đắt theo số trục, trôi tích phân, cồng kềnh, tiêu thụ điện |
+| Flex sensor | Rẻ, đơn giản | Chỉ đo gập theo một chiều, trôi, dễ hỏng khi lặp |
+| Camera/marker | Chính xác trong lab | Không dùng tại nhà, che khuất |
+| **Đề tài này:** vách khung + piezoresistive | Rẻ, nhẹ, mã hóa được **hướng và lực** | Cần cơ khí chính xác, cần suy luận, cần GATE để chứng minh |
 
 ---
 
-## 6. Triển khai biên (edge deployment) 🟡/🔵
+## 6. Bù ảnh hưởng drift và tự kiểm tra độ tin cậy
 
-- **RK3588 / Orange Pi 5 Pro:** NPU công bố **~6 TOPS** (INT8) — 🔵 là **thông số nhà sản xuất**, chưa phải throughput đo được.
-- **INT8 quantization:** giảm kích thước/tăng tốc suy luận, có thể đánh đổi chút độ chính xác → phải đo **accuracy drop** sau lượng tử hoá.
-- **Chuẩn đo:** latency (ms), throughput (inference/s), công suất (W), bộ nhớ — trên mô hình thực tế, không ước lượng.
-- **Chế độ suy luận:** theo cửa sổ/bước chân (per-step/per-window), không nhất thiết per-sample.
+### 6.1 Phép đo vi sai (differential) 🟢
+Đặt **hai sensing element trên hai vách đối diện** của cùng một khung, đọc hiệu `d = S_palmar − S_dorsal`:
+- thành phần do nhiệt độ/độ ẩm/creep chung cho cả hai vách (common-mode) bị **triệt phần lớn** khi trừ;
+- dấu của `d` cho biết **chiều** gập/duỗi; độ lớn cho biết cường độ.
+
+Đây là nguyên lý kinh điển (dummy gauge trong cầu Wheatstone) → **không được claim là mới**.
+
+### 6.2 Ô tham chiếu (reference element) 🟢
+Một sensing element đặt ở vị trí **không chịu tải cơ học của người dùng** (ví dụ trên nẹp cổ tay) và được giữ dưới một tải mẫu cố định. Tín hiệu của nó phản ánh **biến thiên thuần túy của hệ đo** (nhiệt độ, độ ẩm, lão hóa, thay đổi nguồn). Dùng để:
+1. hiệu chỉnh phần trôi chung;
+2. **kích hoạt cờ "UNRELIABLE"** khi hệ đo trôi vượt ngưỡng, thay vì đưa ra kết luận sai.
+
+### 6.3 Điều KHÔNG được nói 🟢
+- ❌ "Triệt tiêu drift", "loại bỏ drift", "drift-free".
+- ✅ "**Giảm ảnh hưởng** của drift ở tầng common-mode, phần drift không chung vẫn tồn tại và được **định lượng bằng GATE C/D**".
 
 ---
 
-## 7. Khung theo dõi dọc (longitudinal) & tuyên bố an toàn
+## 7. Đặc trưng tín hiệu và chỉ số chức năng
 
-### 7.1 Chuỗi theo dõi 🟡
+### 7.1 Bảng đặc trưng dự kiến 🟡
+| Nhóm | Đặc trưng | Ý nghĩa chức năng |
+|---|---|---|
+| Biên độ | Đỉnh lực theo khớp, tổng lực | Sức mạnh |
+| Thời gian | Thời gian lên đỉnh, thời gian giữ, nhịp | Kiểm soát vận động, mỏi |
+| Mượt | Số lần đổi dấu đạo hàm, độ gồ ghề (jerk-like) | Chất lượng điều khiển |
+| Phân bố | Tỷ lệ giữa các ngón, bất đối xứng ngón cái | Mẫu phối hợp |
+| Bền | Độ suy giảm biên độ trong một hiệp | Sức bền / mỏi |
+| Đối chiếu | So với chính bệnh nhân ở tuần 0 | Tiến triển (longitudinal) |
+
+### 7.2 Vì sao dùng baseline cá nhân 🟡
+Do đặc tính vật liệu và hình học khung khác nhau giữa các lần chế tạo, sai số tuyệt đối giữa các cá nhân lớn. Giá trị so sánh **trong cùng một người theo thời gian** có ý nghĩa hơn nhiều so với so sánh giữa hai người.
+
+---
+
+## 8. Giám sát dọc (longitudinal) và thống kê
+
+### 8.1 Bộ chỉ số bắt buộc 🟢
+- **Độ lặp lại trong phiên (within-session):** hệ số biến thiên CV, ICC.
+- **Độ lặp lại giữa các phiên (between-session):** ICC, SEM (standard error of measurement).
+- **MDC** suy từ SEM: `MDC ≈ 1.96·√2·SEM` (mức tin cậy 95%, hai phía). 🟢
+- **Độ nhạy phát hiện thay đổi (sensitivity to change):** so sánh độ lớn thay đổi thật với MDC.
+- **Tỷ lệ báo động giả (false-alarm rate)** khi chạy hệ thống trên phantom qua nhiều ngày.
+
+### 8.2 Tiêu chí sống còn 🟡
 ```
-Personal baseline → longitudinal deviation → gait change detection → rehab response monitoring
+Δ_signal (thay đổi chức năng thật)  >  MDC (biến thiên của chính hệ đo)
 ```
-
-### 7.2 Được phép vs bị cấm 🟢
-| Được phép | Bị cấm |
-|---|---|
-| "hỗ trợ theo dõi thay đổi chức năng vận động" | "chẩn đoán OA" |
-| "đánh giá đáp ứng phục hồi" | "điều trị OA" |
-| "nguyên mẫu đo lường cơ sinh học" | "thiết bị y tế" |
-| "so sánh với force plate (validation)" | "thay thế force plate/X-ray/MRI/bác sĩ" |
+Nếu bất đẳng thức này không đạt trên phantom, hệ thống **không thể** dùng để theo dõi tiến triển — và điều đó phải được báo cáo trung thực, không tô hồng.
 
 ---
 
-## 8. Câu hỏi mở & giả thuyết cần kiểm chứng
+## 9. Xử lý tại biên và lượng tử hóa INT8
 
-| # | Mục | Trạng thái | Bằng chứng cần |
-|---|---|---|---|
-| 1 | Độ lớn drift thực của mẫu Velostat (offset vs gain) theo nhiệt/tải/thời gian | 🔵 chưa đo | bench đặc trưng cảm biến |
-| 2 | dP/dt giảm bao nhiêu % drift ở tần số/thời lượng nào | 🟡 | thí nghiệm tải dài |
-| 3 | ST-GNN có thắng baseline không | 🟡 | so sánh cùng split |
-| 4 | Cross-session generalization giữ được bao lâu | 🔵 | dữ liệu nhiều phiên |
-| 5 | False change detection giảm bao nhiêu khi có drift correction | 🟡 | killer experiment |
-| 6 | Prior art 2025–2026 ở đâu (gap thật nằm đâu) | 🔵 | `docs/03` gap analysis |
-| 7 | NPU INT8 latency/throughput/công suất thực | 🔵 | benchmark |
+### 9.1 Vì sao phải xử lý tại biên 🟢
+- Bệnh nhân lớn tuổi, không chuyên công nghệ → thiết bị phải hoạt động **không phụ thuộc mạng**.
+- Dữ liệu sức khỏe → giảm nhu cầu truyền tải/nhạy cảm dữ liệu thô.
+- Phản hồi tức thời cho người dùng.
 
-> **Nguyên tắc:** mỗi dòng trên chỉ được chuyển thành kết quả khi có artifact đo/trích dẫn tương ứng trong `research/evidence/SOURCE_LEDGER.csv` và `research/claims/CLAIM_LEDGER.csv`.
+### 9.2 INT8 quantization 🟢
+Lượng tử hóa mô hình từ FP32 sang INT8 giúp:
+- giảm kích thước mô hình (~4×) và băng thông bộ nhớ;
+- tăng tốc trên NPU (RK3588 có NPU ~6 TOPS cho INT8);
+- đổi lại: mất mát độ chính xác — **phải đo**, không được giả định bằng 0.
+
+### 9.3 Nguyên tắc trung thực 🟢
+Lượng tử hóa không phải "điểm mới khoa học". Nó là **kỹ thuật triển khai**. Trong báo cáo phải nêu rõ: kiến trúc mô hình, tập dữ liệu, cách chia train/validation, và mức giảm độ chính xác sau lượng tử hóa so với FP32.
+
+---
+
+## 10. Giới hạn phải nêu thẳng trong báo cáo
+
+1. Đây là **proof-of-concept trên phantom và (nếu được duyệt) người khỏe tình nguyện** — **không** phải thử nghiệm lâm sàng.
+2. Chưa có bằng chứng hệ thống phát hiện đúng thay đổi chức năng ở bệnh nhân thật.
+3. Cơ chế suy luận hướng khớp là **bài toán ngược**, cần kiểm chứng; sai số cụ thể **để trống cho đến khi đo**.
+4. Hệ thống **không** thay thế FMA/ARAT/BBT, **không** chẩn đoán, **không** điều trị.
+5. Mọi biện pháp an toàn cho người tham gia chỉ được thực hiện **sau** khi có phê duyệt IRB/SRC.

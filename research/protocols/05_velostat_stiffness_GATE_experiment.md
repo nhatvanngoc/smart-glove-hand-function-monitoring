@@ -1,5 +1,10 @@
 # GATE experiment — Hướng C: Velostat dynamic-pressure có đo được độ cứng mô không?
 
+> ⚠️ **SUPERSEDED — KHÔNG DÙNG (2026-09-13).**
+> File này là GATE experiment của Hướng C (**theo dõi độ cứng mô gan chân / sàng lọc DFU**), đã bị bỏ ngày 2026-08-28 vì GATE 3 (Usefulness) yếu.
+> GATE experiment hiện hành: `research/protocols/06_glove_hand_GATE_experiment.md`.
+
+
 **Ngày soạn:** 2026-08-26 · **Trạng thái:** CHỜ vật liệu (Velostat). Đây là thí nghiệm **quyết định** Hướng C sống hay chết.
 
 ## Câu hỏi gate (duy nhất)

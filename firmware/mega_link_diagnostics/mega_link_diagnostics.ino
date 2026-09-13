@@ -1,3 +1,10 @@
+// ============================================================================
+// ⚠️  DI SẢN — KHÔNG ÁP DỤNG CHO ĐỀ TÀI HIỆN TẠI (2026-09-13)
+// Sketch này viết cho Arduino Mega 2560 trong đề tài smart insole (đã bỏ).
+// Đề tài hiện tại dùng ESP32-S3 + CD74HC4067 (DEC-HW-003).
+// Giữ lại chỉ để tham khảo khung đóng gói frame/CRC. Không dùng trong báo cáo.
+// ============================================================================
+
 /* Diagnostic transport firmware only — no GRF/COP/calibration claim.
    USB serial is the recommended first link to Orange Pi. */
 #include <Arduino.h>

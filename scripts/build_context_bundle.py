@@ -23,20 +23,23 @@ FULL_SOURCES = [
     "research/context/DECISION_LOG.md",
     "research/claims/CLAIM_LEDGER.csv",
     "research/evidence/SOURCE_LEDGER.csv",
-    "research/reviews/2026-08-25_smart_insole_redteam.md",
+    "research/reviews/00_EXPLORATION_SUMMARY.md",
+    "research/context/CONVERSATION_2026-09-13.md",
     "research/protocols/ISEF_REVIEW_ORCHESTRATION.md",
-    "research/protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md",
+    "research/protocols/06_glove_hand_GATE_experiment.md",
     "docs/01_Topic_Definition.md",
     "docs/02_Theoretical_Foundation.md",
 ]
 OUTLINE_SOURCES = [
     "docs/03_Literature_Gap_Analysis_Plan.md",
+    "docs/04_Hardware_Architecture.md",
     "research/tooling/SETUP_STATUS.md",
 ]
 RISK_PATTERN = re.compile(
     r"(?i)(synthetic|simulation|mô phỏng|chưa|không được|warning|cảnh báo|risk|rủi ro|"
     r"limitation|giới hạn|32\s*mmhg|irb|src|volunteer|claim|evidence|5\s*[x×]\s*9|"
-    r"8\s*[x×]\s*8|orange pi|jetson|robot arm)"
+    r"8\s*[x×]\s*8|orange pi|jetson|robot arm|gate|drift|unreliable|phantom|"
+    r"esp32|cd74hc4067|mdc|icc)"
 )
 
 
