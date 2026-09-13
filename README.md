@@ -124,12 +124,15 @@ Mọi agent/tác giả tuân thủ [`AGENTS.md`](AGENTS.md): đọc snapshot →
 
 ## 9. Ghi chú về tên repo
 
-- Tên đề tài đã đổi; tên **repo GitHub hiện tại vẫn là `velostat-smart-insole-dfu`** (di sản đề tài cũ).
-- Agent phiên này **không có quyền Administration** trên repo (HTTP 403), nên không tự đổi tên được. Chủ dự án chạy:
+- Tên đề tài đã đổi; tên **repo GitHub hiện tại vẫn là `velostat-smart-insole-dfu`** và phần **description vẫn là mô tả đề tài đệm khí cũ** — cả hai đều là di sản.
+- Agent phiên này **không có quyền Administration** trên repo (HTTP 403 khi thử `gh repo rename` và `gh repo edit`), nên không tự sửa được. Chủ dự án chạy:
 
 ```bash
 gh repo rename smart-glove-stroke-hand-rehab --repo nhatvanngoc/velostat-smart-insole-dfu --yes
 git remote set-url origin https://github.com/nhatvanngoc/smart-glove-stroke-hand-rehab.git
+gh repo edit --description "Nghiên cứu và phát triển găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ"
 ```
+
+- Sau khi đổi xong, cập nhật `DEC-REPO-001` trong `research/context/DECISION_LOG.md` sang `DONE`.
 
 - Thư mục làm việc cục bộ vẫn giữ tên `velostat-smart-insole-dfu` (ràng buộc của phiên làm việc) — không ảnh hưởng nội dung khoa học.
