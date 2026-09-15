@@ -1,5 +1,12 @@
 # 04 — Orange Pi 5 Pro ↔ Arduino Mega 2560 bring-up tests (before Velostat arrives)
 
+> ⚠️ **DI SẢN — KHÔNG ÁP DỤNG CHO ĐỀ TÀI HIỆN TẠI (2026-09-13).**
+> File này được viết cho đề tài **smart insole** với **Arduino Mega 2560** — đề tài đã bị bỏ.
+> Đề tài hiện tại là **găng tay theo dõi chức năng bàn tay sau đột quỵ**, dùng **ESP32-S3 + CD74HC4067** (DEC-HW-003), mức logic 3.3 V nên **không cần level shifter**.
+> Giữ lại để tham khảo cách kiểm tra đường truyền/CRC/timestamp. **Không** trích như phương pháp hiện hành.
+> Phương pháp hiện hành: `research/protocols/06_glove_hand_GATE_experiment.md`.
+
+
 - **Purpose:** validate acquisition-to-edge transport, timing, electrical safety, ADC behavior and edge-host stability using known signals/synthetic frames. These tests are **not** sensor validation, GRF/COP validation, drift validation, or real-time performance proof until raw logs are retained and reviewed.
 - **Scope:** Arduino Mega 2560 = acquisition/timestamping; Orange Pi 5 Pro = receipt, logging, diagnostics and later inference.
 
