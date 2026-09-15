@@ -1,92 +1,80 @@
-# 03 — Kế hoạch phân tích khoảng trống nghiên cứu (2025–2026)
+# 03 — Kế hoạch phân tích khoảng trống nghiên cứu (2011–2026)
 
-> ⚠️ **LƯU Ý (2026-08-26):** Tài liệu này viết cho đề tài CŨ (3D-GRF/COP + knee OA). Đề tài hiện tại là **Hướng C** (Velostat theo dõi độ cứng mô gan chân / sàng lọc DFU) — xem `docs/01_Topic_Definition.md`. Nội dung dưới đây giữ làm **tham khảo nền**, sẽ viết lại khi cần.
-
-
-> **Ngày:** 2026-08-25 · **Trạng thái:** KẾ HOẠCH — **chưa có kết quả rà soát**. Đây là quy trình phải chạy **trước khi build hardware** và **trước khi claim bất kỳ novelty nào**.
-> **Nguyên tắc chống ảo giác:** "không tìm thấy trong một truy vấn" chỉ cho phép ghi `UNVERIFIED`, **không** chứng minh "chưa có ai làm". Mọi nguồn vào `research/evidence/SOURCE_LEDGER.csv` chỉ sau khi xác minh tiêu đề/tác giả/venue/năm/DOI/URL và đoạn văn hỗ trợ đúng claim.
+> **Ngày:** 2026-09-13 · **Trạng thái:** KẾ HOẠCH — **chưa hoàn tất rà soát**. Phải chạy xong **trước khi** viết bất kỳ câu nào khẳng định "chưa có ai làm".
+> **Nguyên tắc chống ảo giác:** "không tìm thấy trong một truy vấn" chỉ cho phép ghi `UNVERIFIED`, **không** chứng minh "chưa có ai làm". Một nguồn chỉ vào `research/evidence/SOURCE_LEDGER.csv` sau khi đã xác minh tiêu đề/tác giả/venue/năm/DOI/URL **và** đọc được đoạn văn hỗ trợ đúng claim.
 
 ---
 
 ## 1. Mục tiêu
 
-Tìm một **khoảng trống đủ sâu** để biến "smart insole" thành nghiên cứu khoa học — cụ thể là xác định mức prior art của **4 ứng viên novelty chính**:
+Xác định **mức prior art** của 4 ứng viên novelty của đề tài găng tay, theo thứ tự quan trọng:
 
-- **E + D (ưu tiên):** tách Δ_biology khỏi Δ_sensor + phát hiện thay đổi dọc (longitudinal change detection).
-- **A:** drift-resistant estimation qua nhiều phiên.
-- **B:** cross-session generalization (train ngày 1 → đúng ngày 30).
-- **C:** personal baseline (không retrain toàn bộ khi đổi người).
+| Ưu tiên | Ứng viên novelty | Câu hỏi prior-art cần trả lời |
 
----
-
-## 2. Chủ đề tìm kiếm (10 nhóm — từ chỉ thị chủ dự án)
-
-| # | Nhóm | Truy vấn gợi ý (tiếng Anh) |
 |---|---|---|
-| 1 | Velostat + plantar pressure | `Velostat insole pressure sensor characterization` |
-| 2 | 3D-GRF estimation | `smart insole machine learning 3D ground reaction force estimation` |
-| 3 | COP estimation | `center of pressure estimation insole machine learning` |
-| 4 | sensor drift / hysteresis | `Velostat drift hysteresis long-term`, `piezoresistive sensor drift compensation` |
-| 5 | cross-session generalization | `wearable gait model cross-session generalization calibration` |
-| 6 | personal calibration | `personal calibration insole pressure GRF` |
-| 7 | longitudinal gait monitoring | `longitudinal gait monitoring wearable drift` |
-| 8 | knee OA biomechanics | `knee osteoarthritis gait ground reaction force center of pressure` |
-| 9 | GNN / ST-GCN cho gait | `spatio-temporal graph convolution gait ground reaction force` |
-| 10 | Edge/INT8 deployment | `RK3588 NPU INT8 inference latency gait` |
+| **A (cao nhất)** | Cảm biến **hướng** qua vách khung cứng: dùng áp lực lên vách cơ khí để mã hóa **hướng chuyển động của lóng ngón**, không dùng IMU | Đã có ai dùng khung cứng + piezoresistive để suy hướng khớp chưa? Bằng sáng chế nào? |
+| **B** | Suy luận hướng khớp từ trường lực rời rạc → **tái tạo bàn tay 3D** không cần IMU | Có công bố nào tái tạo pose không dùng IMU/camera? Sai số bao nhiêu? |
+| **C** | **Longitudinal monitoring** chức năng bàn tay tại nhà giữa các lần tái khám, có **tự kiểm tra độ tin cậy** | Đã có hệ thống nào theo dõi bàn tay tại nhà theo tuần và tự báo "dữ liệu không đáng tin"? |
+| **D** | Hạ chi phí so với dynamometer/E-Link bằng vật liệu piezoresistive giá rẻ | Ngưỡng giá của các giải pháp hiện có; có sản phẩm thương mại nào < 50 USD? |
+
+**Điều kiện để A được xem là "chưa bị chiếm":** phải tìm và đọc được công bố/sáng chế gần nhất theo cùng nguyên lý, rồi chỉ ra được **khác biệt cụ thể**, không phải chỉ "khác về ứng dụng".
 
 ---
 
-## 3. Quy trình mỗi nhóm
+## 2. Mười nhóm chủ đề tìm kiếm
 
-1. **Log truy vấn** trước khi tìm (auditable):
-   ```bash
-   python scripts/research_log.py --kind search --engine web \
-     --query '...' --purpose 'gap analysis nhóm N' --status complete \
-     --summary '...' --sources SRC-...
-   ```
-2. **Thu thập candidate** (web search, Google Scholar, arXiv, PubMed) — ghi raw vào `research/cache/` (ignored).
-3. **Xác minh 5 yếu tố** mỗi nguồn: tiêu đề, tác giả, venue, năm, DOI/URL + **đoạn văn hỗ trợ đúng claim**.
-4. Ghi vào `research/evidence/SOURCE_LEDGER.csv` với `verification_status ∈ {VERIFIED, PARTIAL, UNVERIFIED, REJECTED}` và `verified_scope`.
-5. Cập nhật ma trận dưới đây (mục 5).
-6. Đối với mỗi ứng viên novelty, kết luận một trong: **GAP confirmed (có bằng chứng) / OVERLAP (prior art đã có) / UNRESOLVED (chưa đủ dữ liệu)**.
-
----
-
-## 4. Tiêu chí "gap đủ sâu"
-
-Một khoảng trống chỉ được claim khi **cả 3** điều kiện sau có bằng chứng:
-1. Các công trình gần nhất được trích dẫn đầy đủ và **được đọc đúng phạm vi** (không chỉ abstract).
-2. Chỉ ra **khác biệt cụ thể** (về drift handling, cross-session, cost, deployment) chứ không phải "chưa thấy bài tích hợp".
-3. Khác biệt đó **có thể đo được** bằng benchmark định lượng (vd: cross-session error, false-change rate).
+| # | Nhóm | Truy vấn gợi ý (tiếng Anh) | Trạng thái |
+|---|---|---|---|
+| 1 | Găng tay cảm biến cho phục hồi chức năng | `smart glove stroke rehabilitation hand function monitoring` · `data glove piezoresistive hand therapy` | ☐ |
+| 2 | Đo **hướng** lực / mô-men bằng vật liệu áp điện trở | `directional force sensing piezoresistive glove` · `shear force glove sensor` | ☐ |
+| 3 | Tái tạo pose bàn tay không dùng camera/IMU | `hand pose reconstruction without IMU` · `glove kinematic reconstruction force sensor` | ☐ |
+| 4 | Khung cứng / exoskeleton mềm và cảm biến tích hợp | `rigid exoskeleton frame finger force sensing` · `finger segment displacement sensor` | ☐ |
+| 5 | Theo dõi tại nhà sau đột quỵ | `home monitoring upper limb stroke wearable longitudinal` | ☐ |
+| 6 | Thang đo lâm sàng & MDC | `Fugl-Meyer ARAT minimal detectable change upper extremity` | ☐ |
+| 7 | Lực ngón và chức năng | `finger force grip pinch correlation Fugl-Meyer` | ☐ |
+| 8 | Đặc tính vật liệu Velostat | `Velostat characterization hysteresis creep drift pressure sensor` | ☐ |
+| 9 | Tự kiểm tra/hiệu chuẩn cảm biến | `sensor self-validation reference cell drift compensation` · `self-calibration piezoresistive` | ☐ |
+| 10 | Edge-AI cho thiết bị đeo y tế | `INT8 quantization wearable healthcare NPU on-device inference` | ☐ |
+| 11 | Bằng sáng chế liên quan | `patent glove force sensor hand rehabilitation monitoring` (Google Patents, WIPO, USPTO) | ☐ |
+| 12 | Đề tài trong nước đã có | `đồ án găng tay cảm biến phục hồi chức năng` · các đề tài ViSEF/ISEF/thi KHKT đã đạt giải | ☐ |
 
 ---
 
-## 5. Ma trận theo dõi (điền dần — hiện trống)
+## 3. Nguồn gốc đã có (từ giai đoạn trước — phải đọc lại toàn văn)
 
-| Nhóm | Số nguồn candidate | Số VERIFIED | Phát hiện chính | Ảnh hưởng novelty (E/D/A/B/C) | Trạng thái |
-|---|---|---|---|---|---|
-| 1 Velostat+plantar | 0 | 0 | — | — | CHƯA LÀM |
-| 2 3D-GRF | 1 | 1 | Zhang et al. 2025: low-cost CapSense+IMU + attention, đối chiếu force plate, ước lượng 3D-GRF | Generic GRF regression: OVERLAP; không chứng minh E/D | SƠ BỘ — xem review 2026-08-25 |
-| 3 COP | 0 | 0 | — | — | CHƯA LÀM |
-| 4 drift/hysteresis | 2 | 2 | Velostat có đặc trưng hysteresis/time-history; piezoresistive insole 2026 báo drift/stabilization khi cycling | A: generic correction không đủ; E vẫn UNRESOLVED | SƠ BỘ — xem review 2026-08-25 |
-| 5 cross-session | 1 | 1 | Có test–retest pressure insole/force-plate; chưa xác minh multi-day 3D-GRF + separation | B/E: UNRESOLVED | SƠ BỘ — xem review 2026-08-25 |
-| 6 personal calib | 0 | 0 | — | — | CHƯA LÀM |
-| 7 longitudinal | 2 | 2 | Longitudinal wearable monitoring và plantar-pressure individuality đã có nhưng khác thiết bị/population | D high-level: OVERLAP; E device-specific: UNRESOLVED | SƠ BỘ — xem review 2026-08-25 |
-| 8 knee OA | 0 | 0 | — | — | CHƯA LÀM |
-| 9 GNN/ST-GCN | 0 | 0 | — | — | CHƯA LÀM |
-| 10 edge/INT8 | 0 | 0 | — | — | CHƯA LÀM |
+Các tài liệu dưới đây đã **gặp trong quá trình tra cứu** nhưng chưa được đưa vào `SOURCE_LEDGER.csv` với trạng thái `READ_FULL`. Trước khi trích dẫn, phải đọc toàn văn và ghi lại số trang/bảng số cụ thể.
 
----
-
-## 6. Kết luận tạm thời (đã biết từ chỉ thị chủ dự án — vẫn phải xác minh)
-
-> Literature 2025–2026 **đã có** smart insole + ML ước lượng 3D-GRF; pressure insole + IMU + ML; spatiotemporal GCN cho continuous 3D-GRF; GRF liên quan knee OA. Do đó **"Velostat + GNN → 3D-GRF" không đủ novelty** — đây là cảnh báo chiến lược của chủ dự án, sẽ được kiểm chứng bằng quy trình trên (chưa phải kết luận có bằng chứng).
+- Systematic review: *AI-based smart glove for hand movement recognition and rehabilitation monitoring* (Springer, 2026 — 101 bài 2011–2025). 🔵 xác minh lại tạp chí, số, DOI.
+- *Wearable technology to capture arm use of stroke survivors in home and community settings* (medRxiv 2023 / PMC9901039).
+- *Tracking Upper Limb Motion via Wearable Solutions* — systematic review (JMIR 2024).
+- *Occupational Therapy at Home E-Rehabilitation (OTHER)* — DOI 10.1080/09638288.2026.2643929, PMID 41918405.
+- Amin K.R. et al., *Remote Monitoring for the Management of Spasticity: Challenges, Opportunities and Proposed Technological Solution* — IEEE OJEMB, early access 30/12/2024, DOI 10.1109/OJEMB.2024.3523442. (Lưu ý: đối tượng là **spasticity**, không phải trực tiếp chức năng bàn tay → chỉ dùng để chứng minh **khoảng trống chung** về theo dõi giữa các lần tái khám.)
+- Zhu lab (UCLA), *A Glove-based System for Studying Hand-Object Manipulation* (IROS 2017) — 15 IMU + 6 cảm biến Velostat lực tiếp xúc. **Prior art gần nhất, phải differentiate rõ.**
+- *A Reconfigurable Data Glove for Reconstructing Physical and Virtual Grasps* (2023) — mạng IMU + Velostat.
+- *Development of an Instrumented Glove for Palmar Pressure Assessment in Kayakers* (Sensors 2026) — Velostat trong găng, bối cảnh thể thao.
+- *Design of a flexible data glove for gesture recognition* (2025) — mảng piezoresistive 5×4, nhận dạng cử chỉ.
+- Hopkins M. et al., đặc tính Velostat — IEEE Sensors Journal 2020 (🔵 xác minh lại tên bài/DOI).
+- *Effect of task-oriented training assisted by force feedback hand rehabilitation robot on finger grasping function in stroke patients with hemiplegia* (2024, PMC11092254) — RCT, cho thấy lực bóp/AROM/FMA-Hand/ARAT cải thiện; dùng làm bằng chứng **lực ngón có ý nghĩa lâm sàng**.
+- *Quantitative measurement of finger usage in stroke hemiplegia using ring-shaped wearable devices* (2023, PMC10242812) — tỷ lệ sử dụng ngón tương quan với FMA-UE/ARAT/STEF.
 
 ---
 
-## 7. Đầu ra mong đợi
+## 4. Quy trình thực hiện
 
-- `research/evidence/SOURCE_LEDGER.csv` cập nhật.
-- Bảng tổng hợp prior art (sensor, ground-truth, drift handling, model, cost) trong một tài liệu rà soát `research/reviews/20XX-XX-XX_literature_gap.md`.
-- Kết luận novelty cho E/D/A/B/C + cập nhật `research/claims/CLAIM_LEDGER.csv` (SUPPORTED/UNVERIFIED/CONTRADICTED).
-- Quyết định chính thức của chủ dự án về novelty cuối cùng trong `research/context/DECISION_LOG.md`.
+1. Với mỗi nhóm chủ đề, chạy tối thiểu **3 truy vấn khác cách diễn đạt** (thuật ngữ chuyên ngành, thuật ngữ thương mại, thuật ngữ bằng sáng chế).
+2. Log mọi truy vấn vào `research/queries/QUERY_LOG.jsonl` bằng `scripts/research_log.py` (kèm mục đích và kết luận đạt/không đạt).
+3. Chỉ ghi nguồn vào `SOURCE_LEDGER.csv` khi đã xác minh **tiêu đề + tác giả + venue + năm + DOI/URL** và **đoạn văn hỗ trợ đúng claim**.
+4. Điền vào **ma trận theo dõi** dưới đây, mỗi dòng một công bố/sáng chế.
+5. Kết thúc: viết một đoạn **"prior art gần nhất và khác biệt cụ thể"** cho từng ứng viên novelty. Nếu không tìm được khác biệt → **hạ mức novelty**, không được giữ nguyên câu claim.
+
+## 5. Ma trận theo dõi (điền dần)
+
+| ID | Nguồn | Loại | Đo gì | Cảm biến | Đối tượng | Theo dõi dọc? | Tự kiểm tra lỗi? | Khác biệt với đề tài |
+|---|---|---|---|---|---|---|---|---|
+| *chờ điền* | | | | | | | | |
+
+## 6. Ngưỡng ra quyết định
+
+- Nếu tìm thấy **một công bố hoặc bằng sáng chế đã làm đúng** "khung cứng + piezoresistive → suy hướng khớp + tái tạo 3D": **hạ novelty A xuống mức "cải tiến"**, dồn trọng tâm sang C (longitudinal + self-validation).
+- Nếu tìm thấy hệ thống theo dõi bàn tay tại nhà theo tuần đã có sản phẩm: **hạ novelty C**, dồn sang A.
+- Nếu **cả A và C đều bị chiếm**: dừng, báo thẳng, không viết báo cáo như thể còn mới.

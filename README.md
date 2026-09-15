@@ -1,35 +1,108 @@
-# Smart Insole Edge-AI — Velostat tự kiểm tra & theo dõi độ cứng mô gan chân (sàng lọc DFU)
+# Găng tay thông minh — Đánh giá & theo dõi chức năng vận động bàn tay sau đột quỵ
 
-**Lót giày cảm biến áp lực Velostat giá rẻ**, dùng **Edge-AI**, **tự kiểm tra độ tin cậy của cảm biến** và **theo dõi độ cứng mô khu trú** ở gan chân — hỗ trợ **sàng lọc sớm nguy cơ loét bàn chân đái tháo đường (DFU) tại nhà**.
+**Đề tài (tên chính thức):**
 
-> **Trạng thái bằng chứng:** giai đoạn **định hướng + prior-art**. **Chưa có kết quả thực nghiệm.** Đề tài **sống hay chết do GATE experiment** (chờ Velostat). Không tuyên bố chẩn đoán/điều trị; chỉ "sàng lọc/theo dõi nguy cơ". Xem `research/context/PROJECT_SNAPSHOT.md`.
+> **Nghiên cứu và phát triển găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ**
 
-## Vấn đề & ý tưởng
+**Tiếng Anh:**
 
-- Người đái tháo đường hay bị **loét bàn chân → đoạn chi**; **mô đệm gan chân xơ cứng trước khi loét**. **Độ cứng mô là biomarker nguy cơ DFU đã được y văn xác nhận.**
-- Công cụ đo độ cứng hiện tại (elastography/MyotonPRO/TCM) **đắt, cồng kềnh, 1 điểm, chỉ ở phòng khám**.
-- **Ý tưởng:** mảng **Velostat** rẻ, **nén lặp (áp lực động)** → suy **độ cứng khu trú**; **self-validation** (ô tham chiếu phát hiện drift → báo lỗi thay vì báo sai) + **theo dõi dọc tại nhà**.
+> A low-cost smart glove with directional piezoresistive sensing for quantitative hand motor-function assessment and longitudinal monitoring in post-stroke rehabilitation.
 
-## Trọng tâm novelty (trung thực)
+**Pitch 1 câu ("viên đạn"):**
 
-> Điểm mới chính = **góc vật lý**: dùng **đáp ứng áp lực động** của Velostat để suy **độ cứng mô** (dynamic-pressure stiffness proxy). **Self-validation & longitudinal KHÔNG mới** (đã có prior art) — là execution. Đây là mức novelty **phù hợp ViSEF** (không phải "phát minh thế giới").
+> **Theo dõi định lượng chức năng bàn tay tại nhà, liên tục giữa các lần tái khám lâm sàng.**
 
-Hành trình săn đề tài + lý do các hướng khác bị loại: [`research/reviews/00_EXPLORATION_SUMMARY.md`](research/reviews/00_EXPLORATION_SUMMARY.md). Chi tiết đề tài: [`docs/01_Topic_Definition.md`](docs/01_Topic_Definition.md). GATE experiment: [`research/protocols/05_velostat_stiffness_GATE_experiment.md`](research/protocols/05_velostat_stiffness_GATE_experiment.md).
+---
 
-## Tài liệu
+## ⚠️ Trạng thái bằng chứng — đọc trước khi trích dẫn
 
-| Tài liệu | Nội dung |
-|---|---|
-| [`docs/01_Topic_Definition.md`](docs/01_Topic_Definition.md) | Đề tài, RQ 2 tầng, novelty, pipeline, killer experiment, lộ trình theo tầng |
-| [`docs/02_Theoretical_Foundation.md`](docs/02_Theoretical_Foundation.md) | **Cơ sở lí thuyết**: cơ sinh học, Velostat, drift, dP/dt, GNN, metrics, edge |
-| [`docs/03_Literature_Gap_Analysis_Plan.md`](docs/03_Literature_Gap_Analysis_Plan.md) | Kế hoạch rà soát khoảng trống 2025–2026 (10 nhóm chủ đề) |
-| [`research/protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md`](research/protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md) | Phản biện 5 ghế + 5 câu hỏi chí mạng |
-| [`research/protocols/ISEF_REVIEW_ORCHESTRATION.md`](research/protocols/ISEF_REVIEW_ORCHESTRATION.md) | Điều phối phản biện 6-lane + adjudication |
-| [`research/context/DECISION_LOG.md`](research/context/DECISION_LOG.md) | Nhật ký quyết định chính thức |
-| [`research/context/PROJECT_SNAPSHOT.md`](research/context/PROJECT_SNAPSHOT.md) | Snapshot ngữ cảnh hiện tại |
-| [`research/context/CONVERSATION_2026-08-25.md`](research/context/CONVERSATION_2026-08-25.md) | Bản nén hội thoại (đổi hướng + tinh chỉnh) |
+- Giai đoạn hiện tại: **định hướng đề tài + thiết kế + prior art**. **Chưa có kết quả thực nghiệm nào.**
+- Mọi tuyên bố về độ chính xác, độ nhạy, tương quan lâm sàng trong repo là **giả thuyết**, cho đến khi có log đo thật.
+- **Không** chẩn đoán đột quỵ, **không** thay thế đánh giá lâm sàng (FMA/ARAT/Box & Block), **không** phải robot phục hồi chức năng.
+- **Không** thử trên người tham gia (kể cả người khỏe) trước khi hoàn tất quy trình IRB/SRC.
+- Quy tắc chi tiết: [`AGENTS.md`](AGENTS.md).
 
-## Thiết lập nhanh
+---
+
+## 1. Vấn đề
+
+- Đột quỵ là nguyên nhân hàng đầu gây tàn tật lâu dài. Phần lớn người bệnh còn di chứng yếu/liệt tay, hạn chế sinh hoạt hằng ngày.
+- Phục hồi chức năng bàn tay phụ thuộc vào **luyện tập tại nhà hằng ngày**, nhưng kỹ thuật viên chỉ gặp bệnh nhân mỗi **1–3 tháng**.
+- Các công cụ đánh giá hiện tại (Fugl-Meyer, ARAT, Box & Block Test, lực kế Jamar, E-Link) cho **một "ảnh chụp" tại thời điểm đo**, tại cơ sở y tế, chi phí cao.
+- → Khoảng giữa hai lần tái khám là một **"hộp đen"**: không biết bệnh nhân có tập không, tập đúng hay sai, đang tiến bộ hay chững lại.
+
+## 2. Hướng giải quyết
+
+Một **thiết bị đánh giá/theo dõi** (không phải máy tập):
+bệnh nhân đeo găng tay trong các bài tập chuẩn tại nhà → hệ thống ghi lực theo **hướng và độ lớn** ở từng khớp ngón tay → trích xuất chỉ số chức năng → vẽ lại **mô hình bàn tay 3D** và dựng **đường cong tiến triển theo tuần** → kỹ thuật viên/bác sĩ xem từ xa.
+
+## 3. Nguyên lý cảm biến (điểm kỹ thuật trung tâm)
+
+```
+Ngón tay chuyển động theo hướng X
+        ↓
+Ép vào vách khung cứng (exoskeleton) phía X
+        ↓
+Vật liệu piezoresistive (Velostat) trên vách đó bị nén
+        ↓
+Điện trở giảm → ADC đọc → lực hướng X
+        ↓
+Ghép nhiều kênh → suy luận hướng gập/duỗi từng khớp → dựng lại bàn tay 3D
+```
+
+**Khác biệt so với găng tay phổ biến trên thị trường:** các hệ thống hiện có thường dùng **IMU / flex sensor** để đo góc. Thiết kế này **không dùng IMU** — dùng chính cấu trúc khung cứng + **sensing element chế tạo từ vật liệu Velostat** để mã hóa **hướng** và **lực**.
+
+Phân cấp thuật ngữ (bắt buộc dùng đúng): xem [`docs/bao_cao/GLOSSARY.md`](docs/bao_cao/GLOSSARY.md) —
+**vật liệu Velostat** ≠ **sensing element** (Velostat + copper tape + cấu trúc sandwich) ≠ **mảng sensing element** ≠ **hệ thống cảm biến áp lực bàn tay** (mảng + ESP32-S3 + firmware).
+
+## 4. Điểm mới — nói trung thực
+
+| # | Thành phần | Mức mới | Ghi chú |
+|---|---|---|---|
+| 1 | **Cảm biến hướng qua vách khung cứng** (directional sensing through rigid-frame walls, không IMU) | Ứng viên chính | Prior art gần nhất dùng IMU để đo pose, Velostat chỉ đo lực tiếp xúc. Cần rà soát prior art kỹ trước khi claim |
+| 2 | **Cặp sensing element đối xứng** triệt thành phần drift đồng pha (common-mode) | Kỹ thuật | Không claim là phát minh |
+| 3 | **Theo dõi dọc (longitudinal) tại nhà + tái tạo 3D để chuyên gia xem từ xa** | Ứng dụng | Khoảng trống được xác nhận bởi hội đồng chuyên gia 2024 và KTV VLTL-PHCN |
+| 4 | **Mô hình INT8 chạy trên NPU (RK3588)** | Kỹ thuật triển khai | Không mới về thuật toán; mới về triển khai biên cho bài toán này |
+
+> Không claim "phát minh thế giới". Mức novelty nhắm tới là **ViSEF/ISEF**: thực thi tốt + tác động thật + sáng tạo vừa phải.
+> Hành trình chọn đề tài và lý do các hướng khác bị loại: [`research/reviews/00_EXPLORATION_SUMMARY.md`](research/reviews/00_EXPLORATION_SUMMARY.md).
+
+## 5. Kiến trúc phần cứng (chốt 2026-09-13)
+
+```
+12–24 sensing element (Velostat + copper tape) trên khung găng in 3D
+        ↓
+CD74HC4067 (16 kênh/MUX) × 1–2
+        ↓ 1 kênh analog (chọn MUX bằng chân EN)
+ESP32-S3
+  · ADC1 12-bit + lấy trung bình N mẫu → ~11 bit hiệu dụng
+  · Quét toàn bộ kênh → frame + CRC → BLE / UART
+        ↓
+Orange Pi 5 Pro (RK3588, NPU ~6 TOPS)
+  · Bù ảnh hưởng drift (cặp đối xứng + ô tham chiếu)
+  · Trích đặc trưng → vector lực
+  · Suy luận hướng khớp → tái tạo bàn tay 3D
+  · Mô hình INT8 (RKNN) chạy trên NPU
+        ↓
+Dashboard theo tuần → KTV / bác sĩ theo dõi từ xa
+```
+
+Chi tiết ngân sách độ phân giải, tốc độ khung hình và bố trí kênh: [`docs/04_Hardware_Architecture.md`](docs/04_Hardware_Architecture.md).
+
+## 6. Bản đồ repo
+
+| Nhóm | File | Nội dung |
+|---|---|---|
+| Đề tài | [`docs/01_Topic_Definition.md`](docs/01_Topic_Definition.md) | Tên, vấn đề, khoảng trống, novelty, RQ, pipeline |
+| Lý thuyết | [`docs/02_Theoretical_Foundation.md`](docs/02_Theoretical_Foundation.md) | Phục hồi vận động sau đột quỵ, thang đo, cơ sinh học bàn tay, vật liệu piezoresistive, drift, edge-AI |
+| Prior art | [`docs/03_Literature_Gap_Analysis_Plan.md`](docs/03_Literature_Gap_Analysis_Plan.md) | Kế hoạch rà soát khoảng trống 2011–2026 |
+| Phần cứng | [`docs/04_Hardware_Architecture.md`](docs/04_Hardware_Architecture.md) | Bố trí kênh, MUX, ngân sách nhiễu/độ phân giải, tốc độ khung |
+| Báo cáo | [`docs/bao_cao/`](docs/bao_cao/) | A.1–A.6 theo mẫu ViSEF + GLOSSARY |
+| Outline | [`docs/OUTLINE_BAOCAO_VISEFD.md`](docs/OUTLINE_BAOCAO_VISEFD.md) | Khung báo cáo toàn văn A/B/C |
+| GATE | [`research/protocols/06_glove_hand_GATE_experiment.md`](research/protocols/06_glove_hand_GATE_experiment.md) | Thí nghiệm quyết định đề tài sống/chết |
+| Sổ sách | [`research/context/`](research/context/), [`research/claims/`](research/claims/), [`research/evidence/`](research/evidence/) | Decision log, snapshot, claim ledger, source ledger |
+
+## 7. Thiết lập nhanh
 
 Yêu cầu: Git, Python 3.10+, Bash.
 
@@ -39,33 +112,27 @@ python3 -m venv .venv
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 
-# Clone đúng phiên bản các nguồn nghiên cứu/tooling vào .tools/sources (đã ghim commit)
-bash scripts/bootstrap_research_tooling.sh
-
-# Kiểm tra trạng thái; thêm --strict để trả lỗi nếu thiếu dependency/target bắt buộc
-python scripts/check_research_environment.py
+bash scripts/bootstrap_research_tooling.sh          # ghim commit tooling vào .tools/sources
+python scripts/check_research_environment.py        # thêm --strict để fail khi thiếu dependency
 ```
 
-MiKTeX (render sơ đồ PlotNeuralNet/TikZ) cần **installer chính thức** trên máy làm việc (https://miktex.org/download); trên Debian 12 có thể thử `bash scripts/install_miktex_debian.sh`. Clone source MiKTeX trong `.tools/sources/miktex` **không phải** MiKTeX runtime.
+## 8. Quy trình nghiên cứu có kiểm chứng
 
-## Quy trình nghiên cứu có kiểm chứng
+Mọi agent/tác giả tuân thủ [`AGENTS.md`](AGENTS.md): đọc snapshot → log truy vấn → cập nhật claim/source ledger → chạy review protocol khi có thay đổi lớn → cập nhật snapshot → `python scripts/build_context_bundle.py`.
 
-Mọi agent tuân thủ [`AGENTS.md`](AGENTS.md). Quy trình mỗi phiên: đọc snapshot → log truy vấn (`scripts/research_log.py`, `scripts/tinyfish_search.py`) → cập nhật claim/source ledger → chạy review protocol khi có thay đổi lớn → cập nhật snapshot → `python scripts/build_context_bundle.py`.
+**Bước tiếp theo bắt buộc:** chốt bố trí kênh + chế tạo mẫu sensing element, sau đó chạy **GATE 0** trong `research/protocols/06_glove_hand_GATE_experiment.md` trước khi viết bất kỳ kết luận nào.
 
-**Bước tiếp theo bắt buộc (trước khi build hardware):** literature gap analysis 2025–2026 theo `docs/03`.
+## 9. Ghi chú về tên repo
 
-## Lưu ý đổi tên repo
-
-Đã **chuẩn bị đổi tên** `nhatvanngoc/adaptive_cushion_aac` → `nhatvanngoc/smart-insole-edge-ai`, nhưng token GitHub của phiên agent **không có quyền Administration** (HTTP 403) nên chưa thực hiện được. Chủ dự án tự đổi:
+- Tên đề tài đã đổi; tên **repo GitHub hiện tại vẫn là `velostat-smart-insole-dfu`** và phần **description vẫn là mô tả đề tài đệm khí cũ** — cả hai đều là di sản.
+- Agent phiên này **không có quyền Administration** trên repo (HTTP 403 khi thử `gh repo rename` và `gh repo edit`), nên không tự sửa được. Chủ dự án chạy:
 
 ```bash
-gh repo rename smart-insole-edge-ai --repo nhatvanngoc/adaptive_cushion_aac --yes
+gh repo rename smart-glove-stroke-hand-rehab --repo nhatvanngoc/velostat-smart-insole-dfu --yes
+git remote set-url origin https://github.com/nhatvanngoc/smart-glove-stroke-hand-rehab.git
+gh repo edit --description "Nghiên cứu và phát triển găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ"
 ```
 
-hoặc GitHub web → **Settings → Repository name**. Sau đó (nếu cần):
+- Sau khi đổi xong, cập nhật `DEC-REPO-001` trong `research/context/DECISION_LOG.md` sang `DONE`.
 
-```bash
-git remote set-url origin https://github.com/nhatvanngoc/smart-insole-edge-ai.git
-```
-
-Branch làm việc của phiên giữ nguyên `arena/01a0372f-adaptive-cushion-aac` (ràng buộc nền tảng).
+- Thư mục làm việc cục bộ vẫn giữ tên `velostat-smart-insole-dfu` (ràng buộc của phiên làm việc) — không ảnh hưởng nội dung khoa học.

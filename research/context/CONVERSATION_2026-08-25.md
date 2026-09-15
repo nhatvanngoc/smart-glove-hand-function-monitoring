@@ -1,5 +1,11 @@
 # Conversation archive — 2026-08-25 (đổi hướng đề tài)
 
+> ⚠️ **LƯU TRỮ LỊCH SỬ — đề tài trong file này đã bị bỏ (2026-08-28 / 2026-09-13).**
+> Nội dung nói về đề tài **smart insole 3D-GRF/COP** và **lót giày theo dõi độ cứng mô gan chân (DFU)** — cả hai đã bị loại.
+> Đề tài hiện tại: **găng tay thông minh đánh giá & theo dõi chức năng bàn tay sau đột quỵ** (`docs/01_Topic_Definition.md`, DEC-TOPIC-019).
+> Giữ file để truy vết lịch sử quyết định; **không** dùng làm cơ sở kỹ thuật cho đề tài hiện tại.
+
+
 > **Mục đích:** bản nén (lossy) hội thoại ra quyết định đổi hướng đề tài, lưu trữ bền vững trên GitHub để khôi phục ngữ cảnh mà không phụ thuộc trí nhớ hội thoại.
 > **Phương pháp nén:** tóm tắt có cấu trúc + phụ lục chứa **nguyên văn** chỉ thị của chủ dự án (làm provenance). Bản tóm tắt là **hỗ trợ điều hướng**, không phải bằng chứng; nguồn chuẩn là `DECISION_LOG.md`, `PROJECT_SNAPSHOT.md` và các artifact gốc được trỏ tới.
 > **Trạng thái:** chủ dự án cho biết sẽ gửi **thêm thông tin** sau — các mục "mở" dưới đây chờ cập nhật tiếp theo.
