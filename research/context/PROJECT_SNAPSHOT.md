@@ -1,4 +1,4 @@
-# Project snapshot — 2026-09-13
+# Project snapshot — 2026-09-19 (lượt rà soát prior art 1) · nền 2026-09-13
 
 > Bản nén ngữ cảnh để phiên sau khôi phục trạng thái **bằng artifact**, không dựa vào trí nhớ hội thoại.
 > Chỉ chứa **sự kiện bền vững**. Quyết định đầy đủ: `DECISION_LOG.md`. Đề tài: `docs/01_Topic_Definition.md`.
@@ -42,12 +42,18 @@
 
 ## 4. Novelty (trung thực — mức ViSEF)
 
-- **KHÔNG** claim "găng tay + AI/TinyML" là mới; **KHÔNG** claim "đo lực bóp" là mới.
-- **Ứng viên chính:** cảm biến **hướng** qua **vách khung cứng** — mã hóa hướng chuyển động của lóng ngón bằng áp lực lên vách, **không dùng IMU/flex sensor**, đồng thời lấy được **độ lớn lực**.
-- **Ứng viên ứng dụng:** theo dõi dọc tại nhà + tái tạo bàn tay 3D để chuyên gia xem từ xa.
-- **KHÔNG mới (phải trích dẫn prior art):** đọc vi sai/ô tham chiếu để bù drift; INT8 quantization.
-- Prior art gần nhất phải differentiate: Zhu lab IROS 2017 (15 IMU + 6 Velostat lực tiếp xúc); Reconfigurable Data Glove 2023 (IMU + Velostat).
-- **Chưa hoàn tất rà soát prior art** → xem `docs/03_Literature_Gap_Analysis_Plan.md`. Mức novelty chỉ được chốt sau khi rà soát xong.
+> ⚠️ **CẬP NHẬT 2026-09-19 — lượt rà soát prior art 1** (`research/reviews/2026-09-19_prior_art_novelty_gate1.md`). Mức novelty bên dưới đã **dịch chuyển**: A bị hạ một bậc, C được nâng lên trọng tâm. **Chưa chốt** — chờ `DEC-NOV-001` + lane R5.
+
+- **KHÔNG** claim "găng tay + AI/TinyML" là mới; **KHÔNG** claim "đo lực bóp" là mới; **KHÔNG** claim "không dùng IMU" là mới (đã có găng grating/optic 2021, stretch 2024).
+- ~~Ứng viên chính: cảm biến hướng qua vách khung cứng~~ → **sau lượt rà soát 1: chỉ còn là "cải tiến cấu hình + phương pháp lập luận"**, vì:
+  - `SRC-SIDEWALL-PIEZO-2015` (Sensors 15(10), DOI 10.3390/s151025463): **1 lõi + 4 vách elastomer**, phần tử CNT/PDMS khóa liên động, phân biệt pháp tuyến + shear 4 hướng **không cần xử lý tín hiệu phức tạp** → nguyên lý "vách mã hóa hướng" có từ 2015.
+  - `SRC-ARTGLOVE-2026` (arXiv:2606.16370): **găng vỏ cứng khớp nối, 16 bề mặt chức năng, da áp điện trở 2048 taxel @120 Hz** — nhưng 22 DoF đo bằng **encoder**.
+  - `SRC-CN116954366A-ARRAYGLOVE`: bằng sáng chế găng 20 phần tử áp điện trở tại 14 khớp ngón + lòng bàn.
+- **Ứng viên chính mới (đề xuất): C** = chỉ số chức năng bàn tay từ lực hướng, kèm **khung MDC/ICC** và **cờ từ chối kết luận**, dùng tại nhà giữa hai lần tái khám. Giao điểm này **chưa thấy ai làm đủ**, nhưng **cấm** nói "hệ thống đầu tiên theo dõi tại nhà": đã có `SRC-LOWCOST-GLOVE-2006` (găng extended monitoring + functional hand assessment, 2006) và `SRC-MULTITOUCH-APP-2021` (app tablet n=88, có SEM/MDC, hội tụ FMA-UE/JTT/BBT/NHPT).
+- **KHÔNG mới (phải trích dẫn prior art):** đọc vi sai/ô tham chiếu để bù drift (thêm bằng chứng `SRC-OPENPAD-FINGER-2020`: 2 phần tử hai bên đốt ngón để tách thành phần lực, từ 2020); INT8 quantization.
+- **Prior art đã xác minh danh tính 2026-09-19:** `SRC-ZHU-2017-GLOVE` = Liu H. et al., IROS 2017, tr. 6617–6624, DOI 10.1109/IROS.2017.8206575 (đúng như mô tả cũ; bổ sung: hướng vector lực **gán theo pose từ IMU**, không suy từ vách). `SRC-RECONFIG-GLOVE-2023` = Liu H. et al., **Engineering** 2024;32(1):217-232, DOI 10.1016/j.eng.2023.01.009 — **sửa**: không phải "Science China". `SRC-SMARTGLOVE-REVIEW-2026` = Mohammed A., Ali A.M., *J. Eng. Appl. Sci.* 73:246 (2026), DOI 10.1186/s44147-026-01084-6 (101 bài 2011–2025; 72% fusion flex+IMU).
+- **Rủi ro trùng trong nước (mức học sinh):** `SRC-VNM-HS-GLove-2026` — học sinh Lâm Đồng làm "găng tay thông minh tích hợp AI" có **cảm biến lực + áp suất khí**, theo dõi tiến độ phục hồi, **giải nhất cấp tỉnh 2026**; `SRC-VNM-ANNAM-2022` (găng mềm PneuNet, giải Nhất EPICS 2022); `SRC-VNM-TL-GLOVE-2026` (găng robot + theo dõi từ xa). **Toàn bộ đều là máy tập/hỗ trợ chủ động**, không phải thiết bị đánh giá có kiểm chứng độ tin cậy → phải nêu trong mục "bất cập của giải pháp hiện tại".
+- **Gap 1 chưa hoàn tất.** Còn: (i) đọc **toàn văn** 5 nguồn (`SRC-ARTGLOVE-2026`, `SRC-SIDEWALL-PIEZO-2015`, `SRC-GRATING-GLOVE-2021`, `SRC-LOWCOST-GLOVE-2006`, `SRC-MANUMETER-RCT-2022`); (ii) tra bằng sáng chế theo IPC A61B5/11 · A61B5/22 · A61B5/10 · G01L1/14 · A61H1/02 (lượt vừa rồi mới 1 truy vấn web, **không đủ** để kết luận); (iii) lane R5 adjudicate; (iv) `DEC-NOV-001` do owner chốt.
 
 ## 5. Phần cứng (CHỐT — DEC-HW-002/003/004)
 
@@ -59,7 +65,9 @@ Cấu hình 2      : 24 kênh, mỗi khớp 1 CẶP đối xứng → đọc vi 
 MCU             : ESP32-S3 (ADC1 12-bit + trung bình N mẫu, BLE 5, logic 3.3 V)
                   [thay Arduino Mega 2560 — DEC-HW-003]
 Edge            : Orange Pi 5 Pro RK3588 (NPU ~6 TOPS), mô hình INT8 (RKNN)
-Tham chiếu bench: load cell + HX711
+Tham chiếu bench: load cell + HX711  (GATE A trở đi; GATE 0 dùng **khối lượng chuẩn**, F = m·g)
+Sở hữu   (2026-09-19, DEC-RESOURCE-001): Velostat + copper tape + ESP32-S3 + Orange Pi 5 Pro = ĐÃ CÓ;
+           còn thiếu cho GATE 0: CD74HC4067?, DMM 4 dây?, khối lượng chuẩn, in 3D  → kiểm kê: research/context/EQUIPMENT_AND_ACCESS.md
 ```
 
 Ngân sách độ phân giải/tốc độ khung (dự kiến, **phải đo lại**): ~11 bit hiệu dụng sau trung bình 16 mẫu; tốc độ khung mục tiêu 45–100 Hz; đủ cho động tác 0,5–2 Hz. Chi tiết: `docs/04_Hardware_Architecture.md`.
@@ -99,9 +107,12 @@ Ngân sách độ phân giải/tốc độ khung (dự kiến, **phải đo lạ
 
 ## 9. Việc tiếp theo (theo thứ tự)
 
+0. ✅ **ĐÃ LÀM 2026-09-19:** lượt rà soát prior art 1 → `research/reviews/2026-09-19_prior_art_novelty_gate1.md`; 24 nguồn vào ledger (20 `READ_ABSTRACT`, 4 `UNVERIFIED` — chưa đọc toàn văn); 3 claim cập nhật + 2 claim mới; GATE A/C có thêm mốc so sánh y văn. ☐ **CÒN NỢ:** đọc toàn văn 5 nguồn, tra IPC bằng sáng chế, `DEC-NOV-001`.
+0.5 ☐ **NGANG HÀNG QUAN TRỌNG (mới 2026-09-19):** chủ dự án chốt `DEC-SCOPE-002` cho đề xuất "tập chủ động có trợ lực" — E1 (chỉ lý thuyết) / E2-lite (chỉ số Effort+gap AROM−PROM+RAL, không động cơ, **khuyến nghị**) / E3 (động cơ + Bowden, 8–15 tuần, đổi trục + rủi ro an toàn + IRB). **CẬP NHẬT: sau phản hồi của chủ dự án về chuẩn ViSEF, khuyến nghị mới là E4+E5+E6 (rig phantom + RAL + 1 servo kéo phantom + tầng kê đơn), **đã xác minh chuẩn tham chiếu ISEF 2025 ROBO065T (THPT thị xã Quảng Trị, giải Tư, thuần tích hợp + 4 số tự đo)** -> xem `DEC-SCOPE-002b/c` và `research/protocols/07_ral_phantom_and_ktv_interview.md`. **Chưa chốt → không bắt tay vào cơ khí chấp hành, không đổi docs/01 §1, không đổi A.4.**
+1. ☐ **GIAI ĐOẠN HIỆN TẠI (chỉ thị 2026-09-19): CƠ SỞ LÝ THUYẾT.** Đã xong 2 việc chủ dự án yêu cầu: (1) **mô hình chuỗi đo** → `docs/02` §5.5 (dự toán đơn bậc độ lớn: `F_p ≤ 68·γ·ΔF`, cửa sổ làm việc 2 đầu, yêu cầu rig có ≥2 tốc độ kéo); (4) **đối chiếu toàn văn/danh tính** → sửa 3 lỗi nguồn (Engineering 32:202–216; ironHand = J Rehabil Assist Technol Eng **2016**; US20150233779A1 = Abandoned + CPC) và **phát hiện đối thủ mới** `SRC-TW-SPASTICITY-2022`. Tra cứu bằng sáng chế theo phân loại: **bất khả thi trong môi trường này** — phương pháp + lối thoát ghi ở `docs/03` §7. Hồ sơ nộp: đã soạn `docs/05_De_Cuong_Dang_Ky_DRAFT.md` + đánh giá trần đề tài `research/reviews/2026-09-19_project_ceiling.md` (chủ dự án điền tên/GVHD/timeline, duyệt DEC-SCOPE-004).  Đã viết vào `docs/02` §1.4–§1.6 (ba chế độ tập, Hebbian có điều kiện, learned non-use + bẫy slacking), §3.4 (co cứng theo quan hệ tốc độ–lực cản), §5.4 (điều kiện đo nỗ lực khi chưa cử động), §7.3 (định nghĩa Effort Index / Gap AROM−PROM / RAL + bảng cấm quy đổi đơn vị), §8.3 (tầng đo được vs tầng suy ra lâm sàng). **Chưa làm:** chốt ngưỡng GATE A′/RAL + 9 ngưỡng GATE 0 (`protocols/08` §7), viết script thống kê, chế tạo jig/phantom. Chủ dự án cho biết **thời gian đủ** (`DEC-PLAN-001`). Chủ dự án khai báo đã có thiết bị + KTV 10 năm phản biện (`DEC-RESOURCE-001`) ⇒ **Lớp 0–1 giải ngân được về tiền**; blocker duy nhất còn lại là 9 ngưỡng `protocols/08` §7. **2026-09-19 (11):** bản **nộp được** đã ra đời: `docs/DE_CUONG_NOP_TRUONG.md` (`DEC-PROP-001`); `docs/05` → outline nội bộ. Số liệu dịch tễ đã kiểm (`CLM-BIO-003/-004`); phát hiện A.1 gán con số 80% cho Hendricks 2002 trong khi nguồn đã kiểm là Cochrane 2014 — **chủ dự án sửa A.1** (nay là **10** ô: thêm `G0.0` chọn định nghĩa nhiễu). Chủ dự án chốt: **giữ pha lý thuyết** — không firmware/không script (`DEC-PHASE-001`) → đã phát hành phiếu đo in được `protocols/08a`; và **không nêu danh tính người tham khảo** trong hồ sơ (`DEC-ROLE-001`). Kiểm kê + việc tuần này: `research/context/EQUIPMENT_AND_ACCESS.md`. Benchmark hình thức từ báo cáo QG 2024–2025 (15 tr., 17 hình/3 bảng, 0 thống kê) → `2026-09-19_benchmark_xe_lan_ALS_QG2025.md` → kế hoạch giữ đủ 7 cổng; `protocols/08` đã sẵn sàng chạy ngay khi §7 được chốt.
 1. ☐ Chốt cấu hình kênh 1 → 2 (hay làm thẳng cấu hình 2).
 2. ☐ Chốt giao thức bài tập chuẩn cùng KTVVLTL-PHCN.
-3. ☐ Rà soát prior art theo `docs/03` → chốt lại mức novelty.
+3. ☐ Rà soát prior art **nửa còn lại** theo `docs/03` → chốt mức novelty qua `DEC-NOV-001`.
 4. ☐ Chế tạo sensing element → đo `R_sensor`/tải → chọn `R_f`.
 5. ☐ Chạy GATE 0 → GATE A/B → **GATE C** → GATE D/E/F.
 6. ☐ Điền số thật vào A.3 + mục C của outline.

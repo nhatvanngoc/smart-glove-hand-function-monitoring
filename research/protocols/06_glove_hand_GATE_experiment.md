@@ -46,6 +46,8 @@
 
 **Nếu FAIL:** quay lại thiết kế cơ khí/electric cực trước, không chạy tiếp.
 
+> **Bản chạy chi tiết (2026-09-19):** [`08_gate0_execution_plan.md`](08_gate0_execution_plan.md) — tách GATE 0 thành **Q1** (độ nhạy: `γ`, `ΔV/σ`) và **Q2** (mạch đọc thật có nghe thấy không: `R₀(F_p) ≤ R_max`), thêm **thí nghiệm quét trở nguồn** để đo `R_max` thay vì đi mượn 100 kΩ, thêm log trôi ≥10 ngày, và **cây quyết định khi fail**. Ngưỡng ở đó là **ĐỀ XUẤT — chủ dự án chốt trước khi đo** (`DEC-SCOPE-003` vẫn hiệu lực).
+
 ---
 
 ## GATE A — Phân biệt HƯỚNG (điểm kỹ thuật trung tâm của đề tài)
@@ -61,6 +63,8 @@
 4. Phân tích: ma trận nhầm lẫn (confusion matrix) + độ chính xác phân loại hướng.
 
 **Thước đo:** accuracy phân loại hướng, tỷ lệ nhầm lẫn giữa cặp hướng đối diện, khoảng cách Euclid giữa vector trung bình của hai hướng đối lập.
+
+> 📚 **Mốc tham chiếu từ y văn** (thêm 2026-09-19 sau lượt rà soát prior art; **không** đổi ngưỡng — DEC-METRIC-001): các găng đo góc khớp không-IMU đã công bố precision ~1,67% FS / RMS < 3,29° (`SRC-GRATING-GLOVE-2021`), sai số góc ±6° cho găng bend+force dùng để đánh giá chức năng tay (`SRC-FUNCASSESS-2016`), ART-Glove dùng encoder cho 22 DoF (`SRC-ARTGLOVE-2026`). **Nếu GATE A/B chỉ đạt mức "phân loại được hướng" mà sai số lớn hơn hẳn các mốc đó, phải trình bày là bước proof-of-concept và nêu rõ khoảng cách**, không so sánh một chiều với "không dùng IMU".
 
 **Tiêu chí PASS (chốt trước):**
 - Phân loại 4 hướng: accuracy ≥ **85%** trên phantom.
@@ -108,6 +112,8 @@
    - `Δ_signal` = khoảng cách giữa các mức (effect size, ví dụ Cohen's d).
    - `σ_noise` = độ lệch chuẩn **trong cùng một mức** qua các phiên (bao gồm cả drift).
 4. Tính **MDC** của chỉ số: `MDC ≈ 1,96·√2·SEM`.
+
+> 📚 **Mốc so sánh bắt buộc nêu trong báo cáo** (thêm 2026-09-19; ngưỡng PASS/FAIL **giữ nguyên**): `SRC-STEF-MDC-2026` — công cụ chuẩn STEF có ICC 0,98 và **MDC95 = 12,7 điểm** trên n=53 bán cấp; `SRC-MANUMETER-RCT-2022` — hệ đeo đã kiểm định có **MDC ≈ 31%** mức dùng tay trung bình ngày và 100–200 counting sai/giờ. Hai mốc này trả lời câu hỏi *"'MDC nhỏ' là nhỏ so với cái gì?"*: nếu MDC của chỉ số găng tay không cạnh tranh được với 31% (hoặc không giải thích được vì sao khác), GATE C được tính là FAIL về mặt *utility* dù đạt ngưỡng 2σ.
 
 **Tiêu chí PASS (chốt trước):**
 - `Δ_signal` giữa Mức 1 và Mức 3 ≥ **2 × σ_noise** (tức là tách được rõ ràng).

@@ -43,7 +43,7 @@
 | Systematic review về AI smart glove (2026, 101 bài 2011–2025) | Phần lớn nguyên mẫu **chưa được kiểm chứng lâm sàng**; tồn tại drift, suy giảm tín hiệu theo thời gian, hiệu chỉnh lại, thiếu chuẩn dữ liệu, ergonomics, thời lượng pin |
 | Wearable arm-use monitoring (PMC9901039, medRxiv 2023) | Cảm biến đeo cổ tay **không** ghi được chuyển động ngón và **không** phân biệt được vận động có mục đích |
 
-**Khoảng trống:** chưa có hệ thống nào **vừa rẻ, vừa dùng tại nhà, vừa tạo ra dữ liệu định lượng chức năng bàn tay có ý nghĩa lâm sàng theo thời gian**, cho cả bệnh nhân không chuyên môn và kỹ thuật viên theo dõi từ xa.
+**Khoảng trống (đã thu hẹp sau lượt rà soát prior art 2026-09-19 — phát biểu ở giao điểm hẹp, không dùng câu *chưa có hệ thống nào*):** đã có nguyên mẫu găng theo dõi dài ngày + đánh giá chức năng tay từ 2006 (`SRC-LOWCOST-GLOVE-2006`), app tablet đo khéo léo tay đã có MDC/ICC trên người đột quỵ năm 2021 (`SRC-MULTITOUCH-APP-2021`), và trong nước đã có găng robot theo dõi từ xa do sinh viên làm 2026 (`SRC-VNM-TL-GLOVE-2026`). Chưa tìm thấy hệ thống nào **kết hợp đủ 4** yếu tố: (i) lực **có hướng** tại từng lóng ngón qua vách khung; (ii) chỉ số có khung MDC/ICC rõ ràng cho theo dõi tiến triển; (iii) tự cờ hóa khi dữ liệu không đủ tin; (iv) chi phí linh kiện phổ thông. **Lưu ý quy tắc bằng chứng:** đây là *chưa tìm thấy*, không phải *không tồn tại* — chưa được đưa vào báo cáo cho tới khi xong tra cứu bằng sáng chế theo IPC và đọc toàn văn 5 nguồn hệ trọng (review §3).
 
 ---
 
@@ -51,14 +51,15 @@
 
 | # | Thành phần | Mức mới | Ghi chú |
 |---|---|---|---|
-| 1 | **Cảm biến hướng qua vách khung cứng** — mã hóa hướng chuyển động của lóng ngón bằng áp lực lên vách khung, không dùng IMU/flex sensor | **Ứng viên chính (vật lý/cơ khí)** | Phải qua rà soát prior art + GATE A/B. Prior art gần nhất (Zhu lab IROS 2017; reconfigurable data glove 2023) dùng IMU để đo pose, Velostat chỉ đo lực tiếp xúc |
-| 2 | **Cặp sensing element đối xứng (differential pair)** triệt thành phần drift/nhiệt đồng pha | Kỹ thuật — **KHÔNG mới** | Nguyên lý dummy-gauge/Wheatstone đã có từ lâu trong đo lường. Chỉ là execution tốt, phải trích dẫn prior art |
-| 3 | **Theo dõi dọc tại nhà + tái tạo bàn tay 3D để chuyên gia xem từ xa** | Ứng dụng — khoảng trống được xác nhận | Không claim "hệ thống đầu tiên" khi chưa rà soát xong |
+| 1 | **Cảm biến hướng qua vách khung cứng** — mã hóa hướng chuyển động của lóng ngón bằng áp lực lên vách khung, không dùng IMU/flex sensor | ~~Ứng viên chính (vật lý/cơ khí)~~ → **CẢI TIẾN cấu hình + phương pháp lập luận** (hạ bậc sau lượt rà soát prior art 2026-09-19) | **Đã rà lượt 1** (`research/reviews/2026-09-19_prior_art_novelty_gate1.md`): nguyên lý *vách + áp điện trở → hướng* đã có từ 2014–2015 (`SRC-SIDEWALL-PIEZO-2015`: lõi linh hoạt + 4 vách elastomer, phân biệt shear 4 hướng không cần xử lý tín hiệu phức tạp); kiến trúc *vỏ cứng khớp nối + da áp điện trở trên 16 bề mặt chức năng* đã có năm 2026 (`SRC-ARTGLOVE-2026`) nhưng họ đo góc bằng encoder. Phần còn lại của đề tài: **suy DẤU gập/duỗi chỉ từ mẫu kích hoạt trên vách có preload — không encoder/IMU/camera**. Bắt buộc trích cả 4 nguồn; các nguồn mới đọc abstract → **chưa** được viết là đã chốt |
+| 2 | **Cặp sensing element đối xứng (differential pair)** giảm thành phần drift/nhiệt đồng pha | Kỹ thuật — **KHÔNG mới** | Nguyên lý dummy-gauge/Wheatstone đã có từ lâu; bằng chứng bổ sung (2026-09-19): đặt 2 phần tử ở 2 bên đốt ngón để tách thành phần lực đã có từ 2020 (`SRC-OPENPAD-FINGER-2020`). Chỉ là execution tốt |
+| 3 | **Theo dõi dọc tại nhà + tái tạo bàn tay 3D để chuyên gia xem từ xa**, kèm **cờ từ chối kết luận khi dữ liệu không đủ tin** | **Ứng viên chính** (nâng bậc sau lượt rà soát prior art 2026-09-19) | Khoảng trống chỉ còn ở **giao điểm hẹp**: đã có găng làm *extended monitoring + functional hand assessment* từ 2006 (`SRC-LOWCOST-GLOVE-2006`) và app tablet đo chức năng tay đã chuẩn hóa MDC/ICC trên người đột quỵ năm 2021 (`SRC-MULTITOUCH-APP-2021`) → **vẫn cấm** câu hệ thống đầu tiên; phần chưa tìm thấy ai làm là *lực hướng + khung MDC/ICC + tự phát hiện mất tin cậy* |
 | 4 | **INT8 quantized trên NPU RK3588** | Triển khai kỹ thuật | Không mới về thuật toán |
 
 **Câu định vị dùng khi bị hỏi "cái này có gì mới?":**
 
-> "Cái mới không nằm ở chỗ 'găng tay + AI'. Cái mới nằm ở **cơ chế**: em đo **lực có hướng** qua vách khung cứng thay vì đo góc bằng IMU, nên hạ được chi phí mà vẫn dựng lại được bàn tay 3D; và em dùng chính cấu trúc đó để **tự phát hiện khi dữ liệu không còn đáng tin** trước khi đưa ra kết luận về tiến triển của bệnh nhân."
+> *(bản cập nhật 2026-09-19: bản cũ nói cái-mới-nằm-ở-cơ-chế-đo-lực-có-hướng đã bị prior art thu hẹp — xem `research/reviews/2026-09-19_prior_art_novelty_gate1.md`)*
+> "Cái mới không phải là găng tay + AI, và cũng không phải ý tưởng dùng vách để đo hướng — ý đó đã có trong cảm biến xúc giác từ 2015. Cái mới là: em dùng **các vách có kéo trước + đọc vi sai để lấy DẤU gập/duỗi mà không cần IMU hay encoder**, rồi em **kiểm chứng bằng MDC/ICC xem chỉ số đó có đủ tin để kết luận về tiến triển hay không** — và hệ thống **tự nhận khi nó không đủ tin**."
 
 ---
 
@@ -109,7 +110,7 @@ Thí nghiệm này quyết định đề tài sống hay chết, và **phải ch
 > **GATE C:** Với cùng một phantom, đo lặp qua nhiều phiên/ngày. Thay đổi tín hiệu khi **cố ý thay đổi mức chức năng mô phỏng** phải **lớn hơn có ý nghĩa thống kê** so với biến thiên drift/nhiễu của cùng hệ thống trong cùng khung thời gian.
 > Nếu **không** → mọi kết luận longitudinal là vô nghĩa → dừng, báo thẳng, không viết báo cáo như thể thành công.
 
-Chi tiết đầy đủ 6 cổng (GATE 0 → GATE E): [`research/protocols/06_glove_hand_GATE_experiment.md`](../research/protocols/06_glove_hand_GATE_experiment.md).
+Chi tiết đầy đủ 7 cổng (GATE 0 và GATE A → GATE F): [`research/protocols/06_glove_hand_GATE_experiment.md`](../research/protocols/06_glove_hand_GATE_experiment.md).
 
 ---
 
