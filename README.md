@@ -59,12 +59,13 @@ Phân cấp thuật ngữ (bắt buộc dùng đúng): xem [`docs/bao_cao/GLOSSA
 
 | # | Thành phần | Mức mới | Ghi chú |
 |---|---|---|---|
-| 1 | **Cảm biến hướng qua vách khung cứng** (directional sensing through rigid-frame walls, không IMU) | Ứng viên chính | Prior art gần nhất dùng IMU để đo pose, Velostat chỉ đo lực tiếp xúc. Cần rà soát prior art kỹ trước khi claim |
+| 1 | **Cảm biến hướng qua vách khung cứng** (directional sensing through rigid-frame walls, không IMU) | ~~Ứng viên chính~~ → **cải tiến cấu hình + cách lập luận hướng khớp** (lượt rà soát prior art 2026-09-19) | Nguyên lý "phần tử áp điện trở trên **vách** → phân biệt hướng" đã có từ 2015 (`SRC-SIDEWALL-PIEZO-2015`); "vỏ cứng khớp nối + da áp điện trở" đã có 2026 (`SRC-ARTGLOVE-2026`, đo góc bằng encoder). Phần còn lại: lấy **dấu** gập/duỗi **chỉ** từ mẫu vách, không encoder/IMU/camera |
 | 2 | **Cặp sensing element đối xứng** triệt thành phần drift đồng pha (common-mode) | Kỹ thuật | Không claim là phát minh |
-| 3 | **Theo dõi dọc (longitudinal) tại nhà + tái tạo 3D để chuyên gia xem từ xa** | Ứng dụng | Khoảng trống được xác nhận bởi hội đồng chuyên gia 2024 và KTV VLTL-PHCN |
+| 3 | **Theo dõi dọc (longitudinal) tại nhà + tái tạo 3D để chuyên gia xem từ xa**, kèm **cờ từ chối kết luận khi dữ liệu không đủ tin** | **Trọng tâm novelty (đề xuất)** | Giao điểm hẹp chưa thấy ai làm đủ. **Không** nói "hệ thống đầu tiên": đã có găng theo dõi dài ngày từ 2006 và app tablet có MDC năm 2021 — xem `research/reviews/2026-09-19_prior_art_novelty_gate1.md` |
 | 4 | **Mô hình INT8 chạy trên NPU (RK3588)** | Kỹ thuật triển khai | Không mới về thuật toán; mới về triển khai biên cho bài toán này |
 
 > Không claim "phát minh thế giới". Mức novelty nhắm tới là **ViSEF/ISEF**: thực thi tốt + tác động thật + sáng tạo vừa phải.
+> **Lượt rà soát prior art 1 (2026-09-19)** đã làm rõ: phần *cơ chế* từng được coi là mới nhất thì đã có tiền lệ ở tầng phần tử, nên đề tài **dịch trọng tâm sang phần kiểm chứng độ tin cậy (MDC/ICC + tự phát hiện mất tin cậy)**. Chi tiết + nghĩa vụ trích dẫn: [`research/reviews/2026-09-19_prior_art_novelty_gate1.md`](research/reviews/2026-09-19_prior_art_novelty_gate1.md).
 > Hành trình chọn đề tài và lý do các hướng khác bị loại: [`research/reviews/00_EXPLORATION_SUMMARY.md`](research/reviews/00_EXPLORATION_SUMMARY.md).
 
 ## 5. Kiến trúc phần cứng (chốt 2026-09-13)
@@ -124,15 +125,12 @@ Mọi agent/tác giả tuân thủ [`AGENTS.md`](AGENTS.md): đọc snapshot →
 
 ## 9. Ghi chú về tên repo
 
-- Tên đề tài đã đổi; tên **repo GitHub hiện tại vẫn là `velostat-smart-insole-dfu`** và phần **description vẫn là mô tả đề tài đệm khí cũ** — cả hai đều là di sản.
+- ✅ **Repo đã đổi tên** thành `smart-glove-hand-function-monitoring` (2026-09-19; tên thực tế khác đề xuất cũ trong `DECISION_LOG`). ⚠️ **Description trên GitHub vẫn là mô tả đề tài đệm khí/thế hệ 1**, `homepage` và `topics` còn trống.
 - Agent phiên này **không có quyền Administration** trên repo (HTTP 403 khi thử `gh repo rename` và `gh repo edit`), nên không tự sửa được. Chủ dự án chạy:
 
 ```bash
-gh repo rename smart-glove-stroke-hand-rehab --repo nhatvanngoc/velostat-smart-insole-dfu --yes
-git remote set-url origin https://github.com/nhatvanngoc/smart-glove-stroke-hand-rehab.git
-gh repo edit --description "Nghiên cứu và phát triển găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ"
+gh repo edit --repo nhatvanngoc/smart-glove-hand-function-monitoring   --description "Nghiên cứu và phát triển găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ"   --homepage "" --add-topic rehabilitation --add-topic stroke --add-topic piezoresistive --add-topic velostat --add-topic isef
 ```
 
-- Sau khi đổi xong, cập nhật `DEC-REPO-001` trong `research/context/DECISION_LOG.md` sang `DONE`.
-
-- Thư mục làm việc cục bộ vẫn giữ tên `velostat-smart-insole-dfu` (ràng buộc của phiên làm việc) — không ảnh hưởng nội dung khoa học.
+- `DEC-REPO-001` được đóng một phần và thay bằng `DEC-REPO-002` (2026-09-19): phần **đổi tên đã xong**, phần **description/homepage/topics còn nợ** — cần chủ dự án chạy lệnh trên (agent không có quyền admin).
+- Thư mục làm việc cục bộ **đã mang tên** `smart-glove-hand-function-monitoring`.
