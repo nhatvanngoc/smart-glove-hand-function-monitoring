@@ -58,7 +58,8 @@ Các đường dẫn `research/cache/`, `downloads/`, `generated/`, và `queries
 - Kết quả synthetic luôn kèm nhãn synthetic/simulation.
 - Mọi con số hiệu suất, latency, accuracy, cost và novelty phải có source/evidence ID.
 - Giá trị chuẩn giáo trình (GRF, phần trăm pha dáng đi…) phải đối chiếu chương/trang gốc trước khi trích dẫn trong bài nộp.
-- Với đề tài Smart Insole: dP/dt chỉ **giảm** drift offset, không "triệt tiêu"; mọi giá trị GRF/COP là kết quả hiệu chuẩn so với chuẩn vàng (force plate/load cell), không phải hằng số vật liệu.
-- Không tuyên bố chẩn đoán/điều trị OA; không "GRF ⇒ OA".
+- Với đề tài găng tay (2026-09-19): cặp đối xứng + ô tham chiếu chỉ **giảm** drift đồng pha, không "triệt tiêu"; mọi giá trị lực/góc khớp là **suy luận** và phải qua hiệu chuẩn từng kênh với load cell tham chiếu — không phải hằng số vật liệu Velostat.
+- Không chẩn đoán đột quỵ/mức độ liệt; không thay thế FMA/ARAT/BBT; không "lực hướng ⇒ tiến triển lâm sàng" khi chưa qua GATE C.
+- **Prior art:** "không tìm thấy" ≠ "chưa ai làm". Sau lượt rà soát 1 (2026-09-19) thì **cấm** các câu: "hệ thống đầu tiên theo dõi tại nhà", "đo hướng bằng vách là nguyên lý mới", "không dùng IMU nên mới" — xem `research/reviews/2026-09-19_prior_art_novelty_gate1.md`.
 - Không thử nghiệm người tham gia trước IRB/SRC pre-approval hợp lệ.
 - Không gọi review nội tuyến hoặc nhiều vai trò trong cùng context là “independent multi-agent review”.
