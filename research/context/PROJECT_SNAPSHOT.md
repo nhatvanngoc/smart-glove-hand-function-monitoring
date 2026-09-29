@@ -5,7 +5,14 @@
 
 ---
 
-## 1. Đề tài (CHỐT — DEC-TOPIC-019)
+## 1. Đề tài (CHỐT — DEC-TOPIC-019; tên mới 2026-09-19 CHƯA TỪNG ĐƯỢC DUYỆT)
+
+> ⚠️ **2026-09-27:** README ngày 2026-09-19 ghi "tên chốt `DEC-TITLE-001`" nhưng quyết định này **không có trong `DECISION_LOG.md`**
+> và file `2026-09-19_title_options.md` không tồn tại. **Bản đã nộp `docs/DE_CUONG.pdf` (§1.1) dùng tên cũ** → repo quay về tên cũ,
+> chờ `DEC-TITLE-002` (hủy `DEC-TITLE-001`).
+>
+> **Đội hình đã nộp (PDF §1, chờ `DEC-TEAM-001`):** Văn Ngọc Nhật Anh (11A2) + Nguyễn Duy Quân (12A1), THPT Quảng Trị;
+> GVHD **Lê Công Long**; lĩnh vực **Hệ thống nhúng**; timeline **09/2026–01/2027**; địa điểm phòng sáng tạo trường + nhà riêng.
 
 **Tiếng Việt:**
 
@@ -86,6 +93,14 @@ Ngân sách độ phân giải/tốc độ khung (dự kiến, **phải đo lạ
 
 **Ngưỡng phải chốt trước khi đo (DEC-METRIC-001).** GATE C fail ⇒ dừng đề tài, báo cáo trung thực.
 
+> ⚠️ **2026-09-27 — ngưỡng ĐÃ NỘP là M1–M6 + C1.1–C1.10** (PDF §5.2/§11.1, `CLM-MET-005`, chờ `DEC-METRIC-002` phê chuẩn):
+> R² ≥ 0,90 (thay 0,95) · liên ngày CV ≤ 8 % trên phantom (thay ICC ≥ 0,75) · hys ≤ 18 % (thay 15 %) ·
+> creep ≤ 8 % giữ 60 s@5 N (thay creep_2dec ≤ 3 %) · trôi/tín hiệu ≤ 2,0/10 ngày qua auto-zero (bỏ điều kiện ΔV@1N) ·
+> M6 = phát hiện đeo lỏng ≥ 80 % qua V_base (thay fault-injection ≥ 4/5).
+> Định nghĩa đã nộp (`CLM-DEF-001`): **GAP = PROM − AROM** (độ, theo giao thức) · **RAL** = nấc tải (g) nhỏ nhất đạt P_complete ≥ 80 % ·
+> **EI** = trung vị biến thiên phổ vi sai chuẩn hóa vận tốc góc (công thức tường minh còn nợ).
+> Bảng đối chiếu: sync review §4. `protocols/08` §7 giữ 10 ô chờ chốt — agent không tự chốt.
+
 ## 7. Ngôn ngữ bắt buộc (DEC-MSG-001)
 
 | Dùng | Không dùng |
@@ -102,11 +117,15 @@ Ngân sách độ phân giải/tốc độ khung (dự kiến, **phải đo lạ
 - ❌ Thay thế FMA / ARAT / Box and Block / đánh giá của chuyên gia
 - ❌ "Đo chính xác lực tuyệt đối" / "đo góc khớp"
 - ❌ "Đã kiểm chứng lâm sàng" / "chứng minh hiệu quả"
-- ❌ Thử trên người tham gia (kể cả người khỏe) trước khi có IRB/SRC
+- ❌ Thử trên người tham gia (kể cả người khỏe) trước khi có IRB/SRC (`DEC-ETHICS-001` vẫn OPEN; bản nộp §7.2/§12 giới hạn ở **tự thử trên chính người thực hiện, chế độ đo, không tác động lực, tự nguyện + quy tắc dừng** — không mở rộng sang người khác/bệnh nhân)
 - ❌ Điền số `[X]` vào A.3 hoặc mục C khi chưa có log đo thật
 
 ## 9. Việc tiếp theo (theo thứ tự)
 
+0. ✅ **ĐÃ LÀM 2026-09-27:** đồng bộ bản nộp `docs/DE_CUONG.pdf` (2026-09-26) → `research/reviews/2026-09-27_decuong_pdf_sync.md`;
+   môi trường cài lại (venv + skills OK, 10/11 check); +7 nguồn ledger (147), +3 claim (27), +2 truy vấn xác minh [15]/[18] (81, đều `UNVERIFIED`);
+   sửa README (tên/đội hình/ngưỡng), `docs/04` §8 + `docs/02` §11 mới, điền danh tính `DE_CUONG_NOP_TRUONG.md`.
+   ☐ **CHỜ OWNER:** 6 quyết định `DEC-SYNC-001`/`DEC-TEAM-001`/`DEC-TITLE-002`/`DEC-HW-005`/`DEC-METRIC-002`/`DEC-SCOPE-005` + duyệt 7 nguồn/3 claim mới.
 0. ✅ **ĐÃ LÀM 2026-09-19:** lượt rà soát prior art 1 → `research/reviews/2026-09-19_prior_art_novelty_gate1.md`; 24 nguồn vào ledger (20 `READ_ABSTRACT`, 4 `UNVERIFIED` — chưa đọc toàn văn); 3 claim cập nhật + 2 claim mới; GATE A/C có thêm mốc so sánh y văn. ☐ **CÒN NỢ:** đọc toàn văn 5 nguồn, tra IPC bằng sáng chế, `DEC-NOV-001`.
 0.5 ☐ **NGANG HÀNG QUAN TRỌNG (mới 2026-09-19):** chủ dự án chốt `DEC-SCOPE-002` cho đề xuất "tập chủ động có trợ lực" — E1 (chỉ lý thuyết) / E2-lite (chỉ số Effort+gap AROM−PROM+RAL, không động cơ, **khuyến nghị**) / E3 (động cơ + Bowden, 8–15 tuần, đổi trục + rủi ro an toàn + IRB). **CẬP NHẬT: sau phản hồi của chủ dự án về chuẩn ViSEF, khuyến nghị mới là E4+E5+E6 (rig phantom + RAL + 1 servo kéo phantom + tầng kê đơn), **đã xác minh chuẩn tham chiếu ISEF 2025 ROBO065T (THPT thị xã Quảng Trị, giải Tư, thuần tích hợp + 4 số tự đo)** -> xem `DEC-SCOPE-002b/c` và `research/protocols/07_ral_phantom_and_ktv_interview.md`. **Chưa chốt → không bắt tay vào cơ khí chấp hành, không đổi docs/01 §1, không đổi A.4.**
 1. ☐ **GIAI ĐOẠN HIỆN TẠI (chỉ thị 2026-09-19): CƠ SỞ LÝ THUYẾT.** Đã xong 2 việc chủ dự án yêu cầu: (1) **mô hình chuỗi đo** → `docs/02` §5.5 (dự toán đơn bậc độ lớn: `F_p ≤ 68·γ·ΔF`, cửa sổ làm việc 2 đầu, yêu cầu rig có ≥2 tốc độ kéo); (4) **đối chiếu toàn văn/danh tính** → sửa 3 lỗi nguồn (Engineering 32:202–216; ironHand = J Rehabil Assist Technol Eng **2016**; US20150233779A1 = Abandoned + CPC) và **phát hiện đối thủ mới** `SRC-TW-SPASTICITY-2022`. Tra cứu bằng sáng chế theo phân loại: **bất khả thi trong môi trường này** — phương pháp + lối thoát ghi ở `docs/03` §7. Hồ sơ nộp: đã soạn `docs/05_De_Cuong_Dang_Ky_DRAFT.md` + đánh giá trần đề tài `research/reviews/2026-09-19_project_ceiling.md` (chủ dự án điền tên/GVHD/timeline, duyệt DEC-SCOPE-004).  Đã viết vào `docs/02` §1.4–§1.6 (ba chế độ tập, Hebbian có điều kiện, learned non-use + bẫy slacking), §3.4 (co cứng theo quan hệ tốc độ–lực cản), §5.4 (điều kiện đo nỗ lực khi chưa cử động), §7.3 (định nghĩa Effort Index / Gap AROM−PROM / RAL + bảng cấm quy đổi đơn vị), §8.3 (tầng đo được vs tầng suy ra lâm sàng). **Chưa làm:** chốt ngưỡng GATE A′/RAL + 9 ngưỡng GATE 0 (`protocols/08` §7), viết script thống kê, chế tạo jig/phantom. Chủ dự án cho biết **thời gian đủ** (`DEC-PLAN-001`). Chủ dự án khai báo đã có thiết bị + KTV 10 năm phản biện (`DEC-RESOURCE-001`) ⇒ **Lớp 0–1 giải ngân được về tiền**; blocker duy nhất còn lại là 9 ngưỡng `protocols/08` §7. **2026-09-19 (11):** bản **nộp được** đã ra đời: `docs/DE_CUONG_NOP_TRUONG.md` (`DEC-PROP-001`); `docs/05` → outline nội bộ. Số liệu dịch tễ đã kiểm (`CLM-BIO-003/-004`); phát hiện A.1 gán con số 80% cho Hendricks 2002 trong khi nguồn đã kiểm là Cochrane 2014 — **chủ dự án sửa A.1** (nay là **10** ô: thêm `G0.0` chọn định nghĩa nhiễu). Chủ dự án chốt: **giữ pha lý thuyết** — không firmware/không script (`DEC-PHASE-001`) → đã phát hành phiếu đo in được `protocols/08a`; và **không nêu danh tính người tham khảo** trong hồ sơ (`DEC-ROLE-001`). Kiểm kê + việc tuần này: `research/context/EQUIPMENT_AND_ACCESS.md`. Benchmark hình thức từ báo cáo QG 2024–2025 (15 tr., 17 hình/3 bảng, 0 thống kê) → `2026-09-19_benchmark_xe_lan_ALS_QG2025.md` → kế hoạch giữ đủ 7 cổng; `protocols/08` đã sẵn sàng chạy ngay khi §7 được chốt.

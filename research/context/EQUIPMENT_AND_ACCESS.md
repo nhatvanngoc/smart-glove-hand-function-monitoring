@@ -10,13 +10,17 @@
 | Velostat (film áp trở) | **Đã có** | GATE 0 → C: mọi sensing element | *[điền: mấy tấm, kích thước, lô]* |
 | Băng đồng (copper tape) | **Đã có** | điện cực của sensing element | *[điền: độ dài]* |
 | ESP32-S3 | **Đã có** | GATE 0 §3 (đo `R_max`, ENOB, `fps_meas`) + bring-up 12 kênh | *[điền: loại board — còn chân ADC1 tự do?]* |
-| Orange Pi 5 Pro (RK3588) | **Đã có** | GATE F (INT8/RKNN) — **đừng dùng trước GATE A/B** | *[điền: RAM / đã có nguồn + thẻ nhớ?]* |
+| Orange Pi 5 Pro (RK3588) | **Đã có** | trạm đo E2E + camera đối chứng + thực nghiệm E1–E4 (INT8 chỉ dưới cổng bằng chứng) | owner 2026-09-29: đã có; đã test INT8 + xử lý ảnh OK *(cần bổ sung: RAM? nguồn + thẻ? model/latency INT8?)* |
 | CD74HC4067 (MUX 16:1) | ❓ chưa nêu | GATE 0 §3 trở lên — **món duy nhất ở Lớp 1 có thể còn thiếu** | *[điền]* |
-| DMM đo được 4 dây / điện trở thấp | ❓ | GATE 0: `R` là đại lượng gốc | *[điền]* |
+| DMM chính = FNIRSI 2C23T (10.000 count, DCV ±(0,5%+3), R ±(0,5%+3) theo datasheet) | **Đã có** | GATE 0: `R`/`V` gốc; C1.3–C1.9; M6 | owner 2026-09-29: chốt spec theo datasheet 2C23T; DMM rời chỉ làm máy phụ (đo đồng thời), không cần tra model |
+| FNIRSI 2C23T: scope 2ch/10MHz/50MSa/s/20mV/div min + gen 1Hz–2MHz/0,1–3,3V | **Đã có** | C1.1 (chứng kiến) · M1 · M5/C1.10 · spec sheet E1–E4 · test chuỗi mV (qua chia áp) | spec đã xác minh 2026-09-29 → notebook M-checklist L1–L5 |
 | Quả cân chuẩn (hoặc chai nước đã cân) | ❓ | **lực chuẩn cho GATE 0** — thay được load cell ở giai đoạn tĩnh | *[điền]* |
 | Máy in 3D + PLA/PETG + TPU | ❓ | jig GATE 0, khung vách, phantom | *[điền: trường có phòng sáng tạo không — `A.5` ghi là có]* |
 | Load cell + HX711 | ❓ (mua sau) | GATE A/B/C: lực động khi ngón đang chuyển | *chưa cần cho GATE 0* |
 | Khung đỡ + vít M5 + êcu hãm + lò xo | ❓ | preload cơ khí (biến số `F_p`) | *[điền]* |
+| INA333 + ADS1115 + MCP6001 + SHT30 + LSM6DS3 *(mới từ bản nộp 2026-09-26)* | ❓ | chuỗi đo đã nộp (`CLM-HW-003`) | *[điền sau khi `DEC-HW-005` chốt]* |
+| Khung nhôm 2020 + trượt tuyến tính + vít me + phanh từ + servo Bowden *(rig E4/E5 theo bản nộp)* | ❓ (mua sau) | rig RAL + phantom (§10 PDF) | *chưa cần cho GATE 0* |
+| Silicone y tế Shore A 25–30 *(phantom theo bản nộp)* | ❓ (mua sau) | đúc phantom tay giả | *đối chiếu tài liệu mô mềm trước khi chốt độ cứng* |
 
 **Ghi chú kỹ thuật quan trọng cho GATE 0:** lực chuẩn **không** cần load cell. Với mỗi khối lượng `m` đã cân, `F = m·g` là chuẩn cơ bản hơn lực kế lò xo
 (không trễ, không cần hiệu chuẩn điện tử). Load cell + HX711 chỉ cần từ GATE A trở đi, lúc đã có chuyển động.
