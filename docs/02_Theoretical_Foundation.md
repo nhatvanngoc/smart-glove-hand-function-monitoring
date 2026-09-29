@@ -385,3 +385,18 @@ Lượng tử hóa không phải "điểm mới khoa học". Nó là **kỹ thu�
 7. Cơ sở thần kinh ở §1.4–§1.6 là **lý thuyết nền để chọn biến số**, không phải cơ chế đề tài chứng minh; đề tài không đo hoạt động não.
 8. "AAT/phát hiện nỗ lực/bù lực theo nhu cầu" **không phải** ý tưởng của đề tài; đề tài dùng lại ở **tầng đo**. Trích dẫn bắt buộc khi viết phần differentiation: `SRC-IRONHAND-2018` (thực tế là Radder et al., *J Rehabil Assist Technol Eng* **2016** — id trong ledger giữ nguyên, năm đã hiệu chỉnh 2026-09-19), `SRC-AAN-EMG-2024`, `SRC-MPC-AAN-2026` (mức đọc: abstract/partial). **Bổ sung bắt buộc sau lượt đối chiếu 2026-09-19:** `SRC-TW-SPASTICITY-2022` (*Sensors* 2022;22(19):7212 — 19 IMU + 1 bóng áp lực, n = 14, tách co cứng khỏi chuyển động tự nguyện, IRB 11002-007): bất kỳ câu nào về Effort Index / "phân biệt co cứng" đều phải trích bài này trước; và `SRC-IRONHAND-JRM-2018` (bài khả thi thứ hai của cùng nhóm). Lưu ý về tìm kiếm bằng sáng chế: găng áp trở được phân loại ở **G06F3/014 / A41D19/00 / G01L1-20x**, không chỉ A61B5/A61H → bộ mã cũ trong `docs/03` §2 nhóm 11 là thiếu (xem `docs/03` §7).
 9. Không nêu trong hồ sơ nộp các ví dụ tham chiếu về thành tích hội thi (chỉ lưu trong `research/`) — theo chỉ thị chủ dự án `2026-09-19`.
+
+---
+
+## 11. Ghi chú đối chiếu bản nộp 2026-09-26 (không sửa các § trên — chờ `DEC-METRIC-002`)
+
+Bản nộp `docs/DE_CUONG.pdf` dùng các định nghĩa **khác** §7.3 ở trên (`CLM-DEF-001`, `PROPOSED`):
+
+| Chỉ số | §7.3 trong file này | Bản nộp (PDF) | Chờ chốt |
+|---|---|---|---|
+| GAP | `A_max(PROM) − A_max(AROM)`, `A = ∫\|d\|dt`, đơn vị **mẫu chuẩn hóa** | **`PROM − AROM`**, đơn vị **độ**, theo giao thức, không suy nguyên nhân (PDF §8.2) | nguồn đo góc (**I7**): 1 IMU bù nghiêng không đo được góc khớp |
+| EI | `median\|d\| / (median\|d\| + median\|d_rest\|)` ∈ (0,1] | trung vị biến thiên phổ vi sai **chuẩn hóa theo vận tốc góc** cùng phiên; công thức/cửa sổ/ngưỡng cố định trước khi đo (PDF §9.3) | **công thức tường minh** (PDF mới mô tả chữ) |
+| RAL | `min{ w : hoàn thành ≥ 80 % }`, gam + bậc tải | **khớp** §7.3 + giao thức cụ thể: 10 chu kỳ/nấc, 120 g → 0 g, `P_complete ≥ 80 %`, trên giàn + phantom (PDF §10.3) | chốt giao thức vào `protocols/07` |
+
+Quy tắc đọc file này tới khi `DEC-METRIC-002` được chốt: §7.3 là **định nghĩa nội bộ cũ** (vẫn hiệu lực cho `protocols/07` GATE A′/RAL đang nháp);
+định nghĩa trong PDF là **định nghĩa đã nộp** (hiệu lực đối ngoại). Mọi văn bản mới sau `DEC-METRIC-002` phải dùng một bộ duy nhất.

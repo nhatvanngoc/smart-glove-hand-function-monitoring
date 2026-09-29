@@ -1,11 +1,11 @@
 # A.2 — Mục tiêu nghiên cứu
 
-- Chế tạo găng tay thông minh tích hợp khung cứng và mảng phần tử cảm biến, có khả năng ghi nhận lực và hướng chuyển động của từng lóng ngón tay trong các bài tập phục hồi chức năng.
+- Chế tạo găng tay thông minh 3 ngón (cái/trỏ/giữa) tích hợp khung vách cứng tiền tải và 12 phần tử cảm biến Velostat + 1 ô chuẩn + 1 IMU, ghi nhận lực và hướng chuyển động từng khớp ngón.
 
-- Xây dựng phương pháp xử lý tín hiệu nhằm giảm ảnh hưởng drift từ cảm biến, trích xuất vector lực và suy luận hướng chuyển động các khớp ngón tay.
+- Xây dựng chuỗi đo vi sai hai vách (lòng–mu) kết hợp auto-zero đầu phiên, giảm ảnh hưởng drift đồng pha và định lượng phần dư bằng thực nghiệm.
 
-- Xây dựng mô hình tái tạo bàn tay 3D từ dữ liệu lực hướng, cho phép trực quan hóa động tác flexion/extension của từng ngón tay để chuyên gia đánh giá từ xa.
+- Trích xuất bộ ba chỉ số định lượng EI (nỗ lực chủ động), GAP (thiếu hụt tầm vận động), RAL (mức trợ giúp) kèm nhãn độ tin cậy, theo công thức đăng ký trước khi thu dữ liệu.
 
-- Xây dựng mô hình đánh giá chức năng vận động bàn tay và triển khai trên thiết bị biên, cho phép xử lý dữ liệu tại chỗ mà không phụ thuộc kết nối mạng.
+- Xây dựng trạm biên (Orange Pi 5 Pro): thu log, kiểm soát chất lượng 2 vòng lặp, dashboard + timeline sự kiện, báo cáo tuần tự động phục vụ kỹ thuật viên theo dõi từ xa.
 
-- Đánh giá khả năng theo dõi diễn tiến chức năng bàn tay qua nhiều phiên đo, xác định liệu các chỉ số thu được có đủ độ ổn định và độ nhạy để phát hiện những thay đổi thực sự trong quá trình phục hồi chức năng hay không.
+- Kiểm định toàn bộ hệ thống trên giàn cơ khí + mô hình tay giả theo ngưỡng M1–M6/C1.1–C1.10 đăng ký trước, kèm một thực nghiệm đối chứng luật-thường-vs-học-máy trên sự kiện giả lập.

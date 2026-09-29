@@ -125,6 +125,11 @@ thước cặp, nhiệt–ẩm kế, kẹp cố định. Tốc độ nén **quas
 ## 7. Ngưỡng PASS/FAIL — **ĐỀ XUẤT, CHỦ DỰ ÁN CHỐT TRƯỚC KHI ĐO**
 
 > Agent **không** chốt ngưỡng (`DEC-SCOPE-003`). Ô "Chốt?" để trống cho chủ dự án; khi điền xong thì in/dán ảnh trang này **trước** khi bật nguồn.
+>
+> ⚠️ **2026-09-27 — bản nộp đã chứa bộ ngưỡng M1–M6 + C1.1–C1.10** (`CLM-MET-005`, chờ `DEC-METRIC-002` phê chuẩn).
+> Bảng dưới (G0.x) là đề xuất cũ của agent; bảng đối chiếu G0↔C1 ở `research/reviews/2026-09-27_decuong_pdf_sync.md` §4.
+> Khi chốt, chủ dự án **chọn một bộ duy nhất** (khuyến nghị: bộ C1.x đã nộp) rồi mới tích ô — không chốt nửa G0 nửa C1.
+> Lưu ý thêm: §3 đo `R_max` của chuỗi ESP32-S3+MUX, trong khi bản nộp dùng ADS1115+INA333 (`DEC-HW-005`) — §3 phải cập nhật theo chuỗi được chốt.
 
 | # | Tiêu chí (đề xuất) | Ngưỡng đề xuất | Chốt? |
 |---|---|---|---|
