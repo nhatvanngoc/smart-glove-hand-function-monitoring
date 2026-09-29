@@ -1,16 +1,18 @@
-# NGHIÊN CỨU, THIẾT KẾ GĂNG TAY GIÁM SÁT VÀ ĐÁNH GIÁ KHẢ NĂNG VẬN ĐỘNG BÀN TAY TRONG PHỤC HỒI CHỨC NĂNG CHỦ ĐỘNG SAU ĐỘT QUỴ
+# NGHIÊN CỨU VÀ PHÁT TRIỂN GĂNG TAY THÔNG MINH HỖ TRỢ ĐÁNH GIÁ VÀ THEO DÕI CHỨC NĂNG VẬN ĐỘNG BÀN TAY TRONG PHỤC HỒI CHỨC NĂNG SAU ĐỘT QUỴ
 
-> **Học sinh:** Văn Ngọc Nhật Anh — THPT Quảng Trị · **Trường:** THPT Quảng Trị, Quảng Trị
-> **Trạng thái hồ sơ:** pha **cơ sở lý thuyết & thiết kế** (`DEC-PHASE-001`) · **chưa có kết quả thực nghiệm** · bản để nộp: [`docs/DE_CUONG_NOP_TRUONG.md`](docs/DE_CUONG_NOP_TRUONG.md)
-> **Tên đề tài chốt ngày 2026-09-19** (`DEC-TITLE-001`), thay tên cũ `DEC-TOPIC-019`; lịch sử đặt tên: [`research/reviews/2026-09-19_title_options.md`](research/reviews/2026-09-19_title_options.md)
+> **Học sinh:** Văn Ngọc Nhật Anh (11A2) + Nguyễn Duy Quân (12A1) · **GVHD:** Lê Công Long · **Trường:** THPT Quảng Trị, Quảng Trị
+> **Trạng thái hồ sơ:** pha **cơ sở lý thuyết & thiết kế** (`DEC-PHASE-001`) · **chưa có kết quả thực nghiệm** · **bản đã nộp:** [`docs/DE_CUONG.pdf`](docs/DE_CUONG.pdf) (15 trang, 2026-09-26)
+> **Tên đã nộp = tên `DEC-TOPIC-019`** (dưới đây). Tên mới mà README ngày 2026-09-19 ghi là "chốt" (`DEC-TITLE-001`) **chưa từng được duyệt trong `DECISION_LOG.md`** → đã hạ thành đề xuất chờ hủy (`DEC-TITLE-002`); chi tiết: [`research/reviews/2026-09-27_decuong_pdf_sync.md`](research/reviews/2026-09-27_decuong_pdf_sync.md)
 
 **Tên tiếng Anh (hồ sơ ISEF/ViSEF bản dịch):**
 
-> *Research and design of a glove that monitors and assesses hand motor function during active post-stroke rehabilitation*
+> *A low-cost smart glove with directional piezoresistive sensing for quantitative hand motor-function assessment and longitudinal monitoring in post-stroke rehabilitation*
 
 **Phụ đề kỹ thuật (dùng ở đầu báo cáo, không nằm trong tên):**
 
 > *Găng tay đo lực ép bên trên khung cứng + tầm vận động chủ động/thụ động từng ngón, kèm ngưỡng tin cậy đăng ký trước khi đo.*
+
+**Lĩnh vực dự thi (đã nộp):** Hệ thống nhúng (Embedded Systems) · **Thời gian:** 09/2026–01/2027 · **Địa điểm:** phòng sáng tạo trường + nhà riêng · chờ `DEC-TEAM-001` phê chuẩn vào log.
 
 **Câu nói với giám khảo (12 giây):**
 
@@ -40,8 +42,8 @@
 
 Đề tài **không** tuyên bố một nguyên lý vật lý mới và **không** bán một nguyên mẫu. Nó tuyên bố ba thứ, theo thứ tự bảo vệ được giảm dần:
 
-1. **Một kiến trúc cơ khí** — mảng áp trở đặt trên **vách cứng** của ốp ngón, cấu hình nửa cầu Wheatstone, để đo riêng **thành phần lực ép bên**: đại lượng tăng khi người bệnh chống lại tầm vận động, tức là thứ mà cảm biến gập góc *về bản chất* không phân biệt được.
-2. **Một thiết kế phép đo** — `AROM` rồi `PROM` trên cùng ngón, cùng phiên, ở **hai tốc độ kéo** (vì phản ứng căng cơ phụ thuộc tốc độ). `GAP = AROM − PROM` chính là phép thử phân tách *"chưa cố"* khỏi *"bị giữ lại"*.
+1. **Một kiến trúc cơ khí** — mảng áp trở đặt trên **vách cứng** của ốp ngón, cấu hình cầu vi sai hai vách (bản nộp: `R_ref = 10 kΩ` → INA333 G=10 → ADS1115 16-bit), để đo riêng **thành phần lực ép bên**: đại lượng tăng khi người bệnh chống lại tầm vận động, tức là thứ mà cảm biến gập góc *về bản chất* không phân biệt được.
+2. **Một thiết kế phép đo** — `AROM` rồi `PROM` trên cùng ngón, cùng phiên, ở **hai tốc độ kéo** (vì phản ứng căng cơ phụ thuộc tốc độ). `GAP = PROM − AROM` (bản nộp 2026-09-26; README cũ ghi ngược dấu) chính là phép thử phân tách *"chưa cố"* khỏi *"bị giữ lại"*.
 3. **Một lớp tự kiểm chứng** — ngưỡng `MDC`/`ICC`/`CV`/trôi **đăng ký trước khi đo**, mỗi phiên mang cờ `UNRELIABLE` khi vượt ngưỡng, và **lỗi được tiêm có chủ đích** trên rig để chứng minh cờ đó không phải đồ trang trí.
 
 > **Câu chốt cho hội đồng:** phần (1) đã có tiền lệ ở tầng phần tử cảm biến, phần (2) là lựa chọn phương pháp luận, **phần (3) là phần đề tài này mạnh hơn cả một số công trình đã công bố** — và cũng là phần rẻ nhất để làm đúng.
@@ -75,7 +77,7 @@
 
 | RQ | Cửa quyết định | Nếu fail thì sao |
 |---|---|---|
-| R1 | **`GATE 0`** (`G0.1` + `G0.7` là hai ô giết) | Không có chuỗi số liệu nào để nói về diễn tiến → đề tài đổi thành **báo cáo phương pháp + kết quả âm tính** (vẫn nộp được, vẫn có giá trị) |
+| R1 | **`GATE 0`** (bản nộp: `C1.2` + `C1.8` là hai ô giết, tương ứng `G0.1` + `G0.7` cũ) | Không có chuỗi số liệu nào để nói về diễn tiến → đề tài đổi thành **báo cáo phương pháp + kết quả âm tính** (vẫn nộp được, vẫn có giá trị) |
 | R1 | **`GATE C`** (trôi 28 ngày, nhiệt–ẩm, tháo/lắp) | Dừng đề tài theo đúng nghĩa đã ghi trong `research/protocols/06` |
 | R2 | `GATE A`/`GATE B` trên ≥ 1 ngón | Bỏ tái tạo 3D, giữ `GAP`/`EI` |
 | R3 | **Chỉ sau IRB** — nằm ngoài phạm vi đề cương này | Không nêu giả thuyết R3 như kết quả; chỉ là thiết kế dự phòng |
@@ -88,10 +90,10 @@
 Co cơ / bị duỗi thụ động ──► ngón ép vào VÁCH CỨNG của ốp ngón
    ► áp suất tiếp xúc p = F/A_c nén mảng Velostat
    ► ΔR/R = γ · Δp/p₀                       (γ = độ nhạy áp trở, p₀ = F_p/A_c)
-   ► nửa cầu Wheatstone với R_ref, kích V_EX
-   ► ΔV = V_EX · ΔR /(R₀ + R_ref)
-   ► mux CD74HC4067 ──► ESP32-S3 ADC 12 bit ──► trung bình + lấy mẫu lại 20 Hz
-   ► IMU cùng phiên: góc AROM/PROM + tốc độ kéo
+   ► cầu vi sai hai vách: d = S(lòng) − S(mu), R_ref = 10 kΩ (bản nộp)
+   ► INA333 G=10 ──► mux CD74HC4067 ──► ADS1115 16-bit (62,5 µV/LSB)
+   ► ESP32-S3: IIR fc=10 Hz + Notch 50 Hz ──► BLE ──► Orange Pi 5 Pro
+   ► auto-zero 3 s + ô tham chiếu + nhãn "Nghi vấn" (2 vòng lặp kín)
    ► EI · GAP · RAL          (KHÔNG phải newton, KHÔNG phải độ suy từ ADC)
 ```
 
@@ -101,49 +103,54 @@ Co cơ / bị duỗi thụ động ──► ngón ép vào VÁCH CỨNG của �
 2. Thiết kế chỉ sống trong một **cửa sổ tiền tải `F_p` chặn hai phía**: dưới thì không đủ nhạy — với `n_eff ≈ 11`, `V_EX = 3,1 V`, `LSB = 1,51 mV` và `ΔV ≥ 8 LSB` tại `ΔF = 1 N` thì `F_p ≤ 68·γ·ΔF` (γ = 0,5 ⇒ `F_p ≲ 34 N`); trên thì điện trở nguồn cao làm **mux không kịp ổn định ở 20 Hz**. **"Cửa sổ đó có rỗng không" chính là nội dung của GATE 0.**
 
 > `100 kΩ / 10-bit / 1,51 mV` là **ngân sách thiết kế** trong `docs/04` §1, **không phải kết quả đo** — cấm dùng như số liệu.
+> Bản nộp 2026-09-26 dùng chuỗi khác (`CLM-HW-003`, chờ `DEC-HW-005`): ADS1115 + INA333 + `R_ref = 10 kΩ` + SHT30 + 1 IMU LSM6DS3 — xem `docs/04` §8.
+> Số học cửa sổ preload phải tính lại với LSB mới sau khi `DEC-HW-005` được chốt.
 
-**Đính chính một chỗ cũ trong README này:** bản trước viết "thiết kế **không dùng IMU**". Đúng hơn: **dấu gập/duỗi** lấy từ mẫu vách mà không cần encoder (đó là ý của `docs/01` §4), còn **góc và tốc độ kéo** thì **có** 6 IMU — vì `GAP = AROM − PROM` không định nghĩa được nếu không đo góc. Hai mệnh đề này không thay thế nhau.
+**Đính chính hai chỗ cũ trong README này:** (1) bản trước viết "thiết kế **không dùng IMU**" — đúng hơn: **dấu gập/duỗi** lấy từ mẫu vách mà không cần encoder (ý của `docs/01` §4), còn **góc và tốc độ kéo** thì bản nộp chỉ còn **1 IMU ở mu tay** (bù nghiêng), không còn 6 IMU đo góc khớp — **nguồn đo góc cho `GAP` là câu hỏi mở I7**, chờ `DEC-HW-005` trả lời. (2) bản trước viết `GAP = AROM − PROM` — **bản nộp quy ước `GAP = PROM − AROM ≥ 0°`**; đã sửa đồng bộ ở §5.
 
 Phân cấp thuật ngữ (bắt buộc dùng đúng): [`docs/bao_cao/GLOSSARY.md`](docs/bao_cao/GLOSSARY.md) — **vật liệu Velostat** ≠ **sensing element** (Velostat + đồng tự dính + cấu trúc sandwich) ≠ **mảng sensing element** ≠ **hệ thống cảm biến** (mảng + ESP32-S3 + firmware).
 
 ## 5. Ba đại lượng dẫn xuất và quy tắc đơn vị
 
-| Đại lượng | Định nghĩa | Điều kiện phải in kèm | Đơn vị |
+| Đại lượng | Định nghĩa (bản nộp 2026-09-26, `CLM-DEF-001` — chờ `DEC-METRIC-002` phê chuẩn) | Điều kiện phải in kèm | Đơn vị |
 |---|---|---|---|
-| **`EI`** (Effort Index) | `EI = median(\|d\|) / (1 + κ·\|v̂\|)`, `d` = đạo phổ ADC của mảng vách, `v̂` = vận tốc góc IMU | ngón · tốc độ kéo · hướng dẫn bằng giọng nói | **counts (không thứ nguyên)** |
-| **`GAP`** | `AROM − PROM` trên cùng ngón, cùng phiên | do rig kéo ở **hai tốc độ đã hiệu chuẩn** | độ (thang IMU), **không** suy từ ADC |
-| **`RAL`** | mức hỗ trợ **thực** / mức hỗ trợ **yêu cầu** | tải (g) · vị trí khớp · tốc độ, đo trên **rig** | không thứ nguyên ∈ [0,1] |
+| **`EI`** (Effort Index) | trung vị biến thiên phổ của tín hiệu vi sai 12 kênh, chuẩn hóa theo vận tốc góc cùng phiên; công thức/cửa sổ/ngưỡng **cố định trước khi đo**, chỉ so sánh nội bộ cùng giao thức | ngón · tốc độ kéo · hướng dẫn bằng giọng nói | **không thứ nguyên** (công thức tường minh còn nợ) |
+| **`GAP`** | **`PROM − AROM`** trên cùng ngón, cùng phiên (≥ 0°, theo giao thức; **không** tự suy nguyên nhân yếu/co cứng/khớp) | PROM kéo thụ động chậm · AROM gập chủ động tối đa · **hai tốc độ kéo** | độ — **nguồn đo góc còn mở (I7)**, **không** suy từ ADC |
+| **`RAL`** | nấc tải **nhỏ nhất** (thang 120 g → 0 g) đạt tỉ lệ hoàn thành nhịp **P_complete ≥ 80 %** (10 chu kỳ gập/duỗi mỗi nấc, trên giàn + phantom) | tải (g) · vị trí khớp · tốc độ | **gam + bậc tải** (đặc trưng giao thức kiểm định, **không** phải bằng chứng hồi phục) |
 
 **Cấm trong mọi bảng số:** `ADC → newton` (không có load cell trên ngón; load cell chỉ là chuẩn đối chứng ở rig) · `ADC → độ` · dùng `RAL` như chỉ số lâm sàng.
+> Lịch sử định nghĩa (để không lẫn khi đọc tài liệu cũ): README/`DE_CUONG_NOP_TRUONG.md` cũ ghi `GAP = AROM − PROM`, `EI = median\|d\|/(1+κ\|v̂\|)`, `RAL = thực/yêu cầu ∈ [0,1]`; `docs/02` §7.3 ghi `GAP` mẫu chuẩn hóa, `EI = E/(E+E_nền)` — xem sổ R2–R4 trong sync review §5.3.
 
-## 6. Phương pháp: bộ kiểm chứng 10 ngưỡng
+## 6. Phương pháp: bộ kiểm chứng 10 ngưỡng (bản nộp: M1–M6 + C1.1–C1.10)
 
-> Ngưỡng được viết ra và **đóng chốt trước khi có bất kỳ số liệu nào**, và **không** chỉnh lại sau khi thấy số. Một ngưỡng không đạt ⇒ báo cáo **fail** ở ngưỡng đó. Cấm viết "GATE 0 pass" khi `G0.1` hoặc `G0.7` fail (`research/protocols/08` §10.5).
+> Ngưỡng được viết ra và **đóng chốt trước khi có bất kỳ số liệu nào**, và **không** chỉnh lại sau khi thấy số. Một ngưỡng không đạt ⇒ báo cáo **fail** ở ngưỡng đó. Cấm viết "GATE 0 pass" khi `C1.2` hoặc `C1.8` fail. Bảng dưới là ngưỡng **đã nộp** (`CLM-MET-005`, chờ `DEC-METRIC-002` phê chuẩn); cột cuối ghi chỗ đổi so với bộ G0.x cũ.
 
-| ID | Câu hỏi | Ngưỡng |
-|---|---|---|
-| **G0.0** | Chọn định nghĩa nhiễu **trước khi đo** | A: `noise_pp = max−min`/20 mẫu (tính tay được) · B: `σ`/≥5.000 mẫu (cần script) |
-| **G0.1** 🎯 | Có tồn tại `F_p` vừa đủ nhạy vừa đủ ổn định? | ∃`F_p`: `R₀ ≤ R_max` **và** `SNR ≥ 8 LSB` tại `ΔF = 1 N` |
-| G0.2 | Mảng có thật sự là áp kế? | `γ_i ≥ 0,25` ở ≥4/5 mảng, `R² ≥ 0,95` |
-| G0.3 / G0.4 | Lặp lại giữa chu kỳ / giữa **ngày** | `CV ≤ 5 %` · `ICC(3 ngày) ≥ 0,75` |
-| G0.5 / G0.6 | Đường lên có trùng đường xuống? Có bị lún khi giữ tải? | `hys_norm ≤ 15 %` · `creep_2dec ≤ 3 %` |
-| **G0.7** 🎯 | Tín hiệu có trôi chậm hơn biên độ cần đo? | `drift_ratio ≤ 2` **và** trôi 10 ngày < `ΔV` tại `ΔF = 1 N` |
-| G0.8 | Các mảng có đủ giống nhau để so sánh giữa ngón? | độ rải `γ ≤ ±40 %` |
-| G0.9 | Cấu hình kênh đọc kịp không? | `fps_meas ≥ 20 Hz` trên 12 kênh |
+| ID (nộp) | Câu hỏi | Ngưỡng đã nộp | Đổi so với G0.x |
+|---|---|---|---|
+| **C1.1** | Sàn nhiễu mạch đo là bao nhiêu? | `Vpp ≤ 5 mV` / 5.000 mẫu tĩnh | chốt luôn định nghĩa B + ngưỡng tuyệt đối |
+| **C1.2** 🎯 | Có tồn tại `F_p` vừa đủ nhạy vừa đủ ổn định? | `SNR ≥ 18 dB` (≈8×) tại `ΔF = 1 N`, ≥10/12 kênh | đơn vị LSB → dB, phạm vi 10/12 kênh |
+| C1.3 | Mảng có thật sự là áp kế? | `γ ≥ 0,25` (≥10/12 kênh), `R² ≥ 0,90` | **R² 0,95 → 0,90** |
+| C1.4 / C1.5 | Lặp lại giữa chu kỳ / giữa **ngày**? | `CV ≤ 5 %` · `CV ≤ 8 %` (3 ngày, tháo/đeo lại, trên phantom) | **ICC → CV**, nới 5 %→8 % |
+| C1.6 / C1.7 | Đường lên có trùng đường xuống? Có bị lún khi giữ tải? | `h ≤ 18 %` · `creep ≤ 8 %` (giữ 60 s @ 5 N) | **15 %→18 %** · **đổi định nghĩa creep** |
+| **C1.8** 🎯 | Tín hiệu có trôi chậm hơn biên độ cần đo? | trôi/tín hiệu ≤ 2,0 sau 10 ngày (qua auto-zero) | **bỏ** điều kiện so ΔV@1N |
+| C1.9 | Các mảng có đủ giống nhau để so sánh giữa ngón? | độ rải `γ ≤ ±40 %` (+ bảng chuẩn hóa) | khớp |
+| C1.10 | Cấu hình kênh đọc kịp không? | `fs ≥ 20 Hz` đồng thời 12 kênh | khớp (⚠️ PDF §8.1/§9.1 ghi 50 Hz — I1) |
 
-🎯 = ô giết đề tài. **Cách chạy GATE 0 mà không cần một dòng code:** `research/protocols/08a` — phiếu in được, chuẩn lực là **khối lượng đã cân** (`F = m·g`, không trễ, không cần hiệu chuẩn điện tử), mọi phép tính chỉ là trừ số nguyên. Kế hoạch đầy đủ + cây fail: `research/protocols/08`.
+🎯 = ô giết đề tài. **Cách chạy GATE 0 mà không cần một dòng code:** `research/protocols/08a` — phiếu in được, chuẩn lực là **khối lượng đã cân** (`F = m·g`, không trễ, không cần hiệu chuẩn điện tử), mọi phép tính chỉ là trừ số nguyên. Kế hoạch đầy đủ + cây fail: `research/protocols/08` (giữ 10 ô chờ chốt; bảng đối chiếu G0↔C1: sync review §4).
 
 ## 7. Kế hoạch và ngân sách
 
 ```
 Lớp 0 (GATE 0)    Mảng Velostat + đồng tự dính + jig in + khối lượng chuẩn + đồng hồ đo
                   ── chuẩn lực = F = m·g, KHÔNG cần load cell ──►  0,12–0,65 triệu đ
-Lớp 1 (GATE A/B)  3 ngón (2, 3, cái) × 4 mảng = 12 mảng áp trở + 6 IMU + 12 flex
-                  + CD74HC4067 → ESP32-S3 (12 bit, V_EX = 3,1 V, 20 Hz)  ► +0,57–1,50 triệu đ
+Lớp 1 (GATE A/B)  3 ngón (cái, trỏ, giữa) × 2 khớp, cầu vi sai hai vách + 1 IMU LSM6DS3
+                  + INA333 + ADS1115 + 2×CD74HC4067 → ESP32-S3 (20 Hz)  ► +0,57–1,50 triệu đ
 Lớp 2 (GATE D/F)  Orange Pi 5 Pro (log nguồn thô + dashboard) + rig E4/E5 (vít me,
                   phanh từ, tải chuẩn) + phantom silicone          ► +1,10–2,50 triệu đ
 Lớp 3 (lâm sàng)  IRB + bệnh viện + n ≥ 20                          ► CHƯA MỞ — ngoài đề cương
 ```
+
+> Bản nộp đặt thêm 3 ràng buộc sản phẩm: giá găng mục tiêu **< 1,5 triệu đ** · khối lượng đeo **< 150 g** · trễ toàn hệ thống **≤ 500 ms** (M5).
 
 | Tổng hợp | Tiền mặt cần chi (vật tư đã có sẵn đã được trừ) |
 |---|---|
@@ -187,9 +194,9 @@ Bằng sáng chế đã tra: **US20150233779A1** (Waltop) — **đã abandoned**
 
 | Loại | Số lượng | Kiểm ở đâu |
 |---|---|---|
-| Nguồn đã vào sổ, có locator + mức đã đọc | **141** | `research/evidence/SOURCE_LEDGER.csv` |
-| Tuyên bố, kèm cấp bằng chứng + hành động còn lại | **24** | `research/claims/CLAIM_LEDGER.csv` |
-| Quyết định có ngày + chủ sở hữu + trạng thái | **34** | `research/context/DECISION_LOG.md` |
+| Nguồn đã vào sổ, có locator + mức đã đọc | **147** | `research/evidence/SOURCE_LEDGER.csv` |
+| Tuyên bố, kèm cấp bằng chứng + hành động còn lại | **27** | `research/claims/CLAIM_LEDGER.csv` |
+| Quyết định có ngày + chủ sở hữu + trạng thái | **38** | `research/context/DECISION_LOG.md` |
 | Nhật ký truy vấn ngoài (**kể cả lần tìm không thấy**) | **81** | `research/queries/QUERY_LOG.jsonl` |
 | Phiếu đo/thực nghiệm đã thiết kế, chưa chạy | **10 ngưỡng · 7 gate · 8 buổi bench** | `research/protocols/06`–`08a` |
 | Số liệu đo của đề tài | **0** | `research/bench/logs/` — đang trống, và đó là trạng thái thật |
@@ -228,9 +235,9 @@ python scripts/build_context_bundle.py --budget-chars 40000     # -> research/ge
 
 **Ba việc còn lại, đúng thứ tự:**
 
-1. ☐ **Chủ dự án chốt 10 ô** `Chốt?` trong `research/protocols/08` §7 (việc này **không** ai làm thay được).
+1. ☐ **Chủ dự án chốt 6 quyết định đồng bộ bản nộp** (`DEC-SYNC-001`/`TEAM`/`TITLE-002`/`HW-005`/`METRIC-002`/`SCOPE-005`, sync review §6) **rồi chốt 10 ô** `Chốt?` trong `research/protocols/08` §7 (việc này **không** ai làm thay được).
 2. ☐ Chạy GATE 0 bằng `research/protocols/08a` → mỗi buổi = 1 file log + 8 ảnh; **kể cả buổi fail cũng phải lưu**.
-3. ☐ Thay dự toán bằng **báo giá/hoá đơn thật** → `DEC-BUDGET-001`; chỉ khi đó mới xét giải ngân Lớp 1.
+3. ☐ Thay dự toán bằng **báo giá/hoá đơn thật** → `DEC-BUDGET-001` (id dự kiến trong `2026-09-19_project_ceiling.md`, chưa tạo); chỉ khi đó mới xét giải ngân Lớp 1.
 
 Luồng chuẩn cho mỗi thay đổi lớn: đọc `research/context/PROJECT_SNAPSHOT.md` → log truy vấn (`scripts/research_log.py`) → cập nhật `SOURCE_LEDGER`/`CLAIM_LEDGER` → chạy review protocol → cập nhật snapshot + `INDEX.md` → dựng lại bundle.
 
@@ -265,6 +272,7 @@ gh repo view --json name,description,repositoryTopics -q '"\(.name)\n\(.descript
 
 | Ngày | Việc |
 |---|---|
-| 2026-09-19 (lượt 4) | README dựng lại theo cấu trúc hồ sơ khoa học (luận điểm · RQ + điều kiện giết · nguyên lý · 10 ngưỡng · tự khai); đề xuất tên mới `DEC-TITLE-001`; điền 3/4 ô danh tính của đề cương; `DEC-DOC-001` |
+| 2026-09-27 | **Đồng bộ bản nộp `docs/DE_CUONG.pdf` (2026-09-26):** đội hình 2 người + GVHD + timeline + lĩnh vực Nhúng; tên quay về `DEC-TOPIC-019` (`DEC-TITLE-001` chờ hủy); `GAP = PROM − AROM`; ngưỡng C1.x; kiến trúc ADS1115+INA333; +7 nguồn/+3 claim; 6 quyết định chờ chốt (`DEC-SYNC-001`…`DEC-SCOPE-005`) |
+| 2026-09-19 (lượt 4) | README dựng lại theo cấu trúc hồ sơ khoa học (luận điểm · RQ + điều kiện giết · nguyên lý · 10 ngưỡng · tự khai); đề xuất tên mới (ghi nhầm là "chốt" — đã sửa 2026-09-27, chờ `DEC-TITLE-002`) |
 | 2026-09-19 (lượt 3) | Đề cương nộp `docs/DE_CUONG_NOP_TRUONG.md`; sửa 2 lỗi trích dẫn trong `A.1`; thi hành `DEC-ROLE-001` (không nêu danh tính người được tham khảo) |
 | 2026-09-19 (lượt 1–2) | Prior art lượt 1–2 (novelty dịch từ cơ chế sang lớp thống kê); GATE 0 plan + phiếu đo không code; đánh giá trần dự án + mức đầu tư theo lớp |

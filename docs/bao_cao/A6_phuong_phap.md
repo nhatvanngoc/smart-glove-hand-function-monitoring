@@ -1,9 +1,9 @@
 # A.6 — Phương pháp nghiên cứu
 
-- **Tổng quan tài liệu:** Rà soát y văn về di chứng vận động sau đột quỵ, công cụ đánh giá chức năng bàn tay hiện tại, đặc tính kỹ thuật của vật liệu Velostat, và các hệ thống theo dõi trên thị trường.
+- **Tổng quan tài liệu:** Rà soát y văn về di chứng vận động sau đột quỵ, công cụ đánh giá chức năng bàn tay, đặc tính kỹ thuật Velostat, và các hệ thống theo dõi tại nhà; đối chiếu prior art + bằng sáng chế trước khi chốt mức mới.
 
-- **Tham khảo ý kiến:** Lấy ý kiến từ kỹ thuật viên vật lý trị liệu – phục hồi chức năng, các bài báo của chuyên gia về thiếu sót của giải pháp hiện tại.
+- **Tham khảo ý kiến (ẩn danh):** Kỹ thuật viên vật lý trị liệu – phục hồi chức năng phản biện giao thức đo trên giấy (phiếu + ghi chép); ý kiến là bằng chứng nhu cầu, không phải bằng chứng kết quả.
 
-- **Phương pháp thực nghiệm:** Chế tạo mẫu phần tử cảm biến và găng tay; đo đặc tính cảm biến trên bàn tay; thu thập và phân tích tín hiệu để xây dựng mô hình đánh giá chức năng.
+- **Phương pháp thực nghiệm:** Chuẩn lực tĩnh = quả cân đã cân (F = m·g); DMM chính FNIRSI 2C23T + scope/gen của máy + load cell 5 kg (sau khi có HX711); đo bench → giàn → phantom theo ngưỡng đăng ký trước; mọi phiên ghi log thô + ảnh.
 
-- **Phương pháp phân tích và thống kê:** Đánh giá độ lặp lại; tương quan mô hình đánh giá với công cụ đánh giá chuẩn; đánh giá độ nhạy phát hiện thay đổi theo thời gian.
+- **Phương pháp phân tích và thống kê:** CV, R², hysteresis, creep, tỷ số trôi, recall/precision (M6, E1–E4); công thức EI và ngưỡng chấp nhận cố định trước khi thu dữ liệu; không hạ chuẩn sau khi thấy số.

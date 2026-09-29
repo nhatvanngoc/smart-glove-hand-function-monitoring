@@ -161,9 +161,49 @@ thời gian mang/tháo (don–doff) ở mức người nhà làm được trong 
 
 ## 7. Việc phải làm trước khi viết bất kỳ kết luận nào
 
-1. ☐ Chốt cấu hình 1 hay 2 (hoặc lộ trình 1 → 2).
+1. ☐ Chốt cấu hình 1 hay 2 (hoặc lộ trình 1 → 2) — và chốt `DEC-SCOPE-005` (3 ngón như bản nộp hay giữ lộ trình 5 ngón).
 2. ☐ Đo `R_sensor` theo tải cho ≥ 5 mẫu sensing element tự chế.
 3. ☐ Đo ENOB thực của chuỗi ADC + MUX.
 4. ☐ Đo tốc độ khung và độ trễ end-to-end thực tế.
 5. ☐ Ghi toàn bộ vào `research/bench/` và `research/evidence/SOURCE_LEDGER.csv` (loại `raw_measurement`).
 6. ☐ Sau đó mới chạy `research/protocols/06_glove_hand_GATE_experiment.md`.
+
+---
+
+## 8. Cấu hình ĐÃ NỘP (`docs/DE_CUONG.pdf` §8–§9, 2026-09-26) — chờ `DEC-HW-005`
+
+> Các §1–§7 ở trên là **ngân sách thiết kế trên giấy** (ESP32-S3 ADC 12-bit, `V_EX = 3,1 V`, 6 IMU, lộ trình 5 ngón).
+> Bản nộp dùng chuỗi khác. **Không xóa §1–§7** (lịch sử thiết kế); khi `DEC-HW-005` được chốt thì §8 này thành cấu hình hiện hành
+> và `protocols/08` §3 + `docs/02` §5.5 phải tính lại theo LSB mới. Chi tiết: `CLM-HW-003`, sync review §2-F6.
+
+```
+[Tầng 1 — tay]  12 sensing element Velostat (khung ốp ngón PETG in 3D, điện cực đồng 0,05 mm,
+                bu-lông kẹp vi chỉnh preload F_p) + 1 ô tham chiếu không tải
+                + 1 IMU 6-DOF LSM6DS3 ở mu tay (bù góc nghiêng trọng trường)
+[Tầng 2 — cổ tay] 2× CD74HC4067 (chuyển mạch 1 kHz) → MCP6001 đệm
+                → cầu vi sai ΔV = V(lòng) − V(mu), R_ref = 10 kΩ (0,1 %, 25 ppm/°C)
+                → INA333 G = 10 (CMRR ≥ 100 dB) → ADS1115 16-bit (±2,048 V, 62,5 µV/LSB, 860 SPS)
+                → ESP32-S3 (lọc IIR bậc 2 fc = 10 Hz, Notch 50 Hz, BLE 5.0)
+                → nguồn LiPo 3,7 V qua TP4056 + LDO HT7333 (cách ly lưới điện)
+                + SHT30 bù trôi nhiệt–ẩm
+[Tầng 3 — biên] Orange Pi 5 Pro (RK3588, NPU 6 TOPS): suy luận INT8 < 15 ms,
+                tính EI/GAP/RAL + dashboard
+```
+
+**Bảng delta so với ngân sách §1–§5:**
+
+| Hạng mục | Ngân sách cũ (§1–§5) | Bản nộp (§8–§9 PDF) |
+|---|---|---|
+| ADC | ESP32-S3 ADC1 12-bit (~1,51 mV/LSB danh định) | **ADS1115 16-bit rời** (62,5 µV/LSB, dải ±2,048 V) |
+| Khuếch đại | không có (cầu phân áp thụ động, `R_f ≈ R_sensor`) | **INA333 G = 10**, `R_ref = 10 kΩ` 0,1 % |
+| Đệm / bù môi trường | chưa có | MCP6001 + **SHT30** |
+| IMU | 6 IMU (góc AROM/PROM + tốc độ kéo) | **1 IMU LSM6DS3** (bù nghiêng) — ⚠️ nguồn đo góc cho GAP còn mở (**I7**) |
+| Lấy mẫu | mục tiêu 45–100 Hz, sàn 20 Hz | ⚠️ PDF ghi **cả 50 Hz** (§8.1/§9.1) **và 20 Hz** (M5/C1.10) — **I1** |
+| Lọc số | chưa định | IIR bậc 2 fc = 10 Hz + Notch 50 Hz |
+| Ngón | lộ trình 5 ngón (cấu hình 1/2) | **3 ngón** (cái/trỏ/giữa) — `DEC-SCOPE-005` |
+| Kênh vi sai | 24 kênh vi sai (cấu hình 2) | "**12 kênh vi sai**" trên 6 khớp — ⚠️ chưa rõ 12 cặp hay 12 phần tử (**I6**) |
+| Nguồn | chưa định | LiPo 3,7 V + TP4056 + HT7333 |
+
+**Quy tắc vận hành đi kèm (PDF §9.3/§11.2):** auto-zero 3 s duỗi nghỉ đầu phiên (`V_offset` trừ trực tiếp);
+cảnh báo kiểm tra cơ khí khi trôi tĩnh vượt **±5 %** dải đo so với ô tham chiếu; vòng lặp 1 (`V_base` → chỉnh găng),
+vòng lặp 2 (phương sai → nhãn **"Nghi vấn"** + loại khỏi xu hướng + đo lại).
