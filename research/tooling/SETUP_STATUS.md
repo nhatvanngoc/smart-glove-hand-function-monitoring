@@ -17,8 +17,9 @@ Authoritative full hashes and URLs: `tools/research_sources.lock.json`.
 - Debian 12 Bookworm detected.
 - Official MiKTeX Debian path and signing-key fingerprint check are implemented in `scripts/install_miktex_debian.sh`.
 - Runtime MiKTeX installation in this sandbox remains **blocked** (APT/HTTPS endpoints) — `pdflatex` not available here. This is an environment/network blocker, not evidence that the installer or MiKTeX is invalid. Install the official MiKTeX installer on the real workstation.
-- The ignored `.venv` has NumPy, Matplotlib and scikit-learn (installed 2026-08-25).
-- Environment check result: **10/11** required/target checks pass; only `pdflatex` fails. `miktexsetup` remains an optional warning.
+- The ignored `.venv` has NumPy, Matplotlib and scikit-learn (**reinstalled 2026-09-27**; + `pypdf` for local PDF text extraction — not a runtime dependency).
+- Environment check result (re-run 2026-09-27): **10/11** required/target checks pass; only `pdflatex` fails. `miktexsetup` remains an optional warning.
+- Third-party checkouts + 4 skill links re-verified 2026-09-27 via `bootstrap_research_tooling.sh` (all `READY`, pinned commits match lock file).
 
 ## Topic-related note (2026-08-25)
 

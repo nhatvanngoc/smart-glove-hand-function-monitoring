@@ -5,12 +5,12 @@
 
 > **Một câu phải nói thẳng trước tiên:** tài liệu này **chưa có một số liệu đo thực nghiệm nào của tác giả**. Toàn bộ con số xuất hiện bên dưới thuộc một trong ba loại: (a) trích nguồn đã kiểm (có DOI ở §12), (b) **mục tiêu cần đạt** do chính đề tài đặt ra, hoặc (c) **ngân sách dự toán**. Không dòng nào được đọc như kết quả. Đây là lựa chọn có ý thức, không phải thiếu sót: đề tài được thiết kế sao cho mọi tuyên bố đều truy vết được về một phép đo hoặc một nguồn.
 
-| Cần điền | Giá trị |
+| Cần điền | Giá trị (điền 2026-09-27 từ bản đã nộp `DE_CUONG.pdf` §1/§7.3) |
 |---|---|
-| Họ tên học sinh | ⟨điền⟩ |
-| Lớp / Trường / Tỉnh | ⟨điền⟩ |
-| Giáo viên hướng dẫn | ⟨điền⟩ |
-| Năm học / thời điểm nộp | ⟨điền⟩ |
+| Họ tên học sinh | Văn Ngọc Nhật Anh + Nguyễn Duy Quân |
+| Lớp / Trường / Tỉnh | 11A2 + 12A1 / THPT Quảng Trị / Quảng Trị |
+| Giáo viên hướng dẫn | Lê Công Long |
+| Năm học / thời điểm nộp | 2026–2027 · nộp 2026-09-26 · thực hiện 09/2026–01/2027 · lĩnh vực Hệ thống nhúng |
 
 ---
 

@@ -17,10 +17,13 @@
 ├── LICENSE
 ├── requirements.txt               ← numpy, matplotlib, scikit-learn
 ├── docs/
+│   ├── DE_CUONG.pdf / DE_CUONG.txt    ← ⭐ BẢN ĐÃ NỘP (15 tr., 2026-09-26) + trích text tra cứu
+│   ├── DE_CUONG_NOP_TRUONG.md         ← Đề cương nộp trường (bản md; danh tính đã điền từ PDF)
 │   ├── 01_Topic_Definition.md         ← Đề tài, RQ 2 tầng, novelty, pipeline, killer experiment
-│   ├── 02_Theoretical_Foundation.md   ← CƠ SỞ LÝ THUYẾT (phục hồi vận động, thang đo, Velostat, drift, edge-AI)
+│   ├── 02_Theoretical_Foundation.md   ← CƠ SỞ LÝ THUYẾT (…+ §11 ghi chú định nghĩa theo bản nộp)
 │   ├── 03_Literature_Gap_Analysis_Plan.md ← Kế hoạch rà soát khoảng trống 2011–2026
-│   ├── 04_Hardware_Architecture.md    ← Bố trí kênh, MUX, ngân sách nhiễu, tốc độ khung
+│   ├── 04_Hardware_Architecture.md    ← Bố trí kênh, MUX, ngân sách nhiễu (…+ §8 cấu hình đã nộp ADS1115+INA333)
+│   ├── 05_De_Cuong_Dang_Ky_DRAFT.md   ← Outline nội bộ (không nộp)
 │   ├── OUTLINE_BAOCAO_VISEFD.md       ← Khung báo cáo toàn văn A/B/C theo mẫu ViSEF
 │   └── bao_cao/
 │       ├── A1_ly_do_chon_de_tai.md    ← Tiêu chí A của ViSEF
@@ -50,6 +53,7 @@
 │   ├── queries/QUERY_LOG.jsonl    ← Log truy vấn (auditable)
 │   ├── bench/templates/           ← Template log đo bench
 │   ├── reviews/00_EXPLORATION_SUMMARY.md ← Tổng kết hành trình săn đề tài
+│   ├── reviews/2026-09-27_decuong_pdf_sync.md ← ⭐ ĐỐI CHIẾU BẢN NỘP với repo (F1–F14, G0↔C1, sổ I/L/R, 6 QĐ chờ chốt)
 │   ├── reviews/2026-09-19_prior_art_novelty_gate1.md ← ⭐ KẾT QUẢ RÀ SOÁT PRIOR ART lượt 1 (ma trận + quyết định hạ/nâng novelty)
 │   ├── reviews/archive/           ← ~20 báo cáo kill-test (đề tài cũ, lưu lịch sử)
 │   └── tooling/SETUP_STATUS.md    ← Trạng thái runtime/tooling
@@ -92,7 +96,8 @@
 - **2026-08-26:** chốt Hướng C — lót giày Velostat theo dõi độ cứng mô gan chân (sàng lọc DFU).
 - **2026-08-28:** **PIVOT** — bỏ DFU vì GATE 3 (Usefulness) yếu; chuyển sang **găng tay theo dõi chức năng bàn tay sau đột quỵ** (DEC-TOPIC-018).
 - **2026-09-13:** chốt **tên đề tài chính thức** (DEC-TOPIC-019), chuyển phần cứng từ Arduino Mega 2560 sang **ESP32-S3 + CD74HC4067** (DEC-HW-003), chốt **bố trí kênh** (DEC-HW-004), cập nhật đồng bộ toàn repo + push GitHub.
-- **2026-09-19 (11):** `docs/DE_CUONG_NOP_TRUONG.md` = **bản đề cương nộp nhà trường** (13 mục + Phụ lục A): tính mới theo tiêu chí ViSEF/ISEF với bảng đối chiếu 8 công trình/sản phẩm, ảnh hưởng chia 3 loại, cơ sở lý thuyết + nguyên lý hoạt động, 10 ngưỡng đăng ký trước khi đo, ngân sách dự toán theo 4 lớp. `docs/05` thành outline nội bộ. Thêm `SRC-VN-STROKE-EPI-2025`, `SRC-COCHRANE-UE-2014`, `SRC-HENDRICKS-2002-MOTORRECOVER` (UNVERIFIED — ghi lại một chỗ **trích sai nguồn** trong A.1) và `CLM-BIO-003/-004`.
+- **2026-09-27:** đồng bộ **bản đã nộp `docs/DE_CUONG.pdf`** (15 tr., tạo 2026-09-26) → `research/reviews/2026-09-27_decuong_pdf_sync.md`: đội hình 2 người + GVHD Lê Công Long, lĩnh vực Nhúng, timeline 09/2026–01/2027; tên quay về `DEC-TOPIC-019` (README cũ ghi `DEC-TITLE-001` "chốt" là quá thẩm quyền — chưa từng vào log); `GAP = PROM − AROM`; ngưỡng C1.x; kiến trúc ADS1115+INA333; môi trường cài lại (10/11 check). 6 quyết định + 7 nguồn + 3 claim chờ owner duyệt.
+- **2026-09-19 (11):** `docs/DE_CUONG_NOP_TRUONG.md` = **bản đề cương nộp nhà trường** (13 mục + Phụ lục A): tính mới theo tiêu chí ViSEF/ISEF với bảng đối chiếu 8 công trình/sản phẩm, ảnh hưởng chia 3 loại, cơ sở lý thuyết + nguyên lý hoạt động, 10 ngưỡng đăng ký trước khi đo, ngân sách dự toán theo 4 lớp. `docs/05` thành outline nội bộ. Thêm `SRC-VN-STROKE-EPI-2025`, `SRC-COCHRANE-UE-2014`, `SRC-HENDRICKS-2002-MOTORRECOVER` (UNVERIFIED — ghi lại một chỗ **trích sai nguồn** trong A.1) và `CLM-BIO-003/-004`. *(2026-09-27: đã điền 4 ô danh tính từ bản PDF đã nộp.)*
 - **2026-09-19 (10):** chủ dự án chốt 2 việc — **`DEC-ROLE-001`: không nêu danh tính KTV trong hồ sơ nộp** (đã sửa `docs/05` §9.6, `protocols/07` §7; `A.5` còn nợ 1 chỗ) và **`DEC-PHASE-001`: vẫn pha lý thuyết** (không firmware, không script). Để GATE 0 vẫn chạy được: **`research/protocols/08a_gate0_bench_sheets.md`** — phiếu đo in được dùng toàn số nguyên + checklist 8 ảnh, và `protocols/08` thêm **G0.0** (chọn định nghĩa nhiễu A/B trước khi đo).
 - **2026-09-19 (9):** chủ dự án khai báo **đã có** Velostat + ESP32-S3 + Orange Pi 5 Pro + băng đồng và có **chị là KTV VLTL-PHCN 10 năm** → `DEC-RESOURCE-001` + `SRC-OWNER-2026-09-19-RESOURCES/-KTV10Y` + kiểm kê `research/context/EQUIPMENT_AND_ACCESS.md` + ranh giới sử dụng KTV ở `research/protocols/07` §7. Verdict đầu tư: **giải ngân được Lớp 0–1 về tiền**, nhưng **ngưỡng vẫn phải chốt trước khi đo** và **không đo trên người nhà**.
 - **2026-09-19 (8):** đọc **toàn văn** báo cáo dự thi "Xe lăn tự hành ALS" (QG 2024–2025, lĩnh vực **Hệ thống nhúng**, 15 trang) do chủ dự án cung cấp → `research/reviews/2026-09-19_benchmark_xe_lan_ALS_QG2025.md` + `SRC-XELAN-ALS-QG2025-REPORT` (READ_FULL) + `CLM-MET-004` (ngân sách hình thức). Kết luận: phương pháp của ta **trên** chuẩn thắng cuộc; vật thật + con số **dưới** (bằng 0). Khuyến nghị đổi lĩnh vực dự thi sang **Hệ thống nhúng**.

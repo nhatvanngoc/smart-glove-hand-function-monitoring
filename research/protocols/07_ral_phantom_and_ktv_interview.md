@@ -1,6 +1,7 @@
 # 07 — Rig RAL (phantom có tải chỉnh được) + phiếu hỏi KTVVLTL-PHCN
 
 > **Ngày soạn:** 2026-09-19 · **Trạng thái:** **CHỜ GIAI ĐOẠN RIG** — chủ dự án đã duyệt phạm vi E4+E5+E6 (`DEC-SCOPE-003`) nhưng **hoãn chốt ngưỡng** và **hoãn viết script**; giai đoạn hiện tại chỉ làm **cơ sở lý thuyết** (`docs/02` §1.4–§1.6, §3.4, §5.4, §7.3, §8.3). File này để nguyên bản nháp, **không** coi là ngưỡng đã chốt.
+> **2026-09-27 — cấu hình rig/phantom ĐÃ NỘP** (PDF §10, chờ `DEC-METRIC-002`/`DEC-HW-005` nối vào file này): khung nhôm 2020 + trượt tuyến tính ổ bi + vít me bước đôi + phanh từ + lò xo tải chuẩn; phantom silicone y tế **Shore A 25–30** (cần đối chiếu tài liệu mô mềm trước khi chốt); load cell + **HX711 24-bit** kiểm định độc lập; AAN chỉ trên phantom: lò xo nấc 20–120 g + servo Bowden `F_assist = max(0, F_target − F_phantom)` + giới hạn lực cài trước + phản hồi thị giác EI; RAL = nấc tải nhỏ nhất đạt `P_complete ≥ 80 %` (10 chu kỳ/nấc, 120 g → 0 g). Chi tiết: sync review §2-F10/F11.
 > **Vì sao có file này:** đề xuất "tập chủ động có trợ lực (AAT)" của chủ dự án chỉ thành nội dung khoa học nếu **đo được** nỗ lực và mức trợ giúp cần thiết.
 > **Nguyên tắc bắt buộc (giống `06`):** mọi số liệu trong file này là **trên rig/phantom** → **không cần IRB**; **cấm** tác động lực lên người cho tới khi có phê duyệt đạo đức.
 > **Ngưỡng PASS/FAIL chốt TRƯỚC khi đo; cấm chỉnh sau khi thấy số.**

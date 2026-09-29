@@ -1,17 +1,19 @@
 # A.3 — Tiêu chí của dự án
 
-- Mảng phần tử cảm biến ghi nhận lực và hướng chuyển động tại các lóng ngón tay ổn định và lặp lại trong các bài tập chuẩn (gập, duỗi, cầm nắm).
+*(Ngưỡng đăng ký trước — số đo điền sau khi có log. Chi tiết: outline A.3.)*
 
-- Hệ thống tái tạo được mô hình bàn tay 3D phản ánh động tác flexion/extension của từng ngón tay theo thời gian thực, phục vụ chuyên gia đánh giá từ xa.
+- **M1/C1.2:** SNR ≥ 18 dB tại ΔF = 1 N trên ≥ 10/12 kênh.
 
-- Đặc trưng thu được từ cảm biến phân biệt được ít nhất 3 mức độ suy giảm chức năng khác nhau, được kiểm chứng trên phantom.
+- **M2/C1.3:** γ ≥ 0,25 và R² ≥ 0,90 trong dải 0,5–10 N.
 
-- Các chỉ số chức năng thu được có quan hệ tương quan với kết quả các công cụ đánh giá lâm sàng chuẩn.
+- **M3/C1.4/C1.5:** CV nội phiên ≤ 5%; CV liên ngày (tháo/đeo lại) ≤ 8%.
 
-- Biên độ tín hiệu phản ánh thay đổi chức năng tay lớn hơn biên độ drift và nhiễu của cảm biến trong cùng khung thời gian.
+- **M4/C1.8:** tỷ số trôi/tín hiệu sau 10 ngày ≤ 2,0 (có auto-zero).
 
-- Hệ thống có khả năng theo dõi sự thay đổi chức năng qua nhiều phiên đo mà không tạo ra cảnh báo thay đổi giả do biến thiên của cảm biến.
+- **M5/C1.10:** quét đồng thời ≥ 20 Hz toàn bộ kênh; trễ hệ thống ≤ 500 ms.
 
-- Mô hình đánh giá chức năng có khả năng suy luận tại thiết bị biên với độ trễ thấp.
+- **M6:** phát hiện đeo sai qua cửa sổ V_base, tỷ lệ ≥ 80% (N = 20–30 lần thử).
 
-- Cơ chế tự kiểm tra độ tin cậy có khả năng phát hiện các trường hợp cảm biến hoạt động bất thường hoặc suy giảm hiệu năng được tạo ra có chủ đích.
+- **C1.1/C1.6/C1.7/C1.9:** Vpp ≤ 5 mV/5.000 mẫu; hys ≤ 18%; creep ≤ 8% (60 s @ 5 N); đồng đều kênh ±40%.
+
+- Mọi chỉ số EI/GAP/RAL tính lặp lại giữa phiên, gắn nhãn tin cậy; phiên không đạt bị gắn "Nghi vấn" và loại khỏi xu hướng.

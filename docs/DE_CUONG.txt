@@ -1,0 +1,465 @@
+# BẢN TRÍCH TEXT TỪ docs/DE_CUONG.pdf (để tra cứu, không phải bản nộp)
+# - Nguồn: docs/DE_CUONG.pdf (15 trang, tạo 2026-09-26 23:32 +07:00, Microsoft Word for Microsoft 365)
+# - Trích bằng: pypdf (venv), ngày 2026-09-27. Công thức/ký hiệu có thể lệch so với PDF.
+# - Bản chính thức là file PDF. Mọi trích dẫn nộp hồ sơ phải đối chiếu PDF, không trích file này.
+
+
+========== PAGE 1/15 ==========
+ 
+ 1 
+1. THÔNG TIN CHUNG VỀ DỰ ÁN  
+Mục Nội dung 
+1.1  Tên dự án  Găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận 
+động bàn tay trong phục hồi chức năng sau đột quỵ  
+1.2  Lĩnh vực Hệ thống nhúng (Embedded Systems)  
+1.3  Loại dự án  Dự án kỹ thuật  
+1.4  Học sinh thực 
+hiện 
+1. Văn Ngọc Nhật Anh — Lớp 11A2, Trường THPT Quảng Trị  
+2. Nguyễn Duy Quân — Lớp 12A1, Trường THPT Quảng Trị  
+1.5  GVHD Lê Công Long 
+1.6  Đơn vị  Trường THPT Quảng Trị, tỉnh Quảng Trị  
+2. TÓM TẮT  
+Đột quỵ là nguyên nhân hàng đầu gây tàn tật lâu dài tại Việt Nam; chức năng 
+vận động bàn tay hồi phục chậm và cần được theo dõi định lượng giữa các lần 
+tái khám, trong khi theo dõi tại nhà hiện dựa vào tự ghi chép với sai số đã được 
+chứng minh là rất lớn. Dự án thiết kế và chế tạo một găng tay đo lường: màng áp 
+điện trở Velostat được kéo trước trên vách khung cứng của ốp ngón in 3D; khi 
+ngón gập/duỗi ép vào vách, phép đọc vi sai hai vách đối diện cho biết hướng vận 
+động và mức lực ép, đồng thời triệt tiêu trôi đồng pha do nhiệt độ – độ ẩm. Từ 
+12 kênh tín hiệu, hệ thống tính ba chỉ số định nghĩa tường minh: mức gắng sức 
+chủ động (EI), độ thiếu hụt tầm vận động (GAP = PROM − AROM đo cùng 
+phiên) và mức trợ giúp cần thiết (RAL) xác định bằng đường cong tải–tỷ lệ hoàn 
+thành trên giàn kiểm định. Mỗi phiên đo được gán nhãn độ tin cậy tự động: tự 
+cân chỉnh điểm 0 đầu phiên, đối chiếu ô tham chiếu không tải, và loại các phiên 
+“nghi vấn” khỏi xu hướng. Phần hỗ trợ theo nhu cầu (AAN) sử dụng lò xo chia 
+nấc và servo kéo cáp Bowden để khảo sát nguyên tắc can thiệp tối thiểu, xác 
+định RAL trên mô hình tay giả. 
+3. ĐẶT VẤN ĐỀ  
+3.1  Bối cảnh nghiên cứu  
+Theo dữ liệu dịch tễ học tại Việt Nam, tỷ lệ hiện mắc đột quỵ đạt 1.541/100.000 
+dân và mới mắc 222/100.000 dân/năm [1]. Bàn tay chịu tổn thương nặng nhất do 
+diện tích đại diện vận động trên vỏ não lớn [3, 4]. Tổng quan Cochrane chỉ ra 
+50% bệnh nhân liệt bàn tay không hồi phục được chức năng hữu ích sau 6 tháng 
+nếu thiếu can thiệp liên tục [5]. Trong khi đó, hệ thống y tế phục hồi chức năng 
+
+
+========== PAGE 2/15 ==========
+ 
+ 2 
+chuyên sâu phân bố chủ yếu ở tuyến trung ương [1, 2], tạo ra khoảng trống lớn 
+trong quản lý bệnh nhân tại nhà.  
+ 
+Hình 1. Gánh nặng dịch tễ đột quỵ và di chứng bàn tay tại Việt Nam [1, 5].  
+3.2  Lý do chọn đề tài  
+Di chứng bàn tay sau đột quỵ xuất phát từ hai cơ chế đan xen: liệt mềm suy yếu 
+cơ chủ động và co cứng cơ đối kháng [3, 4]. Cảm biến uốn cong thương mại chỉ 
+đo góc quay hình học, hoàn toàn không phân tách được cử động hạn chế do yếu 
+cơ hay do co cứng [8, 10]. Các công cụ lượng giá lâm sàng đòi hỏi chuyên viên 
+trực tiếp thực hiện [2, 4], còn robot thương mại có chi phí đắt đỏ ( hàng ngàn 
+USD) [9], tập trung vào tập luyện thay vì đo lường theo dõi xu hướng dài hạn.  
+3.3  Tính cấp thiết của đề tài  
+Khoảng cách giữa chu kỳ tái tổ chức thần kinh (theo ngày/tuần) và chu kỳ tái 
+khám lâm sàng (1–3 tháng) làm mất dấu tiến triển hồi phục. Việc thiết kế thiết bị 
+đeo tay nhỏ gọn (< 150 g), giá rẻ, có khả năng bóc tách nỗ lực chủ động và tự 
+kiểm soát chất lượng dữ liệu đo lường là nhu cầu bức thiết của ngành phục hồi 
+chức năng [2, 4, 7].  
+3.4  Vấn đề nghiên cứu  
+Đề tài tập trung giải quyết bài toán: “Thiết kế hệ thống găng tay đo lường giá 
+thành thấp để theo dõi định lượng vận động bàn tay tại nhà; khảo sát khả năng 
+phân biệt hướng vận động và mức lực ép, trích xuất các chỉ số EI, GAP, RAL, 
+đồng thời tự kiểm chuẩn dữ liệu. Cơ cấu AAN chỉ được kiểm chứng trên mô 
+hình tay giả.”  
+
+
+
+========== PAGE 3/15 ==========
+ 
+ 3 
+4. TỔNG QUAN TÌNH HÌNH NGHIÊN CỨU  
+4.1  Các nghiên cứu và giải pháp hiện có  
+Các giải pháp hiện hữu được chia thành 3 nhóm chính : 
+- Nhóm 1 - Găng tay cảm biến đo lường (Data Gloves): Sử dụng màng Velostat 
+và IMU để đo lực tiếp xúc khi cầm nắm (IROS 2017 [12], ART -Glove 2026 
+[11]). Nhược điểm: đòi hỏi nhiều cảm biến, chi phí cao, chưa đo vi sai độc lập 
+từng khớp.  
+- Nhóm 2 - Robot tập luyện và găng trợ lực (Robotic Gloves): Các hệ thống 
+thương mại như Gloreha [9], ironHand [13, 14] hay Hand of Hope đã tích hợp 
+giải thuật hỗ trợ theo nhu cầu (Assist -as-Needed - AAN) qua cảm biến sEMG 
+hoặc cảm biến lực ngón. Tuy nhiên, nhóm này chủ yếu phục vụ chức năng tập 
+luyện vận động cưỡng bức/trợ lực, kết cấu cồng kềnh, giá rất cao (350 đến hơn 
+6.000 USD) và tín hiệu sEMG dễ trôi trên cơ co cứng, không tối ưu cho đo 
+lường theo dõi xu hướng dài hạn tại nhà.  
+- Nhóm 3 - Thang đo lượng giá lâm sàng: Các thang FMA -UE, ARAT, MAS, 
+BBT [2, 4] là chuẩn  nhưng chỉ phản ánh thời điểm khám tại viện, không phản 
+ánh diễn biến tập luyện tại nhà.  
+ 
+Hình 2. Phân loại các nhóm giải pháp hiện hữu và khoảng trống kỹ thuật.  
+
+
+
+========== PAGE 4/15 ==========
+ 
+ 4 
+4.2  Hạn chế của các nghiên cứu hiện có  
+- Thiếu đo lực & phân tách cơ lực: Cảm biến góc uốn chỉ đo góc quay hình học, 
+không đo được lực tương tác và không phân biệt được yếu cơ với co cứng 
+đối kháng [8, 10].  
+- Giá thành cao & thiếu tính năng theo dõi: Các găng robot trợ lực AAN thương 
+mại có kết cấu phức tạp và chủ yếu hỗ trợ tập luyện; các con số giá thành chỉ 
+được sử dụng khi có tài liệu công khai kiểm chứng được [9].  
+- Thiếu kiểm soát chất lượng số liệu: Phương pháp bệnh nhân tự ghi chép sai số 
+lớn (100–200 lượt/giờ) [7] và chưa có cơ chế tự kiểm chứng độ tin cậy để 
+phát hiện cảm biến trôi nhiệt hoặc đeo lỏng găng khi sử dụng tại nhà [4, 8].  
+4.3  Khoảng trống nghiên cứu và Tính mới của đề tài  
+Đề tài lấp đầy khoảng trống kỹ thuật bằng 3 giải pháp cốt lõi:  
+- Cơ cấu ốp ngón khung cứng tiền tải và mạch vi sai hai vách, xác định trực tiếp 
+hướng gập/duỗi và tự triệt tiêu trôi đồng pha  do nhiệt độ. 
+- Hệ thống chỉ số định lượng toán học: Định nghĩa tường minh bộ ba chỉ số EI 
+(nỗ lực chủ động), GAP (thiếu hụt tầm vận động) và RAL (mức trợ giúp cần 
+thiết). 
+- Kiểm chứng AAN trên mô hình tay giả & tự kiểm chuẩn 2 vòng lặp: Khảo sát 
+quy tắc bù tải trên phantom, kết hợp auto-zero và tự kiểm soát dữ liệu nghi vấn; 
+không truyền lực lên người.  
+5. MỤC TIÊU NGHIÊN CỨU  
+5.1  Mục tiêu tổng quát  
+Chế tạo nguyên mẫu găng tay đo lường giá thành mục tiêu dưới 1,5 triệu đồng, 
+có khả năng thu nhận định lượng dữ liệu vận động bàn tay và theo dõi lặp lại tại 
+nhà; mỗi phiên đo kèm nhãn độ tin cậy để phục vụ đánh giá kỹ thuật của hệ 
+thống. Dự án không đánh giá hiệu quả lâm sàng.  
+5.2  Mục tiêu kỹ thuật định lượng cụ thể  
+- M1 — Tỷ số tín hiệu trên nhiễu (SNR): SNR ≥ 18 dB tại mức thay đổi lực ΔF 
+= 1 N trên ít nhất 10 trong 12 kênh đo (thuộc 3 ngón tay chính: cái, trỏ, giữa). 
+- M2 — Độ nhạy cảm biến: Hệ số nhạy tương đối γ ≥ 0,25 và độ tuyến tính R² ≥ 
+0,90 trong dải tiền tải khả dụng (0,5 N đến 10 N).  
+
+
+========== PAGE 5/15 ==========
+ 
+ 5 
+- M3 — Độ lặp lại phép đo: Hệ số biến thiên nội phiên CV ≤ 5% trên giàn đo cơ 
+học; hệ số biến thiên liên ngày CV ≤ 8% khi tháo/đeo lại trên mô hình tay giả 
+(với CV = σ/μ × 100%).  
+- M4 — Kiểm soát trôi dạt: Tỷ số trôi/tín hiệu tích lũy sau 10 ngày ≤ 2,0 (được 
+bù trừ và triệt tiêu thông qua thuật toán auto -zero đầu mỗi phiên đo).  
+- M5 — Thời gian thực: Tần số quét đồng thời fs ≥ 20 Hz trên toàn bộ 12 kênh; 
+tổng độ trễ toàn hệ thống ≤ 500 ms.  
+- M6 — Phát hiện lỗi đeo găng: Độ nhạy phát hiện tình trạng đeo lỏng găng 
+hoặc xô lệch vị trí đạt ≥ 80% dựa trên kiểm tra phổ điện áp tĩnh V_base.  
+6. CÂU HỎI NGHIÊN CỨU VÀ GIẢ THIẾT KHOA HỌC  
+6.1  Câu hỏi nghiên cứu  
+- R1 (Về tính năng Đo lường vận động bàn tay của găng tay): Nguyên mẫu 
+găng tay thông minh có khả năng đo đếm chính xác lực ép và phân biệt rõ ràng 
+hướng gập/duỗi của từng ngón tay trong cấu trúc thiết bị đeo gọn nhẹ (không 
+phụ thuộc vào cảm biến góc quay cồng kềnh) hay không?  
+- R2 (Về tính năng Theo dõi dài hạn tại nhà): Tín hiệu thu thập từ găng tay c ó 
+đạt độ ổn định theo thời gian và khả năng tự phát hiện sai lệch (như hiện tượng 
+đeo lỏng găng) để đảm bảo dữ liệu theo dõi chức năng bàn tay theo tuần tại nhà 
+là đáng tin cậy hay không?  
+- R3 (Về tính nhất quán của các chỉ số): Các chỉ số GAP, EI và RAL có được 
+tính lặp lại, phân biệt được các mức tải hoặc quỹ đạo đã biết trên giàn kiểm định 
+và được gắn nhãn độ tin cậy phù hợp hay không?  
+6.2  Giả thiết khoa học  
+- H1 (Cho R1): Cấu trúc ốp ngón khung cứng kết hợp mạch vi sai hai vách 
+(lòng– mu) triệt tiêu nhiễu đồng pha, cho phép đo chính xác lực ép và phân 
+biệt chiều gập/duỗi từng khớp mà không cần encoder.  
+- H2 (Cho R2): Cơ chế auto -zero kết hợp ô chuẩn tĩnh kiểm soát trôi tín hiệu 
+(trôi/tín hiệu ≤ 2,0 sau 10 ngày) và tự phát hiện ≥ 80% trường hợp đeo găng sai 
+vị trí. 
+- H3 (Cho R3): Khi áp dụng cùng giao thức trên giàn kiểm định và mô hình tay 
+giả, bộ ba chỉ số GAP, EI, RAL thay đổi nhất quán theo các mức tải hoặc quỹ 
+
+
+========== PAGE 6/15 ==========
+ 
+ 6 
+đạo đã biết và các phiên không đạt tiêu chí chất lượng được gán nhãn “Nghi 
+vấn”. 
+7. ĐỐI TƯỢNG VÀ PHẠM VI NGHIÊN CỨU  
+7.1  Đối tượng nghiên cứu  
+Đối tượng nghiên cứu là phép đo chức năng vận động và lực cơ ngón tay trong 
+bối cảnh theo dõi sau đột quỵ. Ba ngón tay chính (cái, trỏ, giữa) đảm nhiệm 
+phần lớn chức năng cầm nắm tinh xảo của bàn tay. Hệ thống thu thập tín hiệu vi 
+sai tại 2 khớp bản lề mỗi ngón (MCP và PIP/IP), tạo thành 12 kênh đo vi sai 
+hoàn chỉnh kết nối về đai cổ tay.  
+ 
+Hình 3. Cấu hình phân bố 12 kênh đo vi sai trên ba ngón tay chủ đạo.  
+7.2  Phạm vi nghiên cứu  
+Phạm vi kỹ thuật: Thiết kế phần cứng 12 kênh vi sai, giải thuật trích xuất chỉ số 
+EI, GAP, RAL và cơ cấu trợ lực AAN dẫn động Bowden.  
+Phạm vi thực nghiệm: Đo kiểm định lượng trên giàn đo cơ học trục trượt tích 
+hợp tay giả silicone chuẩn hóa lực; thử nghiệm giao thức trên chính người thực 
+hiện chỉ ở chế độ đo, không tác động lực, trên cơ sở tự nguyện và có quy tắc 
+dừng. Không thu dữ liệu của người khác hoặc người bệnh trước khi có phê 
+duyệt đạo đức.  
+7.3  Thời gian và địa điểm nghiên cứu  
+Địa điểm: Phòng nghiên sáng tạo tại Trường THPT Quảng Trị  và nhà riêng. 
+Thời gian: Từ tháng 9/2026 đến tháng 1/2027. 
+
+
+
+========== PAGE 7/15 ==========
+ 
+ 7 
+8. PHƯƠNG PHÁP NGHIÊN CỨU VÀ THỰC NGHIỆM  
+8.1  Thiết kế phương pháp và chuẩn hóa dữ liệu  
+Đề tài áp dụng quy trình thiết kế kỹ thuật chuẩn hóa (Engineering Design 
+Process) kết hợp thực nghiệm vật lý định lượng. Dữ liệu từ 12 kênh cảm biến và 
+1 kênh chuẩn trôi được lấy mẫu liên tục với tần số fs = 50 Hz, lượng tử hóa 16 -
+bit qua ADC ADS1115 (860 SPS, dải ±2,048 V, độ phân giải 62,5 μV/LSB), 
+đồng bộ thời gian và bù trôi nhiệt qua cảm biến SHT30.  
+8.2  Phương pháp thực nghiệm xác định GAP và khảo sát vật liệu  
+Độ thiếu hụt tầm vận động (GAP) được định nghĩa là hiệu số góc giữa tầm vận 
+động thụ động (PROM) và tầm vận động chủ động (AROM) đo trong cùng 
+phiên: GAP = PROM − AROM, quy ước GAP ≥ 0°. PROM được xác định theo 
+giao thức kéo dãn thụ động chậm; AROM là biên độ tự gập chủ động tối đa 
+trong cùng điều kiện đo. GAP mô tả chênh lệch tầm vận động theo giao thức, 
+không tự nó phân biệt nguyên nhân yếu cơ, co cứng hoặc tổn thương khớp.  
+ 
+Hình 4. Phép đo định lượng độ thiếu hụt tầm vận động GAP = PROM − AROM (số 
+liệu mô phỏng minh họa).  
+Vật liệu áp điện trở Velostat có tính phi tuyến mạnh. Đề tài đăng ký trước giả 
+thuyết tồn tại cửa sổ lực kéo trước khả dụng Fp ∈ [0,5 N; 2,0 N]. Bi ên độ cửa 
+sổ, độ nhạy vi sai và độ tuyến tính thực tế sẽ do phép nén tải chuẩn ở Giai đoạn 
+1 xác định; chỉ các kết quả có nhật ký đo và dữ liệu gốc mới được báo cáo là kết 
+quả thực nghiệm.  
+
+
+
+========== PAGE 8/15 ==========
+ 
+ 8 
+ 
+Hình 5. Đặc tính áp điện trở và cửa sổ lực tiền tải màng Velostat (số liệu mô phỏng 
+minh họa).  
+8.3  Phương pháp suy luận vi sai hai vách và triệt tiêu trôi dạt  
+Tín hiệu từ hai vách cảm biến đối diện của mỗi khớp được đưa vào mạch cầu 
+chia áp vi sai. Hiệu điện áp đầu ra: d = S(lòng) − S(mu). Khi gập ngón chủ động, 
+vách lòng chịu nén làm điện trở giảm dẫn đến S(lòng) tăng (S(mu) ≈ 0), cho 
+hiệu d > 0. Khi duỗi ngón, vách mu bị nén làm S(mu) tăng, cho hiệu d < 0. Ở 
+trạng thái nghỉ, d ≈ 0.  
+Khi nhiệt độ hoặc độ ẩm biến thiên làm điện trở Velostat bị trôi dạt, hiệu ứng 
+dão tác động đồng thời lên cả hai vách đối xứng (trôi đồng pha: ΔS(lòng) ≈ 
+ΔS(mu)). Phép trừ vi sai tại tầng phần cứng triệt tiêu  thành phần trôi:  
+d = [S(lòng) + ΔS] − [S(mu) + ΔS] = S(lòng) − S(mu), bảo đảm tính ổn định . 
+ 
+Hình 6. Nguyên lý suy luận vi sai hai vách và tự triệt tiêu trôi đồng pha (số liệu mô 
+phỏng minh họa).  
+
+
+
+========== PAGE 9/15 ==========
+ 
+ 9 
+9. THIẾT KẾ VÀ GIẢI PHÁP HỆ THỐNG  
+9.1  Kiến trúc hệ thống ba tầng  
+Hệ thống được tổ chức thành cấu trúc 3 tầng phân cấp tối ưu:  
+- Tầng 1 (Cơ - điện tử trên tay): 12 phần tử cảm biến Velostat trên khung ốp 
+ngón in 3D PETG tiền tải, 1 ô cảm biến tham chiếu không tải và 1 IMU 6-DOF 
+(LSM6DS3) tại mu bàn tay để bù góc nghiêng trọng trường.  
+- Tầng 2 (Thu thập & Truyền thông tại cổ tay): Gồm 2 IC dồn kênh 
+CD74HC4067, khuếch đại vi sai INA333, ADC ADS1115 (16 -bit) và vi điều 
+khiển ESP32-S3 (lọc IIR bậc 2, fc = 10 Hz, truyền BLE 5.0 tốc độ 50 Hz). Cấp 
+nguồn độc lập bằng pin LiPo 3,7 V qua IC TP4056 và LDO HT7333 cách ly an 
+toàn tuyệt đối với lưới điện.  
+- Tầng 3 (Xử lý biên Edge AI): Máy tính nhúng Orange Pi 5 Pro (vi xử lý 
+RK3588, NPU 6 TOPS) thực thi mô hình suy luận lượng tử hóa INT8 với độ trễ 
+< 15 ms để tính bộ ba chỉ số EI, GAP, RAL và xuất dữ liệu Dashboard y tế.  
+ 
+Hình 7. Kiến trúc ba tầng phân cấp của hệ thống găng tay thông minh.  
+
+
+
+========== PAGE 10/15 ==========
+ 
+ 10 
+9.2  Thiết kế phần cứng cảm biến và mạch đo vi sai  
+Mỗi phần tử cảm biến có cấu trúc sandwich: đế PETG in 3D, điện cực lá đồng 
+0,05 mm, màng Velostat và bu -lông kẹp cơ khí vi chỉnh lực tiền tải Fp tại tâm 
+dải tuyến tính.  
+ 
+Hình 8. Phần tử cảm biến Velostat trên vách khung in 3D.  
+Mạch cầu vi sai sử dụng điện trở chuẩn R_ref = 10 kΩ (sai số 0,1%, hệ số nhiệt 
+25 ppm/°C). Tín hiệu lệch vi sai ΔV = V(lòng) − V(mu) được đưa vào bộ 
+khuếch đại đo lường INA333 với hệ số khuếch đại G = 10 lần (CMRR ≥ 100 
+dB), đưa tín hiệu lên dải 0 – 2,048 V tối ưu của ADC ADS1115.  
+ 
+Hình 9. Sơ đồ mạch cầu chia áp và khuếch đại vi sai INA333.  
+9.3  Chuỗi tín hiệu và thuật toán tự cân chỉnh điểm 0  
+Tín hiệu 12 kênh quét tuần tự qua CD74HC4067 (tần số chuyển mạch 1 kHz), 
+đệm MCP6001, số hóa tại ADS1115. ESP32-S3 lọc Notch 50 Hz triệt nhiễu lưới 
+điện và truyền gói tin BLE đến máy tính nhúng.  
+Thuật toán Auto-zero ghi nhận điện áp tĩnh V_offset khi bàn tay duỗi nghỉ trong 
+3 giây đầu phiên để trừ trực tiếp vào kết quả đo. Nếu điện áp trôi tĩnh vượt 
+ngưỡng ±5% dải đo so với ô tham chiếu, hệ thống kích hoạt cảnh báo kiểm tra 
+cơ khí. 
+
+
+
+========== PAGE 11/15 ==========
+ 
+ 11 
+Chỉ số mức gắng sức chủ động EI được tính trong từng cửa sổ vận động từ trung 
+vị độ biến thiên phổ của tín hiệu vi sai 12 kênh, sau khi chuẩn hóa theo vận tốc 
+góc của cùng phiên đo. Công thức tính, độ dài cửa sổ, quy tắc chuẩn hóa và 
+ngưỡng chấp nhận được cố định trước khi thu dữ liệu; EI chỉ dùng để so sánh 
+các phiên theo cùng giao thức, không được diễn giải như tín hiệu thần kinh hoặc 
+chỉ số chẩn đoán.  
+ 
+Hình 10. Chuỗi thu nhận tín hiệu và thuật toán tự cân chỉnh điểm 0.  
+10. CƠ CẤU HỖ TRỢ VÀ PHÉP ĐO MỨC TRỢ GIÚP (RAL)  
+10.1  Giàn đo cơ khí kiểm chứng và mô hình tay giả (Phantom)  
+Giàn đo chuyên dụng gồm: khung nhôm 2020, trục trượt tuyến tính ổ bi dẫn 
+hướng, vít me bước đôi kết hợp phanh từ hãm tư thế và hệ lò xo tạo tải chuẩn. 
+Mô hình bàn tay giả đúc bằng silicone y tế, chọn độ cứng Shore A 25 –30 làm 
+dải thiết kế cần được đối chiếu với tài liệu mô phỏng mô mềm trước khi chốt, 
+mang găng đo và kết nối với cảm biến lực load cell qua mạch đọc HX711 24-bit 
+để kiểm định độc lập độ lặp lại và độ trễ cơ học.  
+ 
+Hình 11. Giàn đo cơ khí trục trượt kiểm chuẩn và mô hình tay giả.  
+
+
+
+========== PAGE 12/15 ==========
+ 
+ 12 
+10.2 Cơ cấu hỗ trợ theo nhu cầu (AAN) khảo sát trên mô hình tay gi ả 
+Cơ cấu AAN được xây dựng để khảo sát nguyên tắc “can thiệp tối thiểu” trên 
+mô hình tay giả và giàn kiểm định. Đây là động cơ thiết kế tham chiếu từ y văn 
+phục hồi chức năng [2, 3, 4], không phải giả thuyết về hiệu quả thần kinh mà dự 
+án kiểm chứng. Cơ cấu không truyền lực lên người và không được sử dụng để 
+tập luyện hoặc điều trị.  
+Trên mô hình tay giả, hệ thống gồm ba khối phối hợp: (1) khối lò xo hỗ trợ thụ 
+động chia nấc 20, 40, 60, 80, 100 và 120 g; (2) khối servo kéo cáp Bowden để 
+tạo mức tải kiểm định theo quy tắc F_assist(t) = max(0, F_target(t) − 
+F_phantom(t)), có giới hạn lực cài đặt trước cho giàn thử; và (3) phản hồi thị 
+giác hiển thị EI cùng mức hỗ trợ để kiểm chứng giao thức và đồng bộ dữ liệu. 
+Việc áp dụng lên người bệnh, nếu có, thuộc nghiên cứu sau này và chỉ được thực 
+hiện khi có phê duyệt đạo đức — ngoài phạm vi dự án.  
+ 
+Hình 12. Cơ cấu hỗ trợ theo nhu cầu (Assist -as-Needed) và phản hồi sinh học thị giác . 
+10.3  Phương pháp xác định chỉ số mức trợ giúp cần thiết (RAL)  
+Chỉ số RAL được xác định trên giàn kiểm định và mô hình tay giả bằng đường 
+cong tải–tỷ lệ hoàn thành. Hệ thống thực hiện 10 chu kỳ gập/duỗi tại từng nấc 
+tải, từ 120 g giảm dần về 0 g; điểm cắt RAL là mức tải nhỏ nhất đạt tỷ lệ hoàn 
+thành nhịp P_complete ≥ 80%. Trong phạm vi dự án, RAL là chỉ số đặc trưng 
+cho giao thức kiểm định của nguyên mẫu, không phải bằng chứng về hồi phục 
+cơ lực hoặc hiệu quả lâm sàng.  
+
+
+
+========== PAGE 13/15 ==========
+ 
+ 13 
+ 
+Hình 13. Đường cong xác định chỉ số mức trợ giúp RAL (số liệu mô phỏng minh họa).  
+11. TIÊU CHÍ ĐÁNH GIÁ VÀ KIỂM SOÁT CHẤT LƯỢNG DỮ LIỆU  
+11.1  Bảng chỉ tiêu kỹ thuật nghiệm thu định lượng (Giai đoạn 1)  
+Toàn bộ 10 chỉ tiêu kỹ thuật cốt lõi nghiệm thu mảng cảm biến được trình bày 
+trong Bảng 1:  
+Mã Chỉ tiêu kỹ thuật kiểm tra Ngưỡng định lượng chấp nhận 
+C1.1 Mức sàn nhiễu mạch đo  Biên độ nhiễu đỉnh-đỉnh V_pp ≤ 5 mV trên 5.000 
+mẫu tĩnh 
+C1.2 Tỷ số tín hiệu trên nhiễu (SNR)  SNR ≥ 18 dB (tín hiệu gấp ≥ 8 lần nhiễu tại lực 
+ΔF = 1 N trên ≥ 10/12 kênh)  
+C1.3 Độ nhạy áp điện trở vi sai (γ)  γ ≥ 0,25 trên ≥ 10/12 kênh đo; độ tuyến tính R² ≥ 
+0,90 trong dải tiền tải  
+C1.4 Độ lặp lại nội phiên (Intra -assay) Hệ số biến thiên giữa các chu kỳ đo trên giàn cơ 
+học CV ≤ 5%  
+C1.5 Độ lặp lại liên ngày (Inter -day) Hệ số biến thiên CV (3 ngày đo độc lập tháo/đeo 
+lại) ≤ 8% 
+C1.6 Độ trễ cơ - điện (Hysteresis)  Độ chênh lệch giữa chu trình nén và xả tải h ≤ 
+18% 
+C1.7 Độ dão tải tĩnh (Creep)  Độ suy giảm tín hiệu sau 60 giây giữ tải 5 N: 
+Creep ≤ 8%  
+C1.8 Độ trôi trượt dài hạn (Long -term 
+drift) 
+Tỷ số trôi/tín hiệu sau 10 ngày ≤ 2,0 (triệt tiêu qua 
+Auto-zero) 
+C1.9 Độ đồng đều giữa các kênh  Độ phân tán nhạy giữa các mảng ≤ ±40% (áp 
+dụng bảng chuẩn hóa)  
+C1.10 Tốc độ quét dữ liệu  Tần số lấy mẫu đồng thời fs ≥ 20 Hz trên toàn bộ 
+12 kênh  
+ 
+
+
+
+========== PAGE 14/15 ==========
+ 
+ 14 
+11.2  Lưu đồ tự kiểm tra và cơ chế hai vòng lặp kín xử lý dữ liệu  
+Hệ thống tích hợp thuật toán tự kiểm tra 2 vòng lặp khép kín: Vòng lặp 1 kiểm 
+soát tiếp xúc cơ khí (nếu V_base ngoài chuẩn do đeo lỏng găng, hệ thống cảnh 
+báo chỉnh lại găng). Vòng lặp 2 kiểm soát phương sai phiên đo (nếu số liệu có 
+đột biến do rung lắc, phiên đo bị gán nhãn 'Nghi vấn', loại khỏi cơ sở dữ liệu xu 
+hướng và yêu cầu đo lại).  
+ 
+Hình 14. Lưu đồ hai vòng lặp khép kín tự kiểm soát dữ liệu nghi vấn.  
+12. AN TOÀN – ĐẠO ĐỨC VÀ GIỚI HẠN TUYÊN B Ố 
+Thiết bị đeo trong phạm vi dự án là hệ thống đo thụ động, không truyền lực, 
+không chẩn đoán và không thay thế đánh giá của nhân viên y tế. Giàn cơ khí, lò 
+xo, servo và cáp Bowden chỉ tác động lên mô hình tay giả silicone. Thử nghiệm 
+trên chính người thực hiện chỉ nhằm kiểm tra thao tác đo, không có tác động lực, 
+được thực hiện tự nguyện và có quy tắc dừng. Không thu dữ liệu của người bệnh 
+hoặc người khác trước khi có phê duyệt đạo đức và quy trình đồng thuận phù 
+hợp. 
+Toàn bộ chỉ tiêu chấp nhận, công thức chỉ số, ngưỡng loại phiên và quy tắc phân 
+tích được đăng ký trước khi đo. Mỗi kết quả phải kèm nhật ký thử nghiệm, dữ 
+liệu gốc và nhãn độ tin cậy; dữ liệu mô phỏng phải được ghi rõ là minh họa. Dự 
+án không tuyên bố nguyên lý vật lý mới, hiệu quả điều trị, kích thích phục hồi 
+thần kinh hoặc giá trị chẩn đoán. Mọi ứng dụng can thiệp trên người thuộc 
+nghiên cứu tương lai và chỉ được xem xét sau khi có phê duyệt đạo đức.  
+ 
+
+
+
+========== PAGE 15/15 ==========
+ 
+ 15 
+TÀI LIỆU THAM KHẢO  
+[1]  Tran M.C., Prisco L., Mai T.D., et al. Comprehensive analysis of stroke epidemiology in 
+Vietnam: Insights from GBD 1990 –2019 and RES-Q 2017–2023. Global 
+Epidemiology, 2025; 9:100199. DOI: 10.1016/j.gloepi.2025.100199. 
+[2]  Bộ Y tế Việt Nam. Hướng dẫn chẩn đoán và điều trị Phục hồi chức năng sau đột quỵ não. 
+Quyết định số 4039/QĐ-BYT, Nhà xuất bản Y học, Hà Nội, 2014. 
+[3]  Cao Minh Châu, Nguyễn Thị Kim Liên, Trần Trọng Hải. Giáo trình Phục hồi chức năng. 
+Nhà xuất bản Y học, Hà Nội, 2020. 
+[4]  Nguyễn Đăng Khoa, Phan Thiệu Xuân Giang, et al. Lượng giá chức năng chi trên, tầm 
+vận động khớp và kiểm soát co cứng sau đột quỵ não. Cổng thông tin Phục hồi Chức 
+năng Online (PHCN-Online.com), 2024. 
+[5]  Pollock A., Farmer S.E., Brady M.C., et al. Interventions for improving upper limb 
+function after stroke. Cochrane Database of Systematic Reviews, 2014; 11:CD010820. 
+DOI: 10.1002/14651858.CD010820.pub2. 
+[6]  Langhorne P., Coupar F., Pollock A. Motor recovery after stroke: a systematic review. 
+The Lancet Neurology, 2009; 8(8):741–754. 
+[7]  Schwerz de Lucena D., Rowe J.B., Okita S., et al. Providing Real -Time Wearable 
+Feedback to Increase Hand Use after Stroke: A Randomized, Controlled Trial 
+(Manumeter). Sensors, 2022; 22(18):6938. DOI: 10.3390/s22186938. 
+[8]  Amin K.R., et al. Remote Monitoring for the Management of Spasticity: Challenges, 
+Opportunities and Proposed Technological Solution. IEEE Open Journal of 
+Engineering in Medicine and Biology, 2024. DOI: 10.1109/OJEMB.2024.3523442. 
+[9]  A magnetically controlled soft robotic glove for hand rehabilitation. Device (Cell Press), 
+2024; 2(4):100215. DOI: 10.1016/j.device.2024.100215. 
+[10] Lin B.-S., Lee I.-J., Hsiao P.-C., et al. Design of a Multi-Sensor System for Exploring 
+Upper Limb Spasticity in Stroke Patients. Sensors, 2022; 22(19):7212. DOI: 
+10.3390/s22197212. 
+[11] Lin C., Zhao D. ART-Glove: Articulated Tactile Glove for Contact-Grounded Dexterous 
+Interaction Capture. arXiv:2606.16370, 2026. 
+[12] Liu H., Zhang Z., Jiao Z., et al. A Reconfigurable Data Glove for Reconstructing 
+Physical and Virtual Grasps. Engineering, 2024; 32:202–216. DOI: 
+10.1016/j.eng.2023.01.009. 
+[13] Radder B., Prange -Lasonder G.B., Kottink A.I.R., et al. Home rehabilitation with a soft 
+robotic glove in stroke patients: a pilot feasibility study (ironHand). J. Rehabil. Assist. 
+Technol. Eng., 2016; 3:2055668316670553. 
+[14] Radder B., et al. Feasibility of a wearable soft -robotic glove to support impaired hand 
+function in everyday life. Journal of Rehabilitation Medicine, 2018; 50:598–606. DOI: 
+10.2340/16501977-2357. 
+[15] A Systematic Review on Custom Data Gloves: Sensing Technologies and Applications. 
+IEEE Access, 2024; 12:71245–71268. 
+[16] Piezoresistive Tactile Sensor Discriminating Multidirectional Forces for Robotic 
+Grippers. Sensors, 2015; 15(10):25463–25478. DOI: 10.3390/s151025463. 
+[17] Phỏng vấn tham khảo ẩn danh với kỹ thuật viên vật lý trị liệu – phục hồi chức năng về 
+nhu cầu theo dõi sau đột quỵ, 2026. Tư liệu định tính dùng để mô tả nhu cầu, không 
+phải kết quả nghiên cứu. 
+[18] Piezoresistive characteristics of carbon-black conductive polymer composites (Velostat). 
+Sensor and Actuators A: Physical, 2018; 279:412–421. 

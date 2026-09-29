@@ -2,10 +2,10 @@
 
 ## Đề tài: Nghiên cứu và phát triển găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ
 
-> **Học sinh:** Văn Ngọc Nhật Anh — THPT Quảng Trị
-> **Phiên bản:** v2.0 — 2026-09-13 (chốt tên đề tài; phần cứng ESP32-S3 + CD74HC4067; bổ sung mục tiêu tái tạo bàn tay 3D)
+> **Học sinh:** Văn Ngọc Nhật Anh (11A2) + Nguyễn Duy Quân (12A1) — THPT Quảng Trị · GVHD: Lê Công Long
+> **Phiên bản:** v3.0 — 2026-09-29 (đồng bộ cấu hình đã nộp ADS1115+INA333; áp dụng checklist M-01..M-27; chốt đồ nghề + trần E2E; AI chuyển thành thực nghiệm đối chứng; bỏ mục tiêu 3D/clinical)
 > **"Viên đạn":** Theo dõi định lượng chức năng bàn tay tại nhà, liên tục giữa các lần tái khám lâm sàng.
-> **Lưu ý:** Mọi ô `[X]` chỉ được điền **sau** GATE experiment. Không bịa số. Xem `AGENTS.md`.
+> **Lưu ý:** Mọi ô `[X]` chỉ được điền **sau** khi đo. Không bịa số. Xem `AGENTS.md`. Mọi claim vượt dữ liệu bị cấm — xem B.9.
 
 ---
 
@@ -13,57 +13,61 @@
 
 ### 1. Lý do chọn đề tài
 
-*(Bản chốt hiện tại nằm ở `docs/bao_cao/A1_ly_do_chon_de_tai.md` — 4 đoạn, viết theo form giải nhất.)*
+*(Bản văn ở `docs/bao_cao/A1_ly_do_chon_de_tai.md` — đã sửa cite theo M-22/M-23/M-24.)*
 
 Cấu trúc đoạn:
-- Gánh nặng đột quỵ + di chứng liệt/yếu tay; vì sao đây là vấn đề con người, không phải vấn đề kỹ thuật.
+- Gánh nặng đột quỵ + di chứng liệt/yếu tay; vì sao đây là vấn đề con người, không phải vấn đề kỹ thuật. Số "1,5 triệu di chứng" ghi rõ là **ước tính của nhóm từ [1]**, không phải số in trong [1] (M-22).
 - Phục hồi bàn tay = luyện tập tại nhà; kỹ thuật viên chỉ gặp bệnh nhân mỗi 1–3 tháng → quãng giữa là **"hộp đen"**.
-- Công cụ hiện tại (FMA, ARAT, Box and Block, lực kế Jamar, E-Link) là **ảnh chụp tại thời điểm đo**, chi phí cao, chủ yếu ở cơ sở y tế.
-- Xác nhận độc lập: hội đồng chuyên gia quốc tế 2024 (DOI 10.1109/OJEMB.2024.3523442) + nghiên cứu OTHER 2026 (DOI 10.1080/09638288.2026.2643929) + phỏng vấn KTVVLTL-PHCN.
-- Câu chốt tên đề tài + một câu mô tả giải pháp.
+- Công cụ hiện tại (FMA, ARAT, Box and Block, lực kế Jamar, E-Link) là **ảnh chụp tại thời điểm đo**, chi phí cao, chủ yếu ở cơ sở y tế. Tự ghi chép thủ công sai số lớn (Manumeter 2022).
+- Xác nhận độc lập: hội đồng chuyên gia quốc tế 2024 (DOI 10.1109/OJEMB.2024.3523442) + nghiên cứu OTHER 2026 🔵 verify + **tham khảo ẩn danh** KTV VLTL-PHCN (DEC-ROLE-001: không tên, không năm kinh nghiệm, không quan hệ).
+- Câu chốt tên đề tài + một câu mô tả giải pháp (vi sai hai vách + EI/GAP/RAL + trạm biên).
 
 ### 2. Mục tiêu nghiên cứu
 
 *(Bản chốt ở `docs/bao_cao/A2_muc_tieu.md`)*
-- Chế tạo găng tay tích hợp khung cứng và mảng phần tử cảm biến, ghi nhận lực và hướng chuyển động của từng lóng ngón.
-- Xây dựng phương pháp xử lý tín hiệu giảm ảnh hưởng drift, trích xuất vector lực và suy luận hướng khớp.
-- Xây dựng mô hình **tái tạo bàn tay 3D** từ dữ liệu lực-hướng để chuyên gia đánh giá từ xa.
-- Xây dựng mô hình đánh giá chức năng và triển khai trên thiết bị biên.
-- Đánh giá khả năng theo dõi diễn tiến qua nhiều phiên đo.
+- Chế tạo găng 3 ngón (cái/trỏ/giữa): 12 phần tử Velostat trên khung vách cứng tiền tải + 1 ô chuẩn + 1 IMU mu tay.
+- Xây dựng chuỗi đo vi sai hai vách (lòng–mu) + auto-zero + **định lượng phần dư** (không nói "triệt tiêu hoàn toàn").
+- Trích xuất bộ ba chỉ số EI/GAP/RAL kèm nhãn độ tin cậy (công thức EI viết tường minh trước khi thu dữ liệu — M-25).
+- Xây dựng trạm biên: thu log → kiểm soát chất lượng → dashboard + timeline sự kiện → báo cáo tuần cho KTV từ xa.
+- Kiểm định toàn bộ trên giàn + phantom theo ngưỡng đăng ký trước (M1–M6 + C1.1–C1.10) + 1 thực nghiệm đối chứng luật-thường-vs-ML.
 
 ### 3. Tiêu chí của dự án
 
-*(Bản chốt ở `docs/bao_cao/A3_tieu_chi.md`; ngưỡng số điền sau GATE)*
-- Mảng sensing element ổn định, lặp lại trong các bài tập chuẩn.
-- Tái tạo được bàn tay 3D phản ánh flexion/extension từng ngón.
-- Phân biệt được ≥ 3 mức suy giảm chức năng trên phantom.
-- Chỉ số thu được có tương quan với công cụ đánh giá lâm sàng chuẩn.
-- **Biên độ tín hiệu phản ánh thay đổi chức năng lớn hơn biên độ drift/nhiễu** *(tiêu chí sống còn — GATE C)*.
-- Không tạo cảnh báo thay đổi giả qua nhiều phiên đo *(GATE D)*.
-- Suy luận tại biên với độ trễ thấp *(GATE F)*.
-- Tự phát hiện được sensing element hoạt động bất thường *(GATE E)*.
+*(Bản chốt ở `docs/bao_cao/A3_tieu_chi.md`; số đo điền sau khi có log)*
+
+| Mã | Chỉ tiêu | Ngưỡng (đăng ký trước) |
+|---|---|---|
+| M1/C1.2 | SNR tại ΔF = 1 N (≥10/12 kênh) | ≥ 18 dB |
+| M2/C1.3 | γ, R² (dải 0,5–10 N) | γ ≥ 0,25; R² ≥ 0,90 |
+| M3/C1.4/C1.5 | CV nội phiên / liên ngày | ≤ 5% / ≤ 8% |
+| M4/C1.8 | Trôi/tín hiệu sau 10 ngày (+ auto-zero) | ≤ 2,0 |
+| M5/C1.10 | fs toàn 12 kênh / trễ hệ thống | ≥ 20 Hz (danh định — M-02) / ≤ 500 ms |
+| M6 | Phát hiện đeo sai (cửa sổ V_base, N = 20–30) | tỷ lệ phát hiện ≥ 80% |
+| C1.1 | Sàn nhiễu / 5.000 mẫu tĩnh | Vpp ≤ 5 mV |
+| C1.6/C1.7 | Hysteresis / creep (60 s @ 5 N) | h ≤ 18% / ≤ 8% |
+| C1.9 | Đồng đều giữa các kênh | ≤ ±40% (+ bảng chuẩn hóa) |
 
 ### 4. Đối tượng và phạm vi nghiên cứu
 
 *(Bản chốt ở `docs/bao_cao/A4_doi_tuong_pham_vi.md`)*
-- **Kỹ thuật:** sensing element Velostat + copper tape, khung găng in 3D, ESP32-S3 + CD74HC4067, Orange Pi 5 Pro, phantom bàn tay, load cell tham chiếu.
-- **Y sinh:** di chứng yếu/liệt tay sau đột quỵ — nghiên cứu nền; giai đoạn này chỉ bench/phantom, người tình nguyện khỏe chỉ sau khi có phê duyệt.
-- **Giới hạn:** không chẩn đoán; không phải thiết bị tập; không thay thế đánh giá lâm sàng.
+- **Kỹ thuật (đã nộp):** 12 phần tử + ô chuẩn + 1 IMU; cầu vi sai → INA333 → 2×CD74HC4067 → MCP6001 → ADS1115 → ESP32-S3 → BLE → Orange Pi 5 Pro (trạm dùng chung của trường).
+- **Y sinh:** di chứng yếu/liệt tay sau đột quỵ — nghiên cứu nền; giai đoạn này chỉ bench/phantom.
+- **Người đeo (M-26, TODO):** ghi rõ ai đeo (kể cả thành viên nhóm), khi nào, biện pháp an toàn (pin, cách ly, không lực tác động lên người).
+- **Giới hạn:** không chẩn đoán; không can thiệp/vận động hộ trên người (AAN chỉ trên phantom); không thay thế đánh giá lâm sàng; không claim lâm sàng.
 
 ### 5. Địa điểm nghiên cứu và thực nghiệm
 
 *(Bản chốt ở `docs/bao_cao/A5_dia_diem.md`)*
-- Phòng thực hành vật lý, phòng sáng tạo trường THPT Quảng Trị, và tại nhà.
-- Tham khảo thực tiễn: KTVVLTL-PHCN (chị tác giả) — xác nhận pain point và góp ý giao thức bài tập; chuyên gia PHCN tại phcn-online.com.
+- Phòng thực hành vật lý, phòng sáng tạo trường THPT Quảng Trị, và tại nhà (09/2026–02/2027).
+- Tham khảo thực tiễn: **01 KTV VLTL-PHCN (ẩn danh)** phản biện giao thức đo trên giấy — bằng chứng **nhu cầu**, không phải bằng chứng **kết quả**.
 
 ### 6. Phương pháp nghiên cứu
 
 *(Bản chốt ở `docs/bao_cao/A6_phuong_phap.md`)*
-- **Tổng quan tài liệu:** prior art găng tay cảm biến; công cụ đánh giá tay sau đột quỵ; đặc tính Velostat; các hệ thống theo dõi tại nhà.
-- **Tham khảo ý kiến:** KTV VLTL-PHCN (phỏng vấn có ghi chép) + chuyên gia độc lập.
-- **Thực nghiệm bench:** jig nén + load cell tham chiếu; phantom bàn tay nhiều mức chức năng; đo lặp, ghi log thô.
-- **Phân tích tín hiệu:** trích đặc trưng, đọc vi sai, bù ảnh hưởng drift, suy luận hướng khớp.
-- **Thống kê:** CV, ICC, SEM, MDC, Cohen's d, tương quan Pearson/Spearman, tỷ lệ báo động giả.
+- **Tổng quan tài liệu:** prior art găng cảm biến; công cụ đánh giá tay; đặc tính Velostat; hệ thống theo dõi tại nhà.
+- **Tham khảo ý kiến:** KTV VLTL-PHCN (phiếu + ghi chép, ẩn danh) + chuyên gia độc lập.
+- **Thực nghiệm bench:** chuẩn lực tĩnh = **quả cân đã cân (F = m·g)**; DMM chính FNIRSI 2C23T (spec datasheet) + scope/gen của máy + load cell 5 kg (sau khi có HX711); C1.1 đo bằng ADS1115 tự log + scope chứng kiến.
+- **Thống kê (đăng ký trước):** CV, R², h, creep, tỷ số trôi, recall/precision (M6, E1–E4). Không hạ chuẩn sau khi thấy số.
 
 ---
 
@@ -71,31 +75,28 @@ Cấu trúc đoạn:
 
 ### 1. Tổng quan đề tài
 
-**Sơ đồ pipeline (chốt):**
+**Sơ đồ pipeline (chốt theo cấu hình đã nộp + M-04/M-16/M-17):**
 
 ```
-Bàn tay người dùng
-      ↓ [bài tập chuẩn: gập / duỗi / chụm / bóp / chạm ngón]
-Khung găng in 3D + mảng sensing element (Velostat + copper tape)
+Bàn tay (3 ngón: cái/trỏ/giữa) · 2 khớp/ngón × 2 vách = 12 phần tử + 1 ô chuẩn
+      ↓ [kênh = phần tử đơn; mỗi khớp = 1 cặp vi sai d = S_lòng − S_mu]
+Cầu chia áp (R_ref = 10 kΩ 0,1%) → INA333 (G = [X] sau M-01) → 2×CD74HC4067
+      ↓ [Vex = [X] TODO M-17]
+MCP6001 → ADS1115 (16-bit, LSB 62,5 µV) → ESP32-S3 (lọc, auto-zero, BLE 20 Hz)
       ↓
-CD74HC4067 (16 kênh) ×1 (12 kênh) hoặc ×2 (24 kênh)
-      ↓ [1 kênh analog, chọn MUX bằng chân EN]
-ESP32-S3  · ADC1 12-bit + trung bình N mẫu · frame + CRC · BLE/UART
-      ↓
-Orange Pi 5 Pro (RK3588, NPU ~6 TOPS)
-  ├─ Bù ảnh hưởng drift (ô tham chiếu + cặp đối xứng)
-  ├─ Trích đặc trưng → vector lực theo khớp
-  ├─ Suy luận hướng gập/duỗi → tái tạo bàn tay 3D
-  ├─ Mô hình INT8 (RKNN) trên NPU
-  └─ Cờ "UNRELIABLE" khi dữ liệu không hợp lệ
-      ↓
-Đường cong chức năng theo tuần
-      ↓
-Dashboard → KTV / bác sĩ theo dõi từ xa
+Orange Pi 5 Pro — TRẠM ĐO (trường đã có):
+  ├─ Thu log + database phiên đo
+  ├─ Kiểm soát chất lượng 2 vòng lặp (V_base + phương sai phiên)
+  ├─ Trích xuất EI/GAP/RAL + nhãn tin cậy
+  ├─ Dashboard + timeline sự kiện + báo cáo tuần (PDF)
+  ├─ Camera đối chứng góc (P1) + thực nghiệm E1–E4 rules-vs-ML (P1)
+  └─ Không suy luận gập/duỗi bằng ML (dấu vi sai đã làm việc đó — M-08)
+      ↓ [file báo cáo chuyển tay — không claim cloud]
+KTV xem từ xa → duyệt cờ đỏ → quyết định chuyên môn (AI sàng lọc, người quyết định)
 ```
 
 **Nguyên lý cơ khí (điểm kỹ thuật trung tâm):**
-ngón tay chuyển động theo hướng X → tì vào vách khung hướng X → nén sensing element trên vách đó → đọc được lực-hướng → **suy luận** hướng gập/duỗi của từng khớp. Không dùng IMU.
+ngón tì vào vách khung → nén phần tử trên vách đó → cặp vi sai lòng–mu cho dấu hướng (d > 0 gập, d < 0 duỗi) + biên độ lực; IMU mu tay bù nghiêng + chuẩn hóa vận tốc góc. Drift đồng pha **giảm** ở tầng vi sai + auto-zero, **phần dư định lượng** qua C1.8.
 
 ### 2. Bất cập của các giải pháp hiện tại và giải pháp đề tài
 
@@ -106,157 +107,149 @@ ngón tay chuyển động theo hướng X → tì vào vách khung hướng X �
 | Găng tay IMU/flex thương mại | Đắt theo số trục, trôi, cồng kềnh | Vách khung + vật liệu piezoresistive, mã hóa cả hướng và lực |
 | Găng tay phục hồi chức năng chủ động (robot găng) | Gây phụ thuộc máy, rủi ro an toàn, cần người có chuyên môn | **Không can thiệp vào vận động** — chỉ đánh giá/theo dõi |
 | Đeo cảm biến ở cổ tay | Không ghi được chuyển động ngón; không phân biệt vận động có mục đích | Đo tại từng khớp ngón |
-| Phần mềm mô phỏng (RehabReach và tương tự) | Mô phỏng, thiếu vi cử động và không tương tác thực | Đo trực tiếp trên bàn tay thật; 🔵 cần xác minh thông tin RehabReach trước khi đưa vào báo cáo |
+| Phần mềm mô phỏng (RehabReach và tương tự) | Mô phỏng, thiếu vi cử động và không tương tác thực | Đo trực tiếp; 🔵 cần xác minh thông tin RehabReach trước khi đưa vào báo cáo |
 
 > **Khoảng trống thật:** chưa có hệ thống nào **vừa rẻ, vừa tại nhà, vừa tạo ra dữ liệu định lượng chức năng bàn tay theo tuần**, dùng được bởi người không chuyên môn và theo dõi được bởi kỹ thuật viên từ xa — **và tự biết khi nào dữ liệu của mình không còn đáng tin**.
 
 ### 3. Thiết kế phần cứng
 
-*(Chi tiết đầy đủ: `docs/04_Hardware_Architecture.md`)*
+*(Chi tiết đầy đủ: `docs/04_Hardware_Architecture.md` §8)*
 
-| STT | Linh kiện | SL | Chức năng |
-|---|---|---|---|
-| 1 | Vật liệu piezoresistive Velostat | [X] tấm | Lớp nhạy áp lực trong sensing element |
-| 2 | Copper tape (điện cực) | [X] | Điện cực trên/dưới, cấu trúc sandwich |
-| 3 | Khung găng in 3D (PLA/PETG + TPU) | 1 | Vách ép tạo hướng + định vị sensing element |
-| 4 | CD74HC4067 (MUX 16:1) | 1–2 | Mở rộng 12–24 kênh analog |
-| 5 | **ESP32-S3** | 1 | ADC1 12-bit, lọc/trung bình, đóng gói frame + CRC, BLE/UART |
-| 6 | Orange Pi 5 Pro (RK3588) | 1 | Xử lý tín hiệu, suy luận INT8 trên NPU, dashboard |
-| 7 | Load cell + HX711 | 1 | Tham chiếu lực trên bench (ground truth cho GATE) |
-| 8 | Phantom bàn tay (in 3D, khớp hãm góc) | 1 | Ground truth cho GATE A/B/C |
-
-*(Bỏ mục level shifter 5V→3.3V của phiên bản cũ — ESP32-S3 chạy 3.3 V nên khớp trực tiếp với Orange Pi.)*
+| STT | Linh kiện | SL | Chức năng | Trạng thái |
+|---|---|---|---|---|
+| 1 | Velostat + băng đồng (điện cực) | đủ 12 + chuẩn | Phần tử áp trở sandwich | đã có |
+| 2 | Khung ốp ngón PETG + vít tiền tải Fp | 3 ngón | Vách cứng + cửa sổ preload | cần chế tạo |
+| 3 | R_ref 10 kΩ 0,1% + INA333 (duy nhất — M-16) | 1 bộ | Cầu vi sai + khuếch đại (G sau M-01) | **mua chính hãng (P0)** |
+| 4 | CD74HC4067 + MCP6001 + ADS1115 | 2+1+1 | Quét 13 đầu vào + ADC 16-bit | mua (P0) |
+| 5 | ESP32-S3 | 1 | Lọc, auto-zero, BLE 20 Hz | đã có |
+| 6 | LSM6DS3 (hoặc thay thế có ghi nhận) + SHT30 | 1+1 | Bù nghiêng + log T/RH | mua (P0) |
+| 7 | TP4056 + HT7333 + LiPo 3,7 V | 1 bộ | Nguồn đeo cách ly lưới | mua (P0) |
+| 8 | Orange Pi 5 Pro (trạm dùng chung) | 1 | Trạm đo + dashboard + báo cáo | **trường đã có** |
+| 9 | Giàn: nhôm 2020 + ray + vít me + servo + khớp cứng + lò xo + quả cân | 1 | Kiểm định RAL/GAP/E1–E4 (bỏ phanh — M-20) | dựng (P0/P1) |
+| 10 | Load cell 5 kg + HX711 + phantom silicone | 1 | Chuẩn động + tay giả | cell đã có; **HX711 mua ngay** |
+| 11 | Thước đo góc + ẩm-nhiệt kế + camera USB | 1 | Góc chuẩn chính + T/RH + đối chứng (P1) | mua |
 
 ### 4. Nguyên lý sensing element và trích đặc trưng
 
 **4.1 Cơ chế piezoresistive**
-- Velostat: điện trở giảm khi nén; quan hệ **phi tuyến**, có hysteresis, creep, drift, phụ thuộc nhiệt độ và cơ tính nền.
-- Hệ quả: **không** chuyển ADC thành Newton; chỉ dùng đặc trưng **tương đối** và **động**.
+- Velostat: điện trở giảm khi nén; quan hệ **phi tuyến**, có hysteresis, creep, drift, phụ thuộc nhiệt-ẩm.
+- Hệ quả: **không** chuyển ADC thành Newton; chỉ dùng đặc trưng **tương đối** và **động**; R(F) đo thật là nút M-01.
 
-**4.2 Bố trí kênh**
-- Cấu hình 1 (12 kênh): 4 ngón dài × 2 khớp + ngón cái × 2 + lòng bàn tay × 1 + ô tham chiếu × 1.
-- Cấu hình 2 (24 kênh): mỗi khớp có **cặp đối xứng** hai vách → đọc vi sai.
+**4.2 Bố trí kênh (M-04)**
+- 3 ngón × 2 khớp × 2 vách = **12 phần tử** + 1 ô chuẩn = 13 đầu vào ADC, tạo **6 cặp vi sai**.
+- Bài tập chuẩn: gập/duỗi từng ngón, chụm, bóp, chạm ngón (thứ tự chốt cùng KTV).
 
-**4.3 Bài tập chuẩn và đặc trưng**
+**4.3 Bù drift + nhiệt (bản hẹp)**
+- Cặp đối xứng → hiệu `d` giảm thành phần đồng pha; ô chuẩn + auto-zero đầu phiên.
+- Nhiệt: **không chương riêng** — log T/RH mọi phiên (SHT30) + 1 đồ thị trôi-vs-T + hệ số r từ dữ liệu C1.8 + trích y văn.
+- Cấm chữ "loại bỏ/triệt tiêu hoàn toàn drift" (M-10).
 
-| Bài tập | Vùng kích hoạt | Đặc trưng |
-|---|---|---|
-| Gập từng ngón (flexion) | vách lòng bàn tay của ngón đó | Biên độ, thời gian lên đỉnh |
-| Duỗi (extension) | vách đối diện | Dấu và biên độ vi sai |
-| Chụm ngón (pinch) | ngón cái + ngón đối diện | Tỷ lệ giữa hai vùng |
-| Bóp cả bàn tay (power grip) | nhiều ngón + lòng bàn tay | Tổng lực, phân bố, độ bền |
-| Chạm ngón cái–đầu ngón (opposition) | ngón cái + 4 ngón | Mẫu phối hợp |
+### 5. Luật thường trước, ML đối chứng (thay thế mục "Mô hình học máy" cũ)
 
-**4.4 Bù ảnh hưởng drift**
-- Cặp sensing element đối xứng → hiệu `d` triệt thành phần đồng pha.
-- Ô tham chiếu → phát hiện trôi hệ thống → cờ `UNRELIABLE`.
-- Không dùng từ "loại bỏ drift".
+- **Luật 0-tham-số gánh chính:** dấu vi sai → hướng; EI/GAP/RAL = phép tính số học + thống kê cổ điển.
+- **Thực nghiệm đối chứng duy nhất (P1):** phân loại sự kiện E1–E4 (spike/rung/tuột/bão hòa — định nghĩa ở mức tín hiệu, không dùng từ y khoa) trên dữ liệu giàn + sự kiện giả lập cơ học; phe A luật ngưỡng (scope) vs phe B ML (RF/NN nhỏ); chia test theo phiên; metric chính recall + precision kèm baseline (M-08 chỉ sống lại dưới dạng benchmark đo thật).
+- **Cấm:** phân loại MAS/chẩn đoán (M-15), góc từ tín hiệu (M-13), suy nguyên nhân GAP (M-14).
 
-### 5. Mô hình học máy và suy luận tại biên
+### 6. Đo góc độc lập cho GAP (thay thế mục "Tái tạo 3D" cũ)
 
-- **Đầu vào:** vector đặc trưng từ mảng sensing element theo từng bài tập.
-- **Baseline trước:** hồi quy tuyến tính / rừng ngẫu nhiên — **chỉ dùng mạng nơ-ron nếu baseline không đủ**.
-- **Hai nhiệm vụ tách biệt:**
-  1. **Suy luận hướng khớp** (từ trường lực → hướng) — kiểm chứng bằng GATE B trên phantom có góc biết trước.
-  2. **Chỉ số chức năng** (từ đặc trưng → chỉ số theo tuần) — kiểm chứng bằng GATE C/D.
-- **Không claim thay thế Fugl-Meyer.** Chỉ claim: chỉ số có **tương quan** với công cụ chuẩn (khi đo được).
-- **Lượng tử hóa:** INT8 → RKNN → NPU RK3588; phải báo cáo độ trễ và mức giảm độ chính xác so với FP32.
-
-### 6. Tái tạo bàn tay 3D
-
-- Đầu vào: vector lực-hướng theo khớp.
-- Đầu ra: mô hình bàn tay 3D biểu diễn mức gập/duỗi từng ngón theo thời gian.
-- Mục đích: chuyên gia xem nhanh "bệnh nhân tuần này gập được tới đâu", không phải để thay goniometer.
-- Kiểm chứng: GATE B (MAE theo khớp so với phantom góc biết trước) + đánh giá định tính của KTV.
+- Chuẩn chính: **thước đo góc/goniometer** gắn trên giàn (P0). Đối chứng P1: camera + marker ArUco trên Pi (xử lý ảnh đã test OK).
+- Tái tạo 3D đầy đủ + EKF + IMU từng đốt → **hướng phát triển**, không phải mục tiêu giai đoạn này.
 
 ### 7. Dashboard và theo dõi từ xa
 
-- Bệnh nhân: hướng dẫn bài tập, phản hồi tức thời, không cần đọc số liệu kỹ thuật.
-- KTV: xem đường cong theo tuần của từng bệnh nhân; thấy ngay khi đường cong đi ngang hoặc giảm.
-- Cảnh báo: chỉ khi vượt MDC **và** dữ liệu ở trạng thái hợp lệ.
+- Người tập: hướng dẫn bài tập + thanh EI phản hồi tức thời.
+- KTV (ngồi nhà): timeline sự kiện E1–E4 + đường cong tuần + **báo cáo PDF tự động**; bấm vào cờ đỏ xem sóng tín hiệu; chuyển file thủ công (USB/nhắn tin) — **không claim cloud/app**.
+- Cảnh báo: chỉ khi vượt ngưỡng **và** dữ liệu ở trạng thái hợp lệ (không bị gắn "Nghi vấn").
+
+### 8. Ngân sách (viết đúng phạm vi — M-21)
+
+- Báo cáo ghi: **"thiết bị đeo < 1,5 triệu"** + **"trạm nhà dùng chung"** (Pi của trường, như máy tính KTV).
+- Dự toán vận hành E2E < 10M (~5,5M: găng ~1,2M + giàn-đo ~3,2M + dự phòng ~1M) **chỉ nằm ở sổ tay** (`research/notebook/2026-09-29_measurability_M-checklist.md` §5), không vào báo cáo.
+
+### 9. Những câu báo cáo sẽ KHÔNG nói (chống tái phạm M-10..M-15)
+
+| Câu cấm | Thay bằng |
+|---|---|
+| "Triệt tiêu/triệt để drift/nhiệt" | "Giảm trôi đồng pha; phần dư định lượng qua C1.8" |
+| "RAL giảm = bệnh cải thiện" | "RAL là đặc trưng giao thức kiểm định trên giàn" |
+| "AI phát hiện co giật/co cứng/MAS…" | "AI gắn cờ sự kiện tín hiệu E1–E4; KTV diễn giải" |
+| "Góc quy đổi từ tín hiệu" | "Góc đo độc lập (thước đo góc ± camera)" |
+| "GAP do yếu cơ/co cứng" | "GAP ghi nhận chênh lệch; không tự suy nguyên nhân" |
+| "AAN hỗ trợ tay người bệnh…" | Mọi câu AAN chỉ viết về phantom |
+| "Suy luận INT8 < X ms" (chưa đo) | Chỉ ghi số đo thật + điều kiện đo |
 
 ---
 
 ## C. CHẾ TẠO MÔ HÌNH VÀ VẬN HÀNH THỬ NGHIỆM
 
-*(Toàn bộ ngưỡng PASS/FAIL chi tiết ở `research/protocols/06_glove_hand_GATE_experiment.md`)*
+*(Ma trận đo đầy đủ: notebook M-checklist §2; ngưỡng chốt trước khi đo — `research/protocols/08` §7.)*
 
-### 1. GATE 0 — Độ lặp lại của sensing element
-- Đường cong tải tăng/giảm (hysteresis), creep 60 s, 100 chu kỳ, 3 ngày, 5 sensing element.
-- Pass dự kiến: CV trong phiên ≤ 5%; ICC giữa phiên ≥ 0,75.
+### 1. Bench điện (M1/M2 + C1.1/C1.2/C1.3/C1.6/C1.7/C1.9)
+- R(F) + γ + R² (DMM + quả cân) → **trả lời M-01/M-17** → tính lại G, Vex, chuỗi.
+- SNR@1N (scope + log ADS1115); hys lên/xuống; creep 60 s; đồng đều kênh; Vpp 5.000 mẫu (phương pháp tách).
 
-### 2. GATE A — Phân biệt hướng
-- Lực theo 4 hướng × 3 mức × 20 lần trên phantom.
-- Pass dự kiến: accuracy 4 hướng ≥ 85%; cặp đối lập ≥ 90%.
+### 2. Lặp lại + drift + đeo (M3/M4/M6 + C1.4/C1.5/C1.8)
+- CV nội phiên trên giàn; CV liên ngày tháo/đeo lại (3 ngày); drift 10 ngày 3 lần/ngày + T/RH.
+- M6: cửa sổ V_base + 20–30 lần tháo/đeo, đếm phát hiện (đường lui: hạ thành quy trình thao tác).
 
-### 3. GATE B — Tái tạo bàn tay 3D
-- Phantom có góc hãm 0°/30°/60°/90°; so góc suy luận với góc thật.
-- Pass dự kiến: MAE ≤ 15°, tương quan r ≥ 0,8.
+### 3. Thời gian thực (M5/C1.10)
+- fs toàn kênh ≥ 20 Hz (timestamp + scope kẹp DRDY); trễ đầu–cuối ≤ 500 ms (gen phát bước → GPIO mirror).
 
-### 4. GATE C — **Độ nhạy phát hiện thay đổi (tiêu chí sống còn)**
-> "Thay đổi chức năng thật có lớn hơn drift/nhiễu của chính hệ thống không?"
-- 3 mức chức năng mô phỏng × ≥ 5 phiên × ≥ 3 ngày.
-- Pass dự kiến: Δ giữa mức 1 và 3 ≥ 2σ; Cohen's d ≥ 0,8; MDC < mức chênh giữa hai mức liền kề.
-- **FAIL ⇒ dừng, báo cáo trung thực.**
+### 4. Giàn + phantom (RAL/GAP/EI)
+- RAL: 10 chu kỳ/nấc, điểm cắt P_complete ≥ 80% (quả cân + đếm).
+- GAP: kéo 2 vận tốc (PROM ω₁ ≈ 15°/s) + gập chủ động, góc đọc từ thước đo góc.
+- EI: tính offline từ log theo công thức M-25; kiểm nhất quán giữa phiên.
 
-### 5. GATE D — Nhiều ngày không báo động giả
-- Giữ nguyên một mức ≥ 10 ngày; đếm báo động giả.
-- Pass dự kiến: ≤ 10% số phiên; không có xu hướng trôi giả đơn điệu.
+### 5. Đối chứng + camera (P1)
+- E1–E4: injector cơ học (búa/lò xo/nới vít) + spec sheet bằng scope → dataset → rules-vs-ML.
+- Camera ArUco đối chứng góc vs thước đo góc (sai lệch cho phép vài độ, nếu không đạt thì camera chỉ minh họa).
 
-### 6. GATE E — Tự phát hiện lỗi
-- Bơm lỗi có chủ đích: đứt dây, chập, trôi mạnh, giảm độ nhạy, tăng nhiễu.
-- Pass dự kiến: phát hiện ≥ 90%; báo động giả ≤ 5%; phát hiện ≤ 10 s.
+### 6. Kết quả tích hợp hệ thống (ESP32-S3 ↔ Orange Pi)
+- BLE 20 Hz thực đo, tỷ lệ lỗi/khung mất, trễ đầu–cuối, số phiên "Nghi vấn" đúng/sai.
 
-### 7. GATE F — Suy luận tại biên
-- Đo độ trễ, độ ổn định 30 phút, mức giảm độ chính xác INT8 vs FP32.
-- Pass dự kiến: ≤ 50 ms; mất mát ≤ 2%.
+### 7. Kết luận
+- Bảng đối chiếu **A.3 → kết quả đo thật** (không ô trống, không claim vượt dữ liệu — M-05).
+- Nêu rõ: proof-of-concept trên bench/phantom (+ người đeo ghi theo M-26); chưa thử trên bệnh nhân; không thay thế đánh giá lâm sàng.
 
-### 8. Kết quả tích hợp hệ thống (ESP32-S3 ↔ Orange Pi)
-- Tốc độ khung thực đo, tỷ lệ lỗi CRC, độ trễ đầu–cuối, số frame mất khi truyền BLE.
-
-### 9. Kết luận
-- Bảng đối chiếu **tiêu chí A.3 → kết quả đo thật** (không có ô nào bỏ trống).
-- Nêu rõ: proof-of-concept trên phantom; chưa thử trên bệnh nhân; không thay thế đánh giá lâm sàng.
-
-### 10. Hướng phát triển
-- Giai đoạn 2: người tình nguyện khỏe (sau IRB/SRC).
-- Giai đoạn 3: pilot bệnh nhân sau đột quỵ (bệnh viện đối tác + IRB).
-- Mở rộng: bại não trẻ em, phục hồi sau chấn thương bàn tay, sàng lọc sa sút vận động tinh.
+### 8. Hướng phát triển
+- Tái tạo 3D + EKF + IMU từng đốt; FPC/e-textile; app + cloud; ánh xạ lâm sàng (MAS…) **với đối tác bệnh viện + IRB**.
 
 ---
 
 ## TÀI LIỆU THAM KHẢO *(verify đầy đủ trước khi nộp — xem `research/evidence/SOURCE_LEDGER.csv`)*
 
-- [ ] Amin K.R. et al., *Remote Monitoring for the Management of Spasticity: Challenges, Opportunities and Proposed Technological Solution*, IEEE OJEMB (2024), DOI 10.1109/OJEMB.2024.3523442
-- [ ] *Occupational Therapy at Home E-Rehabilitation (OTHER)* (2026), DOI 10.1080/09638288.2026.2643929, PMID 41918405
-- [ ] Systematic review: AI-based smart glove for hand movement recognition and rehabilitation monitoring (Springer, 2026) 🔵 verify
-- [ ] Zhu lab, *A Glove-based System for Studying Hand-Object Manipulation* (IROS 2017) — prior art gần nhất
-- [ ] *A Reconfigurable Data Glove for Reconstructing Physical and Virtual Grasps* (2023)
-- [ ] *Development of an Instrumented Glove for Palmar Pressure Assessment in Kayakers* (Sensors 2026)
-- [ ] *Wearable technology to capture arm use of stroke survivors in home and community settings* (medRxiv 2023 / PMC9901039)
-- [ ] *Tracking Upper Limb Motion via Wearable Solutions* — JMIR 2024
-- [ ] Hopkins M. et al., đặc tính Velostat — IEEE Sensors J 2020 🔵 verify
-- [ ] *Effect of task-oriented training assisted by force feedback hand rehabilitation robot…* (2024, PMC11092254)
-- [ ] *Quantitative measurement of finger usage in stroke hemiplegia using ring-shaped wearable devices* (2023, PMC10242812)
-- [ ] Nguồn dịch tễ đột quỵ Việt Nam + nguồn "80% bệnh nhân yếu tay" — **bắt buộc đối chiếu lại**
-- [ ] Nguồn giá/giới hạn của Jamar và E-Link — **bắt buộc đối chiếu lại**
+- [ ] Tran M.C. et al., dịch tễ đột quỵ VN, *Global Epidemiology* 2025;9:100199 — đọc toàn văn (số 1,5M = nhóm tự nhân — M-22)
+- [ ] Pollock A. et al., Cochrane 2014 — 80%/50% qua Background (← Langhorne 2009…); **không trích Hendricks 2002 cho 80%**
+- [ ] Manumeter, *Sensors* 2022 — sai số tự ghi chép 🔵 đối chiếu mức đọc
+- [ ] Amin K.R. et al., IEEE OJEMB 2024, DOI 10.1109/OJEMB.2024.3523442
+- [ ] Găng từ tính, *Device* 2024 — **không ghi là Gloreha** (M-24)
+- [ ] Lin B.-S. et al., *Sensors* 2022 — hệ đa cảm biến co cứng (n = 14, có IRB)
+- [ ] ART-Glove, arXiv:2606.16370
+- [ ] Liu et al., *A Reconfigurable Data Glove…*, *Engineering* 2024 — **không ghi IROS 2017** (M-24)
+- [ ] ironHand 2016 + 2018
+- [ ] *Custom Data Gloves* review, arXiv:2405.15417 🔵 xác minh bản IEEE Access nếu trích
+- [ ] OTHER 2026, DOI 10.1080/09638288.2026.2643929 🔵 verify
+- [ ] Velostat: MIT Media Lab 2012 (đã đọc) + Hopkins, IEEE Sensors J 2020 🔵 verify + bài Sensors & Actuators A 2018 🔵 verify ([18] cũ)
+- [ ] Jamar + E-Link (giá/giới hạn) 🔵 bắt buộc đối chiếu lại
+- [ ] Tham khảo KTV VLTL-PHCN (ẩn danh, phiếu + ghi chép) — ý kiến chuyên môn, **không** phải nghiên cứu định lượng
+- [ ] Đồ nghề: FNIRSI 2C23T (spec theo datasheet/manual + Elektor 2024) — nêu tên máy + spec dùng trong báo cáo, chi tiết ở sổ tay
 
 ---
 
 ## GHI CHÚ CHO PHIÊN SAU
 
-**Đã thay đổi trong phiên 2026-09-13:**
-- ✅ Chốt tên đề tài chính thức (bỏ chữ "hệ thống … TinyML … giá thấp" trong tên cũ).
-- ✅ Phần cứng: Arduino Mega 2560 → **ESP32-S3 + CD74HC4067** (DEC-HW-003).
-- ✅ Bố trí kênh: 6 vùng → **12 kênh (tối thiểu) / 24 kênh (đọc vi sai)** (DEC-HW-004).
-- ✅ Bổ sung mục tiêu **tái tạo bàn tay 3D** vào A.2/A.3/outline.
-- ✅ GATE experiment viết lại cho găng tay: `research/protocols/06_glove_hand_GATE_experiment.md`.
-- ✅ Đồng bộ README, INDEX, docs/01–04, GLOSSARY, ledger.
+**Đã thay đổi trong v3.0 (2026-09-29):**
+- ✅ Đồng bộ cấu hình đã nộp: cầu vi sai → INA333 → MUX → ADS1115 → ESP32-S3 → BLE → Pi (DEC-HW-005).
+- ✅ Áp dụng checklist M-01..M-27: 20 Hz danh định, định nghĩa kênh, INA333 duy nhất, Vex TODO, tách ngân sách, cấm 7 nhóm câu (B.9).
+- ✅ AI từ "đầu tàu" → 1 thực nghiệm đối chứng rules-vs-ML (P1); bỏ mục tiêu 3D/MAS/cloud khỏi giai đoạn này.
+- ✅ Đồ nghề chốt (DEC-INST-001): 2C23T + DMM phụ + load cell 5 kg (HX711 P0); trần E2E <10M sổ tay-only (DEC-BUDGET-002).
+- ✅ Ẩn danh KTV toàn bộ (DEC-ROLE-001); sửa cite epi/Cochrane/IROS/Gloreha (M-22..M-24).
+- ✅ Viết lại A1/A2/A3/A4/A6 cho khớp.
 
-**Còn chờ:**
-- [ ] Chốt cấu hình kênh 1 hay 2 (hoặc lộ trình 1 → 2).
-- [ ] Chốt giao thức bài tập chuẩn cùng KTVVLTL-PHCN (thứ tự, số lần, thời gian nghỉ).
-- [ ] Đo `R_sensor` theo tải → chọn R_f.
-- [ ] Đo ENOB thực + tốc độ khung thực.
-- [ ] Rà soát prior art (docs/03) → chốt lại mức novelty.
-- [ ] Điền số thật vào A.3 và mục C sau khi có log.
+**Còn chờ (không đo cho tới khi xong các mục 🔴):**
+- [ ] 🔴 Viết công thức EI tường minh (M-25) + chốt 9 ngưỡng `protocols/08` §7.
+- [ ] 🔴 Đo R(F) thật → trả lời M-01/M-17 (Vex, G, S, SNR).
+- [ ] Ghi rõ người đeo + an toàn (M-26); lấy 5 số INT8 của owner (M-08).
+- [ ] Shopping P0: HX711, ADS1115/INA333 chính hãng, SHT30, cân/quả cân, thước đo góc, ẩm-nhiệt kế.
+- [ ] Xác minh nốt các cite 🔵 (OTHER, Hopkins, [18], RehabReach, Jamar/E-Link).
+- [ ] Viết lại A7/GLOSSARY nếu còn dùng.
