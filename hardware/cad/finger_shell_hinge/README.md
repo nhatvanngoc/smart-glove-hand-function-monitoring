@@ -167,22 +167,35 @@ Bài học: dù CAD đã "chạy được" (không lỗi CGAL/OCCT, bbox/thể t
 
 **Lỗi #2 (cùng ngày, cùng phiên phát hiện):** chủ dự án nhận ra ảnh lắp ráp (đóng/mở) **thiếu hẳn trục chốt bản lề** — 2 nửa vỏ có đủ khớp ống xen kẽ nhưng không có gì "xuyên qua" để giữ chúng lại, nhìn giống bản lề rỗng. Nguyên nhân: `export_assembly_state()` (.py) và `assembly_closed()`/`assembly_open()` (.scad) vốn chỉ vẽ 2 nửa vỏ, **quên vẽ `hinge_pin`/`build_pin()`** dù chi tiết chốt đã có sẵn trong file từ đầu (xuất riêng ra `hinge_pin.stl`). Đã sửa: thêm trục (màu xám đậm để phân biệt) vào cả 2 trạng thái lắp ráp ở cả 2 file; vì trục nằm đúng trên tâm trục xoay nên vị trí của nó không đổi giữa đóng/mở, không cần tính toán thêm.
 
+## 5b. Thay đổi thiết kế theo yêu cầu — trục bản lề HÀN LIỀN vào nửa mu tay (2026-10-07)
+
+**Yêu cầu của chủ dự án:** "cố định trục xám này với bản lề chính... khi in ra in nguyên 1 khối chứ không cần thay đổi" — tức muốn **bỏ việc chốt là 1 chi tiết rời phải lắp tay** (xỏ que/chốt qua lỗ sau khi in), thay vào đó **hàn trục liền vào nửa mu tay (bản lề cố định)** ngay từ lúc in.
+
+**Đã làm** (tham số `PIN_INTEGRATED`, mặc định `true` ở cả 2 file):
+- Nửa mu tay (`top_shell`) **không còn khoan lỗ chốt nữa** — thay vào đó, trục (đường kính giống hệt `hinge_pin.stl` trước đây) được **hợp nhất (`union`)** thẳng vào khối, nên `top_shell_dorsal.stl`/`.step` xuất ra **đã bao gồm sẵn trục**, in 1 lần duy nhất ra 1 khối liền (thể tích tăng từ ~2169mm³ lên ~2258mm³, đúng bằng thể tích trục ~78.5mm³ được cộng vào — đã kiểm chứng bằng `check_connectivity.py`: vẫn là 1 khối liền).
+- Nửa lòng tay (`bottom_shell`) **vẫn luôn khoan lỗ** (khe hở bán kính 0.15mm) ở các khớp ống của nó — để có thể **trượt/xoay tự do quanh trục cố định** đã gắn liền vào nửa kia. Đây là phần BẮT BUỘC phải tách rời, vì nó cần di chuyển (mở ra/đóng vào) — không thể hàn liền với nửa mu tay.
+- Lắp ráp: in 2 nửa riêng (mu tay đã có sẵn trục, lòng tay có lỗ trượt) → luồn khớp ống của nửa lòng tay vào dọc theo trục cố định từ một đầu (thao tác y hệt như trước, chỉ khác là không còn chi tiết chốt thứ 3 rời nữa).
+- Vẫn giữ `PART = "pin"` và vẫn xuất `hinge_pin.stl` **chỉ để tham khảo kích thước trục** (không cần in riêng nữa ở chế độ mặc định).
+- Muốn quay lại thiết kế cũ (chốt rời, có thể thay bằng que kim loại)? Đặt `PIN_INTEGRATED = False` (`.py`) hoặc `PIN_INTEGRATED = false;` (`.scad`, trong Customizer) rồi chạy lại.
+
+**⚠️ Đánh đổi cần biết (không giấu):** mục 6 (hướng dẫn in) trước đây khuyến nghị **KHÔNG in chốt bằng nhựa** mà dùng que kim loại/nhựa cứng có sẵn (que hàn nhựa, đinh ghim, dây đồng Ø2mm) — lý do: một que nhựa mảnh (bán kính ~1mm) in bằng FDM dễ cong/gãy hơn vật liệu sẵn có, nhất là chịu lực uốn lặp lại của bản lề. **Khi hàn liền trục vào vỏ (`PIN_INTEGRATED=true`), ta mất luôn lựa chọn thay bằng que kim loại đó** — nếu trục in bị gãy trong lúc dùng, phải **in lại nguyên cả nửa mu tay**, không chỉ thay 1 que nhỏ như trước. Bù lại: ít chi tiết rời hơn (không lo mất chốt), lắp nhanh hơn (bớt 1 bước), và trục được 3 khớp ống "ôm" dọc suốt chiều dài nên có thể còn cứng vững hơn so với 1 que rời chỉ ăn khớp bằng ma sát. Đây là đánh đổi thiết kế, **chưa có số đo độ bền thật** — vẫn cần in thử + thử uốn/gập lặp lại trước khi kết luận cách nào bền hơn (xem mục 8).
+
 ## 6. Hướng dẫn in 3D (khuyến nghị — chưa kiểm chứng bằng mẫu in thật)
 
 - **Vật liệu:** PETG (đồng bộ với `docs/04` §6), ≥ 5 vòng tường, 100% hoặc ≥ 60% infill ở vùng ngàm/bản lề (chịu lực lặp lại).
 - **Hướng in bản lề:** đặt sao cho **trục chốt (trục X của mảnh) thẳng đứng theo trục Z máy in** — lỗ chốt sẽ in theo từng lớp tròn hoàn chỉnh, không cần support, không bị méo do in ngang qua lỗ.
 - **Hướng in ngàm/tay đòn:** tay đòn đàn hồi (`arm`) nên in với lớp vân (layer line) **vuông góc hướng uốn** để bền mỏi hơn — nghĩa là in đứng theo chiều dày `arm_t`, không in nằm phẳng.
 - **Khớp ống xen kẽ (knuckle):** chừa khe in `knuckle_gap = 0.5 mm` đã tính sẵn trong tham số; nếu máy in dung sai lớn, tăng `knuckle_gap` lên 0.6–0.8 mm để tránh 2 mảnh dính nhau.
-- **Chốt bản lề:** file `hinge_pin.stl`/`.step` chỉ để **tham khảo kích thước** (đường kính nhỏ hơn lỗ 0.15 mm/bán kính); thực tế nên dùng que nhựa/kim loại cứng có sẵn (que hàn nhựa, đinh ghim, hoặc đoạn dây đồng/thép Ø2 mm) thay vì in — in một que nhựa mảnh dài 20 mm bằng FDM dễ cong/gãy hơn là dùng vật liệu sẵn có.
+- **Chốt bản lề:** mặc định (`PIN_INTEGRATED = true`, xem mục 5b) trục đã **hàn liền vào `top_shell_dorsal.stl`** — in nửa mu tay là có sẵn trục, không cần in/lắp chốt riêng. File `hinge_pin.stl`/`.step` vẫn được xuất riêng chỉ để **tham khảo kích thước** (không cần in). Nếu đổi `PIN_INTEGRATED = false` để quay lại thiết kế chốt rời: nên dùng que nhựa/kim loại cứng có sẵn (que hàn nhựa, đinh ghim, hoặc đoạn dây đồng/thép Ø2 mm) thay vì in — in một que nhựa mảnh dài 20 mm bằng FDM dễ cong/gãy hơn là dùng vật liệu sẵn có (nhưng dễ thay thế hơn nếu gãy — xem đánh đổi ở mục 5b).
 - **Hốc cảm biến:** in xong cần làm phẳng nhẹ bề mặt hốc (giấy nhám mịn) trước khi dán sandwich Velostat + đồng, để tiếp xúc đều — đúng tinh thần `docs/04` §4.1 "điện trở tiếp xúc copper–Velostat... cần preload + kẹp cơ khí ổn định".
 
 ## 7. BOM cho 1 cụm (1 đốt ngón)
 
 | # | Chi tiết | Nguồn |
 |---|---|---|
-| 1 | Nửa mu tay (A) — `top_shell_dorsal.stl` | In PETG |
+| 1 | Nửa mu tay (A) — `top_shell_dorsal.stl` (đã bao gồm trục bản lề hàn liền, mặc định `PIN_INTEGRATED=true`) | In PETG |
 | 1 | Nửa lòng tay (B) — `bottom_shell_palmar.stl` | In PETG |
-| 1 | Chốt bản lề Ø~2 mm, dài ~22 mm | Que/dây cứng có sẵn (xem mục 6) — **không bắt buộc in** |
+| 0/1 | Chốt bản lề Ø~2 mm, dài ~22 mm | **Không cần** ở chế độ mặc định (trục đã hàn liền vào mảnh A); chỉ cần nếu đổi `PIN_INTEGRATED=false` — khi đó dùng que/dây cứng có sẵn (xem mục 5b/6), không bắt buộc in |
 | 2 | Miếng sensing element Velostat + đồng tự dính | Theo `docs/04` §3/§6 (đã có trong BOM hệ thống) |
 | 1–2 | Dây đai Velcro/thun phụ (qua `strap_slot`) | Tuỳ chọn, khóa an toàn lớp 2 |
 

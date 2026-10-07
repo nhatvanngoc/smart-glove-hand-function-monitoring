@@ -60,6 +60,13 @@ class P:
     n_knuckle_top = 3    # số "khớp ống" thuộc nửa mu tay (A)
     n_knuckle_bot = 2    # số "khớp ống" thuộc nửa lòng tay (B), xen kẽ với A
     knuckle_gap = 0.5    # khe hở in 3D giữa các khớp ống (mm)
+    PIN_INTEGRATED = True  # 2026-10-07, theo yêu cầu chủ dự án: True = HÀN
+    # LIỀN trục chốt vào nửa mu tay (in top_shell + trục thành 1 khối duy
+    # nhất, không cần lắp chốt rời — chỉ nửa lòng tay vẫn tách riêng vì
+    # phải xoay quanh trục). False = thiết kế cũ: chốt là 1 chi tiết RỜI
+    # (hinge_pin.stl), xỏ qua lỗ xuyên cả 2 nửa sau khi in (xem README §5b
+    # để biết đánh đổi: tích hợp -> ít chi tiết rời hơn, nhưng KHÔNG còn
+    # thay được bằng que kim loại cứng nếu trục in bị gãy).
     r_knuckle = 3.0      # bán kính ngoài khớp ống (mm)
     r_pin = 1.15         # bán kính lỗ xỏ chốt (mm) -> lỗ phi 2.3mm cho chốt phi 2.0-2.2mm
     knuckle_overlap = 0.5  # phần khớp ống "ăn" vào thành vỏ để union liền khối
@@ -167,7 +174,10 @@ def knuckle_segments():
     return segs
 
 
-def add_hinge_knuckles(shell, which):
+def add_hinge_knuckles(shell, which, cut_hole=True):
+    """cut_hole=False: KHÔNG khoan lỗ chốt (dùng cho nửa mu tay khi
+    PIN_INTEGRATED=True — trục sẽ được HÀN LIỀN thay vì xỏ qua lỗ, xem
+    build_top_shell())."""
     segs = [s for s in knuckle_segments() if s[2] == which]
     y_flat = -p.W_out / 2.0
     y_axis = y_flat - p.r_knuckle + p.knuckle_overlap
@@ -185,16 +195,17 @@ def add_hinge_knuckles(shell, which):
             .translate((xc - w / 2.0, 0, 0))
         )
         shell = shell.union(boss)
-    # khoan lỗ chốt xuyên suốt toàn bộ vùng bản lề (một lỗ thẳng, đi qua mọi khớp ống)
-    hole_len = (p.L - 2 * p.margin_x) + 4.0
-    pin_hole = (
-        cq.Workplane("YZ")
-        .center(y_axis, z_axis)
-        .circle(p.r_pin)
-        .extrude(hole_len)
-        .translate((p.margin_x - 2.0, 0, 0))
-    )
-    shell = shell.cut(pin_hole)
+    if cut_hole:
+        # khoan lỗ chốt xuyên suốt toàn bộ vùng bản lề (một lỗ thẳng, đi qua mọi khớp ống)
+        hole_len = (p.L - 2 * p.margin_x) + 4.0
+        pin_hole = (
+            cq.Workplane("YZ")
+            .center(y_axis, z_axis)
+            .circle(p.r_pin)
+            .extrude(hole_len)
+            .translate((p.margin_x - 2.0, 0, 0))
+        )
+        shell = shell.cut(pin_hole)
     return shell
 
 
@@ -301,9 +312,16 @@ def build_top_shell():
     tube = base_tube()
     shell = split_half(tube, +1)
     shell = cut_sensor_pocket(shell, +1)
-    shell = add_hinge_knuckles(shell, "top")
+    # PIN_INTEGRATED=True (mặc định, theo yêu cầu 2026-10-07): KHÔNG khoan lỗ
+    # chốt ở nửa mu tay — trục sẽ được HÀN LIỀN (union) vào ngay bên dưới,
+    # nên top_shell + trục bản lề in ra là MỘT khối duy nhất, không cần lắp
+    # chốt rời. Nửa lòng tay (build_bottom_shell) vẫn LUÔN khoan lỗ (có khe
+    # hở 0.15mm) để trượt/xoay tự do quanh trục cố định này.
+    shell = add_hinge_knuckles(shell, "top", cut_hole=not p.PIN_INTEGRATED)
     shell = add_latch_catch(shell)
     shell = add_strap_slots(shell, +1)
+    if p.PIN_INTEGRATED:
+        shell = shell.union(build_pin())
     return shell
 
 
@@ -370,24 +388,29 @@ def main():
         p.L, p.W_in, p.H_in, p.t_wall))
 
     top = build_top_shell()
-    print("  top_shell OK, volume=%.1f mm3" % top.val().Volume())
+    pin_note = "da han lien vao top_shell, in 1 khoi" if p.PIN_INTEGRATED else "chi tiet roi, lap sau"
+    print("  top_shell OK, volume=%.1f mm3 (truc ban le: %s)" % (top.val().Volume(), pin_note))
     bot = build_bottom_shell()
     print("  bottom_shell OK, volume=%.1f mm3" % bot.val().Volume())
     pin = build_pin()
-    print("  pin OK, volume=%.1f mm3" % pin.val().Volume())
+    print("  pin OK, volume=%.1f mm3 (xuat rieng hinge_pin.stl de tham khao kich thuoc truc,"
+          " du da han lien vao top_shell hay chua)" % pin.val().Volume())
 
     for name, obj in (("top_shell_dorsal", top), ("bottom_shell_palmar", bot), ("hinge_pin", pin)):
         cq.exporters.export(obj, os.path.join(OUT_DIR, f"{name}.step"))
         cq.exporters.export(obj, os.path.join(OUT_DIR, f"{name}.stl"))
         print("  exported", name)
 
-    # Trạng thái lắp ráp: ĐÓNG (0°) và MỞ (xoay nửa lòng tay quanh trục bản lề)
-    # — CẢ 2 trạng thái đều kèm hinge_pin (trục chốt) vì chốt nằm đúng trên
-    # tâm xoay nên không di chuyển khi mở/đóng (xem hinge_axis_points()).
-    export_assembly_state(top, bot, "assembly_closed", pin=pin)
+    # Trạng thái lắp ráp: ĐÓNG (0°) và MỞ (xoay nửa lòng tay quanh trục bản lề).
+    # Nếu PIN_INTEGRATED=True, trục đã NẰM SẴN TRONG top (union ở
+    # build_top_shell()) nên KHÔNG truyền pin= nữa (tránh vẽ/xuất trùng lặp);
+    # nếu False (thiết kế cũ, chốt rời), vẫn vẽ thêm pin vào cả 2 trạng thái
+    # vì chốt nằm đúng trên tâm xoay nên không di chuyển khi mở/đóng.
+    asm_pin = None if p.PIN_INTEGRATED else pin
+    export_assembly_state(top, bot, "assembly_closed", pin=asm_pin)
     bot_open = build_open_bottom_shell(angle_deg=150.0)
-    export_assembly_state(top, bot_open, "assembly_open", pin=pin)
-    print("  exported assembly_closed, assembly_open (kem hinge_pin)")
+    export_assembly_state(top, bot_open, "assembly_open", pin=asm_pin)
+    print("  exported assembly_closed, assembly_open")
 
     print("Xong. File STEP/STL nằm trong:", OUT_DIR)
 

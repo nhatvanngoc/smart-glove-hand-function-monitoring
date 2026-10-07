@@ -97,6 +97,14 @@ strap_slot_h = 6.0;
 PART = "assembly_open"; // "top" | "bottom" | "pin" | "assembly_closed" | "assembly_open"
 OPEN_ANGLE = 150;       // độ, dùng khi PART = "assembly_open"
 
+// 2026-10-07, theo yêu cầu chủ dự án: true = HÀN LIỀN trục chốt vào nửa mu
+// tay (in top_shell + trục thành 1 khối duy nhất, không cần lắp chốt rời —
+// chỉ nửa lòng tay vẫn tách riêng vì phải xoay quanh trục). false = thiết
+// kế cũ: chốt là 1 chi tiết RỜI (PART="pin"), xỏ qua lỗ xuyên cả 2 nửa sau
+// khi in (xem README §5b: đánh đổi — tích hợp thì gọn hơn, nhưng KHÔNG còn
+// thay được bằng que kim loại cứng nếu trục in bị gãy).
+PIN_INTEGRATED = true;
+
 $fn = 48; // độ mịn hình tròn (giảm còn ~24 nếu máy chạy preview chậm)
 
 // =====================================================================
@@ -265,17 +273,22 @@ module strap_slots(sign) {
 // =====================================================================
 // 7) LẮP RÁP TỪNG CHI TIẾT
 // =====================================================================
+// PIN_INTEGRATED=true (mặc định, theo yêu cầu 2026-10-07): KHÔNG khoan lỗ
+// chốt ở nửa mu tay, HÀN LIỀN (union) trục ngay vào top_shell -> in top +
+// trục thành 1 khối duy nhất. Nửa lòng tay LUÔN khoan lỗ (khe hở 0.15mm)
+// để trượt/xoay tự do quanh trục cố định này, dù PIN_INTEGRATED là gì.
 module top_shell() {
     difference() {
         union() {
             split_half(+1);
             hinge_knuckles("top");
             latch_catch();
+            if (PIN_INTEGRATED) hinge_pin();
         }
         union() {
             sensor_pocket(+1);
             wire_channel(+1);
-            hinge_pinhole();
+            if (!PIN_INTEGRATED) hinge_pinhole();
             strap_slots(+1);
         }
     }
@@ -316,7 +329,9 @@ module bottom_shell_print_ready() { rotate([0, -90, 0]) bottom_shell(); }
 module assembly_closed() {
     color("Orange")     top_shell();
     color("SteelBlue")  bottom_shell();
-    color("DimGray")    hinge_pin(); // truc ban le -- xem ghi chu loi da sua ben duoi
+    // Neu PIN_INTEGRATED=true, truc da nam san trong top_shell() (union o
+    // dinh nghia top_shell ben tren) nen KHONG ve them nua (tranh trung lap).
+    if (!PIN_INTEGRATED) color("DimGray") hinge_pin();
 }
 
 // Xoay nửa lòng tay quanh trục bản lề (đường thẳng qua (*, y_hinge, 0),
@@ -334,7 +349,7 @@ module assembly_open(angle = OPEN_ANGLE) {
         rotate([angle, 0, 0])
         translate([0, -y_hinge, 0])
         bottom_shell();
-    color("DimGray") hinge_pin();
+    if (!PIN_INTEGRATED) color("DimGray") hinge_pin();
 }
 
 // =====================================================================

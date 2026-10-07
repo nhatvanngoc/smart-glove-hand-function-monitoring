@@ -57,11 +57,25 @@ def render(paths, colors, out_name, elev=20, azim=-55, title="", alpha=1.0):
 
 def main():
     b = os.path.join(OUT_DIR, "")
+    # Nếu PIN_INTEGRATED=true (mặc định từ 2026-10-07), trục đã HÀN LIỀN vào
+    # top_shell nên không có file "*__pin.stl" riêng nữa (đã nằm sẵn trong
+    # "*__top.stl") -> tự động bỏ qua lớp pin riêng nếu không tìm thấy file.
+    has_pin_closed = os.path.exists(b + "assembly_closed__pin.stl")
+    has_pin_open = os.path.exists(b + "assembly_open__pin.stl")
+
+    def paths_colors(prefix, dorsal_c, palmar_c, has_pin):
+        paths = [b + f"{prefix}__top.stl", b + f"{prefix}__bottom.stl"]
+        colors = [dorsal_c, palmar_c]
+        if has_pin:
+            paths.append(b + f"{prefix}__pin.stl")
+            colors.append(PIN_COLOR)
+        return paths, colors
+
     render(
         [b + "top_shell_dorsal.stl"],
         [DORSAL_COLOR],
         "01_top_shell_dorsal.png",
-        title="Nua MU TAY (co dinh) - 3 khop ban le + khoi ngam",
+        title="Nua MU TAY (co dinh) - 3 khop ban le + khoi ngam + truc han lien",
     )
     render(
         [b + "bottom_shell_palmar.stl"],
@@ -69,35 +83,35 @@ def main():
         "02_bottom_shell_palmar.png",
         title="Nua LONG TAY (xoay quanh ban le) - 2 khop ban le + tay don ngam",
     )
+    p, c = paths_colors("assembly_closed", DORSAL_COLOR, PALMAR_COLOR, has_pin_closed)
     render(
-        [b + "assembly_closed__top.stl", b + "assembly_closed__bottom.stl", b + "assembly_closed__pin.stl"],
-        [DORSAL_COLOR, PALMAR_COLOR, PIN_COLOR],
+        p, c,
         "03_assembly_closed_iso.png",
-        title="Trang thai DONG (khi da cai ngam) - goc nhin iso (co truc ban le)",
+        title="Trang thai DONG (khi da cai ngam) - goc nhin iso",
         elev=20,
         azim=-55,
     )
+    p, c = paths_colors("assembly_closed", DORSAL_COLOR + "aa", PALMAR_COLOR + "aa", has_pin_closed)
     render(
-        [b + "assembly_closed__top.stl", b + "assembly_closed__bottom.stl", b + "assembly_closed__pin.stl"],
-        [DORSAL_COLOR + "aa", PALMAR_COLOR + "aa", PIN_COLOR + "cc"],
+        p, c,
         "04_assembly_closed_end.png",
-        title="Trang thai DONG - nhin doc truc ngon tay (tiet dien, co truc ban le)",
+        title="Trang thai DONG - nhin doc truc ngon tay (tiet dien)",
         elev=0,
         azim=0,
     )
+    p, c = paths_colors("assembly_open", DORSAL_COLOR, PALMAR_COLOR, has_pin_open)
     render(
-        [b + "assembly_open__top.stl", b + "assembly_open__bottom.stl", b + "assembly_open__pin.stl"],
-        [DORSAL_COLOR, PALMAR_COLOR, PIN_COLOR],
+        p, c,
         "05_assembly_open_iso.png",
-        title="Trang thai MO (ban le xoay ~150 do) - dat ngon vao, chua cai ngam (co truc ban le)",
+        title="Trang thai MO (ban le xoay ~150 do) - dat ngon vao, chua cai ngam",
         elev=22,
         azim=-60,
     )
+    p, c = paths_colors("assembly_open", DORSAL_COLOR + "cc", PALMAR_COLOR + "cc", has_pin_open)
     render(
-        [b + "assembly_open__top.stl", b + "assembly_open__bottom.stl", b + "assembly_open__pin.stl"],
-        [DORSAL_COLOR + "cc", PALMAR_COLOR + "cc", PIN_COLOR],
+        p, c,
         "06_assembly_open_end.png",
-        title="Trang thai MO - nhin doc truc ngon tay (co truc ban le)",
+        title="Trang thai MO - nhin doc truc ngon tay",
         elev=0,
         azim=0,
     )
@@ -105,7 +119,8 @@ def main():
         [b + "hinge_pin.stl"],
         ["#444444"],
         "07_hinge_pin.png",
-        title="Chot ban le (truc), rieng le - in PETG hoac dung que nhua/kim loai phi ~2mm",
+        title="Truc ban le (hinh dang/kich thuoc tham khao) - da han lien vao top_shell" if not has_pin_closed
+        else "Chot ban le (truc), rieng le - in PETG hoac dung que nhua/kim loai phi ~2mm",
     )
 
 
