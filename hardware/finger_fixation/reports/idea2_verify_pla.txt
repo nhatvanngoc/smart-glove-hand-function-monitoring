@@ -1,0 +1,26 @@
+# build_idea2_ratchet_cinch.py
+##############################################################################
+   [PASS] A1. Mỗi nấc chỉnh 0,255 mm đường kính (≤ 0,30 mm) bước răng 0.80 mm ⇒ ΔØ = 0.255 mm/nấc | 8 nấc / 9 rãnh
+   [PASS] A2. Một cỡ in phủ ≥ 2,0 mm đường kính (dải Ø20–24 ⇒ 2 cỡ in) 8 nấc × 0.80 mm = 6.40 mm hành trình ⇒ ΔØ = 2.04 mm/cỡ | 4,0 mm cần 2 cỡ in
+   [PASS] A3. Lực VƯỢT NẤC ≤ 2,2 N (bấm nhẹ, không đau đầu ngón) k_mũi = 0.96 N/mm (công xôn 8.02 × 8.8 × 0.40) | nhấc 0.50 mm ⇒ F ≈ 0.48 N
+   [PASS] A4. Lực NHẢ bằng MỘT ngón cái ≤ 8 N (đòn nhả qua trụ đế) đòn 8.02 (mũi) / 2.40 (mấu) | nhấc mũi 0.60 mm ⇒ F ≈ 1.28 N (biên trên đòn cứng 1.92 N)
+   [PASS] A5. Ứng suất lò xo lá khi nhả ≤ σ_y/2.5 = 22.0 MPa (PLA) σ_nấc = 16.3 MPa | σ_nhả = 19.6 MPa | σ_y = 55 MPa ⇒ FS ≈ 2.81
+   [PASS] A6. Ngón mũi cóc lọt rãnh 0.20 ≤ rãnh 0.25 — không kê hai đỉnh răng ngón 0.20 mm | rãnh 0.25 mm | đáy ngón 2.10 cách mặt rãnh 0.05 mm
+   [PASS] A7. Ăn khớp mặt răng ĐỨNG ≥ 0,35 mm (form closure, chống mở) đáy mũi 2.10 → đỉnh răng 2.60: ăn sâu 0.50 mm | mặt đứng răng cao 0.55 mm
+   [PASS] A8. GIỚI HẠN SIẾT = khe đóng hết (0,45 mm) ⇒ không thể siết quá cỡ khe in 0.45 mm là kích thước nhỏ nhất của vòng: hai mặt đầu KHÔNG thể chồng lên nhau ⇒ mọi vị trí khoá đều nằm trong 9 rãnh (ΔØ 2.04 mm)
+   [PASS] A9. Lưỡi bay QUA khe với khe hở ≥ 0,30 mm (không cọ khi mở) đáy lưỡi +0.35 so với mặt ngoài vành (0,00) | khe hở 0.35 mm | khe hở in hai bên khe 0.08 mm
+   [PASS] A10. Chân lưỡi NGẬM trong tường TAY KẸP + trụ đế NGẬM trong tường THÂN đáy chân lưỡi -1.15 > mặt trong tường -1.75 (ngàm 1.15 mm) | đáy trụ đế -0.50 > -1.75 | hết phần ngàm ở u = -0.30 (qua khe -0.23 ⇒ lưỡi bay qua khe)
+   [PASS] G1. Một vật liệu duy nhất (PLA) + không đệm rời/keo E=3500 MPa, σ_y=55 MPa, ρ=1.24 g/cm³, μ_design=0.45 | đệm cánh in liền: 0.50 × 9.0 mm, L = 6.90 mm ⇒ k = 8.0 N/mm, σ_tì = 14.7 ≤ 22.0 MPa (FS 1.49)
+   [PASS] G2. Lực VƯỢT NẤC ≤ 2,5 N ở vật liệu PLA (không quá cứng để bấm) công xôn 8.02 mm, lá 8.8 × 0.40 ⇒ k = 0.96 N/mm | nhấc 0.50 mm ⇒ F = 0.48 N
+   [PASS] A11. Một khối liền + hợp lệ + Z 12–16 mm + khe thật 0,45 mm 1 khối | isValid=True | Z = 14.00 mm | ΔX = +0.43 mm (ngân sách 2,00) | khe thật 0.450 mm
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+A. RĂNG CƯA: 8 nấc × 0.80 mm | dốc 45° cao 0.55 | rãnh 0.25 | ăn sâu 0.50 mm
+   con cóc: lá 8.8 × 0.40 mm, công xôn 8.02 mm ⇒ k = 0.96 N/mm | F_vượt nấc 0.48 N | F_nhả 1.28 N (biên trên 1.92 N)
+B. KHE THẬT (ring_common): 0.450 mm | mặt đầu THÂN u = +0.225 | mặt đầu TAY KẸP u = -0.225 | khe hở in khi khoá 0.03 mm
+C. KHỐI LƯỢNG: PLA 2.03 cm³ ≈ 2.52 g | chi tiết in: 1 (một vật liệu, không đệm rời)
+D. ENVELOPE: 25.26 × 29.60 × 14.00 mm | ΔX = +0.43 mm (ngân sách 2,00)
+   Xuất 1 STL tại: /home/user/smart-glove-hand-function-monitoring/hardware/finger_fixation/stl/idea2_pla
+KẾT LUẬN: TẤT CẢ MỤC KIỂM TRA PASS.
+
+##############################################################################

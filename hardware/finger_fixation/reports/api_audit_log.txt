@@ -25,3 +25,4 @@ RÀ SOÁT API FREECAD — script build Ý tưởng 1/2/3 + ring_common.py
 KẾT LUẬN: API HỢP LỆ — script build chỉ dùng API FreeCAD chuẩn.
    (headless vẫn dùng được vì freecad_compat.py phủ đúng các API này)
 ==============================================================================
+   → đã ghi /home/user/smart-glove-hand-function-monitoring/hardware/finger_fixation/reports/freecad_api_audit.txt

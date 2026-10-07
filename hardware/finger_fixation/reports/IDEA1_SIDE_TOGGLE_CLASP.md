@@ -4,11 +4,36 @@
 > **Vị trí tài liệu:** `hardware/finger_fixation/reports/IDEA1_SIDE_TOGGLE_CLASP.md`
 > **Mã nguồn sinh STL:** `hardware/finger_fixation/build_idea1_toggle_clasp.py`
 > **Nguồn duy nhất của hình học khoá:** `hardware/finger_fixation/synthesis/toggle_synthesis.py`
-> **Log kiểm chứng:** `hardware/finger_fixation/reports/idea1_verify_log.txt`
-> **STL xuất ra:** `hardware/finger_fixation/stl/idea1/` (Ring_PETG.stl + Pad1..4_TPU.stl)
+> **Log kiểm chứng (2 vật liệu):** `reports/idea1_verify_abs.txt` · `reports/idea1_verify_pla.txt`
+> **STL xuất ra:** `hardware/finger_fixation/stl/idea1/Ring_ABS.stl` (ABS) ·
+> `hardware/finger_fixation/stl/idea1_pla/Ring_PLA.stl` (PLA)
 > **Bản vá hình học:** 2026-10-07 — sửa 4 lỗi hình học (khe bị hàn kín, rãnh đệm cắt
-> mất lá bản lề, nub lọt lòng vòng, tam giác suy biến); xem **§4.1**. Bảng kiểm nay
-> có 13 mục PASS, thêm B4 · B5–B7 · B8.
+> mất lá bản lề, nub lọt lòng vòng, tam giác suy biến); xem **§4.1**.
+
+---
+
+## 0. CẬP NHẬT 2026-10-07 — VẬT LIỆU ĐƠN (CHỈ PLA HOẶC ABS), BỎ ĐỆM TPU, KHÔNG KEO
+
+Theo yêu cầu mới của chủ dự án (*"chỉ có nhựa PLA hoặc ABS, cố gắng không thêm phần
+khác"*), bản này **thay thế toàn bộ phần vật liệu của bản PETG + TPU trước**:
+
+- **4 đệm TPU 85A rời → 4 đệm CÁNH IN LIỀN** bằng chính vật liệu của vòng: cánh
+  **0,60 mm (ABS) / 0,50 mm (PLA)**, cung tự do L = 6,93 mm ⇒ k = 7,8 / 8,0 N/mm,
+  đàn hồi **0,20 mm** rồi **tì CHẶN CỨNG** (tường sau 0,60 mm); lực tì 1,56 N;
+  σ_tì = **10,0 MPa** (ABS, FS 1,20) / **14,7 MPa** (PLA, FS 1,49) — kiểm G3.
+  Bằng chứng hình học: `reports/figures/idea1_petal_pads_section.png` (mặt cắt OCCT:
+  tường liền ở z = 1 mm, 4 cửa sổ đệm với khe 0,20 mm ở z = 7 mm).
+- **Lá mỏng tại chốt mềm A** chọn theo vật liệu: **0,40 mm / δ = 0,15 mm** (ABS,
+  σ 9,7 ≤ 12 MPa, lực đặt trước 0,46 N) và **0,50 mm / δ = 0,12 mm** (PLA, σ 17,0 ≤
+  22 MPa, lực đặt trước 1,25 N) — kiểm **B3b** (cả hai phía: σ và biên đặt trước).
+- **Không đệm rời, không keo kết cấu** — kiểm G2; khối lượng = MỘT vật liệu:
+  **2,53 g ABS** / **3,04 g PLA** (kiểm G1).
+- Bảng kiểm nay **18 mục PASS ở cả ABS và PLA** (`idea1_verify_abs.txt` /
+  `idea1_verify_pla.txt`); phần §2/§3 bên dưới mô tả hình học khung (còn nguyên giá
+  trị), nhưng **các câu nói về "đệm TPU 85A" phải đọc theo khối cập nhật này**.
+- Ràng buộc hệ quả: một vòng P1 đơn độc chỉ giữ được **2,91 N** ở ngân sách 20 kPa
+  (**2,91 N < 15–25 N**) ⇒ cần vòng P2/đốt giữa — xem §6 hạng mục mở #2 và tài liệu
+  `reports/MATERIAL_SINGLE_PLA_ABS.md` §5.
 
 ---
 
@@ -35,7 +60,7 @@ Ba chi tiết chuyển động nằm trên **cùng một chi tiết in** (không
    Muốn đảo dấu mô-men phải quay **135°** ⇒ tải *không thể* tự nhả khoá.
 3. **Tự hãm nêm (self-locking wedge):** β = 15° < ρ = atan(μ=0.35) = **19.3°** ⇒ chốt P
    không trượt dọc mặt dốc dù mặt chặn mất tác dụng (lớp dự phòng).
-4. **Lá mỏng = chốt mềm A (không phải khớp rời):** cần gạt gắn vào tai qua lá PETG
+4. **Lá mỏng = chốt mềm A (không phải khớp rời):** cần gạt gắn vào tai qua lá nhựa cùng vật liệu (ABS 0,40 / PLA 0,50 mm — §0)
    `0.55 × 7.6 mm`, `k ≈ 4.8 N/mm`; tạo lực đặt trước + **bù dung sai in & từ biến**,
    tuyệt đối không có khe hở lắp ghép (vì không có khớp bản lề rời).
 
@@ -53,7 +78,7 @@ Ba chi tiết chuyển động nằm trên **cùng một chi tiết in** (không
   **φ = 61°** (mu–sườn); bó mạch số nằm ở đường **giữa bên (mid-lateral)**, cách đường
   giữa-trục ≈ **3.96 mm** ở ngón (an toàn ≈ 3 mm) — vì vậy điểm chia phải đặt **chếch ra sau
   (posterolateral)**, đúng như các nghiên cứu giải phẫu mid-lateral đã dẫn ở mục nguồn.
-  Bốn đệm TPU tì ở φ = 33°/147°/213°/327° đều **không** phủ đường giữa-bên.
+  Bốn đệm cánh in liền tì ở φ = 33°/147°/216°/288° đều **không** phủ đường giữa-bên.
 * **Vách cảm biến ở phía mu** (φ 74°→106°) nên không thêm chi tiết nào vào mặt sườn.
 * **Bàn tay thao tác:** đệm ngón cái nằm ở **phía mu–trụ, nơi không có ngón khác**
   ⇒ ngón cái của chính bàn tay đó (hoặc tay kia) đẩy được, hành trình **2.5 mm**, lực
@@ -61,19 +86,18 @@ Ba chi tiết chuyển động nằm trên **cùng một chi tiết in** (không
 
 ### 2.2 Biến dạng mô mềm
 
-* Tiếp xúc da là **4 điểm xác định** (4 đệm TPU 85A) chứ không phải một cung cứng:
-  bề mặt da không bị “siết” ở một điểm, áp suất phân bố trên **tổng diện tích đệm ≈ 479 mm²**
-  (4 × cung 70° × dài 9 mm ở r=10.9).
+* Tiếp xúc da là **4 điểm xác định** (4 đệm CÁNH IN LIỀN — §0) chứ không phải một cung cứng:
+  bề mặt da không bị “siết” ở một điểm, áp suất phân bố trên **A_tiếp xúc = 323 mm²**
+  (4 × cửa sổ 46° × H_PAD 9 mm ở r = a_in + t/2 — kiểm G4).
 * **Ngân sách áp suất (số thiết kế, không phải đo):** ngưỡng tham chiếu 8 kPa (liên tục) /
   20 kPa (ngắt quãng, ≈ 150 mmHg — mức bắt đầu giảm tưới máu theo y văn băng ép).
-  Với lực gân **F = 10 N** và μ = 0.8 cần ΣN = 12.5 N ⇒ áp suất trung bình **≈ 26 kPa**,
-  tức **1.3× ngưỡng ngắt quãng** ⇒ *còn dư địa thiết kế*: (a) tăng cung đệm 46°→70°,
-  (b) dùng μ cao hơn của TPU–da (μ ≈ 0.8–1.1), (c) hạ lực gân an toàn xuống ≤ 8 N cho
-  một vòng P1 đơn độc, (d) bổ sung **tì dọc trục ở vành gần** (điểm tựa vào khớp bàn-đốt)
-  để chuyển một phần tải dọc trục thành phản lực nén thay vì ma sát. → **ghi nhận mở**,
-  xem §6.
-* **Không có “vết cắt” kim loại lên da:** toàn bộ bề mặt trong là PETG/TPU bo tròn,
-  không có ren vít, không có cạnh sắc do bu-lông.
+  Với ngân sách hiện hành (μ = 0,45; 20 kPa) một vòng P1 giữ được **2,91 N** (8 kPa: 1,16 N)
+  ⇒ **không đủ 15–25 N**: các hướng xử lý là (a) **chia tải qua P1 + P2**, (b) tăng diện
+  tích tì (cung/chiều rộng), (c) dùng μ lạc quan 0,60 nếu bề mặt in có vân (đo lại trên
+  mẫu), (d) bổ sung **tì dọc trục ở vành gần** để chuyển một phần tải trục thành phản lực
+  nén thay vì ma sát. → **ghi nhận mở**, xem §6 và `MATERIAL_SINGLE_PLA_ABS.md` §5.
+* **Không có “vết cắt” kim loại lên da:** toàn bộ bề mặt trong là nhựa in (PLA hoặc ABS)
+  bo tròn, không có ren vít, không có cạnh sắc do bu-lông.
 
 ### 2.3 Bốn điều kiện khoá — kiểm bằng số
 
@@ -85,7 +109,7 @@ Ba chi tiết chuyển động nằm trên **cùng một chi tiết in** (không
 | 4 | Hành trình | `R_handle·Δφ`, `Δφ = H_peg/(L_eff·cot β)` | **34° ⇒ 2.5 mm** ngón cái ✓ |
 
 **Lực tì lên mặt chặn:** tay đòn = |u| trọng tâm land = 3.10 mm ⇒ `F_stop = M/3.10 = 4.21 N`
-(ứng suất tì trên vệt land 2.4 mm² ≈ **1.8 MPa** — rất thấp so với PETG).
+(ứng suất tì trên vệt land 2.4 mm² ≈ **1.8 MPa** — rất thấp so với σ_cho phép 12 MPa của ABS).
 **Tự hãm:** β = 15° < ρ = 19.3°; **hiệu suất nêm** `1/tan(β+ρ) = 3.73` ⇒ hành trình móc
 1.61 mm đủ mở khe 5 mm của tay kẹp.
 
@@ -98,9 +122,9 @@ Nguồn rơ duy nhất của một cơ cấu kẹp là **khe hở lắp ghép**.
    (mô-men tải dấu dương ⇒ luôn ép về phía mặt chặn).
 3. Khe hở **in 0.15 mm** ở mặt dốc là **hai mặt phẳng song song** (chốt Ø3 đã vát phẳng
    dây cung ≈ 1.5 mm) nên khép **đều**, không rơ góc; đo trên mô hình, hành trình đặt trước
-   chỉ **0.50° ≈ 0.11 mm ở r=12.6** và bị **lực đệm TPU + phản lực ngón ép kín** ngay khi
+   chỉ **0.50° ≈ 0.11 mm ở r=12.6** và bị **lực đệm cánh in liền + phản lực ngón ép kín** ngay khi
    đeo ⇒ trạng thái *làm việc* là đường truyền lực **kín, đặt trước, đàn hồi**:
-   ngón → đệm TPU → tay kẹp → chốt P → mặt dốc → cần gạt → **mặt chặn cứng** → thân → vành.
+   ngón → đệm cánh in liền → tay kẹp → chốt P → mặt dốc → cần gạt → **mặt chặn cứng** → thân → vành.
 4. Dải đường kính Ø20–24 mm **không** được bù bằng khe hở cơ khí mà bằng:
    (a) chốt P **trượt dọc mặt dốc** (Δ ≈ 0.27 mm cho ±1 mm đường kính — mặt dốc dài
    2.34 mm nên còn thừa), (b) lá mỏng `±1.5 mm` hành trình bù dung sai in/từ biến.
@@ -116,8 +140,8 @@ Nguồn rơ duy nhất của một cơ cấu kẹp là **khe hở lắp ghép**.
                     ▲
         ...         │         φ=90°  [VÁCH CẢM BIẾN φ74–106° + RÃNH GÂN]
          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-      φ147 ░░░░░░░░░░░░░░░░░░░░░ φ33            ▓ = PETG (thân/tay kẹp)
-        ░░░░░░░░░░░░░░░░░░░░░░░░░                 ░ = đệm TPU 85A (4 đệm 70°)
+      φ147 ░░░░░░░░░░░░░░░░░░░░░ φ33            ▓ = nhựa in (PLA hoặc ABS)
+        ░░░░░░░░░░░░░░░░░░░░░░░░░                 ░ = đệm cánh in liền 85A (4 đệm 70°)
      ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
    φ180░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░φ0  ◄── ĐƯỜNG GIỮA-BÊN (mid-lateral)
      ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░        NV bundle cách ≈ 3.96 mm (ngón)
@@ -156,7 +180,7 @@ Nguồn rơ duy nhất của một cơ cấu kẹp là **khe hở lắp ghép**.
 ### 3.3 Đường truyền lực khi đã khoá (form-closed, mọi khâu đều BỊ ÉP)
 
 ```
-   NGÓN TAY ──(nén)──► ĐỆM TPU 85A ──► TAY KẸP ──► CHỐT P Ø3 ──► MẶT DỐC của MÓC
+   NGÓN TAY ──(nén)──► ĐỆM CÁNH IN LIỀN ──► TAY KẸP ──► CHỐT P Ø3 ──► MẶT DỐC của MÓC
                                                                       │
                                                      (mô-men M = 13.05 N·mm, dấu +)
                                                                       ▼
@@ -171,14 +195,14 @@ Nguồn rơ duy nhất của một cơ cấu kẹp là **khe hở lắp ghép**.
 
 ---
 
-## 4. KẾT QUẢ KIỂM TỰ ĐỘNG (đã chạy, log đầy đủ ở `reports/idea1_verify_log.txt`)
+## 4. KẾT QUẢ KIỂM TỰ ĐỘNG (đã chạy; log đầy đủ: `reports/idea1_verify_abs.txt` và `reports/idea1_verify_pla.txt`)
 
 | Mục | Tiêu chí | Kết quả | Kết luận |
 |---|---|---|---|
 | A | Khung toạ độ suy từ synthesis | A=(5.791,13.698); P=(8.219,10.520) Ø3; \|A–P\|=4.00; β=15° | — |
 | B1 | Tiếp xúc thiết kế của mặt dốc | **0.0000 mm** | PASS |
 | B2 | Mặt chặn cứng + tải ép vào mặt chặn | STOP_R=3.10 mm; F_stop=**4.21 N**; biên đảo dấu **135°** | PASS |
-| B3 | Lá mỏng (chốt mềm) | 0.55×7.6 mm; k≈4.8 N/mm | — |
+| B3 | Lá mỏng (chốt mềm, theo vật liệu) | ABS 0.40×7.6 mm, δ 0.15 ⇒ k 3.06 N/mm, σ 9.7 MPa | PASS (B3b) |
 | B4 | **KHE thân ↔ tay kẹp khi ĐÓNG (hở thật)** | hở **0.450 mm**, chồng lấn **0.0000°** (mặt đầu 59.98°/62.02°; cung thân 256.98°, tay kẹp 66.98°) | PASS |
 | B5–B7 | **Rãnh đệm không cắt vào vùng chức năng** | lá bản lề / khe / rãnh cảm biến: chồng lấn **0.00°** cả ba | PASS |
 | B8 | **Lòng vòng sạch (không nub tì da)** | vật liệu trong lòng vòng **0.00 mm³** | PASS |
@@ -188,9 +212,9 @@ Nguồn rơ duy nhất của một cơ cấu kẹp là **khe hở lắp ghép**.
 | C3 | Nhả khoá trong một động tác | cần gạt **34°** (≤ 60°), ngón cái **2.5 mm**, **4.64 N** | PASS |
 | D | Z dài trục 12–16 mm | **14.03 mm** | PASS |
 | D | ΔX sườn ≤ 2.0 mm | **−0.17 mm** (X ∈ [−12.03, +12.03]) | PASS |
-| E | Khối lượng (ngân sách in) | PETG 2.17 cm³ ≈ **2.76 g** + TPU 1.489 cm³ ≈ **1.80 g** | — |
+| E | Khối lượng (ngân sách in, MỘT vật liệu) | **ABS 2,43 cm³ ≈ 2,53 g** · **PLA 2,45 cm³ ≈ 3,04 g** | — |
 | F | Đúng 1 khối đặc liền | **1 khối**, `isValid()=True` | PASS |
-| F | 5 STL xuất ra | Ring_PETG.stl + 4 Pad*_TPU.stl | PASS |
+| F | 1 STL xuất ra | `Ring_ABS.stl` / `Ring_PLA.stl` (đệm cánh in liền trong cùng khối) | PASS |
 | QA | Lưới STL (trimesh) | tất cả **kín**, định hướng nhất quán, **0 tam giác suy biến**, **1 mảnh** (vành 8 780 tam giác; V=2 170.57 mm³) | PASS |
 
 Bao hình tổng: **24.09 × 36.01 × 14.03 mm**.
@@ -224,8 +248,9 @@ cd hardware/finger_fixation
 python synthesis/toggle_synthesis.py
 
 # 2) Sinh STL + chạy toàn bộ kiểm tra (không cần cài FreeCAD — dùng headless/):
-python headless/run_verify.py build_idea1_toggle_clasp.py   # → xuất 5 STL + bảng PASS/FAIL
-python headless/mesh_qa.py                                  # → QA lưới STL
+python headless/run_verify.py build_idea1_toggle_clasp.py   # ABS → 1 STL + bảng 18 mục
+FF_MAT=PLA python headless/run_verify.py build_idea1_toggle_clasp.py  # PLA
+python headless/mesh_qa.py stl/idea1/Ring_ABS.stl stl/idea1_pla/Ring_PLA.stl
 
 # 3) Trên FreeCAD thật (khi có cài):
 freecadcmd build_idea1_toggle_clasp.py
@@ -241,16 +266,21 @@ Mesh.export`); `headless/freecad_compat.py` chỉ là lớp thay thế App/Part/
 
 1. **Chưa có kết quả đo hay chế tạo.** Mọi số trong báo cáo này là **ngân sách thiết kế**
    tính trên mô hình hình học/lực học; chưa in, chưa thử trên người, chưa đo lực.
-2. **Thiếu mặt bằng so sánh:** chưa có ảnh chụp mẫu in để đối chiếu khe hở thực.
-3. **Hạng mục mở #1 (áp suất mô mềm):** với F_gân = 10 N & μ = 0.8, áp suất đệm trung bình
-   ≈ 26 kPa (1.3× ngưỡng ngắt quãng 20 kPa). Cần chọn 1 trong 4 hướng đã nêu ở §2.2.
-4. **Hạng mục mở #2 (nhánh gân):** ngân sách ΣN = 31.2 N cho F = 25 N vượt khả năng của
-   *một* lá mỏng (k=4.8 N/mm × 1.5 mm = 7.2 N) ⇒ **một vòng P1 đơn độc chỉ nên tải ≤ 10 N**;
-   với 25 N cần phân bố qua nhiều đốt/nhiều vòng hoặc bổ sung tì dọc trục ở vành gần.
-5. **Khe hở in 0.15 mm** cần in với *gap-fill tắt* cho vùng mặt dốc (thông số slicer),
-   nếu in sai sẽ dính thành một đường ⇒ phải kiểm bằng mẫu in thử trước khi kết luận.
+2. **Thiếu mặt bằng so sánh:** chưa có ảnh chụp mẫu in để đối chiếu khe hở thực. Bằng chứng
+   hình học hiện có là mặt cắt OCCT `reports/figures/idea1_petal_pads_section.png`.
+3. **Hạng mục mở #1 (áp suất mô mềm):** ở ngân sách hiện hành (μ = 0,45), một vòng P1 giữ
+   được **2,91 N** (20 kPa) / 1,16 N (8 kPa) ⇒ chưa đủ 15–25 N. Bốn hướng xử lý ở §2.2.
+4. **Hạng mục mở #2 (tải trục):** ΣN cho F = 25 N vượt khả năng *một* vòng P1 (2,91 N) ⇒
+   với 25 N phải phân bố qua **P1 + P2** (hoặc tăng diện tích tì / dùng μ lạc quan 0,60 đã
+   đo), hoặc bổ sung tì dọc trục ở vành gần.
+5. **Khe hở in 0.15 mm (mặt dốc) và 0.20 mm (cửa sổ đệm)** cần in với *gap-fill TẮT*
+   (thông số slicer), nếu in sai sẽ dính thành một đường ⇒ phải kiểm bằng mẫu in thử.
 6. **Ngưỡng sinh lý** (3.96 mm cho bó mạch ngón; 8/20 kPa) là **trích dẫn y văn** làm
    ngân sách thiết kế, không phải kết quả thí nghiệm của nhóm.
+7. **μ(nhựa–nhựa) = 0,30 (chêm/quá tâm) CHƯA ĐO** — xem `MATERIAL_SINGLE_PLA_ABS.md` §5.
+8. **Từ biến & mỏi:** PLA từ biến và dòn hơn ABS; lá chốt mềm PLA chạy ở FS 1,3 so với
+   σ_cho phép (≈ 3,2 so với σ_y) — nên ưu tiên **ABS** cho chi tiết đàn hồi, và đo lại lực
+   đặt trước sau 24 h giữ tải trên mẫu in.
 
 ---
 
@@ -259,10 +289,9 @@ Mesh.export`); `headless/freecad_compat.py` chỉ là lớp thay thế App/Part/
 | # | Cơ chế | Nguồn | Nguyên lý khác biệt | Bộ sinh STL |
 |---|---|---|---|---|
 | **1** | **Vòng khoá quá tâm kiểu móc có mặt dốc** (Side Toggle Clasp) | `build_idea1_toggle_clasp.py` | form-closed quá tâm + nêm tự hãm, in liền khối | ✅ **hoàn thành — kiểm PASS** |
-| 2 | **Vòng kẹp bánh cóc + lá xo dạng meander** (Ratchet Cinch Ring) | `build_idea2_ratchet_cinch.py` (+ `ring_common.py`) | nhiều nấc một chiều, lực kẹp giới hạn 2.2 N, chống tháo ngược | 🔧 đang hoàn thiện |
-| 3 | **Đai quấn có chêm chặn** (Wrap Band + Wedge Stop) | `build_idea3_wrap_band.py` (+ `ring_common.py`) | băng quấn 1 vòng, khoá bằng chêm tam giác tự hãm | ⏳ chưa có script |
+| 2 | **Vòng khoá cóc một chiều** (Ratchet Cinch Ring) | `build_idea2_ratchet_cinch.py` (+ `ring_common.py`) | 9 rãnh × 0,80 mm, khoá bằng **mặt răng đứng** (form closure), lưỡi con cóc 0,40 mm | ✅ **hoàn thành — 13/13 PASS × 2 vật liệu** (`reports/IDEA2_RATCHET_CINCH.md`) |
+| 3 | **Đai quấn siết cơ học + chêm tự hãm** (Wrap Band + Self-Locking Wedge) | `build_idea3_wrap_band.py` | đai 355° × 0,80 mm căng bằng tay + **chêm 10° tự hãm**, gờ móc cắm rãnh, không keo | ✅ **hoàn thành — 13/13 PASS × 2 vật liệu** (`reports/IDEA3_WRAP_BAND.md`) |
 
-> `ring_common.py` cung cấp phần dùng chung (thân + tay kẹp + lá bản lề + phụ kiện +
-> rãnh/đệm TPU) đã áp **cùng bốn bản vá** của §4.1, nên hai ý tưởng sau thừa hưởng
-> sẵn phần hình học đã kiểm. Việc còn lại: viết `build_idea3_wrap_band.py` theo đúng
-> khuôn kiểm tra của Ý tưởng 1 (Z · ΔX · 1 khối · QA lưới) rồi gộp báo cáo 3 đề xuất.
+> **Cả ba đã hoàn thành.** `ring_common.py` cung cấp phần dùng chung (thân + tay kẹp +
+> lá bản lề + đệm cánh in liền) đã áp **cùng bốn bản vá** của §4.1. Bản tổng hợp 3 đề
+> xuất: `reports/TONG_HOP_3_CO_CHE.md`; ràng buộc vật liệu đơn: `reports/MATERIAL_SINGLE_PLA_ABS.md`.

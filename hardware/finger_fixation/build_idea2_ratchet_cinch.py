@@ -24,7 +24,8 @@ NGOÀI (v = 0 = ĐÚNG mặt ngoài ellipse). Vì u là chiều dài cung (khôn
 chi tiết ở xa khe KHÔNG bị trôi khỏi mặt vành (bản 1 dùng khung tiếp tuyến nên
 lưỡi dài bị hụt ra ngoài).
 
-Xuất: stl/idea2_ratchet/{Ring_PETG, Pad1..4_TPU}.stl — kiểm A1–A11.
+Xuất: stl/idea2[ _pla]/Ring_<MAT>.stl — MỘT chi tiết in, một vật liệu
+(PLA hoặc ABS), 4 đệm cánh IN LIỀN (khe 0,20 mm) — kiểm A1–A11 + G1/G2.
 """
 import bisect
 import math
@@ -86,20 +87,23 @@ NUB_U1 = V0_VALLEY + VALLEY - BACKLASH      # +0.02: mặt CHẶN (quay về +u)
 NUB_U0 = NUB_U1 - TOE_W - 0.04              # −0.22: mép sau ngón
 NUB_V_BOT = 2.10                            # đáy ngón (cách mặt rãnh 0,05)
 NUB_V_MID = 2.70                            # vai ngón (cách đỉnh răng 0,10)
-BLADE_T = 0.50                              # lò xo lá
+BLADE_T = RC.pick_leaf_t(P.MAT.E, P.sig_allow(), 8.00, 0.60, widths=(0.40, 0.50, 0.60, 0.80))
+#   ^ bề dày lá lò xo chọn theo VẬT LIỆU: σ_nhả = 1.5·E·t·δ/L² với L ≈ 8,0 mm,
+#     δ_nhả = 0,60 mm. ABS ⇒ t = 0,40 mm (σ 11,3 MPa ≤ 12); PLA ⇒ t = 0,40 mm
+#     (σ 19,7 ≤ 22). Bản PETG cũ dùng 0,50 mm vì PETG chỉ ~1,2 GPa.
 BLADE_V0, BLADE_V1 = 3.70, 4.20
-BLADE_U0, BLADE_U1 = -2.40, 8.60
+BLADE_U0, BLADE_U1 = -2.40, 11.60
 PAWL_Z0, PAWL_Z1 = 2.60, 11.40
 NUB_Z0, NUB_Z1 = 4.30, 9.70                 # mũi cóc lọt giữa hai tai trụ đế
 EAR_Z = ((2.60, 3.90), (10.10, 11.40))      # hai tai (chừa 0,10 mm với lưỡi)
-PED_U0, PED_U1 = 5.00, 5.80                 # trụ đế = trục quay của đòn nhả
+PED_U0, PED_U1 = 7.80, 8.60                 # trụ đế = ngàm lá (L công xôn ≈ 8,0 mm)
 PED_V0 = -0.50
-TAB_U0, TAB_U1 = 8.00, 9.20                 # mấu nhả (ngón cái đè XUỐNG)
+TAB_U0, TAB_U1 = 11.00, 12.20               # mấu nhả (ngón cái đè XUỐNG)
 TAB_V0, TAB_V1 = 4.10, 5.00
 CLAMP_IN = 0.10                             # ngập 0,10 mm vào lá (tránh mặt trùng nhau)
 
 PADS = [("Pad1", 33.0), ("Pad2", 147.0), ("Pad3", 216.0), ("Pad4", 288.0)]
-PAD_ARC, PAD_SLOT_D, PAD_T, PAD_LIP = 46.0, 1.35, 1.55, 0.55
+PAD_ARC = 46.0                              # cung cửa sổ đệm (đệm cánh in liền)
 
 # ======================================== 2. KHUNG CUNG (u,v) TRÊN ELLIPSE ===
 def _arc_table(n=2880):
@@ -182,16 +186,18 @@ tab = lprism([(TAB_U0, TAB_V0), (TAB_U1, TAB_V0), (TAB_U1, TAB_V1), (TAB_U0, TAB
              PAWL_Z0, PAWL_Z1)
 pawl = RC.union_all(ears + [blade, nub, tab])
 
-# =========================================================== 6. ĐỆM TPU =====
-pads = RC.make_pads([pp for _, pp in PADS], PAD_ARC, PAD_SLOT_D, PAD_T)
+# ================================== 6. ĐỆM CÁNH IN LIỀN (MỘT VẬT LIỆU) ======
+# Biến thể chỉ dùng PLA/ABS: không còn 4 đệm TPU in rời — thay bằng 4 đệm cánh in
+# liền cùng vòng (ring_common.petal_pads): cánh mỏng ngàm một đầu, khe 0,20 mm rồi
+# tới thành dày = CHẶN CỨNG. Xem ring_common.petal_metrics để biết ngân sách k/σ.
+pads = []
 
 # ==================================================== 7. LẮP RÁP VÀ XUẤT ====
 # Ý tưởng 2 KHÔNG dùng trụ neo gân (φ 86–112°): khoang đó đã dành cho con cóc +
 # trụ đế + mấu nhả. Chỉ giữ rãnh cảm biến ở lòng vành (không ảnh hưởng cơ cấu).
 _boss, recess, _hole = RC.body_features()
 ring = RC.union_all([shell, arm, hinge, tongue, pawl])
-cutter = [reliefs] + RC.pad_cutters([pp for _, pp in PADS], PAD_ARC, PAD_SLOT_D, PAD_LIP) \
-    + [recess]
+cutter = [reliefs] + RC.petal_pads([pp for _, pp in PADS], PAD_ARC) + [recess]
 for c in cutter:
     ring = ring.cut(c)
 ring = ring.removeSplitter()
@@ -204,14 +210,16 @@ B_BLADE = PAWL_Z1 - PAWL_Z0
 I_B = B_BLADE * BLADE_T ** 3 / 12.0
 L_NUB = PED_U0 - NUB_U0                     # công xôn trụ đế → MẶT CHỊU LỰC mũi cóc
 L_TAB = TAB_U0 - PED_U1                     # công xôn trụ đế → mấu nhả
-K_NUB = 3.0 * P.E_PETG * I_B / L_NUB ** 3
+K_NUB = 3.0 * P.MAT.E * I_B / L_NUB ** 3
 LIFT_SKIP = V_TIP - NUB_V_BOT               # nhấc để vượt 1 răng
-LIFT_REL = LIFT_SKIP + 0.15                 # nhả: nhấc dư
+LIFT_REL = LIFT_SKIP + 0.10                 # nhả: nhấc dư 0,10 mm (vừa đủ thoát răng)
+#   ↑ σ_nhả = 1.5·E·t·δ/L²: với vật liệu CỨNG (E=2000 MPa) phải giữ δ nhỏ và L dài,
+#     nếu không lá sẽ vượt σ_y/2,5 (bản PETG cũ nhấc dư 0,15 mm vì E chỉ 1200 MPa).
 F_SKIP = K_NUB * LIFT_SKIP
 F_REL = K_NUB * LIFT_REL * L_NUB / (1.5 * L_TAB)     # mô hình công xôn chịu mô-men
 F_REL_RIGID = K_NUB * LIFT_REL * L_NUB / L_TAB       # biên trên (đòn bẩy cứng)
-SIG_SKIP = 1.5 * P.E_PETG * BLADE_T * LIFT_SKIP / L_NUB ** 2
-SIG_REL = 1.5 * P.E_PETG * BLADE_T * LIFT_REL / L_NUB ** 2
+SIG_SKIP = 1.5 * P.MAT.E * BLADE_T * LIFT_SKIP / L_NUB ** 2
+SIG_REL = 1.5 * P.MAT.E * BLADE_T * LIFT_REL / L_NUB ** 2
 ENGAGE = V_TIP - NUB_V_BOT
 TRAVEL = PITCH * N_CLICK
 D_RES = PITCH / math.pi
@@ -234,10 +242,11 @@ RC.check("A4. Lực NHẢ bằng MỘT ngón cái ≤ 8 N (đòn nhả qua trụ
          F_REL_RIGID <= 8.0,
          "đòn %.2f (mũi) / %.2f (mấu) | nhấc mũi %.2f mm ⇒ F ≈ %.2f N "
          "(biên trên đòn cứng %.2f N)" % (L_NUB, L_TAB, LIFT_REL, F_REL, F_REL_RIGID))
-RC.check("A5. Ứng suất lò xo lá khi nhả ≤ σy/2 = 24 MPa (PETG σy ≈ 48 MPa)",
-         SIG_REL <= 24.0,
-         "σ_nấc = %.1f MPa | σ_nhả = %.1f MPa ⇒ FS ≈ %.1f"
-         % (SIG_SKIP, SIG_REL, 48.0 / SIG_REL))
+RC.check("A5. Ứng suất lò xo lá khi nhả ≤ σ_y/%.1f = %.1f MPa (%s)"
+         % (P.SIG_ALLOW_FS, P.sig_allow(), P.MAT.key),
+         SIG_REL <= P.sig_allow(),
+         "σ_nấc = %.1f MPa | σ_nhả = %.1f MPa | σ_y = %.0f MPa ⇒ FS ≈ %.2f"
+         % (SIG_SKIP, SIG_REL, P.MAT.sig_y, P.MAT.sig_y / SIG_REL))
 RC.check("A6. Ngón mũi cóc lọt rãnh %.2f ≤ rãnh %.2f — không kê hai đỉnh răng"
          % (TOE_W, VALLEY),
          TOE_W <= VALLEY + 0.02,
@@ -261,6 +270,17 @@ RC.check("A10. Chân lưỡi NGẬM trong tường TAY KẸP + trụ đế NGẬ
          "đáy chân lưỡi %+.2f > mặt trong tường %+.2f (ngàm %.2f mm) | đáy trụ đế %+.2f "
          "> %+.2f | hết phần ngàm ở u = %+.2f (qua khe %+.2f ⇒ lưỡi bay qua khe)"
          % (ROOT_V0, -P.T_SIDE, 0.0 - ROOT_V0, PED_V0, -P.T_SIDE, U_ROOT1, -D_FACE))
+_pm = RC.petal_metrics(PAD_ARC)
+RC.check("G1. Một vật liệu duy nhất (%s) + không đệm rời/keo" % P.MAT.key,
+         P.MAT.key in ("PLA", "ABS") and len(pads) == 0,
+         "E=%.0f MPa, σ_y=%.0f MPa, ρ=%.2f g/cm³, μ_design=%.2f | đệm cánh in liền: "
+         "%.2f × %.1f mm, L = %.2f mm ⇒ k = %.1f N/mm, σ_tì = %.1f ≤ %.1f MPa (FS %.2f)"
+         % (P.MAT.E, P.MAT.sig_y, P.MAT.rho, P.MAT.mu, _pm["t"], P.H_PAD, _pm["L"],
+            _pm["k"], _pm["sigma"], _pm["sig_allow"], _pm["fs"]))
+RC.check("G2. Lực VƯỢT NẤC ≤ 2,5 N ở vật liệu %s (không quá cứng để bấm)" % P.MAT.key,
+         F_SKIP <= 2.5,
+         "công xôn %.2f mm, lá %.1f × %.2f ⇒ k = %.2f N/mm | nhấc %.2f mm ⇒ F = %.2f N"
+         % (L_NUB, B_BLADE, BLADE_T, K_NUB, LIFT_SKIP, F_SKIP))
 RC.check("A11. Một khối liền + hợp lệ + Z 12–16 mm + khe thật 0,45 mm",
          len(ring.Solids) == 1 and bool(ring.isValid()) and 12.0 <= st["z_len"] <= 16.0
          and abs(GAP_MM - GAP_SLIT) <= 0.06,
@@ -276,10 +296,11 @@ extras = [
     % (B_BLADE, BLADE_T, L_NUB, K_NUB, F_SKIP, F_REL, F_REL_RIGID),
     "B. KHE THẬT (ring_common): %.3f mm | mặt đầu THÂN u = %+.3f | mặt đầu TAY KẸP u = %+.3f"
     " | khe hở in khi khoá %.2f mm" % (GAP_MM, D_FACE, -D_FACE, BACKLASH),
-    "C. KHỐI LƯỢNG: PETG %.2f cm³ ≈ %.2f g | TPU %.3f cm³ ≈ %.2f g"
-    % (st["vol_petg_cm3"], st["mass_petg"], st["vol_tpu_cm3"], st["mass_tpu"]),
+    "C. KHỐI LƯỢNG: %s %.2f cm³ ≈ %.2f g | chi tiết in: 1 (một vật liệu, không đệm rời)"
+    % (P.MAT.key, st["vol_part_cm3"], st["mass_part"]),
     "D. ENVELOPE: %.2f × %.2f × %.2f mm | ΔX = %+.2f mm (ngân sách 2,00)"
     % (ENV[0], ENV[1], ENV[2], st["dx_lat"]),
 ]
-_rc = RC.finish(ring, pads, "Idea2_RatchetCinch", extras, subdir="idea2")
+_rc = RC.finish(ring, pads, "Idea2_RatchetCinch", extras,
+                subdir="idea2" + P.STL_SUFFIX)   # PLA → stl/idea2_pla
 RC.exit_code(_rc)   # FF_NO_SYS_EXIT=1 khi chạy trong FreeCAD GUI

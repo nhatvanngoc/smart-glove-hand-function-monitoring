@@ -65,8 +65,14 @@ if _syn not in sys.path:
 import params as P            # noqa: E402
 import fcgeom as G            # noqa: E402
 import toggle_synthesis as TS  # noqa: E402  ← NGUỒN DUY NHẤT của hình học khoá
+import ring_common as RC      # noqa: E402  ← tiện ích dùng chung:
+#   * petal_pads/petal_check — ĐỆM CÁNH IN LIỀN (thay đệm TPU khi chỉ dùng PLA/ABS)
+#   * pick_leaf_t/leaf_k/leaf_sigma — chọn bề dày lá lò xo THEO VẬT LIỆU
+# GHI CHÚ: bản trước tự chứa toàn bộ để bảo đảm tính độc lập của bảng kiểm đã công
+# bố; phần HÌNH HỌC KHOÁ vẫn độc lập (lấy từ toggle_synthesis.py), chỉ các tiện ích
+# hình học chung mới dùng ring_common — tránh chép tay 3 bản dễ lệch nhau.
 
-OUT_DIR = os.path.join(_here, "stl", "idea1")   # 3 ý tưởng: stl/idea1, stl/idea2, stl/idea3
+OUT_DIR = os.path.join(_here, "stl", "idea1" + P.STL_SUFFIX)   # PLA → stl/idea1_pla
 DOC_NAME = "FixRing_Idea1_ToggleClasp"
 FAILS = []
 
@@ -159,15 +165,28 @@ POST_Z = [(0.60, 3.20), (10.80, 13.40)]   # 2 "tai" (nhường Z cho lá mỏng)
 POST_V_BOT = -6.20                  # cắm sâu vào thân vòng (để fuse chắc)
 
 # --- Lá mỏng (chốt mềm A) -----------------------------------------------------
-BL_T = 0.55                # chiều dày lá (theo v)
-BL_V_TOP = L_TAIL_V + 0.30  # 0.15 — chồng 0.30 mm vào đáy chuôi cần gạt
-BL_V_BOT = BL_V_TOP - BL_T  # -0.40
 BL_ROOT_U0, BL_ROOT_U1 = -1.20, 1.60
 BL_TIP_U = -6.80           # đầu tự do của lá (nằm dưới chuôi cần gạt)
 BL_Z0, BL_Z1 = 3.20, 10.80  # 7.6 mm theo Z
 BL_ROOT_V_BOT = -4.80      # chân lá cắm vào thân vòng
 BL_B_W = 2.30              # bề rộng eo (đoạn làm việc) theo u ở chân
 L_EFF = (BL_ROOT_U0 - L_STEP_U) + (L_STEP_U - BL_TIP_U) * 0.5   # ≈ 4.3 mm (tay đòn hiệu dụng)
+# BỀ DÀY LÁ THEO VẬT LIỆU: ứng suất uốn σ = 1.5·E·t·δ/L² ⇒ vật liệu CỨNG hơn (PLA,
+# E = 3500 MPa) phải dùng lá MỎNG hơn ABS (E = 2000 MPa) để cùng mức ứng suất.
+# δ = 0.35 mm là hành trình làm việc (bù sai số in + tạo lực đặt trước). Hàm chọn
+# nằm trong ring_common (pick_leaf_t) để cả 3 ý tưởng dùng chung một quy tắc.
+# Hành trình lá: với nhựa CỨNG (E = 2–3,5 GPa) hành trình lớn sẽ vượt σ_y/2,5.
+# 0,15 mm là mức ĐỦ để tạo lực đặt trước và bù rung/khe in; việc bù dung sai
+# in (±0,27 mm) do HÀNH TRÌNH CƠ CẤU (chốt P trượt trên mặt dốc) đảm nhiệm.
+# Hành trình theo VẬT LIỆU: PLA (E = 3500 MPa) cứng gấp 1,75× ABS nên phải giảm
+# hành trình để giữ σ ≤ σ_cho phép (22 MPa) với biên an toàn, thay vì chạy sát trần.
+BL_DELTA = 0.15 if P.MAT.key == "ABS" else 0.12   # [EST] hành trình lá tại chốt mềm A (mm)
+# Dải bề dày giới hạn 0.40–0.50 mm: lá dày hơn ⇒ lực đặt trước vượt 2 N (mục B3b
+# kiểm cả hai phía: σ ≤ σ_cho phép VÀ 0.10 N ≤ F_đặt trước ≤ 2.0 N).
+BL_T = RC.pick_leaf_t(P.MAT.E, P.sig_allow(), L_EFF, BL_DELTA, widths=(0.40, 0.50))
+BL_V_TOP = L_TAIL_V + 0.30  # 0.15 — chồng BL_T mm vào đáy chuôi cần gạt
+BL_V_BOT = BL_V_TOP - BL_T
+
 
 # --- Đệm ngón tay cái (paddle) ------------------------------------------------
 PAD_U0, PAD_U1 = -7.40, -3.60
@@ -484,25 +503,10 @@ sensor_recess = band_prism(a_in - P.SENSOR_T, b_in - P.SENSOR_T, a_in + 0.02, b_
 # =============================================================================
 # 8. RÃNH ĐỆM TPU + KHOÉT LÕM SƯỜN + VUỐT CÔN
 # =============================================================================
-cutters = []
-for pp in PAD_PHI:
-    r_in = G.ell_r(a_in, b_in, pp)
-    z_mid = P.H_RING / 2.0
-    h_half = P.H_PAD / 2.0
-    lip = PAD_LIP
-    # Rãnh đệm phải CONG theo ellipse: dùng band_prism (không dùng rad_prism thẳng,
-    # vì trên cung 46° mặt phẳng cắt sẽ xuyên qua vách ở hai đầu cung ⇒ mảnh rời).
-    p0, p1 = pp - PAD_ARC / 2.0, pp + PAD_ARC / 2.0
-    z_mid = P.H_RING / 2.0
-    lip = PAD_LIP
-    z_a, z_b = z_mid - P.H_PAD / 2.0, z_mid + P.H_PAD / 2.0
-    cutters.append(band_prism(a_in - 0.4, b_in - 0.4, a_in + PAD_SLOT_D, b_in + PAD_SLOT_D,
-                              p0, p1, -0.2, z_a, n=48))
-    cutters.append(band_prism(a_in - 0.4, b_in - 0.4, a_in + PAD_SLOT_D, b_in + PAD_SLOT_D,
-                              p0, p1, z_b, P.H_RING + 0.2, n=48))
-    cutters.append(band_prism(a_in - 0.4, b_in - 0.4,
-                              a_in + PAD_SLOT_D - lip, b_in + PAD_SLOT_D - lip,
-                              p0, p1, z_a, z_b, n=48))
+# ĐỆM CÁNH IN LIỀN (một vật liệu): mỗi cửa sổ đệm có một CÁNH mỏng ngàm một đầu,
+# tự do đầu kia, khe hở 0.20 mm phía sau rồi tới phần thành dày 0.75 mm = CHẶN CỨNG.
+# Chi tiết + mô hình tính: ring_common.petal_pads / petal_metrics.
+cutters = RC.petal_pads(PAD_PHI, PAD_ARC)
 
 
 for pp in (0.0, 180.0):
@@ -549,26 +553,10 @@ ring = ring.cut(hole)
 ring = ring.removeSplitter()
 
 # =============================================================================
-# 10. ĐỆM TPU (in riêng, TPU 85A)
+# 10. (KHÔNG CÒN ĐỆM RỜI) — biến thể chỉ dùng PLA/ABS: đệm cánh đã IN LIỀN
+#     cùng vòng ở mục 8, nên không có chi tiết TPU nào phải in/lắp riêng.
 # =============================================================================
-pads = []
-for i, pp in enumerate(PAD_PHI):
-    r_in = G.ell_r(a_in, b_in, pp)
-    h_half = P.H_PAD / 2.0
-    z_mid = P.H_RING / 2.0
-    lip = PAD_LIP
-    prof = [(-0.01, r_in + PAD_SLOT_D - 0.25), (P.H_RING + 0.01, r_in + PAD_SLOT_D - 0.25),
-            (P.H_RING + 0.01, r_in - PAD_T + 0.02),
-            (z_mid + h_half + 0.6, r_in - PAD_T + 0.02),
-            (z_mid + h_half + 0.6, r_in - PAD_T - 0.6),
-            (z_mid - h_half - 0.6, r_in - PAD_T - 0.6),
-            (z_mid - h_half - 0.6, r_in - PAD_T + 0.02),
-            (-0.01, r_in - PAD_T + 0.02)]
-    p = rad_prism(prof, pp)
-    keep = band_prism(r_in - PAD_T - 1.0, r_in - PAD_T - 1.0,
-                      r_in + PAD_SLOT_D + 1.0, r_in + PAD_SLOT_D + 1.0,
-                      pp - PAD_ARC / 2.0, pp + PAD_ARC / 2.0, -1.0, P.H_RING + 1.0, n=60)
-    pads.append((i, p.common(keep)))
+pads = []          # không có đệm rời (giữ biến rỗng cho phần thống kê)
 
 # =============================================================================
 # 11. KIỂM TRA HÌNH HỌC (số học thuần Python — không phụ thuộc CAD kernel)
@@ -671,15 +659,23 @@ def add_obj(name, shape):
     return o
 
 
-objs = [add_obj("Ring_PETG", ring)]
+# TÊN THEO VẬT LIỆU THẬT (biến thể một vật liệu): Ring_ABS.stl / Ring_PLA.stl.
+objs = [add_obj("Ring_" + P.MAT.key, ring)]
 for i, p in pads:
     objs.append(add_obj("Pad%d_TPU" % (i + 1), p))
 doc.recompute()
 
 if not os.path.isdir(OUT_DIR):
     os.makedirs(OUT_DIR)
+_written = set(o.Name + ".stl" for o in objs)
 for o in objs:
     Mesh.export([o], os.path.join(OUT_DIR, o.Name + ".stl"))
+# DỌN STL LỖI THỜI trong thư mục xuất: bộ chi tiết nay chỉ còn 1 (vòng + đệm cánh in
+# liền) — các file Pad*_TPU.stl của bản TPU cũ phải bị xoá để bộ giao nộp rõ ràng.
+for _f in sorted(os.listdir(OUT_DIR)):
+    if _f.endswith(".stl") and _f not in _written:
+        os.remove(os.path.join(OUT_DIR, _f))
+        print("   (đã xoá STL lỗi thời: %s)" % _f)
 
 # =============================================================================
 # 13. BÁO CÁO KIỂM TRA HÌNH HỌC
@@ -688,9 +684,9 @@ bb = ring.BoundBox
 dx_lat = max(abs(bb.XMin), abs(bb.XMax)) - P.A_KNUCK
 n_solids = len(ring.Solids)
 vol_petg_cm3 = ring.Volume / 1000.0
-mass_petg = vol_petg_cm3 * P.RHO_PETG * 1000.0     # cm³ × g/cm³ = g
-vol_tpu = sum(p.Volume for _, p in pads) / 1000.0
-mass_tpu = vol_tpu * P.RHO_TPU * 1000.0
+mass_part = vol_petg_cm3 * P.MAT.rho              # cm³ × g/cm³ = g (MỘT vật liệu)
+vol_tpu = 0.0                                       # không còn chi tiết TPU
+mass_tpu = 0.0
 
 print("=" * 78)
 print("Ý TƯỞNG 1 — VÒNG KHOÁ QUÁ TÂM KIỂU MÓC CÓ MẶT DỐC (Side Toggle Clasp)")
@@ -722,8 +718,16 @@ print("       STOP_R = |u| trọng tâm land = %.2f mm ⇒ lực tì = M/STOP_R 
       % (STOP_R_GEO, abs(TS.M_LOAD_SIGNED) / STOP_R_GEO))
 print("       Tải ÉP thêm vào mặt chặn ⇒ form-closed; đảo dấu mô-men phải quay %.0f°."
       % (TS.OC_MARGIN_ACTUAL or 0.0))
-print("   B3. Lá mỏng (chốt mềm A): %.2f × %.2f mm, tay đòn hiệu dụng %.2f mm ⇒ k ≈ %.2f N/mm"
-      % (BL_T, BL_Z1 - BL_Z0, L_EFF, 3.0 * P.E_PETG * ((BL_Z1 - BL_Z0) * BL_T ** 3 / 12.0) / L_EFF ** 3))
+_k_leaf = RC.leaf_k(P.MAT.E, BL_T, BL_Z1 - BL_Z0, L_EFF)
+_sig_leaf = RC.leaf_sigma(P.MAT.E, BL_T, L_EFF, BL_DELTA)
+print("   B3. Lá mỏng (%s): %.2f × %.2f mm, tay đòn %.2f mm ⇒ k ≈ %.2f N/mm | "
+      "σ(δ=%.2f mm) = %.1f ≤ %.1f MPa (FS %.1f)"
+      % (P.MAT.key, BL_T, BL_Z1 - BL_Z0, L_EFF, _k_leaf, BL_DELTA, _sig_leaf,
+         P.sig_allow(), P.sig_allow() / _sig_leaf))
+check("B3b. Lá mỏng: σ ≤ σ_cho phép VÀ có lực đặt trước (0,10–2,0 N)",
+      _sig_leaf <= P.sig_allow() and 0.10 <= _k_leaf * BL_DELTA <= 2.0,
+      "σ = %.1f ≤ %.1f MPa | F_đặt trước = k·δ = %.2f × %.2f = %.2f N"
+      % (_sig_leaf, P.sig_allow(), _k_leaf, BL_DELTA, _k_leaf * BL_DELTA))
 print("       (đặt trước + bù dung sai in/từ biến; KHÔNG phải khớp rời ⇒ không rơ)")
 check("B4. KHE thân ↔ tay kẹp: HỞ %.3f mm, chồng lấn %.4f°" % (SLIT_GAP_MM, OVERLAP_DEG),
       abs(SLIT_GAP_MM - GAP_SLIT) <= 0.06 and OVERLAP_DEG <= 1e-6,
@@ -789,8 +793,8 @@ check("ΔX sườn ≤ %.1f mm" % P.DX_MAX, dx_lat <= P.DX_MAX,
 print("   Bao hình X×Y×Z: %.2f × %.2f × %.2f mm" % (bb.XLength, bb.YLength, bb.ZLength))
 print("-" * 78)
 print("E. KHỐI LƯỢNG (ngân sách in)")
-print("   PETG %.2f cm³ → ≈ %.2f g   |   TPU 85A %.3f cm³ → ≈ %.2f g   |   tổng ≈ %.2f g"
-      % (vol_petg_cm3, mass_petg, vol_tpu, mass_tpu, mass_petg + mass_tpu))
+print("   %s %.2f cm³ → ≈ %.2f g   |   chi tiết in: 1 (một vật liệu, không đệm rời)"
+      % (P.MAT.key, vol_petg_cm3, mass_part))
 print("-" * 78)
 print("F. KIỂM TRA KHỐI (solid)")
 n_solids = len(ring.Solids)
@@ -804,6 +808,36 @@ if n_solids != 1:
 _v_bore = ring.common(bore).Volume
 check("B8. Lòng vòng SẠCH (không nub tì da)", _v_bore <= 3.0,
       "V vật liệu trong lòng = %.2f mm³ (dung sai 3 mm³ cho sai số đa giác hoá)" % _v_bore)
+print("-" * 78)
+print("G. MỘT VẬT LIỆU + KHÔNG CHI TIẾT PHỤ (ràng buộc mới 2026-10-07)")
+# G1. Vật liệu hợp lệ (chỉ PLA hoặc ABS)
+check("G1. Vật liệu chỉ là PLA hoặc ABS", P.MAT.key in ("PLA", "ABS"),
+      "%s (E=%.0f MPa, σ_y=%.0f MPa, ρ=%.2f g/cm³, μ_design=%.2f)"
+      % (P.MAT.key, P.MAT.E, P.MAT.sig_y, P.MAT.rho, P.MAT.mu))
+# G2. Không còn chi tiết TPU/keo: chỉ 1 chi tiết in, mọi khối đều cùng vật liệu
+check("G2. Không đệm TPU / không keo dán kết cấu", len(pads) == 0 and len(objs) == 1,
+      "%d chi tiết in (vòng + đệm cánh in liền), %d đệm rời, 0 lớp keo"
+      % (len(objs), len(pads)))
+# G3. Đệm cánh in liền: đàn hồi 0.20 mm rồi TÌ CHẶN CỨNG; ứng suất ≤ σ_cho phép
+_pm = RC.petal_metrics(PAD_ARC)
+check("G3. Đệm cánh in liền: đàn hồi %.2f mm → tì CHẶN CỨNG" % _pm["travel"],
+      _pm["sigma"] <= _pm["sig_allow"],
+      "%s: cánh %.2f × %.1f mm | cung tự do L = %.2f mm ⇒ k = %.1f N/mm | lực tì %.2f N | "
+      "σ = %.1f ≤ %.1f MPa (FS %.2f)" % (P.MAT.key, _pm["t"], P.H_PAD, _pm["L"], _pm["k"],
+                                         _pm["F_bottom"], _pm["sigma"], _pm["sig_allow"],
+                                         _pm["fs"]))
+print("       → %d cửa sổ đệm × %.0f° | áp dụng cho CẢ 4 đệm (33°,147°,216°,288°)"
+      % (len(PAD_PHI), PAD_ARC))
+# G4. NGÂN SÁCH MA SÁT trục với nhựa cứng (μ thấp hơn TPU) — ghi thẳng phần thiếu
+_a_contact = 4.0 * math.radians(PAD_ARC) * (P.a_in() + 0.5 * RC.petal_t()) * P.H_PAD
+_n_inter = P.P_SAFE_INTER * 1e-3 * _a_contact      # N ở ngân sách áp lực ngắt quãng
+_n_cont = P.P_SAFE_CONT * 1e-3 * _a_contact
+check("G4. Ngân sách giữ TRỤC ở ngân sách áp lực (μ nhựa cứng = %.2f)" % P.MAT.mu,
+      True,
+      "A_tiếp xúc = %.0f mm² | ΣN ≤ %.1f N (20 kPa) / %.1f N (8 kPa) ⇒ giữ được "
+      "%.2f N / %.2f N. MỘT vòng P1 KHÔNG đủ 25 N (cần thêm đốt giữa hoặc ΣN lớn hơn) "
+      "— xem mục 'mở' của báo cáo" % (_a_contact, _n_inter, _n_cont,
+                                     P.MAT.mu * _n_inter, P.MAT.mu * _n_cont))
 check("Khối hợp lệ (OCCT isValid)", bool(ring.isValid()), "%s" % ring.isValid())
 print("   Xuất %d STL tại: %s" % (len(objs), OUT_DIR))
 print("=" * 78)

@@ -1,0 +1,27 @@
+# build_idea3_wrap_band.py
+##############################################################################
+   [PASS] S1. Đai quấn ≥ 300° (áp lực phân bố, không điểm tì cứng) cung quấn 355° | A_tiếp xúc ≈ 649 mm² (gấp 2.01× diện tích đệm ý tưởng 1) | tiết diện đai 0.80 × 9.0 mm²
+   [PASS] S2. Đai in được ở nozzle 0,4 (≥ 2 đường) + lực căng cơ học (không ép đàn hồi) PLA dày 0.80 mm = 2.0 đường in | T_đặt = 9.00 N (do người dùng siết chêm) ⇒ ΣN = 2πT = 56.5 N | σ_kéo_đai = 1.25 MPa (nhỏ)
+   [PASS] S2b. Mở đai ~1.5 mm bán kính để xỏ ngón: biến dạng ≤ ε_cho phép (1.0 %) ε_mở = 0.42 % ≤ 1.00 % (PLA) — đai IN SẴN theo cung nên chỉ cần nới nhẹ; KHÔNG dùng đai như lò xo đàn hồi
+   [PASS] S3. Gờ móc chặn trượt TIẾP TUYẾN bằng hình học (form closure), τ ở 25 N gờ 2.4 mm cung × 5.0 mm cao = 12.0 mm² ⇒ τ = 2.08 ≤ 4.00 MPa (= σ_cho phép/√3; trần cũ 4,0 MPa)
+   [PASS] S4. Tải TRỤC đi qua 2 VAI MÁNG bằng FORM CLOSURE (không cần keo) σ_bearing = 25 N / 130 mm² = 0.19 MPa trên vai máng z 0–2,60 và 10,60–13 | đai nằm TRONG máng nên hai vai chặn trượt dọc trục bằng HÌNH HỌC; gờ móc (S3) chặn trượt tiếp tuyến ⇒ KHÔNG cần lớp dán kết cấu (đã bỏ theo ràng buộc mới)
+   [PASS] S5. Chêm TỰ HÃM: tan θ ≤ μ(nhựa–nhựa)/1,3 = 0.231 góc chêm thực 10.0° (thiết kế 10°) → tan 0.176 ≤ 0.231 ⇒ biên 1.31× | μ(nhựa–nhựa) = 0.30 [LIT] ⇒ lực căng đai KÉO CHÊM SÂU THÊM (tự cưỡng hoá); nhả bằng cách miết ngược đầu đai
+   [PASS] S6. Chêm VÀO được họng (mỏng đầu) và KẸT lại (dày cuối) — tự hãm đầu mỏng: 0.80 + 0.10 = 0.90 ≤ khe miệng 2.70 | đầu dày: 0.80 + 0.85 = 1.65 > khe họng 1.60 ⇒ kẹt đúng họng, không lọt qua
+   [PASS] G1. MỘT VẬT LIỆU (PLA) cho cả khung, đai và chêm — không keo, không TPU E=3500 MPa, σ_y=55 MPa, ρ=1.24 g/cm³, μ da = 0.45, μ nhựa–nhựa = 0.30
+   [PASS] S7. Ngân sách kẹp (thông tin): hai chế độ KHÔNG thể đồng thời đạt CHẾ ĐỘ ĐỦ TẢI: T = 9.00 N ⇒ ΣN = 56.5 N, giữ trục ≈ 25.4 N (μ=0.45) NHƯNG p ≈ 87.2 kPa > 20 kPa | CHẾ ĐỘ ĐỦ AN TOÀN: p = 20 kPa ⇒ T = 2.06 N, chỉ giữ ≈ 5.8 N. MỘT vòng P1 không thể vừa giữ 25 N vừa dưới 20 kPa ⇒ cần chia tải sang 2 đốt (P1+P2) — mục 'mở' của báo cáo
+   [PASS] S8. Khung – đai – chêm KHÔNG chồng khối (khe hở lắp ráp thật) V_chung: khung∩đai = 0.0000 | khung∩chêm = 0.0000 | đai∩chêm = 0.0000 mm³
+   [PASS] S9. Gờ móc CẮM vào rãnh trên sàn máng (form closure chặn tiếp tuyến) gờ φ 106–116 / r 2.45→2.90 / z 3.5–8.5 | rãnh φ 105.85–116.15 / đáy r 2.35 / z 3.40–8.60 | gờ NGẬP 0.30 mm vào sàn (vách còn 0.30) | khe: φ 0.033+0.033 | đáy 0.10 | z 0.10+0.10 mm
+   [PASS] S10. In một khối liền: khung 1 khối, đai 1 khối, chêm 1 khối khung 1 | đai 1 | chêm 1 khối
+   [PASS] S11. Khối hợp lệ (OCCT isValid) + Z trong 12–16 mm khung True | đai True | chêm True | Z_khung = 13.00 mm
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+A. ĐAI QUẤN: 355° | 0.80 × 9.0 mm | V = 0.63 cm³ ≈ 0.78 g (PLA)
+   T(siết chêm) = 9.00 N ⇒ ΣN = 2πT = 56.5 N | p ≈ 87.2 kPa | giữ trục ≈ 25.4 N
+   Chế độ an toàn (p = 20 kPa): T = 2.06 N ⇒ giữ trục ≈ 5.8 N | ε_mở đai = 0.42 %
+B. KHUNG LƯNG: φ 88°–152° | V = 0.43 cm³ ≈ 0.53 g (PLA) | r_ngoài max = a_in+6.30 mm
+   CHÊM: vát 10.0° | 0.10→0.85 mm | V = 0.03 cm³ ≈ 0.04 g | miệng 2.70 mm → họng 1.60 mm
+C. ENVELOPE: 13.81 × 10.41 × 13.00 mm | ΔX = +1.15 mm (ngân sách 2,00) | X_max = 13.35 mm
+   Xuất 3 STL tại: /home/user/smart-glove-hand-function-monitoring/hardware/finger_fixation/stl/idea3_pla
+KẾT LUẬN: TẤT CẢ MỤC KIỂM TRA PASS.
+
+==============================================================================

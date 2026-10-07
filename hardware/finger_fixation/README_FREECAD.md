@@ -3,8 +3,10 @@
 > **Áp dụng cho:** `hardware/finger_fixation/build_idea1_toggle_clasp.py` (Ý tưởng 1 —
 > **Cơ cấu đòn bẩy kẹp bên sườn / Side Toggle Clasp**, bản ưu tiên),
 > `build_idea2_ratchet_cinch.py` (Ý tưởng 2), `build_idea3_wrap_band.py` (Ý tưởng 3).
-> **Bằng chứng kiểm chứng:** `reports/idea1_verify_log.txt`, `idea2_verify_log.txt`,
-> `idea3_verify_log.txt`, `reports/freecad_api_audit.txt`, `reports/mesh_qa_log.txt`.
+> **Bằng chứng kiểm chứng (2 vật liệu):** `reports/idea{1,2,3}_verify_{abs,pla}.txt`,
+> `reports/freecad_api_audit.txt`, `reports/mesh_qa_log.txt`.
+> **Tài liệu thiết kế:** `reports/TONG_HOP_3_CO_CHE.md`, `reports/MATERIAL_SINGLE_PLA_ABS.md`,
+> `reports/IDEA{1,2,3}_*.md`; ảnh bằng chứng mặt cắt: `reports/figures/idea1_petal_pads_section.png`.
 
 ---
 

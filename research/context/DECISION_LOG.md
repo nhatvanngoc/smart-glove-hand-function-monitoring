@@ -75,3 +75,17 @@ Only an explicit project-owner or authorized review decision may close an archit
 [ ] **MỚI 2026-09-27 (đồng bộ bản nộp `docs/DE_CUONG.pdf`):** duyệt 6 ID `DEC-SYNC-001` (baseline đã nộp) · `DEC-TEAM-001` (đội hình/GVHD/timeline) · `DEC-TITLE-002` (giữ tên cũ, hủy `DEC-TITLE-001`) · `DEC-HW-005` (chuỗi ADS1115+INA333 + trả lời I6/I7) · `DEC-METRIC-002` (phê chuẩn C1.x/M1–M6 + công thức EI + I1/I8) · `DEC-SCOPE-005` (3 ngón hay 5 ngón) — chi tiết `research/reviews/2026-09-27_decuong_pdf_sync.md` §6
 [ ] **MỚI 2026-09-27:** duyệt 7 nguồn mới trong SOURCE_LEDGER (`SRC-DECUONG-PDF-2026-09-26` READ_FULL; 5 `UNVERIFIED`: [2]/[3]/[4]/[6]/[18] trong PDF; `SRC-KTV-INTERVIEW-2026`) và 3 claim `CLM-HW-003`/`CLM-MET-005`/`CLM-DEF-001` (agent không tự phê)
 ```
+
+### Phiên 2026-10-07 — ràng buộc vật liệu đơn cho cụm cố định ngón (`hardware/finger_fixation/`)
+
+```
+[x] **2026-10-07:** chủ dự án yêu cầu **chỉ PLA hoặc ABS** và **cố gắng không thêm phần khác** cho cơ cấu cố định khung lên đốt gần
+    → ĐÃ THỰC THI trong mã + kiểm tự động (DEC-FIX-001; bằng chứng: `hardware/finger_fixation/reports/MATERIAL_SINGLE_PLA_ABS.md`,
+    `reports/TONG_HOP_3_CO_CHE.md`, 6 log `idea{1,2,3}_verify_{abs,pla}.txt`, 10 STL ở `stl/idea*[_pla]`).
+    Thay thế danh sách PETG + TPU 95A/85A của các phiên trước; bỏ đệm rời, bỏ keo kết cấu (đai ý 3 chuyển sang căng cơ học + chêm 10° tự hãm).
+[ ] **2026-10-07 (chờ chủ dự án):** xác nhận đã nhận ràng buộc một vật liệu + 3 kết quả âm phải nói rõ trong hồ sơ
+    (CLM-FIX-001/002/003): (a) một vòng P1 đơn độc chỉ giữ 2,9–5,8 N ở ngân sách 20 kPa < 15–25 N ⇒ cần chia tải P1+P2;
+    (b) μ(nhựa–nhựa) 0,30 và μ(nhựa–da) 0,45/0,60 đều là NGÂN SÁCH, phải đo trên mẫu in; (c) chưa in, chưa đo, chưa thử trên người.
+[ ] **2026-10-07 (khi có mẫu in):** đo coupon in (kéo/uốn) + μ trên băng thử + lực đặt trước sau 24 h giữ tải (từ biến PLA)
+    để thay các số ngân sách trong `params.py` §6; rồi in thử ý 1 với **gap-fill TẮT** (khe 0,15–0,20–0,03 mm).
+```

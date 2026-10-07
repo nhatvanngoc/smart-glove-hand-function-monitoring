@@ -12,6 +12,8 @@ Mọi con số "an toàn sinh học" trong file này là NGÂN SÁCH THIẾT K�
 thực nghiệm. Không được trích như dữ liệu đo.
 """
 
+import os
+
 # =============================================================================
 # 1. GIẢI PHẪU NGÓN — ĐỐT GẦN (PROXIMAL PHALANX 1)
 # =============================================================================
@@ -21,7 +23,7 @@ B_F1 = 10.0           # [MEASURE] nửa bề sâu MU–LÒNG của P1 (trục Y)
 A_KNUCK = 12.2        # [MEASURE] nửa bề rộng lớn nhất trong khoảng ôm (khớp MCP)
                       #   → dùng làm "ngân sách ΔX" (xem docs: quy tắc ΔX)
 H_RING = 14.0         # [BRIEF] chiều dài trục của vòng (12–16 mm)
-H_PAD = 9.0           # [EST]   chiều cao trục của đệm TPU
+H_PAD = 9.0           # [EST]   chiều cao trục của VÙNG TÌ (đệm cánh in liền)
 N_PAD = 4             # [EST]   số đệm tiếp xúc (4 góc phần tư = 4 điểm tựa xác định)
 
 # Khe hở lắp (bán kính) giữa lòng vòng PETG và da, ở vùng KHÔNG có đệm.
@@ -69,7 +71,7 @@ STOP_GAP = 0.05       # [EST] khe hở danh nghĩa giữa mặt tựa cứng khi
 RATCHET_PITCH_MM = 0.80   # [EST] bước răng (độ phân giải điều chỉnh) — càng nhỏ càng "khít"
 RATCHET_TOOTH_H = 0.55    # [EST] chiều cao răng
 RATCHET_N = 22            # [EST] số răng trên đai
-STRAP_T = 0.90            # [EST] chiều dày đai (in TPU hoặc PETG mỏng)
+STRAP_T = 0.90            # [EST] chiều dày đai (bản cũ; idea3 dùng BAND_T 0.80)
 MEANDER_K = 1.10          # [EST] độ cứng lò xo meander (N/mm) — GIỚI HẠN ÁP SUẤT
 MEANDER_STROKE = 2.0      # [EST] hành trình lò xo meander (mm) ⇒ F_max = 2.2 N
 LEVER_RATIO = 2.6         # [EST] tỉ số đòn bẩy của cần siết (giảm lực tay bệnh nhân)
@@ -85,15 +87,86 @@ WEDGE_DEG = 20.0          # [EST] góc nêm chuyển lực dọc trục → lự
 WEDGE_STOP = 1.4          # [EST] hành trình nêm tối đa (mm) = CHẶN ÁP SUẤT CỨNG
 
 # =============================================================================
-# 6. VẬT LIỆU (giá trị [LIT]/[EST] — phải đo lại trên mẫu in thật)
+# 6. VẬT LIỆU — CHẾ ĐỘ MỘT VẬT LIỆU (PLA hoặc ABS), KHÔNG TPU / KHÔNG KEO
 # =============================================================================
-RHO_PETG = 1.27e-3        # g/cm^3 → dùng để ước lượng khối lượng
-RHO_TPU = 1.21e-3
-E_PETG = 1200.0           # [EST] MPa, mô đun hiệu dụng mẫu in FDM (không phải 2000 nominal)
-E_TPU85 = 4.0             # [EST] MPa, TPU 85A ở biến dạng nhỏ
-EPS_ALLOW = 0.015         # [EST] biến dạng bền mỏi cho phép của PETG in FDM (1.5%)
-MU_DESIGN = 0.80          # [LIT-E] μ thiết kế TPU–da (Zhang & Mak 1999: silicone 0.61±0.21)
-MU_OPT = 1.10             # [LIT-E] μ lạc quan (đệm TPU 85A bám, da ẩm nhẹ)
+# RÀNG BUỘC MỚI (chủ dự án, 2026-10-07): thiết kế CHỈ dùng PLA hoặc ABS và cố
+# gắng KHÔNG thêm chi tiết khác (không đệm TPU rời, không keo dán kết cấu).
+# ⇒ Mọi chi tiết đều in cùng một vật liệu; phần "mềm" trước đây do TPU đảm nhiệm
+#   được thay bằng CƠ CẤU ĐÀN HỒI IN LIỀN (đệm cánh có chặn cứng — xem ring_common
+#   petal_pads) và mọi lá lò xo được chọn chiều dày theo vật liệu.
+#
+# NGUỒN SỐ LIỆU (mức [LIT] — CHƯA xác minh tới bản gốc):
+#   E, σ_ts, ε_break FDM: Forge Labs (hướng dẫn cơ tính in 3D: ABS ~30–40 MPa,
+#     ~2000 MPa, 5–10 %; PLA ~50–60 MPa, ~3500 MPa, 3–6 %); PartMfg (bảng filament);
+#     PMC6926899 (PLA: σ_y 60 MPa, ε_break 6 %, E 3600 MPa); PMC10880662 (PLA σ_ts
+#     59,9 ± 2,9 MPa); Toner Plastics (ABS in: σ_y ≈ 20 MPa, E ≈ 0,8 GPa).
+#   μ nhựa cứng–da: Zhang & Mak 1999 (oandplibrary) — trung bình 0,46 ± 0,15 cho
+#     5 vật liệu; silicone cao nhất 0,61 ± 0,21; nylon thấp nhất 0,37 ± 0,09;
+#     Lopes/ResearchGate (PP–da, da tay/đùi): 0,22–0,45, giảm khi có mồ hôi.
+#   ρ: PartMfg (PLA 1,24; ABS 1,04 g/cm³).
+# Mọi giá trị là NGÂN SÁCH THIẾT KẾ cho mô hình tính — KHÔNG phải kết quả đo.
+
+
+class Mat(object):
+    """Hồ sơ vật liệu dùng cho ngân sách thiết kế (không phải dữ liệu đo)."""
+
+    def __init__(self, key, name_vi, rho, E, sig_y, eps_allow, mu, mu_opt, note,
+                 mu_self=0.30):
+        self.key = key
+        self.name_vi = name_vi
+        self.rho = rho            # g/cm³
+        self.E = E                # MPa — mô đun hiệu dụng mẫu in FDM
+        self.sig_y = sig_y        # MPa — giới hạn chảy/đứt dùng cho ngân sách
+        self.eps_allow = eps_allow  # biến dạng uốn cho phép (mỏi)
+        self.mu = mu              # μ thiết kế nhựa cứng–da (thận trọng)
+        self.mu_opt = mu_opt      # μ lạc quan (bề mặt có gân/nhám)
+        self.note = note
+        # μ NHỰA–NHỰA (cùng vật liệu in FDM, khô) — ngân sách thiết kế cho chêm trượt.
+        # [LIT] polymer–polymer khô thường 0,2–0,4; 0,30 là giá trị thận trọng.
+        self.mu_self = mu_self
+
+    def __repr__(self):
+        return ("Mat(%s: E=%.0f MPa, σ_y=%.0f MPa, μ=%.2f, ρ=%.2f g/cm³)"
+                % (self.key, self.E, self.sig_y, self.mu, self.rho))
+
+
+MATS = {
+    "PLA": Mat("PLA", "PLA", 1.24, 3500.0, 55.0, 0.010, 0.45, 0.60,
+               "cứng, bền kéo cao nhưng GIÒN + từ biến (creep) ở nhiệt độ phòng; "
+               "ưu tiên cho chi tiết CHỊU NÉN/thanh cứng, hạn chế dùng làm lá lò xo"),
+    "ABS": Mat("ABS", "ABS", 1.04, 2000.0, 30.0, 0.020, 0.45, 0.60,
+               "dẻo dai hơn PLA (ε_break 5–30 %), chịu va đập tốt, in kín khí khó hơn; "
+               "ưu tiên cho chi tiết CÓ LÁ LÒ XO / có biến dạng"),
+}
+
+# FF_MAT = vật liệu dùng cho bộ sinh STL (PLA hoặc ABS). Mặc định ABS.
+# FF_MAT_EXPLICIT: nếu người dùng ĐẶT BIẾN MÔI TRƯỜNG, STL của PLA sẽ được ghi
+# vào thư mục con riêng (stl/idea1_pla …) để KHÔNG ghi đè bộ ABS.
+MAT_KEY = os.environ.get("FF_MAT", "ABS").strip().upper()
+MAT_EXPLICIT = "FF_MAT" in os.environ
+STL_SUFFIX = "" if MAT_KEY == "ABS" else "_" + MAT_KEY.lower()
+if MAT_KEY not in MATS:
+    raise ValueError("FF_MAT phải là một trong %s (nhận được %r)" % (sorted(MATS), MAT_KEY))
+MAT = MATS[MAT_KEY]
+M = MAT                     # alias ngắn
+SIG_ALLOW_FS = 2.5          # hệ số an toàn yêu cầu cho ứng suất lá lò xo (σ ≤ σ_y/FS)
+
+
+def sig_allow(fs=None):
+    """Ứng suất cho phép của vật liệu đang chọn (MPa)."""
+    return MAT.sig_y / (SIG_ALLOW_FS if fs is None else fs)
+
+
+# --- TƯƠNG THÍCH NGƯỢC (bản PETG + TPU cũ — KHÔNG dùng cho biến thể một vật liệu) ---
+RHO_PETG = 1.27e-3        # g/cm³  [LIT] — chỉ còn dùng cho ghi chú so sánh
+RHO_TPU = 1.21e-3         # g/cm³
+RHO_PLA = 1.24e-3
+RHO_ABS = 1.04e-3
+E_PETG = 1200.0           # [EST] MPa — bản cũ (đã bị thay bằng MAT.E)
+E_TPU85 = 4.0             # [EST] MPa — bản cũ (TPU 85A, không dùng nữa)
+EPS_ALLOW = 0.015         # [EST] bản cũ 1,5 %
+MU_DESIGN = MAT.mu        # μ thiết kế theo vật liệu đang chọn
+MU_OPT = MAT.mu_opt
 
 # =============================================================================
 # 7. NGÂN SÁCH ÁP SUẤT TIẾP XÚC (an toàn mô mềm) — NGÂN SÁCH, KHÔNG PHẢI KẾT QUẢ ĐO

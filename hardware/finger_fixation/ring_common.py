@@ -60,11 +60,13 @@ def finish(shape, pads, title, extras, subdir=None, extra_parts=()):
     """Đăng ký đối tượng, xuất STL, in bảng tổng hợp. → mã thoát (0/2).
 
     subdir: thư mục con trong stl/ (mỗi ý tưởng một thư mục để KHÔNG ghi đè STL
-    của nhau — cả 3 ý tưởng đều có Ring_PETG.stl + Pad*_TPU.stl).
-    extra_parts: [(tên, khối)] cho các chi tiết in rời khác (đai TPU, chêm...).
+    của nhau — bản MỘT VẬT LIỆU: mỗi ý tưởng chỉ xuất Ring_<MAT>.stl + extras).
+    extra_parts: [(tên, khối)] cho các chi tiết in rời khác (đai, chêm — CÙNG vật liệu).
     """
     doc = App.newDocument(title.replace(" ", "_")[:40])
-    objs = [_add(doc, "Ring_PETG", shape)]
+    # TÊN CHI TIẾT THEO VẬT LIỆU THẬT: Ring_ABS.stl / Ring_PLA.stl …
+    # (bản PETG+TPU cũ đặt Ring_PETG/Pad*_TPU — nay thiết kế chỉ còn MỘT vật liệu)
+    objs = [_add(doc, "Ring_" + P.MAT.key, shape)]
     for i, p in pads:
         objs.append(_add(doc, "Pad%d_TPU" % (i + 1), p))
     for (name, sh) in extra_parts:
@@ -73,8 +75,15 @@ def finish(shape, pads, title, extras, subdir=None, extra_parts=()):
     out_dir = os.path.join(OUT_DIR, subdir) if subdir else OUT_DIR
     if not os.path.isdir(out_dir):
         os.makedirs(out_dir)
+    written = set(o.Name + ".stl" for o in objs)
     for o in objs:
         Mesh.export([o], os.path.join(out_dir, o.Name + ".stl"))
+    # DỌN STL LỖI THỜI: nếu bộ chi tiết đổi (vd bỏ đệm TPU rời), file cũ còn nằm lại
+    # sẽ làm bộ giao nộp mập mờ. Chỉ xoá .stl trong CHÍNH thư mục xuất của script.
+    for _f in sorted(os.listdir(out_dir)):
+        if _f.endswith(".stl") and _f not in written:
+            os.remove(os.path.join(out_dir, _f))
+            print("   (đã xoá STL lỗi thời: %s)" % _f)
     print("-" * 78)
     for line in extras:
         print(line)
@@ -160,13 +169,146 @@ def cut_all(shape, tools):
     """Cắt LẦN LƯỢT từng dao — API FreeCAD chuẩn (cut() chỉ nhận MỘT đối tượng).
 
     FreeCAD không có `shape.cut([a, b, c])` (0.19–1.0 đều chỉ parse một TopoShape;
-    xem src/Mod/Part/App/TopoShapePyImp.cpp → PyArg_ParseTuple "O!"). Tương tự với
+    xem src/Mod/Part/App/TopoShapeApp.cpp → PyArg_ParseTuple "O!"). Tương tự với
     fuse()/common(); chỉ multiFuse()/generalFuse() nhận danh sách và chỉ dùng cho
     PHÉP HỢP. Vì vậy mọi phép cắt nhiều dao phải lặp ở đây.
     """
     for t in tools:
         shape = shape.cut(t)
     return shape
+
+
+# =============================================================================
+# ĐỆM CÁNH ĐÀN HỒI IN LIỀN — thay đệm TPU khi thiết kế chỉ dùng PLA/ABS
+# =============================================================================
+# VÌ SAO: bản PETG+TPU dùng 4 đệm TPU 85A rời để (1) san áp lực tiếp xúc và
+# (2) tăng ma sát. Khi chỉ được dùng PLA/ABS và "cố gắng không thêm chi tiết
+# khác", ta thay bằng 4 ĐỆM CÁNH in liền cùng vật liệu:
+#
+#   – Mỗi cửa sổ đệm có một CÁNH mỏng (bề dày t_p) là phần trong cùng của thành,
+#     NGÀM ở một đầu (trụ neo) và TỰ DO ở đầu kia ⇒ uốn được theo phương kính.
+#   – Sau cánh là KHE HỞ g (0,20 mm) rồi tới phần thành còn lại 0,6 mm: đó là
+#     CHẶN CỨNG. Cánh biến dạng đúng g rồi tì vào chặn ⇒ áp lực tiếp xúc do
+#     HÌNH HỌC quyết định sau đó, KHÔNG phụ thuộc biến dạng dẻo/từ biến.
+#   – Ưu điểm cơ học: biến dạng nhỏ (0,20 mm) đủ hấp thụ sai số in FDM (±0,1 mm)
+#     và tạo tiếp xúc đều; sau khi tì chặn, vòng là kết cấu CỨNG (không "lỏng
+#     lẻo", không nhún theo thời gian — quan trọng với PLA vốn từ biến mạnh).
+#   – Nhược điểm ĐÃ BIẾT (ghi thẳng vào mục "mở" của báo cáo): độ tuân thủ giảm
+#     so với TPU 85A (0,20 mm so với ~1 mm); ma sát nhựa cứng–da thấp hơn
+#     TPU–da (xem params.MAT.mu) ⇒ ngân sách lực trục giảm, PHẢI đo lại trên mẫu.
+#
+# Mô hình tính (công xôn, tải phân bố — NGÂN SÁCH THIẾT KẾ):
+#   k = 8·E·I/L³ ;  F_tì = k·g ;  σ_max = 2·E·g·t_p/L²  (tại ngàm, khi vừa tì chặn)
+#   I = b·t_p³/12 với b = chiều cao cánh theo Z (= H_PAD).
+# Phương trình σ_max rút gọn cho thấy ứng suất KHÔNG phụ thuộc bề dày cánh (bù trừ
+# giữa độ cứng và mô-men) ⇒ chỉ có thể giảm σ bằng cách giảm khe g hoặc tăng L.
+PETAL_POST_DEG = 6.0        # [EST] bề rộng cung của TRỤ NEO (ngàm cánh) trên pad
+PETAL_RELEASE_DEG = 4.5     # [EST] khe nhả đầu tự do của cánh (cắt suốt thành)
+PETAL_GAP = 0.20            # [EST] khe hở sau cánh = hành trình đàn hồi tối đa (mm)
+PETAL_BACK_T = 0.60         # [EST] bề dày phần thành còn lại sau khe = CHẶN CỨNG
+PETAL_T = {"ABS": 0.60, "PLA": 0.50}   # [EST] bề dày cánh (mm) theo vật liệu
+#   σ_tì = 2·E·g·t/L² ⇒ cánh MỎNG hơn vừa giảm ứng suất vừa giảm lực tì (k ∝ t³).
+#   ABS 0,60 mm: σ = 9,8 MPa (≤ σ_y/2,5 = 12) | PLA 0,50 mm: σ = 14,3 MPa (≤ 22)
+
+
+def petal_t():
+    return PETAL_T[P.MAT.key]
+
+
+def pick_leaf_t(E, sig_limit, L, delta, widths=(0.40, 0.50, 0.60, 0.80, 1.00)):
+    """Chọn BỀ DÀY LÁ LÒ XO in được (mm) cho vật liệu (E, σ_cho phép) — quy tắc chung.
+
+    Mô hình: công xôn, tải ở đầu, ứng suất tại ngàm σ = 1.5·E·t·δ/L².
+    Chọn bề dày LỚN NHẤT còn thoả σ ≤ σ_cho phép (để lực đặt trước lớn nhất),
+    trong dải bề dày in được ở nozzle 0.4 mm (bội 0.4/2 = 0.2 mm — ở đây dùng
+    các giá trị thực dụng 0.40–1.00 mm).
+    Trả về 0.40 (nhỏ nhất) nếu không giá trị nào thoả — khi đó mục kiểm ứng suất
+    sẽ FAIL và báo rõ, không được im lặng.
+    """
+    ok = [t for t in widths if 1.5 * E * t * delta / L ** 2 <= sig_limit]
+    return max(ok) if ok else widths[0]
+
+
+def leaf_sigma(E, t, L, delta):
+    """Ứng suất lớn nhất ở ngàm lá lò xo (công xôn, tải đầu) — MPa."""
+    return 1.5 * E * t * delta / L ** 2
+
+
+def leaf_k(E, t, b, L):
+    """Độ cứng công xôn (N/mm) với b = bề rộng theo Z."""
+    return 3.0 * E * (b * t ** 3 / 12.0) / L ** 3
+
+
+def petal_len(arc, post_deg=None, release_deg=None, r_ref=None):
+    """Chiều dài cung của cánh TỰ DO (mm) — dùng cho mô hình công xôn."""
+    post_deg = PETAL_POST_DEG if post_deg is None else post_deg
+    release_deg = PETAL_RELEASE_DEG if release_deg is None else release_deg
+    r_ref = (P.a_in() + petal_t() * 0.5) if r_ref is None else r_ref
+    return math.radians(arc - post_deg - release_deg) * r_ref
+
+
+def petal_metrics(arc, h_pad=None, r_ref=None):
+    """→ dict số liệu NGÂN SÁCH của đệm cánh (k, F_tì, σ khi tì, L, t_p, g)."""
+    t = petal_t()
+    b = P.H_PAD if h_pad is None else h_pad
+    I = b * t ** 3 / 12.0
+    L = petal_len(arc, r_ref=r_ref)
+    k = 8.0 * P.MAT.E * I / L ** 3
+    F = k * PETAL_GAP
+    sig = 2.0 * P.MAT.E * PETAL_GAP * t / L ** 2
+    return dict(t=t, gap=PETAL_GAP, back=PETAL_BACK_T, L=L, I=I, k=k, F_bottom=F,
+                sigma=sig, sig_allow=P.sig_allow(), fs=P.sig_allow() / sig,
+                travel=PETAL_GAP)
+
+
+def petal_pads(phi_list, arc, h_ring=None, h_pad=None):
+    """→ danh sách DAO CẮT tạo 4 ĐỆM CÁNH IN LIỀN (một phần của vòng, cùng vật liệu).
+
+    Mỗi đệm gồm 3 dao:
+      1) KHE SAU CÁNH : vành khuyên [r_in+t_p, r_in+t_p+g] trên cung cánh ⇒ tạo
+                        khe đàn hồi (cánh = phần thành từ r_in tới r_in+t_p).
+      2) KHOÉT TRƯỚC/SAU THEO Z : cùng dải kính nhưng ở z ngoài cửa sổ đệm ⇒ cánh
+                        KHÔNG bị nối vào thành ở trên/dưới (chỉ còn ngàm ở trụ neo).
+      3) KHE NHẢ ĐẦU TỰ DO : cắt SUỐT thành tại đầu xa của cánh ⇒ đầu kia tự do.
+    Trụ neo = phần cung không bị cắt (giữ nguyên bề dày thành) ⇒ cánh ngàm vào đó.
+    """
+    h_ring = P.H_RING if h_ring is None else h_ring
+    t = petal_t()
+    a_in, b_in = P.a_in(), P.b_in()
+    a_out, b_out = P.a_out(), P.b_out()
+    z_mid = h_ring / 2.0
+    z_a = z_mid - (P.H_PAD if h_pad is None else h_pad) / 2.0
+    z_b = z_mid + (P.H_PAD if h_pad is None else h_pad) / 2.0
+    out = []
+    for pp in phi_list:
+        p0, p1 = pp - arc / 2.0, pp + arc / 2.0          # biên cung của cửa sổ
+        a0, a1 = p0 + PETAL_RELEASE_DEG, p1 - PETAL_POST_DEG   # cung CÁNH tự do
+        # 1) khe sau cánh (đúng cung cánh)
+        out.append(band_prism(a_in + t, b_in + t, a_in + t + PETAL_GAP, b_in + t + PETAL_GAP,
+                              a0, a1, z_a, z_b, n=48))
+        # 2) khoét theo Z: bỏ phần [r_in−0.1, r_in+t+g] Ở NGOÀI cửa sổ z ⇒ cánh rời
+        #    khỏi thành trên/dưới; cung = cả cửa sổ (kể cả trụ neo — trụ neo nằm NGOÀI
+        #    cung này vì a1 = p1 − POST_DEG) nhưng KHÔNG chạm phần thành phía sau chặn.
+        for (z0, z1) in ((-0.2, z_a), (z_b, h_ring + 0.2)):
+            out.append(band_prism(a_in - 0.1, b_in - 0.1,
+                                  a_in + t + PETAL_GAP, b_in + t + PETAL_GAP,
+                                  a0, a1, z0, z1, n=48))
+        # 3) khe nhả đầu tự do: cắt suốt thành tại [p0, p0+RELEASE_DEG]
+        out.append(band_prism(a_in - 0.1, b_in - 0.1, a_out + 0.3, b_out + 0.3,
+                              p0, p0 + PETAL_RELEASE_DEG, z_a, z_b, n=24))
+    return out
+
+
+def petal_check(arc, h_pad=None, r_ref=None, name="P. Đệm cánh in liền"):
+    """In + kiểm mục NGÂN SÁCH cho đệm cánh (đàn hồi + ứng suất + tì chặn)."""
+    m = petal_metrics(arc, h_pad=h_pad, r_ref=r_ref)
+    ok = m["sigma"] <= m["sig_allow"]
+    check(name, ok,
+          "%s: cánh %.2f × %.1f mm, cung tự do L = %.2f mm ⇒ k = %.1f N/mm | "
+          "biến dạng %.2f mm rồi TÌ CHẶN CỨNG (%.2f N) | σ = %.1f ≤ %.1f MPa (FS %.1f)"
+          % (P.MAT.key, m["t"], P.H_PAD, m["L"], m["k"], m["travel"], m["F_bottom"],
+             m["sigma"], m["sig_allow"], m["fs"]))
+    return m
 
 
 def exit_code(rc):
@@ -388,7 +530,10 @@ def stats(shape, pads, ref_lat=None):
                z_len=bb.ZMax - bb.ZMin, n_solids=len(shape.Solids),
                ok=bool(shape.isValid()),
                vol_petg_cm3=shape.Volume / 1000.0,
-               mass_petg=shape.Volume / 1000.0 * P.RHO_PETG * 1000.0,
+               mass_petg=shape.Volume / 1000.0 * P.MAT.rho,      # cm³ × g/cm³ = g
                vol_tpu_cm3=sum(p.Volume for _, p in pads) / 1000.0)
     out["mass_tpu"] = out["vol_tpu_cm3"] * P.RHO_TPU * 1000.0
+    out["mass_part"] = out["mass_petg"]
+    out["vol_part_cm3"] = out["vol_petg_cm3"]
+    out["material"] = P.MAT.key
     return out

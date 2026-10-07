@@ -19,7 +19,8 @@ B. KIỂM TRA KHOÁ (số học, không phải đo)
    B2. MẶT CHẶN CỨNG (land trên 2 tai): khe hở danh nghĩa 0.05 mm, tay đòn
        STOP_R = |u| trọng tâm land = 3.10 mm ⇒ lực tì = M/STOP_R = 4.21 N.
        Tải ÉP thêm vào mặt chặn ⇒ form-closed; đảo dấu mô-men phải quay 135°.
-   B3. Lá mỏng (chốt mềm A): 0.55 × 7.60 mm, tay đòn hiệu dụng 4.30 mm ⇒ k ≈ 4.77 N/mm
+   B3. Lá mỏng (ABS): 0.40 × 7.60 mm, tay đòn 4.30 mm ⇒ k ≈ 3.06 N/mm | σ(δ=0.15 mm) = 9.7 ≤ 12.0 MPa (FS 1.2)
+   [PASS] B3b. Lá mỏng: σ ≤ σ_cho phép VÀ có lực đặt trước (0,10–2,0 N) σ = 9.7 ≤ 12.0 MPa | F_đặt trước = k·δ = 3.06 × 0.15 = 0.46 N
        (đặt trước + bù dung sai in/từ biến; KHÔNG phải khớp rời ⇒ không rơ)
    [PASS] B4. KHE thân ↔ tay kẹp: HỞ 0.450 mm, chồng lấn 0.0000° mặt đầu tay kẹp 59.98° | mặt đầu thân 62.02° (cung thân 256.98°, tay kẹp 66.98°)
    [PASS] B5–B7. Rãnh đệm không cắt vào LÁ BẢN LỀ (hở tay kẹp) chồng lấn 0.00°
@@ -46,13 +47,20 @@ D. RÀNG BUỘC HÌNH HỌC CỦA BRIEF
    Bao hình X×Y×Z: 24.09 × 36.01 × 14.03 mm
 ------------------------------------------------------------------------------
 E. KHỐI LƯỢNG (ngân sách in)
-   PETG 2.17 cm³ → ≈ 2.76 g   |   TPU 85A 1.489 cm³ → ≈ 1.80 g   |   tổng ≈ 4.56 g
+   ABS 2.43 cm³ → ≈ 2.53 g   |   chi tiết in: 1 (một vật liệu, không đệm rời)
 ------------------------------------------------------------------------------
 F. KIỂM TRA KHỐI (solid)
    [PASS] Đúng 1 khối đặc liền               1 khối
    [PASS] B8. Lòng vòng SẠCH (không nub tì da) V vật liệu trong lòng = 0.00 mm³ (dung sai 3 mm³ cho sai số đa giác hoá)
+------------------------------------------------------------------------------
+G. MỘT VẬT LIỆU + KHÔNG CHI TIẾT PHỤ (ràng buộc mới 2026-10-07)
+   [PASS] G1. Vật liệu chỉ là PLA hoặc ABS   ABS (E=2000 MPa, σ_y=30 MPa, ρ=1.04 g/cm³, μ_design=0.45)
+   [PASS] G2. Không đệm TPU / không keo dán kết cấu 1 chi tiết in (vòng + đệm cánh in liền), 0 đệm rời, 0 lớp keo
+   [PASS] G3. Đệm cánh in liền: đàn hồi 0.20 mm → tì CHẶN CỨNG ABS: cánh 0.60 × 9.0 mm | cung tự do L = 6.93 mm ⇒ k = 7.8 N/mm | lực tì 1.56 N | σ = 10.0 ≤ 12.0 MPa (FS 1.20)
+       → 4 cửa sổ đệm × 46° | áp dụng cho CẢ 4 đệm (33°,147°,216°,288°)
+   [PASS] G4. Ngân sách giữ TRỤC ở ngân sách áp lực (μ nhựa cứng = 0.45) A_tiếp xúc = 323 mm² | ΣN ≤ 6.5 N (20 kPa) / 2.6 N (8 kPa) ⇒ giữ được 2.91 N / 1.16 N. MỘT vòng P1 KHÔNG đủ 25 N (cần thêm đốt giữa hoặc ΣN lớn hơn) — xem mục 'mở' của báo cáo
    [PASS] Khối hợp lệ (OCCT isValid)         True
-   Xuất 5 STL tại: /home/user/smart-glove-hand-function-monitoring/hardware/finger_fixation/stl/idea1
+   Xuất 1 STL tại: /home/user/smart-glove-hand-function-monitoring/hardware/finger_fixation/stl/idea1
 ==============================================================================
 KẾT LUẬN: TẤT CẢ MỤC KIỂM TRA PASS.
 ==============================================================================
