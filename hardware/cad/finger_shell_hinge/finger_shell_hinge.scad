@@ -81,7 +81,8 @@ r_pin           = 1.15;// bán kính lỗ xỏ chốt (lỗ phi ~2.3mm cho chố
 knuckle_overlap = 0.5; // phần khớp ống "ăn" vào thành vỏ để liền khối
 
 /* [6. Ngàm cài - cạnh Y = +W_out/2] */
-catch_h     = 9.0;  // chiều cao khối ngàm cố định (mu tay)
+catch_h     = 14.0; // chiều cao khối ngàm cố định (mu tay) -- PHẢI >= (arm_h - 1.0 + 1.5)
+                     // để chứa hết nấc răng gần điểm nghỉ của móc (xem latch_catch(), §5c)
 catch_t     = 2.2;  // bề dày khối ngàm
 tooth_h     = 0.9;  // độ nhô mỗi nấc răng
 tooth_pitch = 2.6;  // khoảng cách giữa 2 nấc
@@ -142,6 +143,25 @@ module rounded_box_x(len, w, h, r, x0 = 0) {
                     translate([0, yy, zz])
                         cyl_x(r, len);
         }
+}
+
+// "Viên nang" (capsule) trục X, tâm tại gốc cục bộ, dài tổng l (tính cả 2 chỏm
+// cầu), bán kính r -- giống cyl_x nhưng 2 đầu được BO TRÒN (chỏm bán cầu) thay
+// vì cắt vuông. Dùng cho trục bản lề (hinge_pin) để không còn cạnh sắc ở 2 đầu
+// thò ra, dễ lắp/luồn hơn và an toàn hơn khi chạm da. (2026-10-07, yêu cầu "bo
+// tròn" của chủ dự án)
+module capsule_x(r, l) {
+    // Dùng union() của 1 trụ ngắn hơn (dài l - 2r) + 2 chỏm cầu ở 2 đầu,
+    // thay vì hull() của 2 hình cầu: cho kết quả HÌNH HỌC giống hệt (cùng
+    // là 1 "viên nang") nhưng ổn định hơn với bộ dựng hình CGAL của
+    // OpenSCAD khi union() với các khối phức tạp khác trong cùng 1 chi
+    // tiết (tránh lỗi "CGAL assertion violation" quan sát được khi dùng
+    // hull() trực tiếp trong ngữ cảnh lắp ráp đầy đủ -- xem README §5c).
+    rotate([0, 90, 0]) {
+        cylinder(h = l - 2 * r, r = r, center = true, $fn = $fn);
+        translate([0, 0, -(l / 2 - r)]) sphere(r = r, $fn = $fn);
+        translate([0, 0, (l / 2 - r)]) sphere(r = r, $fn = $fn);
+    }
 }
 
 // =====================================================================
@@ -209,19 +229,44 @@ module hinge_pinhole() {
 // =====================================================================
 // 5) NGÀM CÀI — khối răng (mu tay, để CỘNG) + tay đòn đàn hồi (lòng tay, để CỘNG)
 // =====================================================================
+// SỬA LỖI #3 2026-10-07 (phát hiện khi "check lại cơ chế chính xác" theo
+// yêu cầu chủ dự án): bản cũ đặt vị trí RĂNG theo một tỉ lệ ĐỘC LẬP với
+// catch_h (`catch_h * 0.35 + i*tooth_pitch` => z~2.45-6.45mm), trong khi
+// vị trí nghỉ của MÓC (hook, ở đầu tay đòn) lại tính độc lập theo arm_h
+// (`arm_h - 1.0` => z~11.2-12.8mm) — LỆCH NHAU 5-9mm, không bao giờ chạm
+// được vào nhau (kiểm chứng bằng toạ độ: xem README §5c). Tức là ngàm cài
+// NHƯ CŨ KHÔNG THỂ khoá được — móc vung qua phía trên hẳn các nấc răng.
+// Khắc phục: tính vị trí răng TRỰC TIẾP từ vị trí nghỉ của móc (cùng công
+// thức `arm_h - 1.0` dùng trong latch_arm()) thay vì một tỉ lệ độc lập,
+// để 2 chi tiết LUÔN thẳng hàng dù sau này có đổi arm_h/tooth_pitch.
 module latch_catch() {
     y0 = W_out / 2;
     x0 = margin_x; x1 = L - margin_x;
     w  = x1 - x0;
     xc = (x0 + x1) / 2;
 
-    translate([xc, y0 + catch_t / 2 - 0.3, catch_h / 2])
-        cube([w, catch_t, catch_h], center = true);
+    hook_rest_z = arm_h - 1.0; // PHẢI giống hệt công thức trong latch_arm()
+    assert(catch_h >= hook_rest_z + 1.5,
+           "catch_h phai >= arm_h - 1.0 + 1.5 de chua het nac rang gan diem nghi cua moc");
 
+    // 2026-10-07 "bo tròn": khối ngàm chính giờ bo góc dọc theo chiều dài
+    // (giống cách bo r_out của thân ống) thay vì cube() cạnh vuông sắc --
+    // r nhỏ, an toàn (không chạm tới vùng các răng chèn vào ở cạnh +Y).
+    r_catch = min(0.8, catch_t / 2 - 0.3, catch_h / 2 - 0.3);
+    translate([0, y0 + catch_t / 2 - 0.3, catch_h / 2])
+        rounded_box_x(w, catch_t, catch_h, r_catch, x0 = x0);
+
+    // Nấc 0 (i=0) nằm NGAY TẠI điểm nghỉ tự nhiên của móc -> đây là nấc
+    // móc sẽ tự ăn khớp khi gập hẳn xuống (đóng hoàn toàn, không cần giữ).
+    // Nấc 1 nằm THẤP hơn 1 khoảng tooth_pitch -> móc phải trượt/lướt qua
+    // nấc này trước (cảm giác "tách" 2 nấc khi gập), chưa dừng lại ở đó.
+    // Mỗi nấc cũng được bo nhẹ cạnh (r nhỏ) để giảm ứng suất tập trung khi
+    // in 3D và cho cảm giác cài/mở mượt hơn (ít bị vướng cạnh sắc).
+    r_tooth = min(0.3, tooth_h - 0.1, 1.4 / 2 - 0.1);
     for (i = [0 : 1]) {
-        zt = catch_h * 0.35 + i * tooth_pitch;
-        translate([xc, y0 + catch_t - 0.3 + tooth_h * 0.4, zt])
-            cube([w, tooth_h * 2, 1.4], center = true);
+        zt = hook_rest_z - i * tooth_pitch;
+        translate([0, y0 + catch_t - 0.3 + tooth_h * 0.4, zt])
+            rounded_box_x(w, tooth_h * 2, 1.4, r_tooth, x0 = x0);
     }
 }
 
@@ -245,11 +290,17 @@ module latch_arm() {
     y_arm_center = y0 + catch_t + arm_t / 2 + 0.6;
     y_arm_outer  = y_arm_center + arm_t / 2;
 
-    translate([xc, y_arm_center, arm_h / 2])
-        cube([w, arm_t, arm_h], center = true);
+    // 2026-10-07 "bo tròn": thân tay đòn + móc bo nhẹ cạnh dọc chiều dài
+    // (giống khối ngàm) -- r rất nhỏ vì arm_t/arm_hook khá mỏng, không ảnh
+    // hưởng vùng chân (root) nối với vỏ (đã kiểm lại bằng check_connectivity.py).
+    r_arm  = min(0.3, arm_t / 2 - 0.2);
+    r_hook = min(0.3, (arm_hook + arm_t) / 2 - 0.2, 1.6 / 2 - 0.2);
 
-    translate([xc, y0 + catch_t + arm_t - arm_hook / 2 + 0.2, arm_h - 1.0])
-        cube([w, arm_hook + arm_t, 1.6], center = true);
+    translate([0, y_arm_center, arm_h / 2])
+        rounded_box_x(w, arm_t, arm_h, r_arm, x0 = x0);
+
+    translate([0, y0 + catch_t + arm_t - arm_hook / 2 + 0.2, arm_h - 1.0])
+        rounded_box_x(w, arm_hook + arm_t, 1.6, r_hook, x0 = x0);
 
     // Goc noi (rib): bac cau khoang trong giua vo that va chan tay don.
     root_h = 3.0;
@@ -314,7 +365,10 @@ module hinge_pin() {
     hole_len = (L - 2 * margin_x) + 4;
     pin_len  = hole_len + 1;
     translate([margin_x - 2.5 + pin_len / 2, y_hinge, 0])
-        cyl_x(r_pin - 0.15, pin_len); // khe hở lắp 0.15mm bán kính
+        // 2026-10-07: bo tròn (capsule) thay vì cắt vuông -- 2 đầu trục giờ
+        // là chỏm bán cầu, không còn cạnh sắc, dễ dùng làm mồi luồn qua các
+        // khớp ống khi lắp ráp và an toàn hơn khi đầu trục lộ ra ngoài.
+        capsule_x(r_pin - 0.15, pin_len); // khe hở lắp 0.15mm bán kính
 }
 
 // Đặt mảnh để in: xoay 90° quanh Y để trục bản lề (X cục bộ) nằm DỌC

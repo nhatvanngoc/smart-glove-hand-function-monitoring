@@ -24,7 +24,12 @@ PALMAR_COLOR = "#6699cc"   # nửa lòng tay (xoay quanh bản lề, mang tay đ
 PIN_COLOR    = "#333333"   # trục bản lề (hinge_pin) -- xem loi da sua 2026-10-07
 
 
-def render(paths, colors, out_name, elev=20, azim=-55, title="", alpha=1.0):
+def render(paths, colors, out_name, elev=20, azim=-55, title="", alpha=1.0,
+           zoom_center=None, zoom_range=None):
+    """zoom_center/zoom_range (tuỳ chọn): ép khung nhìn vào 1 VÙNG CỤ THỂ
+    (vd. riêng khu vực ngàm cài) thay vì tự co giãn vừa khít TOÀN BỘ khối --
+    dùng để xác nhận trực quan 2 chi tiết nhỏ (móc/răng) có thực sự chồng
+    lên nhau hay không (xem README §5c)."""
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection="3d")
     all_pts = []
@@ -36,9 +41,13 @@ def render(paths, colors, out_name, elev=20, azim=-55, title="", alpha=1.0):
         ax.add_collection3d(coll)
         all_pts.append(m.vectors.reshape(-1, 3))
     pts = np.concatenate(all_pts, axis=0)
-    mins, maxs = pts.min(axis=0), pts.max(axis=0)
-    center = (mins + maxs) / 2
-    rng = (maxs - mins).max() / 2 * 1.15
+    if zoom_center is not None and zoom_range is not None:
+        center = np.array(zoom_center)
+        rng = zoom_range
+    else:
+        mins, maxs = pts.min(axis=0), pts.max(axis=0)
+        center = (mins + maxs) / 2
+        rng = (maxs - mins).max() / 2 * 1.15
     ax.set_xlim(center[0] - rng, center[0] + rng)
     ax.set_ylim(center[1] - rng, center[1] + rng)
     ax.set_zlim(center[2] - rng, center[2] + rng)
@@ -121,6 +130,21 @@ def main():
         "07_hinge_pin.png",
         title="Truc ban le (hinh dang/kich thuoc tham khao) - da han lien vao top_shell" if not has_pin_closed
         else "Chot ban le (truc), rieng le - in PETG hoac dung que nhua/kim loai phi ~2mm",
+    )
+
+    # 2026-10-07: anh can canh vung NGAM CAI (moc + rang) o trang thai DONG,
+    # de xac nhan truc quan cho fix loi #3 (SS5c) -- moc phai thay ro NAM
+    # TRONG vung cac nac rang, khong con cach xa nhu truoc khi sua.
+    p, c = paths_colors("assembly_closed", DORSAL_COLOR, PALMAR_COLOR, has_pin_closed)
+    render(
+        p, c,
+        "08_latch_closeup.png",
+        title="Can canh NGAM CAI o trang thai DONG - moc phai nam trong vung rang (SS5c)",
+        elev=8,
+        azim=160,
+        zoom_center=(12.0, 14.8, 11.0),
+        zoom_range=5.0,
+        alpha=0.85,
     )
 
 

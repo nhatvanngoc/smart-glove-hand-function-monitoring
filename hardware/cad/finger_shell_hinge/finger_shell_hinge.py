@@ -72,7 +72,9 @@ class P:
     knuckle_overlap = 0.5  # phần khớp ống "ăn" vào thành vỏ để union liền khối
 
     # --- Ngàm cài (snap latch) — cạnh Y = +W_out/2 ---
-    catch_h = 9.0        # chiều cao khối ngàm (mu tay, cố định) tính từ mặt phân (mm)
+    catch_h = 14.0       # chiều cao khối ngàm (mu tay, cố định) tính từ mặt phân (mm)
+                         # PHẢI >= (arm_h - 1.0 + 1.5) để chứa hết nấc răng gần điểm
+                         # nghỉ của móc (xem add_latch_catch(), README §5c)
     catch_t = 2.2        # bề dày khối ngàm
     tooth_h = 0.9        # độ nhô của mỗi nấc răng ngàm
     tooth_pitch = 2.6    # khoảng cách giữa 2 nấc (mm)
@@ -213,25 +215,53 @@ def add_hinge_knuckles(shell, which, cut_hole=True):
 # 5) NGÀM CÀI — khối răng (mu tay, cố định) + tay đòn đàn hồi (lòng tay)
 # =====================================================================
 def add_latch_catch(shell):
-    """Khối ngàm có các nấc răng, gắn vào nửa mu tay (shell trên), cạnh Y=+W_out/2."""
+    """Khối ngàm có các nấc răng, gắn vào nửa mu tay (shell trên), cạnh Y=+W_out/2.
+
+    SỬA LỖI #3 2026-10-07 (phát hiện khi "check lại cơ chế chính xác" theo
+    yêu cầu chủ dự án): bản cũ đặt vị trí RĂNG theo tỉ lệ ĐỘC LẬP với
+    catch_h (`catch_h * 0.35 + i*tooth_pitch` => z~2.45-6.45mm), trong khi
+    vị trí nghỉ của MÓC (hook, ở add_latch_arm) tính độc lập theo arm_h
+    (`arm_h - 1.0` => z~11.2-12.8mm) — LỆCH NHAU 5-9mm, không bao giờ chạm
+    được vào nhau. Ngàm cài NHƯ CŨ KHÔNG THỂ khoá được. Khắc phục: tính vị
+    trí răng TRỰC TIẾP từ vị trí nghỉ của móc (cùng công thức `arm_h - 1.0`
+    dùng trong add_latch_arm()) để 2 chi tiết LUÔN thẳng hàng."""
     y0 = p.W_out / 2.0
     x0, x1 = p.margin_x, p.L - p.margin_x
     w = x1 - x0
     xc = (x0 + x1) / 2.0
 
+    hook_rest_z = p.arm_h - 1.0  # PHẢI giống hệt công thức trong add_latch_arm()
+    assert p.catch_h >= hook_rest_z + 1.5, (
+        "catch_h phai >= arm_h - 1.0 + 1.5 de chua het nac rang gan diem nghi cua moc"
+    )
+
+    # 2026-10-07 "bo tròn": khối ngàm chính + mỗi nấc răng được bo nhẹ các
+    # cạnh dọc theo chiều dài (song song trục X) thay vì cạnh vuông sắc --
+    # bán kính nhỏ, an toàn (không ăn vào vùng các răng/mép ăn khớp), giúp
+    # giảm tập trung ứng suất khi in 3D và cảm giác cài/mở mượt hơn.
+    r_catch = min(0.8, p.catch_t / 2.0 - 0.3, p.catch_h / 2.0 - 0.3)
     block = (
         cq.Workplane("XY")
         .box(w, p.catch_t, p.catch_h)
+        .edges("|X")
+        .fillet(r_catch)
         .translate((xc, y0 + p.catch_t / 2.0 - 0.3, p.catch_h / 2.0))
     )
     shell = shell.union(block)
 
+    # Nấc 0 (i=0) nằm NGAY TẠI điểm nghỉ tự nhiên của móc -> đây là nấc móc
+    # sẽ tự ăn khớp khi gập hẳn xuống (đóng hoàn toàn, không cần giữ). Nấc 1
+    # nằm THẤP hơn 1 khoảng tooth_pitch -> móc phải trượt/lướt qua nấc này
+    # trước (cảm giác "tách" 2 nấc khi gập), chưa dừng lại ở đó.
+    r_tooth = min(0.3, p.tooth_h - 0.1, 1.4 / 2.0 - 0.1)
     n_teeth = 2
     for i in range(n_teeth):
-        z_t = p.catch_h * 0.35 + i * p.tooth_pitch
+        z_t = hook_rest_z - i * p.tooth_pitch
         tooth = (
             cq.Workplane("XY")
             .box(w, p.tooth_h * 2, 1.4)
+            .edges("|X")
+            .fillet(r_tooth)
             .translate((xc, y0 + p.catch_t - 0.3 + p.tooth_h * 0.4, z_t))
         )
         shell = shell.union(tooth)
@@ -262,15 +292,26 @@ def add_latch_arm(shell):
     y_arm_center = y0 + p.catch_t + p.arm_t / 2.0 + 0.6
     y_arm_outer = y_arm_center + p.arm_t / 2.0
 
+    # 2026-10-07 "bo tròn": bo nhẹ cạnh dọc (song song X) của thân tay đòn
+    # và móc -- bán kính rất nhỏ vì arm_t/arm_hook khá mỏng; không ảnh
+    # hưởng vùng "gốc nối" (root) bên dưới (đã xác nhận lại bằng
+    # check_connectivity.py sau khi áp dụng).
+    r_arm = min(0.3, p.arm_t / 2.0 - 0.2)
+    r_hook = min(0.3, (p.arm_hook + p.arm_t) / 2.0 - 0.2, 1.6 / 2.0 - 0.2)
+
     arm = (
         cq.Workplane("XY")
         .box(w, p.arm_t, p.arm_h)
+        .edges("|X")
+        .fillet(r_arm)
         .translate((xc, y_arm_center, p.arm_h / 2.0))
     )
     # móc ở đầu tay đòn, nhô vào phía khối răng (hướng -Y) để ăn khớp
     hook = (
         cq.Workplane("XY")
         .box(w, p.arm_hook + p.arm_t, 1.6)
+        .edges("|X")
+        .fillet(r_hook)
         .translate((xc, y0 + p.catch_t + p.arm_t - p.arm_hook / 2.0 + 0.2, p.arm_h - 1.0))
     )
     # Gốc nối (rib) — bắc cầu khoảng trống giữa vỏ thật và chân tay đòn,
@@ -339,13 +380,18 @@ def build_pin():
     y_axis = -p.W_out / 2.0 - p.r_knuckle + p.knuckle_overlap
     hole_len = (p.L - 2 * p.margin_x) + 4.0
     pin_len = hole_len + 1.0
+    r = p.r_pin - 0.15  # khe hở lắp 0.15mm bán kính
     pin = (
         cq.Workplane("YZ")
-        .center(y_axis, 0)
-        .circle(p.r_pin - 0.15)  # khe hở lắp 0.15mm bán kính
+        .circle(r)
         .extrude(pin_len)
-        .translate((p.margin_x - 2.5, 0, 0))
     )
+    # 2026-10-07 "bo tròn": fillet gần hết bán kính trên 2 mặt tròn đầu trục
+    # -> tạo chỏm bán cầu (dạng "viên nang"/capsule) thay vì cắt vuông --
+    # không còn cạnh sắc ở 2 đầu thò ra, dễ dùng làm mồi luồn qua các khớp
+    # ống khi lắp ráp và an toàn hơn khi đầu trục lộ ra ngoài vỏ.
+    pin = pin.edges("%CIRCLE").fillet(r * 0.999)
+    pin = pin.translate((p.margin_x - 2.5, y_axis, 0))
     return pin
 
 

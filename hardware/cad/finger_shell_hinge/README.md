@@ -180,6 +180,52 @@ Bài học: dù CAD đã "chạy được" (không lỗi CGAL/OCCT, bbox/thể t
 
 **⚠️ Đánh đổi cần biết (không giấu):** mục 6 (hướng dẫn in) trước đây khuyến nghị **KHÔNG in chốt bằng nhựa** mà dùng que kim loại/nhựa cứng có sẵn (que hàn nhựa, đinh ghim, dây đồng Ø2mm) — lý do: một que nhựa mảnh (bán kính ~1mm) in bằng FDM dễ cong/gãy hơn vật liệu sẵn có, nhất là chịu lực uốn lặp lại của bản lề. **Khi hàn liền trục vào vỏ (`PIN_INTEGRATED=true`), ta mất luôn lựa chọn thay bằng que kim loại đó** — nếu trục in bị gãy trong lúc dùng, phải **in lại nguyên cả nửa mu tay**, không chỉ thay 1 que nhỏ như trước. Bù lại: ít chi tiết rời hơn (không lo mất chốt), lắp nhanh hơn (bớt 1 bước), và trục được 3 khớp ống "ôm" dọc suốt chiều dài nên có thể còn cứng vững hơn so với 1 que rời chỉ ăn khớp bằng ma sát. Đây là đánh đổi thiết kế, **chưa có số đo độ bền thật** — vẫn cần in thử + thử uốn/gập lặp lại trước khi kết luận cách nào bền hơn (xem mục 8).
 
+## 5c. Lỗi đã sửa — móc và răng ngàm cài LỆCH NHAU 5-9mm, không bao giờ chạm được (2026-10-07)
+
+**Bối cảnh:** chủ dự án yêu cầu "bo tròn đi bạn, rồi hoàn thiện, check lại cơ chế chính xác". Khi rà soát lại bằng tay toạ độ Z của từng nấc răng (`latch_catch`) so với toạ độ Z của móc (`latch_arm`, ở đầu tay đòn), phát hiện:
+
+- Móc (hook) nằm ở Z = 11.20 – 12.80mm (công thức `arm_h - 1.0`, không đổi từ trước).
+- Cả 2 nấc răng (cũ) nằm ở Z = 2.45 – 3.85mm và 5.05 – 6.45mm (công thức `catch_h * 0.35 + i*tooth_pitch`, tính **độc lập hoàn toàn** với công thức của móc).
+- **Khoảng cách gần nhất giữa móc và răng gần nhất: ~4.75mm — không có bất kỳ điểm chồng lấn Z nào.** Theo trục Y thì 2 chi tiết có chồng lấn (Y = 13.55-14.86mm), nhưng vì Z hoàn toàn lệch nhau nên **móc không bao giờ chạm được răng khi gập xuống** — ngàm cài như cũ **không thể khóa được**, dù cả tay đòn lẫn khối ngàm đều "in được" bình thường (liền khối, đúng kích thước).
+
+**Vì sao lỗi này không bị 2 công cụ kiểm tra trước đó bắt được:**
+- `cross_check.py` chỉ so khớp bản `.py` và bản `.scad` **với nhau** — công thức lệch Z nói trên tồn tại **giống hệt ở cả 2 file** (cùng 1 nguyên nhân gốc: 2 công thức được viết độc lập, không tham chiếu chéo, trôi lệch nhau qua một lần sửa trước), nên so khớp 2 bản vẫn PASS.
+- `check_connectivity.py` chỉ đếm số mảnh rời — răng và móc đều là một phần **liền khối** với vỏ chính của chúng (không rời ra thành mảnh riêng), nên cũng PASS.
+
+Hai công cụ trên kiểm tra "chi tiết có in được không" (liền khối, đúng thể tích/kích thước) chứ **không kiểm tra "2 chi tiết có vai trò ăn khớp với nhau thì có thực sự giao nhau về hình học không"** — đây là một lớp lỗi khác, chỉ lộ ra khi **tính tay toạ độ cụ thể** của từng chi tiết rồi so sánh, đúng như yêu cầu "check lại cơ chế chính xác".
+
+**Đã sửa** (cả 2 file): thay vì tính vị trí răng theo 1 tỉ lệ độc lập, giờ **tính trực tiếp từ vị trí nghỉ của móc** (`hook_rest_z = arm_h - 1.0`, cùng công thức dùng trong `latch_arm`), để 2 chi tiết **luôn thẳng hàng** dù sau này có đổi `arm_h`/`tooth_pitch`:
+- Nấc 0: `z = hook_rest_z` (≈12.0mm) — nấc móc tự ăn khớp khi gập hẳn xuống.
+- Nấc 1: `z = hook_rest_z - tooth_pitch` (≈9.4mm) — móc trượt qua nấc này trước khi tới vị trí nghỉ (cảm giác "tách" 2 nấc khi gập). **Lưu ý:** cách diễn giải "2 nấc = 2 mức khóa" là một giả thuyết cơ khí hợp lý nhưng **CHƯA được kiểm chứng bằng mẫu in thật** — chỉ xác nhận được bằng CAD rằng móc và nấc 0 giao nhau hình học ở trạng thái nghỉ.
+- Tăng `catch_h` từ 9.0mm lên 14.0mm (đủ chứa nấc 0 ở Z≈12 cộng biên an toàn), và thêm `assert(catch_h >= hook_rest_z + 1.5, ...)` ở cả 2 file để lần sau nếu ai đổi `arm_h`/`catch_h` mà quên cập nhật, CAD sẽ **báo lỗi ngay khi dựng hình** thay vì âm thầm sinh ra 1 ngàm không khóa được như lần này.
+
+**Kiểm chứng bằng số liệu, lấy TRỰC TIẾP từ mã nguồn** (không phải tính tay/giả định — xem `check_latch_engagement.py`, công cụ kiểm tra mới thêm):
+
+```
+$ python3 check_latch_engagement.py
+Moc (hook):  X=2.00..22.00  Y=13.55..15.75  Z=11.20..12.80
+Nac rang 0: ... Y=13.06..14.86  Z=11.30..12.70  | chong lan Y=1.31mm Z=1.40mm -> AN KHOP
+Nac rang 1: ... Y=13.06..14.86  Z=8.70..10.10   | chong lan Y=1.31mm Z=0.00mm -> khong giao nhau
+KET LUAN: OK -- moc va it nhat 1 nac rang CO giao nhau hinh hoc ...
+```
+
+`cross_check.py` và `check_connectivity.py` vẫn PASS sau khi sửa (không có hồi quy — xem lệnh chạy ở §5a/§5b, kết quả tương tự).
+
+**`check_latch_engagement.py` đã được thêm làm bước kiểm tra bắt buộc thứ 3** (bên cạnh `cross_check.py` và `check_connectivity.py`) — dùng cho bất kỳ 2 chi tiết nào có vai trò ăn khớp cơ học với nhau (không chỉ ngàm cài), để bắt đúng lớp lỗi "liền khối + đúng kích thước nhưng không tương tác được với nhau" mà 2 công cụ kia không bắt được.
+
+**Giới hạn tự khai:** script chỉ kiểm tra bounding-box có giao nhau ở **trạng thái nghỉ tĩnh** (điều kiện CẦN để khóa được) — **không** mô phỏng lực cài, độ đàn hồi thực tế của tay đòn PETG mỏng (`arm_t=1.1mm`), hay đường đi 3D thực sự của móc khi xoay quanh bản lề (kiểm tra này giả định móc tiếp cận "thẳng xuống", trong khi thực tế là một cung xoay quanh trục bản lề ở xa). Đây **vẫn là thiết kế trên giấy, chưa in thử** — lực cài/mở, độ bền mỏi của tay đòn, và cảm giác "clic" 2 nấc vẫn cần xác nhận bằng mẫu in thật (xem mục 8).
+
+### Bo tròn các cạnh (cùng yêu cầu "bo tròn đi bạn, rồi hoàn thiện")
+
+Ngoài việc sửa lỗi lệch Z ở trên, đã bo tròn thêm các chi tiết sau (cả 2 file), chủ yếu để giảm cạnh sắc (an toàn khi tiếp xúc với tay người chăm sóc/bệnh nhân khi thao tác, giảm tập trung ứng suất khi in FDM) và cho cảm giác "hoàn thiện" hơn một bản thiết kế thô ráp:
+
+- **2 đầu trục bản lề (hinge_pin):** trước đây là hình trụ cắt vuông (2 mặt phẳng tròn, cạnh sắc); giờ là "viên nang" (capsule) — 2 đầu bo tròn thành chỏm bán cầu. Giúp đầu trục dễ dùng làm mồi luồn qua các khớp ống khi lắp ráp, và an toàn hơn ở 2 đầu lộ ra ngoài.
+- **Khối ngàm chính (`latch_catch`) và 2 nấc răng:** bo nhẹ các cạnh dọc theo chiều dài ngón tay (bán kính 0.3-0.8mm tuỳ bề dày từng chi tiết, luôn chọn nhỏ hơn 1 nửa bề dày mỏng nhất để không làm biến dạng/triệt tiêu chi tiết).
+- **Thân tay đòn (`latch_arm`) và móc:** bo nhẹ tương tự (bán kính 0.3mm, nhỏ vì `arm_t`/`arm_hook` khá mỏng ~1.1mm) — **riêng "gốc nối" (root/rib) ở chân tay đòn CỐ Ý giữ cạnh vuông sắc**, không bo tròn, để không ảnh hưởng tới vùng tiếp xúc quan trọng với vỏ đã sửa lỗi liền khối ở §5a (đã xác nhận lại bằng `check_connectivity.py` sau khi bo — vẫn 1 khối liền, không hồi quy).
+- **Chưa bo tròn:** mép hở 2 đầu ống (nơi tiết diện ống tròn-bo-góc gặp 2 mặt phẳng đầu ống thẳng, tại X=0 và X=L) — đây là nơi tiếp xúc trực tiếp với da nhiều nhất nên về lý thuyết cũng nên bo, nhưng việc bo tròn đầy đủ 3D ở đây đòi hỏi kỹ thuật dựng hình phức tạp hơn nhiều (có nguy cơ làm mỏng thành ống ở đúng đầu mút nếu làm không cẩn thận) — **cố tình hoãn lại**, ưu tiên sự chắc chắn/an toàn của hình học hơn là làm nhanh cho đẹp. Nếu chủ dự án muốn, đây sẽ là việc cần làm ở vòng sau.
+
+**Lưu ý kỹ thuật khi dựng bằng OpenSCAD:** ban đầu dùng `hull()` của 2 hình cầu để tạo "viên nang" cho trục — dựng ĐƯỢC từng chi tiết riêng lẻ, nhưng khi `union()` vào toàn bộ lắp ráp phức tạp (`top_shell`) thì CGAL (bộ dựng hình của OpenSCAD) báo lỗi nội bộ ("assertion violation") và ÂM THẦM cắt mất ~0.5mm ở mỗi đầu trục (không crash, không báo lỗi ra STL, chỉ lộ ra khi so bounding-box với bản CadQuery bằng `cross_check.py`). Đã đổi sang dựng "viên nang" bằng `union()` của 1 hình trụ ngắn hơn + 2 chỏm cầu (hình dạng giống hệt, nhưng ổn định hơn với CGAL) — sau khi đổi, `cross_check.py` khớp lại hoàn toàn (<0.1% lệch thể tích, bbox khớp đến 0.003mm). Đây là một ví dụ cụ thể cho thấy **"không có lỗi CGAL/không crash" không đồng nghĩa với "hình học đúng như ý đồ"** — bài học tương tự mục 5a, lần này ở công cụ OpenSCAD thay vì CadQuery.
+
 ## 6. Hướng dẫn in 3D (khuyến nghị — chưa kiểm chứng bằng mẫu in thật)
 
 - **Vật liệu:** PETG (đồng bộ với `docs/04` §6), ≥ 5 vòng tường, 100% hoặc ≥ 60% infill ở vùng ngàm/bản lề (chịu lực lặp lại).
@@ -230,6 +276,7 @@ hardware/cad/finger_shell_hinge/
 ├── render_scad_wasm.mjs      ← chạy chính engine OpenSCAD (qua Node.js) để render .scad ra STL, kiểm chứng
 ├── cross_check.py            ← so thể tích + bounding-box giữa out/*.stl (CadQuery) và out/scad/*.stl (OpenSCAD)
 ├── check_connectivity.py     ← kiểm tra mỗi chi tiết là 1 khối LIỀN (không tách mảnh rời) — xem §5a
+├── check_latch_engagement.py ← kiểm tra móc/răng ngàm cài có THỰC SỰ giao nhau hình học — xem §5c
 ├── package.json / package-lock.json  ← khai báo gói npm openscad-wasm-prebuilt dùng cho render_scad_wasm.mjs
 └── out/
     ├── top_shell_dorsal.step / .stl       ← nửa mu tay (mang khối ngàm + 3 khớp bản lề)
