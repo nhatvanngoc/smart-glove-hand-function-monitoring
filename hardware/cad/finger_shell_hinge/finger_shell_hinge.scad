@@ -80,7 +80,16 @@ n_knuckle_top   = 3;   // số khớp ống thuộc nửa mu tay — PHẢI = n_
 n_knuckle_bot   = 2;   // số khớp ống thuộc nửa lòng tay
 knuckle_gap     = 0.5; // khe hở in 3D giữa các khớp ống
 r_knuckle       = 3.0; // bán kính ngoài khớp ống
-r_pin           = 1.15;// bán kính lỗ xỏ chốt (lỗ phi ~2.3mm cho chốt phi 2.0-2.2mm)
+// 2026-10-07 (theo yêu cầu "in tại chỗ, tự do xoay ngay sau khi in" — xem
+// README §5e): r_pin = bán kính LỖ trên khớp ống nửa lòng tay; khi
+// PIN_INTEGRATED=true, trục đặc hàn vào nửa mu tay có bán kính =
+// r_pin - pin_clearance. Trước đây khe hở là số viết tay 0.15mm, QUÁ CHẶT
+// cho kiểu in-tại-chỗ (dễ dính liền 2 khối nếu máy in chưa hiệu chỉnh hoàn
+// hảo) — các nguồn hướng dẫn in FDM khuyến nghị 0.2-0.4mm. Tăng lỗ lên
+// 1.3mm để giữ nguyên bán kính trục đặc ~1.0mm mà đạt khe hở 0.3mm.
+r_pin           = 1.3; // bán kính lỗ xỏ chốt/khớp xoay (lỗ phi ~2.6mm)
+pin_clearance   = 0.3; // khe hở BÁN KÍNH trục-lỗ (mm) -- CẦN HIỆU CHỈNH
+                        // theo máy in/vật liệu thật, xem README §5e
 knuckle_overlap = 0.5; // phần khớp ống "ăn" vào thành vỏ để liền khối
 
 /* [6. Ngàm cài - cạnh Y = +W_out/2] */
@@ -99,7 +108,14 @@ strap_slot_h = 6.0;
 
 /* [8. Xem trước / xuất file] */
 PART = "assembly_open"; // "top" | "bottom" | "pin" | "assembly_closed" | "assembly_open"
-OPEN_ANGLE = 150;       // độ, dùng khi PART = "assembly_open"
+// LỖI NGHIÊM TRỌNG ĐÃ SỬA 2026-10-07 (§5e): dấu CŨ của OPEN_ANGLE (+150) là
+// HƯỚNG XOAY SAI -- 2 nửa vỏ ĐÂM XUYÊN NHAU thật (giao nhau hình học tới
+// ~600mm3 ở bản .py tương đương) trong khoảng góc +5..+100°, chỉ "trông ổn"
+// ở ảnh render vì ảnh cũ CHỈ xem ở đúng 1 góc cuối (150°, nơi 2 nửa tình cờ
+// tách rời). Đã quét toàn bộ dải góc bằng CadQuery (check_hinge_sweep.py,
+// bản .py) và xác nhận chiều ÂM (-150°) mới là hướng xoay KHÔNG va chạm.
+// assembly_open() bên dưới đã đổi dấu cho đúng.
+OPEN_ANGLE = 150;       // độ (giá trị DƯƠNG, độ lớn góc mở) -- dùng khi PART = "assembly_open"
 
 // 2026-10-07, theo yêu cầu chủ dự án: true = HÀN LIỀN trục chốt vào nửa mu
 // tay (in top_shell + trục thành 1 khối duy nhất, không cần lắp chốt rời —
@@ -238,15 +254,26 @@ module wire_channel(sign) {
 // =====================================================================
 // 4) BẢN LỀ — khớp ống so le (để CỘNG vào vỏ) + lỗ chốt (để TRỪ)
 // =====================================================================
+// SỬA LỖI 2026-10-07 (§5e): cyl_x() là 1 hình trụ TRÒN ĐỦ, tâm đúng tại
+// z=0 (mặt phân 2 nửa) -> một nửa khối của nó luôn tràn sang phía NỬA
+// KHÔNG THUỘC VỀ NÓ (vd. khớp ống của top lại có vật liệu ở Z<0, đè lên
+// đúng chỗ bottom_shell cần chiếm) -> gây chồng lấn hình học ~9.4mm3 dù 2
+// nửa không in dính nhau (rotation-invariant nên không phụ thuộc góc
+// xoay). Cắt boss về đúng nửa KHÔNG GIAN của chính nó (top -> Z>=0,
+// bot -> Z<=0) bằng intersection() với half_space() trước khi thêm vào vỏ.
 module hinge_knuckles(which) {
-    n  = n_knuckle_total();
-    sw = seg_width();
+    n    = n_knuckle_total();
+    sw   = seg_width();
+    sign = (which == "top") ? 1 : -1;
     for (i = [0 : n - 1]) {
         is_top = (i % 2 == 0); // thứ tự T B T B T... (bắt đầu & kết thúc bằng top)
         if ((which == "top" && is_top) || (which == "bot" && !is_top)) {
             xs = margin_x + i * (sw + knuckle_gap);
-            translate([xs + sw / 2, y_hinge, 0])
-                cyl_x(r_knuckle, sw);
+            intersection() {
+                translate([xs + sw / 2, y_hinge, 0])
+                    cyl_x(r_knuckle, sw);
+                half_space(sign);
+            }
         }
     }
 }
@@ -399,7 +426,7 @@ module hinge_pin() {
         // 2026-10-07: bo tròn (capsule) thay vì cắt vuông -- 2 đầu trục giờ
         // là chỏm bán cầu, không còn cạnh sắc, dễ dùng làm mồi luồn qua các
         // khớp ống khi lắp ráp và an toàn hơn khi đầu trục lộ ra ngoài.
-        capsule_x(r_pin - 0.15, pin_len); // khe hở lắp 0.15mm bán kính
+        capsule_x(r_pin - pin_clearance, pin_len); // khe hở = pin_clearance (xem §5e)
 }
 
 // Đặt mảnh để in: xoay 90° quanh Y để trục bản lề (X cục bộ) nằm DỌC
@@ -431,7 +458,7 @@ module assembly_open(angle = OPEN_ANGLE) {
     color("Orange") top_shell();
     color("SteelBlue")
         translate([0, y_hinge, 0])
-        rotate([angle, 0, 0])
+        rotate([-abs(angle), 0, 0]) // xem ghi chú OPEN_ANGLE ở trên -- ÂM mới đúng
         translate([0, -y_hinge, 0])
         bottom_shell();
     if (!PIN_INTEGRATED) color("DimGray") hinge_pin();

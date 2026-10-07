@@ -74,7 +74,22 @@ class P:
     # để biết đánh đổi: tích hợp -> ít chi tiết rời hơn, nhưng KHÔNG còn
     # thay được bằng que kim loại cứng nếu trục in bị gãy).
     r_knuckle = 3.0      # bán kính ngoài khớp ống (mm)
-    r_pin = 1.15         # bán kính lỗ xỏ chốt (mm) -> lỗ phi 2.3mm cho chốt phi 2.0-2.2mm
+    # 2026-10-07 (theo yêu cầu "in tại chỗ, tự do xoay ngay sau khi in"):
+    # r_pin = bán kính LỖ trên khớp ống nửa lòng tay (hole). Khi PIN_INTEGRATED=True,
+    # bán kính trục đặc hàn vào nửa mu tay = r_pin - pin_clearance. Trước đây
+    # pin_clearance là số viết tay 0.15mm ngay trong build_pin() — QUÁ CHẶT cho
+    # kiểu in "print-in-place" (in liền 1 lần, khớp ống bọc quanh trục trong lúc
+    # in, không lắp tay sau) theo đúng nghĩa đen câu yêu cầu của chủ dự án.
+    # Các nguồn hướng dẫn in FDM (Snapmaker, FastPreci, QIDI 3D — xem README §5e)
+    # đều khuyến nghị khe hở bán kính 0.2-0.4mm cho bản lề in-tại-chỗ (0.15mm dễ
+    # bị dính liền 2 khối khi máy in chưa hiệu chỉnh hoàn hảo). Đã tăng lỗ lên
+    # 1.3mm để giữ nguyên bán kính trục đặc ~1.0mm (không đổi độ cứng trục) mà
+    # vẫn đạt khe hở 0.3mm/bán kính theo khuyến nghị.
+    r_pin = 1.3           # bán kính lỗ xỏ chốt/khớp xoay (mm) -> lỗ phi 2.6mm
+    pin_clearance = 0.3   # khe hở BÁN KÍNH giữa trục đặc và lỗ (mm) — ĐÂY LÀ
+                           # THAM SỐ CẦN HIỆU CHỈNH THEO TỪNG MÁY IN/VẬT LIỆU
+                           # THẬT (xem README §5e) — 0.3mm chỉ là điểm khởi đầu
+                           # phổ biến, CHƯA kiểm chứng bằng mẫu in thật.
     knuckle_overlap = 0.5  # phần khớp ống "ăn" vào thành vỏ để union liền khối
 
     # --- Ngàm cài (snap latch) — cạnh Y = +W_out/2 ---
@@ -150,11 +165,25 @@ def base_tube():
     return outer.cut(inner)
 
 
+def half_space(sign):
+    """Khối hộp khổng lồ chiếm trọn nửa không gian Z>0 (sign=+1) hoặc Z<0
+    (sign=-1), dùng để CẮT/GIAO bất kỳ khối nào về đúng 1 nửa mu/lòng tay.
+    Dùng chung cho split_half() (cắt vỏ) VÀ add_hinge_knuckles() (cắt khớp
+    ống bản lề — xem SỬA LỖI 2026-10-07 §5e: khớp ống trước đây là 1 hình
+    trụ TRÒN ĐỦ, tâm đúng tại mặt phân Z=0, nên PHẦN NỬA của nó luôn tràn
+    sang phía đối diện — ví dụ khớp ống của top_shell (should chỉ ở Z>=0)
+    thực ra có một nửa khối nằm ở Z<0, đè lên đúng vùng của bottom_shell,
+    tạo ra ~9.4mm3 chồng lấn KHÔNG ĐỔI dù xoay bản lề góc nào (vì chồng lấn
+    nằm sát trục quay, không phụ thuộc góc xoay) — phát hiện bằng
+    check_hinge_sweep.py.).
+    """
+    big = max(p.W_out, p.H_out, p.L) * 6
+    return cq.Workplane("XY").box(big, big, big).translate((0, 0, sign * big / 2))
+
+
 def split_half(solid, sign):
     """sign=+1 -> nửa Z>0 (mu tay/dorsal), sign=-1 -> nửa Z<0 (lòng tay/palmar)."""
-    big = max(p.W_out, p.H_out, p.L) * 6
-    box = cq.Workplane("XY").box(big, big, big).translate((0, 0, sign * big / 2))
-    return solid.intersect(box)
+    return solid.intersect(half_space(sign))
 
 
 # =====================================================================
@@ -227,6 +256,14 @@ def add_hinge_knuckles(shell, which, cut_hole=True):
             .extrude(w)
             .translate((xc - w / 2.0, 0, 0))
         )
+        # SỬA LỖI 2026-10-07 (§5e): boss là 1 hình trụ TRÒN ĐỦ, tâm đúng tại
+        # z_axis=0 (mặt phân 2 nửa) -> một nửa khối của nó luôn tràn sang
+        # phía NỬA KHÔNG THUỘC VỀ NÓ (vd. khớp ống của top lại có vật liệu ở
+        # Z<0, đè lên đúng chỗ bottom_shell cần chiếm) -> gây chồng lấn hình
+        # học ~9.4mm3 dù 2 nửa không in dính nhau. Cắt boss về đúng nửa KHÔNG
+        # GIAN của chính nó (top -> Z>=0, bot -> Z<=0) trước khi union.
+        sign = +1 if which == "top" else -1
+        boss = boss.intersect(half_space(sign))
         shell = shell.union(boss)
     if cut_hole:
         # khoan lỗ chốt xuyên suốt toàn bộ vùng bản lề (một lỗ thẳng, đi qua mọi khớp ống)
@@ -411,7 +448,7 @@ def build_pin():
     y_axis = -p.W_out / 2.0 - p.r_knuckle + p.knuckle_overlap
     hole_len = (p.L - 2 * p.margin_x) + 4.0
     pin_len = hole_len + 1.0
-    r = p.r_pin - 0.15  # khe hở lắp 0.15mm bán kính
+    r = p.r_pin - p.pin_clearance  # khe hở BÁN KÍNH = p.pin_clearance (xem P, §5e)
     pin = (
         cq.Workplane("YZ")
         .circle(r)
@@ -435,10 +472,23 @@ def hinge_axis_points():
 
 def build_open_bottom_shell(angle_deg=150.0):
     """Xoay nửa lòng tay quanh trục bản lề để minh họa trạng thái MỞ
-    (đặt đốt ngón vào nửa mu tay, rồi gập nửa lòng tay xuống để đóng)."""
+    (đặt đốt ngón vào nửa mu tay, rồi gập nửa lòng tay xuống để đóng).
+
+    LỖI NGHIÊM TRỌNG ĐÃ SỪA 2026-10-07 (§5e, phát hiện khi viết
+    check_hinge_sweep.py để kiểm tra yêu cầu "xoay tự do quanh trục"): dấu
+    của `angle_deg` trước đây là DƯƠNG (+150°) -- hướng này khiến 2 nửa vỏ
+    THẬT SỬ ĐÂM XUYÊN NHAU (giao nhau hình học tới ~600mm3, không phải chỉ
+    chạm nhẹ) trong suốt khoảng góc +5..+100°, chỉ "trông ổn" ở ảnh render
+    cũ vì ảnh cũ CHỈ xuất ở đúng 1 góc cuối (+150°, nơi 2 nửa tình cờ lại
+    tách rời) -- việc chỉ xem ảnh ở 1 góc tĩnh đã bỏ sót toàn bộ đường đi va
+    chạm ở giữa. Đã quét `top.intersect(bot xoay nhiều góc)` bằng CadQuery và
+    phát hiện. Hướng ÂM (-150°) mới là hướng xoay KHÔNG va chạm trong suốt
+    hành trình 0 -> -150° (đã quét từng 5-10° xác nhận, xem
+    check_hinge_sweep.py). Đổi dấu mặc định thành ÂM để khớp hướng mở thật.
+    """
     bot = build_bottom_shell()
     p0, p1 = hinge_axis_points()
-    return bot.rotate((p0.x, p0.y, p0.z), (p1.x, p1.y, p1.z), angle_deg)
+    return bot.rotate((p0.x, p0.y, p0.z), (p1.x, p1.y, p1.z), -abs(angle_deg))
 
 
 def export_assembly_state(top, bot, name, pin=None):
@@ -458,6 +508,32 @@ def export_assembly_state(top, bot, name, pin=None):
     cq.exporters.export(bot, os.path.join(OUT_DIR, f"{name}__bottom.stl"))
     if pin is not None:
         cq.exporters.export(pin, os.path.join(OUT_DIR, f"{name}__pin.stl"))
+
+
+def export_print_in_place(top, bot, out_name):
+    """2026-10-07 (§5e, theo yêu cầu chủ dự án: "phần phụ lồng vào trục khi
+    in, in ra là tự do xoay quanh trục tại chỗ"): xuất MỘT file STL DUY NHẤT
+    chứa CẢ 2 nửa (top_shell đã hàn sẵn trục + bottom_shell) — để nạp thẳng
+    vào slicer làm 1 lần in, khớp ống nửa lòng tay sẽ được in BỌC QUANH trục
+    có sẵn với khe hở `P.pin_clearance` (mặc định 0.3mm bán kính, xem README
+    §5e) — không cần thao tác lắp ráp nào sau khi in; bản lề quay được NGAY
+    khi gỡ khỏi bàn in (nếu máy in đủ chính xác với khe hở này).
+
+    PHẢI gọi với `bot` ở TRẠNG THÁI MỞ (vd. build_open_bottom_shell(150)),
+    KHÔNG phải trạng thái đóng — xem ghi chú trong main() để biết lý do
+    (ngàm cài sẽ bị in dính liền nếu xuất ở tư thế đóng).
+
+    QUAN TRỌNG: 2 khối (top, bot) KHÔNG được boolean-union — chúng phải ở
+    dạng 2 SOLID RIÊNG BIỆT không giao nhau (chỉ cách nhau đúng khe hở) bên
+    trong cùng 1 file multi-solid STL, để slicer in chúng như 2 vật thể độc
+    lập cùng lúc (kỹ thuật "print-in-place" tiêu chuẩn). Trước khi gọi hàm
+    này, main() đã kiểm tra bằng intersect() rằng thể tích giao nhau giữa 2
+    khối ở trạng thái truyền vào là ~0 (xem check_hinge_sweep.py).
+    """
+    compound = cq.Compound.makeCompound([top.val(), bot.val()])
+    path = os.path.join(OUT_DIR, f"{out_name}.stl")
+    cq.exporters.export(compound, path)
+    return path
 
 
 def main():
@@ -488,6 +564,28 @@ def main():
     bot_open = build_open_bottom_shell(angle_deg=150.0)
     export_assembly_state(top, bot_open, "assembly_open", pin=asm_pin)
     print("  exported assembly_closed, assembly_open")
+
+    # File IN-TẠI-CHỖ (print-in-place) 2026-10-07: 1 file STL duy nhất, nạp
+    # thẳng vào slicer, in top+bottom CÙNG LÚC, khớp ống nửa lòng tay đã bọc
+    # sẵn quanh trục — xoay được ngay sau khi in, không cần lắp ráp tay.
+    # QUAN TRỌNG: xuất ở trạng thái MỞ (bot_open), KHÔNG phải trạng thái
+    # đóng — vì ở trạng thái ĐÓNG, móc ngàm cài CỐ Ý chạm/ngoàm vào răng
+    # (giao nhau ~51.5mm3, xem check_hinge_sweep.py); nếu in sẵn ở tư thế đó,
+    # slicer sẽ in LIỀN 2 chi tiết ngàm cài thành 1 khối đặc tại đúng chỗ
+    # ngoàm, làm mất khả năng tay đòn đàn hồi bật ra/cài vào được -- khác
+    # hẳn bản lề (chỉ có khe hở, không bao giờ chạm). Ở trạng thái MỞ 150°,
+    # ngàm cài KHÔNG chạm nhau (xa nhau hẳn) nên an toàn để in-tại-chỗ; sau
+    # khi in xong, gập tay bằng tay để cài ngàm như thiết kế vốn có.
+    if p.PIN_INTEGRATED:
+        pip_vol_check = top.intersect(bot_open)
+        try:
+            pip_overlap = pip_vol_check.val().Volume()
+        except Exception:
+            pip_overlap = 0.0
+        print(f"  [print-in-place] giao nhau top/bottom o TRANG THAI MO = {pip_overlap:.4f} mm3"
+              " (phai gan 0 -- xem check_hinge_sweep.py)")
+        pip_path = export_print_in_place(top, bot_open, "assembly_open_print_in_place")
+        print("  exported", pip_path, "(1 file STL duy nhat, in CA 2 nua CUNG LUC, o tu the MO)")
 
     print("Xong. File STEP/STL nằm trong:", OUT_DIR)
 

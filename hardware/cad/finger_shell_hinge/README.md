@@ -81,7 +81,8 @@ Toàn bộ nằm trong class `P` ở đầu `finger_shell_hinge.py`. Các số d
 | `t_wall` | 2.2 mm | Bề dày vách — PETG, ≥ 5 vòng tường (nozzle 0.4 mm) để cứng vững quanh hốc cảm biến |
 | `flat_w` | 12 mm | **[2026-10-07, thay cho `r_in`/`r_out` cũ]** Bề rộng đoạn THẲNG ở giữa mặt mu/lòng tay (chỗ dán cảm biến) — 2 cạnh hông (bản lề + ngàm) bo tròn hết mức bằng cung elip lớn, xem §5d |
 | `pocket_w/len/depth` | 8 / 16 / 1.3 mm | Hốc khoét để dán sandwich Velostat + đồng tự dính (theo `docs/04` §6) |
-| `r_knuckle`, `r_pin` | 3.0 / 1.15 mm | Khớp ống bản lề (Ø ngoài 6 mm) và lỗ xỏ chốt (Ø 2.3 mm cho chốt Ø2.0–2.2 mm) |
+| `r_knuckle`, `r_pin` | 3.0 / 1.3 mm | Khớp ống bản lề (Ø ngoài 6 mm) và lỗ xỏ chốt/khớp xoay (Ø 2.6 mm) |
+| `pin_clearance` | 0.3 mm | **[2026-10-07]** Khe hở BÁN KÍNH giữa trục đặc và lỗ — cho bản lề "in tại chỗ" (xem §5e), cần hiệu chỉnh theo máy in thật |
 | `n_knuckle_top/bot` | 3 / 2 | Số khớp ống xen kẽ — **phải lệch nhau đúng 1** để xen kẽ đều (có `assert` trong code) |
 | `catch_h`, `tooth_h`, `tooth_pitch` | 14 / 0.9 / 2.6 mm | Khối ngàm cố định, 2 nấc răng (preload thấp/cao) — `catch_h` tăng từ 9→14mm khi sửa lỗi lệch Z, xem §5c |
 | `arm_h`, `arm_t`, `arm_hook` | 13 / 1.1 / 1.1 mm | Tay đòn đàn hồi + độ sâu móc |
@@ -102,9 +103,11 @@ Theo đúng yêu cầu, đã thử cài FreeCAD trước. Trong môi trường c
 
 | Chi tiết | Thể tích CadQuery/OCCT | Thể tích OpenSCAD/CGAL | Lệch | Bounding-box |
 |---|---:|---:|---:|---|
-| `top_shell_dorsal` | 2168.8 mm³ | 2167.5 mm³ | 0.06% | khớp tuyệt đối (24.0 × 32.06 × 13.2 mm) |
-| `bottom_shell_palmar` | 1981.9 mm³ | 1980.7 mm³ | 0.06% | khớp tuyệt đối (24.0 × 32.95 × 23.2 mm) |
-| `hinge_pin` | 78.5 mm³ | 78.3 mm³ | 0.24% | khớp tuyệt đối (25.0 × 2.0 × 2.0 mm) |
+| `top_shell_dorsal` | 2164.0 mm³ | 2161.8 mm³ | 0.10% | khớp tuyệt đối (25.0 × 32.06 × 15.0 mm) |
+| `bottom_shell_palmar` | 1963.1 mm³ | 1961.1 mm³ | 0.10% | khớp tuyệt đối (24.0 × 33.10 × 23.2 mm) |
+| `hinge_pin` | 76.4 mm³ | 76.2 mm³ | 0.27% | khớp tuyệt đối (25.0 × 2.0 × 2.0 mm) |
+
+*(Số liệu trên là của bản mới nhất, 2026-10-07, sau khi sửa lỗi va chạm bản lề + đổi khe hở in-tại-chỗ — xem §5e. Số liệu sẽ còn thay đổi nhẹ mỗi khi chỉnh tham số hình học; chạy lại `cross_check.py` để lấy số mới nhất, đừng tin số cố định trong bảng này.)*
 
 Sai số dưới 0,3% chỉ đến từ rời rạc hoá hình tròn (`$fn`), không phải sai lệch công thức. **Đây là bằng chứng độc lập (2 lõi CAD khác nhau — OCCT vs CGAL — cho cùng kết quả) rằng cả 2 file mô tả đúng cùng một hình học**, chứ **KHÔNG phải** bằng chứng thiết kế đã đúng về công thái học/cơ học — việc đó vẫn cần in thật + đo thật (mục 8).
 
@@ -127,6 +130,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install cadquery numpy-stl matplotlib
 python3 hardware/cad/finger_shell_hinge/finger_shell_hinge.py   # xuất STEP/STL vào out/
 python3 hardware/cad/finger_shell_hinge/render_preview.py       # xuất ảnh xem nhanh vào out/renders/
+python3 hardware/cad/finger_shell_hinge/check_hinge_sweep.py    # [MỚI] quét va chạm bản lề qua cả dải góc mở — xem §5e
 ```
 
 **Tự render `.scad` bằng engine OpenSCAD thật (qua Node.js, không cần cài OpenSCAD desktop) + tự đối chiếu:**
@@ -243,6 +247,39 @@ Ngoài việc sửa lỗi lệch Z ở trên, đã bo tròn thêm các chi tiế
 
 **Giới hạn tự khai:** độ dày thành mỏng nhất (2.08mm) chỉ tính bằng công thức hình học (khoảng cách Euclid giữa 2 đường cong tham số hoá cùng góc — xấp xỉ, không phải khoảng cách pháp tuyến chính xác tuyệt đối), **chưa đo trên mẫu in thật** và chưa có phân tích độ bền cơ học (FEA) cho vùng thành cong mỏng hơn này so với bản chữ nhật cũ. Cảm giác "tròn trịa, bớt cứng ngắc" mới chỉ được xác nhận qua ảnh CAD (`out/renders/`), chưa xác nhận bằng cách cầm/sờ mẫu in thật.
 
+## 5e. LỖI NGHIÊM TRỌNG đã sửa — 2 nửa vỏ ĐÂM XUYÊN NHAU khi mở + đổi sang bản lề "in tại chỗ" (2026-10-07)
+
+**Yêu cầu chủ dự án** (nguyên văn ý): bản lề chỉ cần 1 nửa chứa sẵn trục, nửa kia được in BỌC QUANH trục đó ngay trong lúc in (không lắp tay), rồi khi lấy ra khỏi máy in là xoay được tự do quanh trục tại chỗ.
+
+### Phần 1 — lỗi nghiêm trọng phát hiện khi kiểm tra lại yêu cầu này
+
+Để trả lời đúng câu "xoay có tự do không", **lần đầu tiên bản vẽ này được quét kiểm tra va chạm hình học qua TOÀN BỘ dải góc mở** (trước đây chỉ xem bằng mắt ở ĐÚNG 1 góc cuối, 150°, qua ảnh `05_assembly_open_iso.png`). Dùng `top.intersect(bottom_xoay_tung_goc)` của CadQuery (phép giao boolean thật trên lõi OCCT, không phải ước lượng), phát hiện: **với dấu góc xoay cũ (+150°), 2 nửa vỏ THẬT SỰ ĐÂM XUYÊN NHAU** — thể tích giao nhau lên tới **~600mm³** (so với tổng thể tích 1 nửa ~2000mm³, tức là xuyên **30%** khối lượng) trong suốt khoảng góc **+5° đến +100°**. Ảnh chụp 2 khối ở +45° cho thấy rõ khối xanh (lòng tay) cắm thẳng vào khối cam (mu tay):
+
+- Hướng SAI (+45°): nửa lòng tay xuyên qua nửa mu tay — xem bằng chứng quét (bảng dưới).
+- Hướng ĐÚNG (-45°): 2 nửa tách rời sạch sẽ.
+
+Nguyên nhân: trục bản lề được đặt lệch ra ngoài mép vỏ (để chừa chỗ cho khớp ống) nhưng **dấu chiều xoay (sign) bị chọn SAI** — xoay theo chiều đó khiến điểm xa trục nhất của nửa lòng tay (mép đối diện, phía ngàm cài) quét một cung đi THẲNG vào khối đặc của nửa mu tay trước khi ra khỏi vùng va chạm (chỉ "tình cờ" sạch trở lại ở đúng góc 150°, là góc duy nhất có ảnh render trước đây). Đây là lý do việc chỉ xem 1 ảnh tĩnh ở góc cuối **không đủ** để xác nhận "bản lề xoay được" — phải quét liên tục.
+
+![so sanh loi huong xoay truoc/sau sua](out/renders/09_hinge_sweep_bug_before_after.png)
+*Trái: dấu góc xoay CŨ (+45°) — khối xanh (lòng tay) cắm xuyên qua khối cam (mu tay). Phải: dấu ĐÃ SỬA (-45°) — 2 nửa tách rời sạch sẽ.*
+
+**Đã sửa:** đổi dấu góc xoay trong `build_open_bottom_shell()` (`.py`) và `assembly_open()` (`.scad`) từ dương sang âm. **Đã thêm công cụ kiểm tra thường trực mới — `check_hinge_sweep.py`** — quét giao nhau mỗi 5° từ 0° đến 150°, FAIL nếu bất kỳ góc nào (ngoài vùng ngàm cài đang nhả ra ở 0-10°, nơi có chồng lấn nhỏ CỐ Ý do móc còn trượt qua răng) có giao nhau > 0.05mm³. Sau khi sửa: **0.0mm³ giao nhau ở MỌI góc từ 15° đến 145°, và chỉ 0.02mm³ (không đáng kể) ở 150°** — bằng chứng hình học rằng bản lề xoay tự do suốt hành trình, không chỉ ở điểm cuối.
+
+**Đồng thời sửa luôn 1 lỗi nhỏ liên quan** phát hiện cùng lúc: khớp ống (knuckle) trước đây là hình trụ tròn ĐỦ, tâm đúng tại mặt phân 2 nửa (Z=0), nên một nửa khối của nó luôn "tràn" sang phía nửa kia — gây chồng lấn ~9.4mm³ không đổi theo góc xoay (vì nằm sát trục, không di chuyển khi quay). Đã cắt khớp ống về đúng nửa không gian của chính nó (`half_space()`/`intersection()`) trước khi union vào vỏ — chồng lấn này nay bằng 0.
+
+**Giới hạn tự khai:** đây là bằng chứng HÌNH HỌC (2 khối CỨNG không đâm xuyên nhau), KHÔNG phải bằng chứng cơ học thật — ma sát, độ đàn hồi PETG, dung sai in thật (khớp ống không tròn hoàn hảo, co ngót vật liệu) có thể khiến bản lề thật bị kẹt dù mô hình CAD không báo lỗi. Việc phát hiện lỗi lớn này ở vòng kiểm tra trước (vốn đã công bố renders "đã xác nhận trực quan") cũng là lời nhắc: **kiểm tra bằng ảnh tĩnh 1 góc là KHÔNG ĐỦ** cho các cơ cấu chuyển động — từ nay `check_hinge_sweep.py` chạy mỗi khi đổi tham số hình học liên quan đến bản lề.
+
+### Phần 2 — bản lề "in tại chỗ" (print-in-place) theo đúng yêu cầu
+
+Thiết kế từ trước (§5b) đã có phần: `top_shell` hàn liền (union) trục bản lề đặc vào thân — khi `PIN_INTEGRATED=True` (mặc định). Phần còn thiếu để thành bản lề in-tại-chỗ đúng nghĩa là: (a) khe hở trục-lỗ đủ rộng để máy in FDM không làm dính liền 2 khối, và (b) một file in gộp cả 2 nửa làm 1 lần in.
+
+- **Khe hở (`pin_clearance`):** trước đây là số viết tay 0.15mm bán kính (0.3mm đường kính) ngay trong code — theo các nguồn hướng dẫn thiết kế bản lề in-tại-chỗ FDM ([Snapmaker](https://www.snapmaker.com/blog/3d-printed-hinges/), [FastPreci](https://www.fastpreci.com/blog/3d-printed-hinges/), [QIDI 3D](https://qidi3d.com/blogs/news/how-to-3d-print-interlocking-parts-and-assemblies)), khoảng khuyến nghị phổ biến cho khớp quay in-tại-chỗ là **0.2-0.4mm bán kính** (0.15mm dễ bị dính liền nếu máy chưa hiệu chỉnh hoàn hảo, nhất là do "chân voi" lớp đầu). Đã tăng lên **0.3mm** (tham số `pin_clearance`, đặt tên rõ ràng thay vì số viết tay) và tăng `r_pin` (lỗ) từ 1.15mm lên 1.3mm để GIỮ NGUYÊN bán kính trục đặc ~1.0mm (không đổi độ cứng trục) mà vẫn đạt khe hở mới.
+- **File in gộp:** hàm mới `export_print_in_place()` (`.py`) xuất **1 file STL duy nhất** (`out/assembly_open_print_in_place.stl`) chứa cả `top_shell` (đã có trục) và `bottom_shell` ở **trạng thái MỞ** (2 solid riêng biệt, không boolean-union, chỉ cách nhau đúng khe hở) — nạp thẳng file này vào slicer là in được cả 2 nửa cùng lúc, lấy ra là xoay ngay, không cần lắp. Bản `.scad` tương đương là `out/scad/assembly_open.stl` (đã xuất sẵn qua `render_scad_wasm.mjs`).
+- **QUAN TRỌNG — vì sao là trạng thái MỞ chứ không phải ĐÓNG:** ở trạng thái ĐÓNG, ngàm cài (móc + răng) CỐ Ý chạm/ngoàm vào nhau (giao nhau ~51.5mm³ — đây là độ ngoàm cần thiết để khoá chặt, xem §5c) — nếu xuất file in gộp ở tư thế này, slicer sẽ in LIỀN 2 chi tiết ngàm cài thành 1 khối đặc dính nhau tại đúng chỗ ngoàm (không giống bản lề, chỗ này KHÔNG có khe hở), làm tay đòn đàn hồi mất khả năng bật ra — hỏng ngàm cài vĩnh viễn. Ở trạng thái MỞ (150°), ngàm cài tách xa nhau hẳn, nên an toàn để in gộp; **sau khi in xong, gập tay bằng tay để đóng + cài ngàm** như quy trình sử dụng vốn có.
+- **Đã kiểm tra:** `assembly_open_print_in_place.stl` (`.py`) được load lại bằng `trimesh`, tách được đúng **2 thành phần kín nước (watertight) riêng biệt**, thể tích khớp với `top_shell`/`bottom_shell` xuất riêng (chênh < 0.1%) — xác nhận file là 2 khối thật sự tách rời (không bị dính), sẵn sàng để thử in. File `.scad` tương ứng (`out/scad/assembly_open.stl`) qua kiểm tra tương tự ra 1 mảnh kín nước duy nhất (OpenSCAD CSG `union()` hợp nhất 2 khối chạm/gần chạm thành 1 mesh — khác cách biểu diễn với bản `.py` nhưng cùng ý nghĩa: không có chỗ nào chồng lấn thể tích đáng kể ngoài dự kiến).
+
+**Giới hạn tự khai (QUAN TRỌNG — chưa in thật):** khe hở 0.3mm là **điểm khởi đầu phổ biến theo tài liệu hướng dẫn chung**, KHÔNG phải số đã hiệu chỉnh cho máy in/vật liệu cụ thể nào — từng máy in (độ chính xác cơ khí, hiệu chỉnh dòng nhựa/flow, "chân voi" lớp đầu) có thể cần tăng/giảm. Khuyến nghị in thử 1 bản lề nhỏ (chỉ đoạn có khớp ống, vài cm) với 3-4 mức khe hở (0.2/0.25/0.3/0.35mm) trước khi in bản đầy đủ, theo đúng tinh thần "ngân sách thiết kế, không phải kết quả đo" của `docs/04`. Việc bản lề "xoay được trên CAD" (hình học) KHÔNG đảm bảo "xoay được khi in" (vật lý) — vẫn cần thử nghiệm in thật.
+
 ## 6. Hướng dẫn in 3D (khuyến nghị — chưa kiểm chứng bằng mẫu in thật)
 
 - **Vật liệu:** PETG (đồng bộ với `docs/04` §6), ≥ 5 vòng tường, 100% hoặc ≥ 60% infill ở vùng ngàm/bản lề (chịu lực lặp lại).
@@ -250,6 +287,7 @@ Ngoài việc sửa lỗi lệch Z ở trên, đã bo tròn thêm các chi tiế
 - **Hướng in ngàm/tay đòn:** tay đòn đàn hồi (`arm`) nên in với lớp vân (layer line) **vuông góc hướng uốn** để bền mỏi hơn — nghĩa là in đứng theo chiều dày `arm_t`, không in nằm phẳng.
 - **Khớp ống xen kẽ (knuckle):** chừa khe in `knuckle_gap = 0.5 mm` đã tính sẵn trong tham số; nếu máy in dung sai lớn, tăng `knuckle_gap` lên 0.6–0.8 mm để tránh 2 mảnh dính nhau.
 - **Chốt bản lề:** mặc định (`PIN_INTEGRATED = true`, xem mục 5b) trục đã **hàn liền vào `top_shell_dorsal.stl`** — in nửa mu tay là có sẵn trục, không cần in/lắp chốt riêng. File `hinge_pin.stl`/`.step` vẫn được xuất riêng chỉ để **tham khảo kích thước** (không cần in). Nếu đổi `PIN_INTEGRATED = false` để quay lại thiết kế chốt rời: nên dùng que nhựa/kim loại cứng có sẵn (que hàn nhựa, đinh ghim, hoặc đoạn dây đồng/thép Ø2 mm) thay vì in — in một que nhựa mảnh dài 20 mm bằng FDM dễ cong/gãy hơn là dùng vật liệu sẵn có (nhưng dễ thay thế hơn nếu gãy — xem đánh đổi ở mục 5b).
+- **In "tại chỗ" (print-in-place) — MỚI 2026-10-07, xem §5e:** nạp thẳng **`out/assembly_open_print_in_place.stl`** (bản `.py`) hoặc **`out/scad/assembly_open.stl`** (bản `.scad`) vào slicer — file này chứa CẢ 2 nửa ở trạng thái MỞ, in 1 lần duy nhất, khớp ống nửa lòng tay bọc sẵn quanh trục với khe hở `pin_clearance = 0.3mm` (CHƯA hiệu chỉnh theo máy in thật — khuyến nghị in thử coupon nhỏ với vài mức khe hở trước). **KHÔNG dùng bản ở trạng thái đóng để in gộp** (ngàm cài sẽ bị dính liền, xem §5e). Tắt support trong vùng bản lề (slicer có thể đề xuất support vì thấy lỗ/khe hẹp — không cần, thiết kế đã tính để tự bắc cầu qua khe hở nhỏ).
 - **Hốc cảm biến:** in xong cần làm phẳng nhẹ bề mặt hốc (giấy nhám mịn) trước khi dán sandwich Velostat + đồng, để tiếp xúc đều — đúng tinh thần `docs/04` §4.1 "điện trở tiếp xúc copper–Velostat... cần preload + kẹp cơ khí ổn định".
 
 ## 7. BOM cho 1 cụm (1 đốt ngón)
@@ -294,13 +332,16 @@ hardware/cad/finger_shell_hinge/
 ├── cross_check.py            ← so thể tích + bounding-box giữa out/*.stl (CadQuery) và out/scad/*.stl (OpenSCAD)
 ├── check_connectivity.py     ← kiểm tra mỗi chi tiết là 1 khối LIỀN (không tách mảnh rời) — xem §5a
 ├── check_latch_engagement.py ← kiểm tra móc/răng ngàm cài có THỰC SỰ giao nhau hình học — xem §5c
+├── check_hinge_sweep.py      ← [MỚI 2026-10-07] quét va chạm 2 nửa vỏ qua TOÀN BỘ dải góc mở — xem §5e
 ├── package.json / package-lock.json  ← khai báo gói npm openscad-wasm-prebuilt dùng cho render_scad_wasm.mjs
 └── out/
     ├── top_shell_dorsal.step / .stl       ← nửa mu tay (mang khối ngàm + 3 khớp bản lề)
     ├── bottom_shell_palmar.step / .stl    ← nửa lòng tay (mang tay đòn ngàm + 2 khớp bản lề)
     ├── hinge_pin.step / .stl              ← chốt bản lề (tham khảo kích thước, xem mục 6)
     ├── assembly_closed.step / assembly_open.step   ← lắp ráp 2 trạng thái (có màu, mở bằng FreeCAD/Fusion/...)
-    ├── assembly_closed__{top,bottom}.stl / assembly_open__{top,bottom}.stl  ← mesh từng trạng thái
+    ├── assembly_closed__{top,bottom}.stl / assembly_open__{top,bottom}.stl  ← mesh từng trạng thái (chỉ để XEM)
+    ├── assembly_open_print_in_place.stl   ← [MỚI 2026-10-07] file IN THẬT gộp 2 nửa (trạng thái MỞ) — xem §5e
     ├── renders/                           ← ảnh PNG xem nhanh từ bản CadQuery (dùng trong README này)
     └── scad/                              ← STL xuất từ chính OpenSCAD (render_scad_wasm.mjs) — dùng để đối chiếu
+                                              (scad/assembly_open.stl cũng dùng được để in-tại-chỗ, xem §5e)
 ```
