@@ -157,6 +157,9 @@ Giả định mỗi kênh cần **thời gian ổn định (settling) + lấy m�
 **Tiêu chí công thái học tối thiểu cần đạt (phải đo, không được nói suông):**
 thời gian mang/tháo (don–doff) ở mức người nhà làm được trong ~1 phút; khối lượng tổng; không gây đau khi đeo 15 phút; không cấn khi gập tối đa.
 
+> **2026-10-07 — ĐỀ XUẤT đổi cơ chế "khung cứng định vị lóng ngón" ở dòng đầu bảng trên** (chưa chốt, xem `DEC-HW-006`/`CLM-HW-004`):
+> thay vì ống gần-kín + bu-lông kẹp vi chỉnh (phải luồn/ép ngón tay liệt/co cứng qua vòng kín, rồi siết bu-lông quanh ngón), dùng khung **vỏ-sò 2 mảnh nối bằng bản lề trục in 3D ở 1 cạnh + ngàm cài nhanh ở cạnh kia** — đặt ngón vào nửa đang mở, gập nửa kia xuống, cài ngàm, không cần xỏ/siết quanh ngón. CAD tham số (CadQuery, xuất STEP/STL) + phân tích tham khảo thị trường + việc-phải-làm trước khi dùng thật: [`hardware/cad/finger_shell_hinge/README.md`](../hardware/cad/finger_shell_hinge/README.md). **Chưa in, chưa đo lực/preload, chưa thay thế bu-lông kẹp trong BOM §8** cho tới khi owner duyệt + có số đo bench.
+
 ---
 
 ## 7. Việc phải làm trước khi viết bất kỳ kết luận nào

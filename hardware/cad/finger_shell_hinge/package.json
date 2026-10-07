@@ -1,0 +1,13 @@
+{
+  "name": "finger-shell-hinge-scad-render",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Render finger_shell_hinge.scad bang chinh engine OpenSCAD (ban WASM, chay qua Node.js) de xuat STL va doi chieu hinh hoc voi ban CadQuery (.py). Dung de KIEM CHUNG, khong phai de in truc tiep tu day.",
+  "type": "module",
+  "scripts": {
+    "render": "node render_scad_wasm.mjs"
+  },
+  "dependencies": {
+    "openscad-wasm-prebuilt": "^1.2.0"
+  }
+}

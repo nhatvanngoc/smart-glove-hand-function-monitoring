@@ -13,6 +13,11 @@ venv/
 env/
 ENV/
 
+# Node.js (dùng trong hardware/cad/finger_shell_hinge để chạy OpenSCAD-WASM
+# kiểm chứng file .scad — xem package.json ở đó; chạy `npm install` lại khi cần;
+# package-lock.json được GIỮ lại (nhỏ, để cài lại đúng bản đã kiểm chứng))
+node_modules/
+
 # OS / editor
 .DS_Store
 Thumbs.db

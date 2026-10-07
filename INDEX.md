@@ -35,6 +35,14 @@
 │       └── GLOSSARY.md                ← Phân cấp thuật ngữ cảm biến + tuyên bố bị cấm
 ├── firmware/
 │   └── mega_link_diagnostics/     ← ⚠️ DI SẢN đề tài cũ (Mega ↔ Orange Pi bring-up). Xem ghi chú trong file
+├── hardware/
+│   └── cad/finger_shell_hinge/     ← 🆕 ĐỀ XUẤT CƠ KHÍ (`CLM-HW-004`/`DEC-HW-006`, chưa in/chưa đo): khung ốp
+│                                     1 đốt ngón kiểu vỏ-sò (bản lề trục + ngàm cài) thay cơ chế xỏ ngón + bu-lông
+│                                     kẹp; 2 bản CAD tham số song song, CẢ HAI ĐÃ CHẠY THẬT và đối chiếu chéo khớp
+│                                     nhau (<0.3% lệch thể tích): `finger_shell_hinge.py` (CadQuery/OCCT, xuất
+│                                     STEP/STL vào `out/`) và `finger_shell_hinge.scad` (chạy qua chính OpenSCAD
+│                                     2025.01.19 thật via openscad-wasm-prebuilt/Node.js — xem README §5,
+│                                     `cross_check.py`); ảnh xem nhanh trong `out/renders/` (`render_preview.py`)
 ├── research/
 │   ├── README.md                  ← Quy trình làm việc trong research/
 │   ├── claims/CLAIM_LEDGER.csv    ← Claim + cấp bằng chứng + trạng thái
@@ -82,6 +90,12 @@
 ### `docs/bao_cao/` — Báo cáo theo mẫu ViSEF
 - **A.1–A.6**: lý do chọn đề tài, mục tiêu, tiêu chí, đối tượng & phạm vi, địa điểm, phương pháp.
 - **GLOSSARY**: phân cấp vật liệu → sensing element → mảng → hệ thống; danh sách **tuyên bố bị cấm**.
+
+### `hardware/cad/finger_shell_hinge/` — Cơ khí khung ốp ngón (🆕 2026-10-07)
+- **finger_shell_hinge.py**: script CAD tham số (CadQuery) — vỏ-sò 2 mảnh + bản lề trục + ngàm cài, xuất STEP/STL. **Đã chạy thật trong sandbox** (lõi Open CASCADE, không cần apt/FreeCAD GUI).
+- **finger_shell_hinge.scad**: cùng thiết kế, viết lại bằng cú pháp OpenSCAD để mở trực tiếp bằng app OpenSCAD miễn phí trên máy người dùng. Viết tay theo đúng công thức của bản `.py`. Không tải được *binary* OpenSCAD desktop trong sandbox (GitHub Releases redirect sang domain ngoài allowlist), nhưng **đã chạy được qua chính engine OpenSCAD 2025.01.19 thật** bằng gói npm `openscad-wasm-prebuilt` (WASM, qua Node.js — xem `render_scad_wasm.mjs`). Cả 5 biến thể `PART` dựng thành khối đa diện hợp lệ, không lỗi CGAL; thể tích/bounding-box của `top`/`bottom`/`pin` khớp bản `.py` (CadQuery/OCCT) trong sai số <0.3% (`cross_check.py`) — 2 lõi hình học độc lập đồng ý với nhau. Đây là bằng chứng hình học đúng, KHÔNG phải bằng chứng công thái học/cơ học đã kiểm chứng.
+- **render_preview.py**: dựng ảnh PNG xem nhanh từ STL (không cần GPU/FreeCAD GUI).
+- **README.md** ⭐: bối cảnh vấn đề, tham khảo thị trường (Oval-8, nẹp nhiệt dẻo, HERO glove), bảng tham số, hướng dẫn in, BOM, giới hạn tự khai + việc phải làm trước khi dùng thật. Trạng thái `PROPOSED` (`CLM-HW-004`/`DEC-HW-006`), **chưa in, chưa đo lực**.
 
 ### `research/` — Hạ tầng nghiên cứu có kiểm chứng
 - **Ledgers**: mọi tuyên bố, nguồn, quyết định, truy vấn đều có vết. Sau lượt rà soát 1 (2026-09-19): SOURCE_LEDGER 114 dòng (24 nguồn mới), QUERY_LOG +13 bản ghi, CLAIM_LEDGER 15 dòng (CLM-NOV-003 → `CONFLICTED`, thêm CLM-NOV-005 + CLM-MET-002).
