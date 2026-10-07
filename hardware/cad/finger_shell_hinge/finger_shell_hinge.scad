@@ -316,10 +316,17 @@ module bottom_shell_print_ready() { rotate([0, -90, 0]) bottom_shell(); }
 module assembly_closed() {
     color("Orange")     top_shell();
     color("SteelBlue")  bottom_shell();
+    color("DimGray")    hinge_pin(); // truc ban le -- xem ghi chu loi da sua ben duoi
 }
 
 // Xoay nửa lòng tay quanh trục bản lề (đường thẳng qua (*, y_hinge, 0),
 // song song trục X) — minh hoạ thao tác "mở ra để đặt ngón vào".
+// LỖI ĐÃ SỬA 2026-10-07 (phát hiện bởi chủ dự án: "thiếu cái trục ở giữa
+// bản lề"): trước đây assembly_closed()/assembly_open() chỉ vẽ top_shell()
+// + bottom_shell(), QUÊN vẽ hinge_pin() -> nhìn vào thấy 2 nửa khớp ống kề
+// nhau nhưng không có chốt xuyên qua, trông như bản lề "rỗng". Trục nằm
+// đúng trên đường tâm xoay (y = y_hinge, z = 0, song song trục X) nên vị
+// trí KHÔNG đổi giữa đóng/mở — chỉ cần vẽ thêm, không cần xoay theo.
 module assembly_open(angle = OPEN_ANGLE) {
     color("Orange") top_shell();
     color("SteelBlue")
@@ -327,6 +334,7 @@ module assembly_open(angle = OPEN_ANGLE) {
         rotate([angle, 0, 0])
         translate([0, -y_hinge, 0])
         bottom_shell();
+    color("DimGray") hinge_pin();
 }
 
 // =====================================================================

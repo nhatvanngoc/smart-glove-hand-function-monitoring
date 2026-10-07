@@ -165,6 +165,8 @@ và `cross_check.py` vẫn PASS sau khi sửa (2 bản vẫn khớp nhau, lệch
 
 Bài học: dù CAD đã "chạy được" (không lỗi CGAL/OCCT, bbox/thể tích đúng dự kiến), **không có nghĩa là hình học đó in được thành 1 khối** — vẫn cần kiểm tra tính liên kết (connectivity) riêng, vì phép hợp (`union`/`fuse`) của 2 khối không chạm nhau sẽ "thành công" về mặt code nhưng tạo ra 2 vật thể độc lập.
 
+**Lỗi #2 (cùng ngày, cùng phiên phát hiện):** chủ dự án nhận ra ảnh lắp ráp (đóng/mở) **thiếu hẳn trục chốt bản lề** — 2 nửa vỏ có đủ khớp ống xen kẽ nhưng không có gì "xuyên qua" để giữ chúng lại, nhìn giống bản lề rỗng. Nguyên nhân: `export_assembly_state()` (.py) và `assembly_closed()`/`assembly_open()` (.scad) vốn chỉ vẽ 2 nửa vỏ, **quên vẽ `hinge_pin`/`build_pin()`** dù chi tiết chốt đã có sẵn trong file từ đầu (xuất riêng ra `hinge_pin.stl`). Đã sửa: thêm trục (màu xám đậm để phân biệt) vào cả 2 trạng thái lắp ráp ở cả 2 file; vì trục nằm đúng trên tâm trục xoay nên vị trí của nó không đổi giữa đóng/mở, không cần tính toán thêm.
+
 ## 6. Hướng dẫn in 3D (khuyến nghị — chưa kiểm chứng bằng mẫu in thật)
 
 - **Vật liệu:** PETG (đồng bộ với `docs/04` §6), ≥ 5 vòng tường, 100% hoặc ≥ 60% infill ở vùng ngàm/bản lề (chịu lực lặp lại).

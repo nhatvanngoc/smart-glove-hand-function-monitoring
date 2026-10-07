@@ -21,6 +21,7 @@ os.makedirs(RENDER_DIR, exist_ok=True)
 
 DORSAL_COLOR = "#d9a066"   # nửa mu tay (cố định, mang khối ngàm)
 PALMAR_COLOR = "#6699cc"   # nửa lòng tay (xoay quanh bản lề, mang tay địn ngàm)
+PIN_COLOR    = "#333333"   # trục bản lề (hinge_pin) -- xem loi da sua 2026-10-07
 
 
 def render(paths, colors, out_name, elev=20, azim=-55, title="", alpha=1.0):
@@ -69,34 +70,34 @@ def main():
         title="Nua LONG TAY (xoay quanh ban le) - 2 khop ban le + tay don ngam",
     )
     render(
-        [b + "assembly_closed__top.stl", b + "assembly_closed__bottom.stl"],
-        [DORSAL_COLOR, PALMAR_COLOR],
+        [b + "assembly_closed__top.stl", b + "assembly_closed__bottom.stl", b + "assembly_closed__pin.stl"],
+        [DORSAL_COLOR, PALMAR_COLOR, PIN_COLOR],
         "03_assembly_closed_iso.png",
-        title="Trang thai DONG (khi da cai ngam) - goc nhin iso",
+        title="Trang thai DONG (khi da cai ngam) - goc nhin iso (co truc ban le)",
         elev=20,
         azim=-55,
     )
     render(
-        [b + "assembly_closed__top.stl", b + "assembly_closed__bottom.stl"],
-        [DORSAL_COLOR + "aa", PALMAR_COLOR + "aa"],
+        [b + "assembly_closed__top.stl", b + "assembly_closed__bottom.stl", b + "assembly_closed__pin.stl"],
+        [DORSAL_COLOR + "aa", PALMAR_COLOR + "aa", PIN_COLOR + "cc"],
         "04_assembly_closed_end.png",
-        title="Trang thai DONG - nhin doc truc ngon tay (tiet dien)",
+        title="Trang thai DONG - nhin doc truc ngon tay (tiet dien, co truc ban le)",
         elev=0,
         azim=0,
     )
     render(
-        [b + "assembly_open__top.stl", b + "assembly_open__bottom.stl"],
-        [DORSAL_COLOR, PALMAR_COLOR],
+        [b + "assembly_open__top.stl", b + "assembly_open__bottom.stl", b + "assembly_open__pin.stl"],
+        [DORSAL_COLOR, PALMAR_COLOR, PIN_COLOR],
         "05_assembly_open_iso.png",
-        title="Trang thai MO (ban le xoay ~150 do) - dat ngon vao, chua cai ngam",
+        title="Trang thai MO (ban le xoay ~150 do) - dat ngon vao, chua cai ngam (co truc ban le)",
         elev=22,
         azim=-60,
     )
     render(
-        [b + "assembly_open__top.stl", b + "assembly_open__bottom.stl"],
-        [DORSAL_COLOR + "cc", PALMAR_COLOR + "cc"],
+        [b + "assembly_open__top.stl", b + "assembly_open__bottom.stl", b + "assembly_open__pin.stl"],
+        [DORSAL_COLOR + "cc", PALMAR_COLOR + "cc", PIN_COLOR],
         "06_assembly_open_end.png",
-        title="Trang thai MO - nhin doc truc ngon tay",
+        title="Trang thai MO - nhin doc truc ngon tay (co truc ban le)",
         elev=0,
         azim=0,
     )

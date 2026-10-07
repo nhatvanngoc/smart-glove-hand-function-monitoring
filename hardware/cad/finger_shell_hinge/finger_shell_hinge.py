@@ -346,15 +346,23 @@ def build_open_bottom_shell(angle_deg=150.0):
     return bot.rotate((p0.x, p0.y, p0.z), (p1.x, p1.y, p1.z), angle_deg)
 
 
-def export_assembly_state(top, bot, name):
+def export_assembly_state(top, bot, name, pin=None):
     asm = cq.Assembly()
     asm.add(top, name="top_shell_dorsal", color=cq.Color(0.85, 0.63, 0.40, 1.0))
     asm.add(bot, name="bottom_shell_palmar", color=cq.Color(0.40, 0.60, 0.80, 1.0))
+    if pin is not None:
+        # Trục bản lề (hinge_pin) — SỬA LỖI 2026-10-07 (phát hiện bởi chủ dự
+        # án: "thiếu cái trục ở giữa bản lề"): trục nằm đúng trên đường tâm
+        # xoay (hinge_axis_points()) nên vị trí KHÔNG đổi giữa đóng/mở, chỉ
+        # cần thêm vào assembly để nhìn thấy chốt xuyên qua các khớp ống.
+        asm.add(pin, name="hinge_pin", color=cq.Color(0.25, 0.25, 0.25, 1.0))
     asm.save(os.path.join(OUT_DIR, f"{name}.step"))
     # Xuất riêng từng mảnh dạng STL (ở đúng vị trí/góc xoay của trạng thái này)
     # để xem nhanh bằng render_preview.py — KHÔNG hợp nhất 2 khối (chỉ để xem, không in).
     cq.exporters.export(top, os.path.join(OUT_DIR, f"{name}__top.stl"))
     cq.exporters.export(bot, os.path.join(OUT_DIR, f"{name}__bottom.stl"))
+    if pin is not None:
+        cq.exporters.export(pin, os.path.join(OUT_DIR, f"{name}__pin.stl"))
 
 
 def main():
@@ -374,10 +382,12 @@ def main():
         print("  exported", name)
 
     # Trạng thái lắp ráp: ĐÓNG (0°) và MỞ (xoay nửa lòng tay quanh trục bản lề)
-    export_assembly_state(top, bot, "assembly_closed")
+    # — CẢ 2 trạng thái đều kèm hinge_pin (trục chốt) vì chốt nằm đúng trên
+    # tâm xoay nên không di chuyển khi mở/đóng (xem hinge_axis_points()).
+    export_assembly_state(top, bot, "assembly_closed", pin=pin)
     bot_open = build_open_bottom_shell(angle_deg=150.0)
-    export_assembly_state(top, bot_open, "assembly_open")
-    print("  exported assembly_closed, assembly_open")
+    export_assembly_state(top, bot_open, "assembly_open", pin=pin)
+    print("  exported assembly_closed, assembly_open (kem hinge_pin)")
 
     print("Xong. File STEP/STL nằm trong:", OUT_DIR)
 
