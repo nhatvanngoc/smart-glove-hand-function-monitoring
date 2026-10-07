@@ -59,8 +59,11 @@ H_in = 16.0; // bề dày trong, hướng mu-lòng (mm)
 
 /* [2. Vỏ cứng] */
 t_wall = 2.2; // bề dày thành khung (mm)
-r_in   = 2.5; // bo góc mặt trong
-r_out  = 4.0; // bo góc mặt ngoài
+// 2026-10-07 (theo yêu cầu "đổi sang hình trụ, bớt vuông cứng"): bỏ bo góc
+// chữ nhật kiểu cũ (r_in/r_out). Tiết diện giờ là "viên thuốc dẹt": 2 mặt
+// mu/lòng tay có 1 đoạn THẲNG rộng flat_w (chỗ dán cảm biến), 2 cạnh hông
+// (bản lề + ngàm cài) bo tròn HẾT MỨC bằng 1 cung ELIP lớn. Xem capsule_prism().
+flat_w = 12.0; // bề rộng đoạn thẳng ở giữa mặt mu/lòng tay (mm)
 
 /* [3. Hốc cảm biến Velostat + đồng tự dính] */
 pocket_w     = 8.0;  // bề rộng hốc
@@ -164,13 +167,41 @@ module capsule_x(r, l) {
     }
 }
 
+// Danh sách điểm (Y,Z) của tiết diện "viên thuốc dẹt": PHẲNG ở giữa 2 mặt
+// mu/lòng tay (rộng flat_w), BO TRÒN hết mức ở 2 cạnh hông bằng 1 cung ELIP
+// lớn (bán trục Y = w/2-flat_w/2, bán trục Z = h/2), nối tiếp tuyến với đoạn
+// thẳng (không góc vuông). Tương đương rounded_prism() trong bản .py.
+// (2026-10-07, theo yêu cầu "đổi sang hình trụ, bớt vuông cứng")
+function capsule_profile_pts(w, h, flat_w, n = 16) =
+    let(hf = flat_w / 2, a = w / 2 - hf, b = h / 2)
+    concat(
+        [[hf, h / 2], [-hf, h / 2]],
+        [for (i = [1 : n]) let(t = 90 + i * 90 / n) [-hf + a * cos(t), b * sin(t)]],
+        [for (i = [1 : n]) let(t = 180 + i * 90 / n) [-hf + a * cos(t), b * sin(t)]],
+        [[hf, -h / 2]],
+        [for (i = [1 : n]) let(t = 270 + i * 90 / n) [hf + a * cos(t), b * sin(t)]],
+        [for (i = [1 : n]) let(t = 0 + i * 90 / n) [hf + a * cos(t), b * sin(t)]]
+    );
+
+// Lăng trụ dọc theo X, tiết diện (Y,Z) là "viên thuốc dẹt" ở trên.
+module capsule_prism(length_x, w, h, flat_w, x0 = 0, length_margin = 0) {
+    pts = capsule_profile_pts(w, h, flat_w, 16);
+    translate([x0, 0, 0])
+        rotate([0, 90, 0])
+            linear_extrude(height = length_x + length_margin)
+                // polygon() nhận (local_x,local_y); sau rotate([0,90,0]) thì
+                // global_y=local_y, global_z=-local_x -- nên truyền [-Z,Y]
+                // để bù lại, cho global (Y,Z) đúng như tiết diện mong muốn.
+                polygon(points = [for (p = pts) [-p[1], p[0]]]);
+}
+
 // =====================================================================
 // 2) ỐNG CƠ SỞ (vỏ ngoài trừ lòng trong) + CẮT ĐÔI theo mặt Z=0
 // =====================================================================
 module base_tube() {
     difference() {
-        rounded_box_x(L, W_out, H_out, r_out, x0 = 0);
-        rounded_box_x(L + 4, W_in, H_in, r_in, x0 = -2);
+        capsule_prism(L, W_out, H_out, flat_w, x0 = 0);
+        capsule_prism(L + 4, W_in, H_in, flat_w, x0 = -2);
     }
 }
 

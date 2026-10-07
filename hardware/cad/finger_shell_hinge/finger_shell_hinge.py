@@ -43,8 +43,14 @@ class P:
 
     # --- Vỏ cứng ---
     t_wall = 2.2       # bề dày thành khung (mm), PETG, >=2 lớp tường 0.4mm nozzle
-    r_in = 2.5         # bo góc mặt trong (thoải mái da)
-    r_out = 4.0        # bo góc mặt ngoài
+    # 2026-10-07 (theo yêu cầu "đổi sang hình trụ, bớt vuông cứng"): bỏ cách bo góc
+    # chữ nhật kiểu cũ (r_in/r_out, góc bo nhỏ ~2.5-4mm). Tiết diện giờ là 1 lăng trụ
+    # "viên thuốc dẹt": 2 mặt mu tay/lòng tay có 1 đoạn THẲNG ở giữa (đủ rộng để dán
+    # cảm biến phẳng), còn 2 CẠNH HÔNG (nơi gắn bản lề + ngàm cài) được bo tròn HẾT
+    # MỨC có thể bằng 1 cung ELIP lớn (gần giống nửa hình trụ tròn, không còn góc
+    # vuông). Xem rounded_prism()/README mục "Tiết diện (2026-10-07)".
+    flat_w = 12.0      # bề rộng đoạn thẳng còn lại ở giữa mặt mu/lòng tay (mm) —
+                       # mặc định = pocket_w + 2*2mm biên, đủ chứa hốc cảm biến.
 
     # --- Hốc cảm biến (Velostat + đồng tự dính, theo docs/04 §6) ---
     pocket_w = 8.0     # bề rộng hốc áp cảm biến (mm)
@@ -99,23 +105,48 @@ p = P()
 
 
 # =====================================================================
-# 2) KHỐI ỐNG CƠ SỞ (bo góc chữ nhật) rồi cắt đôi theo mặt Z=0
+# 2) KHỐI ỐNG CƠ SỞ — tiết diện "viên thuốc dẹt" (flat-top capsule), cắt đôi
+#    theo mặt Z=0
 # =====================================================================
-def rounded_prism(length_x, w, h, r, x_off=0.0, length_margin=0.0):
-    """Lăng trụ bo góc dọc theo X, mặt cắt (W x H) trên mặt phẳng YZ."""
-    wp = (
-        cq.Workplane("YZ")
-        .rect(w, h)
-        .extrude(length_x + length_margin)
+def rounded_prism(length_x, w, h, flat_w, x_off=0.0, length_margin=0.0):
+    """Lăng trụ dọc theo X, mặt cắt (YZ) là 1 "viên thuốc dẹt":
+      - 2 mặt mu tay/lòng tay (Z=+-h/2): có 1 đoạn THẲNG ở giữa, rộng `flat_w`
+        (chỗ áp cảm biến phẳng + rãnh dây đai) — y chạy từ -flat_w/2 đến +flat_w/2.
+      - 2 cạnh hông (Y=+-w/2, nơi gắn bản lề + ngàm cài): bo tròn bằng 1 cung
+        ELIP lớn (bán trục Y = w/2 - flat_w/2, bán trục Z = h/2), nối tiếp
+        tuyến (tangent) với đoạn thẳng — không còn góc vuông, "tròn hết mức
+        có thể" trong khi vẫn giữ đủ mặt phẳng ở giữa để dán cảm biến.
+    (2026-10-07, thay cho `rect().fillet(r)` kiểu cũ — xem README mục
+    "Tiết diện": r_in/r_out góc bo nhỏ (2.5-4mm) làm tiết diện trông "vuông,
+    cứng ngắc"; yêu cầu đổi sang "hình trụ" -> dùng cấu trúc flat-top + elip
+    lớn này để vừa tròn trịa ở 2 cạnh hông, vừa giữ mặt phẳng cần thiết cho
+    cảm biến/rãnh dây ở 2 mặt mu/lòng tay.)
+    """
+    half_flat = flat_w / 2.0
+    a = w / 2.0 - half_flat  # bán trục elip theo Y (phải > 0)
+    b = h / 2.0              # bán trục elip theo Z
+    assert a > 0.1, (
+        "flat_w qua lon so voi w (%.1f) -- khong con cho de bo tron canh hong" % w
     )
-    wp = wp.edges("|X").fillet(r)
+    profile = (
+        cq.Workplane("YZ")
+        .moveTo(half_flat, h / 2.0)
+        .lineTo(-half_flat, h / 2.0)                              # mặt mu/lòng tay (thẳng)
+        .ellipseArc(a, b, angle1=90, angle2=180, startAtCurrent=True)   # cạnh hông trái, nửa trên
+        .ellipseArc(a, b, angle1=180, angle2=270, startAtCurrent=True)  # cạnh hông trái, nửa dưới
+        .lineTo(half_flat, -h / 2.0)                               # mặt lòng/mu tay (thẳng)
+        .ellipseArc(a, b, angle1=270, angle2=360, startAtCurrent=True)  # cạnh hông phải, nửa dưới
+        .ellipseArc(a, b, angle1=0, angle2=90, startAtCurrent=True)     # cạnh hông phải, nửa trên
+        .close()
+    )
+    wp = profile.extrude(length_x + length_margin)
     wp = wp.translate((x_off, 0, 0))
     return wp
 
 
 def base_tube():
-    outer = rounded_prism(p.L, p.W_out, p.H_out, p.r_out)
-    inner = rounded_prism(p.L, p.W_in, p.H_in, p.r_in, x_off=-2.0, length_margin=4.0)
+    outer = rounded_prism(p.L, p.W_out, p.H_out, p.flat_w)
+    inner = rounded_prism(p.L, p.W_in, p.H_in, p.flat_w, x_off=-2.0, length_margin=4.0)
     return outer.cut(inner)
 
 

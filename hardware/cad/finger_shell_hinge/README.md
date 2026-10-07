@@ -79,11 +79,11 @@ Toàn bộ nằm trong class `P` ở đầu `finger_shell_hinge.py`. Các số d
 | `L` | 24 mm | Chiều dài khung dọc ngón, đặt giữa thân đốt, tránh 2 khớp MCP/PIP |
 | `W_in`, `H_in` | 19 mm, 16 mm | Kích thước trong (ngang × dày) quanh đốt ngón — **phải đo tay** |
 | `t_wall` | 2.2 mm | Bề dày vách — PETG, ≥ 5 vòng tường (nozzle 0.4 mm) để cứng vững quanh hốc cảm biến |
-| `r_in`, `r_out` | 2.5 / 4.0 mm | Bo góc trong/ngoài — giảm cấn vào da |
+| `flat_w` | 12 mm | **[2026-10-07, thay cho `r_in`/`r_out` cũ]** Bề rộng đoạn THẲNG ở giữa mặt mu/lòng tay (chỗ dán cảm biến) — 2 cạnh hông (bản lề + ngàm) bo tròn hết mức bằng cung elip lớn, xem §5d |
 | `pocket_w/len/depth` | 8 / 16 / 1.3 mm | Hốc khoét để dán sandwich Velostat + đồng tự dính (theo `docs/04` §6) |
 | `r_knuckle`, `r_pin` | 3.0 / 1.15 mm | Khớp ống bản lề (Ø ngoài 6 mm) và lỗ xỏ chốt (Ø 2.3 mm cho chốt Ø2.0–2.2 mm) |
 | `n_knuckle_top/bot` | 3 / 2 | Số khớp ống xen kẽ — **phải lệch nhau đúng 1** để xen kẽ đều (có `assert` trong code) |
-| `catch_h`, `tooth_h`, `tooth_pitch` | 9 / 0.9 / 2.6 mm | Khối ngàm cố định, 2 nấc răng (preload thấp/cao) |
+| `catch_h`, `tooth_h`, `tooth_pitch` | 14 / 0.9 / 2.6 mm | Khối ngàm cố định, 2 nấc răng (preload thấp/cao) — `catch_h` tăng từ 9→14mm khi sửa lỗi lệch Z, xem §5c |
 | `arm_h`, `arm_t`, `arm_hook` | 13 / 1.1 / 1.1 mm | Tay đòn đàn hồi + độ sâu móc |
 | `strap_slot_w/h` | 3.2 / 6.0 mm | Khe luồn dây đai phụ (Velcro/thun) — khóa an toàn lớp 2 |
 
@@ -225,6 +225,23 @@ Ngoài việc sửa lỗi lệch Z ở trên, đã bo tròn thêm các chi tiế
 - **Chưa bo tròn:** mép hở 2 đầu ống (nơi tiết diện ống tròn-bo-góc gặp 2 mặt phẳng đầu ống thẳng, tại X=0 và X=L) — đây là nơi tiếp xúc trực tiếp với da nhiều nhất nên về lý thuyết cũng nên bo, nhưng việc bo tròn đầy đủ 3D ở đây đòi hỏi kỹ thuật dựng hình phức tạp hơn nhiều (có nguy cơ làm mỏng thành ống ở đúng đầu mút nếu làm không cẩn thận) — **cố tình hoãn lại**, ưu tiên sự chắc chắn/an toàn của hình học hơn là làm nhanh cho đẹp. Nếu chủ dự án muốn, đây sẽ là việc cần làm ở vòng sau.
 
 **Lưu ý kỹ thuật khi dựng bằng OpenSCAD:** ban đầu dùng `hull()` của 2 hình cầu để tạo "viên nang" cho trục — dựng ĐƯỢC từng chi tiết riêng lẻ, nhưng khi `union()` vào toàn bộ lắp ráp phức tạp (`top_shell`) thì CGAL (bộ dựng hình của OpenSCAD) báo lỗi nội bộ ("assertion violation") và ÂM THẦM cắt mất ~0.5mm ở mỗi đầu trục (không crash, không báo lỗi ra STL, chỉ lộ ra khi so bounding-box với bản CadQuery bằng `cross_check.py`). Đã đổi sang dựng "viên nang" bằng `union()` của 1 hình trụ ngắn hơn + 2 chỏm cầu (hình dạng giống hệt, nhưng ổn định hơn với CGAL) — sau khi đổi, `cross_check.py` khớp lại hoàn toàn (<0.1% lệch thể tích, bbox khớp đến 0.003mm). Đây là một ví dụ cụ thể cho thấy **"không có lỗi CGAL/không crash" không đồng nghĩa với "hình học đúng như ý đồ"** — bài học tương tự mục 5a, lần này ở công cụ OpenSCAD thay vì CadQuery.
+
+## 5d. Thay đổi thiết kế theo yêu cầu — tiết diện "hình trụ" thay cho hộp chữ nhật bo góc (2026-10-07)
+
+**Phản hồi của chủ dự án** sau khi xem ảnh trạng thái đóng: tiết diện hộp chữ nhật bo góc nhìn "vuông, cứng ngắc", đề nghị đổi sang dáng tròn/hình trụ hơn.
+
+**Làm rõ trước khi sửa:** ngón tay thật có tiết diện hơi bầu dục (rộng hơn dày — `W_in=19mm` x `H_in=16mm`), và 2 cạnh hông của khung cần có **mặt tương đối phẳng** để gắn 3 khớp bản lề + khối ngàm cài, còn 2 mặt mu/lòng tay cần **mặt phẳng** để dán hốc cảm biến Velostat+đồng (`pocket_w=8mm`). Một hình trụ tròn thật (1 đường kính duy nhất, không còn phân biệt rộng/dày) sẽ cần thêm "mấu" phẳng nhô ra mới gắn được bản lề/ngàm — thay đổi lớn hơn, nên đã hỏi lại chủ dự án và chọn phương án: **bo tròn hết mức có thể ở 2 cạnh hông, giữ nguyên 2 mặt mu/lòng tay phẳng**.
+
+**Đã làm** (cả 2 file, hàm `rounded_prism()`/`capsule_prism()` dựng lại từ đầu):
+- Bỏ hẳn cách bo góc chữ nhật kiểu cũ (`r_in=2.5mm`, `r_out=4.0mm` — góc bo nhỏ so với kích thước tổng, nhìn "vuông, cứng ngắc" như chủ dự án nhận xét).
+- Tiết diện mới là 1 lăng trụ **"viên thuốc dẹt" (capsule)**: 2 mặt mu tay/lòng tay chỉ còn 1 đoạn **THẲNG** ở giữa rộng `flat_w=12mm` (đủ chứa hốc cảm biến 8mm + biên 2mm mỗi bên) — đủ để dán phẳng cảm biến/luồn dây đai. Toàn bộ phần còn lại của tiết diện, **kể cả 2 cạnh hông**, là 1 đường cong elip LIÊN TỤC nối tiếp tuyến (không góc gãy) với 2 đầu đoạn thẳng: với `W_out=23.4mm`, `H_out=20.4mm`, bán trục elip theo chiều rộng `a = W_out/2 - flat_w/2 = 5.7mm`, theo chiều dày `b = H_out/2 = 10.2mm`. Nói cách khác, cạnh hông không còn là góc bo nhỏ rời rạc như trước mà là 1 nửa elip trơn chạy suốt từ mép trên xuống mép dưới — không còn đoạn thẳng dọc hay góc vuông nào ở đó.
+- Giới hạn hình học còn lại: đoạn thẳng `flat_w=12mm` ở mặt mu/lòng tay là bắt buộc phải giữ (chứa hốc cảm biến 8mm + biên 2mm mỗi bên); nếu giảm `flat_w` về gần 0 để tiến tới hình trụ/elip tròn tuyệt đối trên toàn tiết diện thì sẽ không còn đủ mặt phẳng để khoét hốc cảm biến — đây là lý do dừng ở `flat_w=12mm` thay vì bỏ hẳn mặt phẳng.
+- **Đã kiểm tra độ dày thành còn lại** (giữa mặt ngoài và mặt trong, dọc theo cung elip, tính bằng toạ độ tham số — không phải đo trên mẫu in thật): mỏng nhất ≈ 2.08mm (tại góc ~52° so với mặt phẳng ngang), so với `t_wall=2.2mm` danh định — giảm ~6%, vẫn an toàn cho PETG 5 vòng tường 0.4mm. Vùng mặt phẳng (nơi hốc cảm biến) và vùng xích đạo cạnh hông (nơi gắn khớp bản lề) đều giữ đúng `t_wall=2.2mm`.
+- **Bản lề và ngàm cài không cần sửa gì** — công thức gắn khớp ống (`add_hinge_knuckles`, tại `z=0`, `y=±W_out/2`) và gốc nối ngàm (`add_latch_catch`/`add_latch_arm`, cũng neo tại `y=±W_out/2`) đều dùng đúng điểm "xích đạo" của tiết diện mới, vị trí không đổi so với tiết diện cũ (elip tại z=0 vẫn chạm đúng y=±W_out/2, giống hệt hình chữ nhật bo góc cũ tại z=0) — đã xác nhận lại bằng `check_latch_engagement.py` và `check_connectivity.py`, không có hồi quy.
+
+**Kiểm chứng:** `cross_check.py` khớp lại hoàn toàn giữa bản `.py` (CadQuery, dùng `ellipseArc()`) và bản `.scad` (OpenSCAD, dùng `polygon()` lấy mẫu 16 điểm/góc phần tư qua hàm số) — lệch thể tích 0.11-0.27% (chỉ do rời rạc hoá góc, OpenSCAD dùng đa giác xấp xỉ còn CadQuery dùng cung elip thật mượt của OpenCASCADE). `check_connectivity.py` và `check_latch_engagement.py` đều PASS, không hồi quy so với §5c.
+
+**Giới hạn tự khai:** độ dày thành mỏng nhất (2.08mm) chỉ tính bằng công thức hình học (khoảng cách Euclid giữa 2 đường cong tham số hoá cùng góc — xấp xỉ, không phải khoảng cách pháp tuyến chính xác tuyệt đối), **chưa đo trên mẫu in thật** và chưa có phân tích độ bền cơ học (FEA) cho vùng thành cong mỏng hơn này so với bản chữ nhật cũ. Cảm giác "tròn trịa, bớt cứng ngắc" mới chỉ được xác nhận qua ảnh CAD (`out/renders/`), chưa xác nhận bằng cách cầm/sờ mẫu in thật.
 
 ## 6. Hướng dẫn in 3D (khuyến nghị — chưa kiểm chứng bằng mẫu in thật)
 
