@@ -1,0 +1,60 @@
+# build_idea1_toggle_clasp.py
+##############################################################################
+==============================================================================
+Ý TƯỞNG 1 — VÒNG KHOÁ QUÁ TÂM KIỂU MÓC CÓ MẶT DỐC (Side Toggle Clasp)
+Hình học khoá SUY RA TỪ synthesis/toggle_synthesis.py (không chép tay số)
+==============================================================================
+A. KHUNG TOẠ ĐỘ CẦN GẠT (mm; gốc = tâm đốt gần, +X = sườn, +Y = mu)
+   A (tâm quay)  = (  5.791,  13.698)  r=14.87  φ=67.08°
+   P (chốt Ø3.0) = (  8.219,  10.520)  r=13.35  |A–P|= 4.00  nghiêng 30.0°
+   β mặt dốc = 15.0°   K_RAMP (u+v) = 6.1213   tay đòn nhả R_handle = 4.15 mm
+------------------------------------------------------------------------------
+B. KIỂM TRA KHOÁ (số học, không phải đo)
+   B1. Mặt dốc tiếp tuyến chốt P: tiếp điểm danh nghĩa (u,v) = ( 5.061,  1.061)
+       |(u+v) − K_RAMP|/√2 = 0.0000 mm ⇒ tiếp xúc thiết kế ĐÚNG (khe hở 0)  PASS
+       Hình học IN: mặt dốc lùi 0.15 mm theo pháp tuyến (khe hở in 0.15 mm) — bị
+       ÉP KÍN bởi phản lực ngón khi đeo ⇒ trạng thái LÀM VIỆC vẫn khép kín, không rơ.
+       Đoạn mặt dốc dùng được: u ∈ [3.60, 5.94] (dài 2.34 mm) — đủ cho ±0.27 mm
+       dịch chốt khi đường kính ngón Ø20→Ø24.
+   B2. MẶT CHẶN CỨNG (land trên 2 tai): khe hở danh nghĩa 0.05 mm, tay đòn
+       STOP_R = |u| trọng tâm land = 3.10 mm ⇒ lực tì = M/STOP_R = 4.21 N.
+       Tải ÉP thêm vào mặt chặn ⇒ form-closed; đảo dấu mô-men phải quay 135°.
+   B3. Lá mỏng (chốt mềm A): 0.55 × 7.60 mm, tay đòn hiệu dụng 4.30 mm ⇒ k ≈ 4.77 N/mm
+       (đặt trước + bù dung sai in/từ biến; KHÔNG phải khớp rời ⇒ không rơ)
+   [PASS] B4. KHE thân ↔ tay kẹp: HỞ 0.450 mm, chồng lấn 0.0000° mặt đầu tay kẹp 59.98° | mặt đầu thân 62.02° (cung thân 256.98°, tay kẹp 66.98°)
+   [PASS] B5–B7. Rãnh đệm không cắt vào LÁ BẢN LỀ (hở tay kẹp) chồng lấn 0.00°
+   [PASS] B5–B7. Rãnh đệm không cắt vào KHE thân ↔ tay kẹp chồng lấn 0.00°
+   [PASS] B5–B7. Rãnh đệm không cắt vào RÃNH CẢM BIẾN chồng lấn 0.00°
+------------------------------------------------------------------------------
+C. ĐỘNG HỌC KHOÁ / NHẢ (mô phỏng 2D số học)
+   [PASS] C0. Khe hở móc ↔ tay kẹp (đóng)    +0.360 mm ≥ 0.18 mm
+   [PASS] C1. Mặt dốc ↔ tâm chốt P = R − vát + khe hở in 1.4500 mm (kỳ vọng 1.4500 = 1.50 − 0.20 + 0.15)
+   [PASS] C2. Hành trình ĐẶT TRƯỚC (khe hở in) ≤ 0.25 mm tay kẹp mở 0.50° = 0.11 mm ở r=12.6 — đây là khe hở IN bị lực đệm/ngón
+       ÉP KÍN (không phải khe hở cơ khí); sau đó đường truyền lực cứng tuyệt đối.
+      cần gạt quay   0.0° → tay kẹp mở tối đa   0.50°  [ok]
+      cần gạt quay  10.0° → tay kẹp mở tối đa   2.50°  [ok]
+      cần gạt quay  20.0° → tay kẹp mở tối đa   4.90°  [ok]
+      cần gạt quay  30.0° → tay kẹp mở tối đa   8.00°  [ok]
+      ...
+   ⇒ Ở cần gạt 34.0°: tay kẹp mở hết 22.74° (khe 5 mm) — NHẢ HẲN
+     ngón tay cái đi 2.46 mm; lực nhả ≈ 4.64 N (M/R_handle + lá mỏng)
+   [PASS] C3. Hành trình nhả ≤ 60° (một động tác) 34.0° ≤ 60°
+------------------------------------------------------------------------------
+D. RÀNG BUỘC HÌNH HỌC CỦA BRIEF
+   [PASS] Z dài trục 12–16 mm                14.03 mm
+   [PASS] ΔX sườn ≤ 2.0 mm                   -0.16 mm (X ∈ [-12.04, 12.04])
+   Bao hình X×Y×Z: 24.09 × 36.01 × 14.03 mm
+------------------------------------------------------------------------------
+E. KHỐI LƯỢNG (ngân sách in)
+   PETG 2.17 cm³ → ≈ 2.76 g   |   TPU 85A 1.489 cm³ → ≈ 1.80 g   |   tổng ≈ 4.56 g
+------------------------------------------------------------------------------
+F. KIỂM TRA KHỐI (solid)
+   [PASS] Đúng 1 khối đặc liền               1 khối
+   [PASS] B8. Lòng vòng SẠCH (không nub tì da) V vật liệu trong lòng = 0.00 mm³ (dung sai 3 mm³ cho sai số đa giác hoá)
+   [PASS] Khối hợp lệ (OCCT isValid)         True
+   Xuất 5 STL tại: /home/user/smart-glove-hand-function-monitoring/hardware/finger_fixation/stl/idea1
+==============================================================================
+KẾT LUẬN: TẤT CẢ MỤC KIỂM TRA PASS.
+==============================================================================
+
+##############################################################################

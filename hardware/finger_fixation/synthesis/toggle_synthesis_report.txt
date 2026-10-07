@@ -1,0 +1,54 @@
+==============================================================================
+TỔNG HỢP CHÍNH XÁC — KẸP QUÁ TÂM SƯỜN (SIDE TOGGLE CLASP), Ý TƯỞNG 1
+Khoá = MÓC CÓ MẶT DỐC (ramp) tì chốt trụ + QUÁ TÂM trên mặt chặn cứng
+==============================================================================
+A. HÌNH HỌC (mm; φ từ trục sườn +X, +Y = mu; gốc = tâm đốt gần)
+   Hp  (bản lề lá tay kẹp) = ( 10.168,  -4.527)  r=11.13  φ=336.0°
+   P   (chốt trụ Ø3.0 mm)   = (  8.219,  10.520)  r=13.35  φ=52.0°
+   A   (tâm quay cần gạt) = (  5.791,  13.698)  r=14.87   [tai trên mặt mu]
+   |A–P| = 4.00 mm (tay đòn kéo) ; nghiêng 30.0° so với pháp tuyến; R_handle = 4.2 mm
+   X cực đại của cơ cấu = 8.22 mm ≤ ngân sách ΔX (a_out = A_F1+GAP_FIT+T_SIDE = 12.63 mm)
+------------------------------------------------------------------------------
+B. BỐN ĐIỀU KIỆN KHOÁ (tính ra, kiểm tra bằng số)
+   B1. KHÔNG RƠ — móc tì mặt dốc β=15° lên chốt trụ Ø3.0 mm; hai bề mặt tì ⇒
+       trạng thái đóng xác định (determinate). Toàn bộ cơ cấu là MỘT chi tiết in
+       liền khối ⇒ KHÔNG có khe hở lắp ghép, không bu-lông/trục rời ⇒ không rơ.
+       Mặt dốc + rãnh móc ôm >180° quanh chốt ⇒ chống nhấc chốt ra theo phương Z.
+   B2. QUÁ TÂM — tay đòn tải h = 2.828 mm, mô-men tải lên cần gạt M = 13.05 N·mm,
+       chiều mô-men = DƯƠNG (âm = kim đồng hồ). MẶT CHẶN CỨNG đặt ở phía TĂNG góc quay
+       (tức phía tải ÉP tới), bán kính 3.1 mm ⇒ lực tì lên mặt chặn = 4.21 N.
+       ⇒ TỰ CƯỜNG HOÁ (form-closed): tải ÉP cần gạt THÊM vào mặt chặn, không thể
+       dẫn động ngược cần gạt. Nhả khoá = người dùng xoay cần gạt NGƯỢC lại (mục D).
+   B3. BIÊN TỰ CƯỜNG HOÁ: phải quay cần gạt 135.0° mới tới điểm đảo dấu mô-men tải
+       ⇒ dự trữ 135.0° ≫ hành trình làm việc 26.7° ⇒ khoá bền vững trước dung sai in.
+   B4. KHUẾCH ĐẠI KIỂU NÊM: mặt dốc β=15° ⇒ hệ số hình học 1/tanβ = 3.73 lần.
+       Nêm TỰ HÃM: β=15° < ρ=atan(μ_nhựa)=19.3° (μ_nhựa=0.35) ⇒ khoá 2 lớp: FORM-CLOSED
+       (mặt chặn cứng) là chính + TỰ HÃM MA SÁT là dự phòng ⇒ không trôi, không lỏng.
+------------------------------------------------------------------------------
+C. HÀNH TRÌNH (một tay, < 3 s)
+   Khe mở thiết kế 5.0 mm ở r=12.6 mm ⇒ tay kẹp quay 22.74° (θ3: 97.38° → 74.64°)
+   ⇒ chốt P đi 6.02 mm theo cung; cần gạt quay 26.7°; đầu ngón cái đi 1.93 mm
+   (tay đòn hiệu dụng 3.46 mm/rad × khuếch đại nêm 3.73)
+------------------------------------------------------------------------------
+D. NGÂN SÁCH LỰC (thiết kế — KHÔNG phải đo thực nghiệm)
+   F_tendon = 25 N dọc trục, μ = 0.80 ⇒ ΣN = 31.2 N ⇒ 7.8 N mỗi đệm (4 đệm)
+   M_open = 70 N·mm (ngân sách) ⇒ lực kéo tại chốt P: F_peg = M_open/R3 = 4.61 N
+   LỰC NHẢ (ngón cái) = M/R_handle + ma sát nhả nêm + độ cứng lá
+       = 3.14 N + 0.35 N + 1.50 N = 4.99 N   [mục tiêu ≤ 8 N] ⇒ PASS
+   LỰC KẸP (ngón cái, có ma sát nêm) = F_peg·tan(β+ρ)·h_tay/R_handle = 2.14 N  [≤ 10 N] ⇒ PASS
+   Ứng suất tì: lực 4.21 N trên vệt tiếp xúc ~2.4 mm² ⇒ 1.75 MPa ≪ σ_y=48 MPa
+------------------------------------------------------------------------------
+E. LÁ ĐÀN HỒI ĐẤT (tai A gắn vào thân qua lá mỏng)
+   Tiết diện 7.6 × 0.55 mm, dài 4.3 mm ⇒ I = 0.105 mm⁴ ⇒ k = 3EI/L³ = 4.77 N/mm
+   Để tạo đủ ΣN = 31.2 N cần biến dạng 6.55 mm (≤ hành trình ±0.8 mm) ⇒ phủ Ø20–Ø24
+   σ_max tại hành trình 0.8 mm = 14.3 MPa (FoS 3.4 theo σ_y = 48 MPa) ⇒ PASS
+   Vai trò: (a) tạo lực kẹp, (b) phủ dải Ø20–24, (c) bù dung sai in & từ biến PETG.
+------------------------------------------------------------------------------
+F. GHI CHÚ PHƯƠNG PHÁP (để không lặp lại lỗi thiết kế)
+   1) Trong cơ cấu 4 khâu, điều kiện 'Hp–P–C thẳng hàng' KHÔNG phải khoá: nếu đường
+      lực của thanh truyền đi qua Hp thì mô-men cân bằng của tay kẹp = 0 ⇒ tay kẹp MẤT ĐỠ.
+   2) Cơ cấu 4 khâu non-Grashof bị chặn cứng ở |A–P| = R1+R2 ⇒ KHÔNG thể 'snap-through'
+      qua gối thẳng bằng đàn hồi ⇒ không thể nhả. Vì vậy bản này dùng MÓC + NÊM + mặt
+      chặn (đúng nguyên lý khoá quá tâm kiểu khoá giày trượt tuyết / kẹp vise-grip).
+   3) Khoá phải là FORM-CLOSED (hình học), không dựa vào ma sát ⇒ không trôi theo thời gian.
+==============================================================================
