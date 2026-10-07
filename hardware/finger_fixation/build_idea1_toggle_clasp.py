@@ -43,7 +43,19 @@ import FreeCAD as App
 import Part
 import Mesh
 
-_here = os.path.dirname(os.path.abspath(__file__)) if "__file__" in globals() else os.getcwd()
+def _script_dir():
+    """Thư mục chứa script — chạy được cả khi exec() trong FreeCAD GUI (không có __file__)."""
+    if "__file__" in globals():
+        return os.path.dirname(os.path.abspath(__file__))
+    _cwd = os.getcwd()
+    for _d in (_cwd, os.path.join(_cwd, "hardware", "finger_fixation")):
+        if os.path.isfile(os.path.join(_d, "params.py")):
+            return _d
+    raise RuntimeError("Không tìm thấy params.py cạnh script — hãy chạy run_in_freecad.py "
+                       "(hoặc cd hardware/finger_fixation trước khi exec).")
+
+
+_here = _script_dir()
 if _here not in sys.path:
     sys.path.insert(0, _here)
 _syn = os.path.join(_here, "synthesis")
@@ -188,11 +200,37 @@ doc = App.newDocument(DOC_NAME)
 # =============================================================================
 # 2. TIỆN ÍCH DỰNG KHỐI
 # =============================================================================
+def fuse_chain(parts):
+    """Hợp nhiều khối bằng CHUỖI fuse HAI NGÔI (API FreeCAD chuẩn, kết quả tất định).
+
+    KHÔNG dùng Shape.multiFuse(): trong FreeCAD đó là general fuse
+    (BRepAlgoAPI_BuilderAlgo) và có thể trả về compound nhiều mảnh rời ⇒ mục kiểm
+    "1 khối liền" sẽ báo sai. Các chi tiết ở đây đều ngập nhau ≥ 0,05 mm nên chuỗi
+    fuse hai ngôi cho ĐÚNG một solid — giống hệt kết quả kiểm headless.
+    """
+    parts = [p for p in parts if p is not None]
+    acc = parts[0]
+    for p in parts[1:]:
+        acc = acc.fuse(p)
+    return acc
+
+
+def cut_all(shape, tools):
+    """Cắt LẦN LƯỢT từng dao — API FreeCAD chuẩn (cut() chỉ nhận MỘT đối tượng).
+
+    FreeCAD KHÔNG có shape.cut([a, b, c]) (PyArg_ParseTuple "O!" trong
+    src/Mod/Part/App/TopoShapePyImp.cpp) — truyền list sẽ TypeError.
+    """
+    for t in tools:
+        shape = shape.cut(t)
+    return shape
+
+
 def prism(pts2d, z0, z1):
     """Đa giác 2D (XY) → khối đặc bằng extrude theo +Z."""
     if len(pts2d) < 3:
         raise ValueError("prism cần >= 3 điểm")
-    w = Part.makePolygon([App.Vector(x, y, z0) for (x, y) in pts2d], closed=True)
+    w = Part.makePolygon([App.Vector(x, y, z0) for (x, y) in pts2d], True)   # vị trí, không keyword
     return Part.Face(w).extrude(App.Vector(0.0, 0.0, float(z1) - float(z0)))
 
 
@@ -216,7 +254,7 @@ def rad_prism(pts_zv, phi):
     that = (-math.sin(t), math.cos(t))
     pts3 = [(rhat[0] * v + that[0] * (-40.0), rhat[1] * v + that[1] * (-40.0), z)
             for (z, v) in pts_zv]
-    face = Part.Face(Part.makePolygon([App.Vector(*p) for p in pts3], closed=True))
+    face = Part.Face(Part.makePolygon([App.Vector(*p) for p in pts3], True))
     return face.extrude(App.Vector(that[0] * 80.0, that[1] * 80.0, 0.0))
 
 
@@ -350,7 +388,7 @@ post_parts = []
 for (z0, z1) in POST_Z:
     post_parts.append(prism(w_poly([(POST_U0, POST_V_TOP), (POST_U1, POST_V_TOP),
                                     (POST_U1, POST_V_BOT), (POST_U0, POST_V_BOT)]), z0, z1))
-post = post_parts[0].multiFuse(post_parts[1:]) if len(post_parts) > 1 else post_parts[0]
+post = fuse_chain(post_parts)
 
 # 5b. Lá mỏng: chân cắm vào thân vòng (khối đế) + đoạn làm việc (eo) + đầu tự do
 leaf_root = prism(w_poly([(BL_ROOT_U0, BL_V_TOP), (BL_ROOT_U1, BL_V_TOP),
@@ -359,7 +397,7 @@ leaf_root = prism(w_poly([(BL_ROOT_U0, BL_V_TOP), (BL_ROOT_U1, BL_V_TOP),
 leaf_web = prism(w_poly([(BL_ROOT_U0, BL_V_TOP), (BL_TIP_U, BL_V_TOP),
                          (BL_TIP_U, BL_V_BOT), (BL_ROOT_U0, BL_V_BOT)]),
                  BL_Z0, BL_Z1)
-leaf = leaf_root.multiFuse([leaf_web])
+leaf = leaf_root.fuse(leaf_web)      # fuse HAI NGÔI (API FreeCAD chuẩn, xem fuse_chain)
 
 # =============================================================================
 # 6. CẦN GẠT: móc có MẶT DỐC (tiếp tuyến chốt P) + chuôi + đệm ngón tay cái
@@ -478,7 +516,7 @@ def taper_wedge(sign):
     x0 = sign * x_edge
     x1 = sign * (x_edge - P.TAPER_DROP)
     pts = [(x0, 0.0, P.TAPER_Z0), (x0, 0.0, P.H_RING + 1.0), (x1, 0.0, P.H_RING + 1.0)]
-    f = Part.Face(Part.makePolygon([App.Vector(*p) for p in pts], closed=True))
+    f = Part.Face(Part.makePolygon([App.Vector(*p) for p in pts], True))
     return f.extrude(App.Vector(0.0, 40.0, 0.0)).translate(App.Vector(0.0, -20.0, 0.0))
 
 
@@ -486,8 +524,7 @@ def taper_wedge(sign):
 # 9. LẮP GHÉP (MỘT chi tiết in liền khối)
 # =============================================================================
 def union_all(parts):
-    parts = [p for p in parts if p is not None]
-    return parts[0].multiFuse(parts[1:]) if len(parts) > 1 else parts[0]
+    return fuse_chain(parts)
 
 
 # 9a. DAO DOÀNG TRONG LÒNG VÒNG (bore): xoá mọi vật liệu lọt vào lòng ngón —
@@ -496,7 +533,10 @@ def union_all(parts):
 bore = band_prism(0.02, 0.02, a_in - 0.02, b_in - 0.02, 0.0, 360.0, -1.0, P.H_RING + 1.0, n=240)
 
 body = union_all([shell, arm, blade_hinge, post, leaf, lever, thumb, peg])
-ring = body.cutMany([relief, sensor_recess, taper_wedge(+1), taper_wedge(-1), bore] + cutters)
+# Cắt lần lượt từng dao: FreeCAD CHỈ nhận MỘT đối tượng cho cut()/fuse()/common()
+# (shape.cut([a, b]) sẽ TypeError; multiFuse chỉ dùng cho PHÉP HỢP).
+ring = cut_all(body, [relief, sensor_recess, taper_wedge(+1), taper_wedge(-1), bore]
+               + cutters)
 
 # --- lỗ vít M3 ở mỏ neo (điểm bắt vỏ Bowden) ---
 hole = Part.makeCylinder(ANCHOR['screw_r'], 40.0,
@@ -773,5 +813,5 @@ else:
     print("KẾT LUẬN: TẤT CẢ MỤC KIỂM TRA PASS.")
 print("=" * 78)
 
-if FAILS:
-    sys.exit(2)
+if FAILS and os.environ.get("FF_NO_SYS_EXIT") != "1":
+    sys.exit(2)      # trong FreeCAD GUI: FF_NO_SYS_EXIT=1 để sys.exit() không đóng app

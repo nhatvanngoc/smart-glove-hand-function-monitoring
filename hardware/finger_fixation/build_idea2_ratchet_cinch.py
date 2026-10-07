@@ -35,7 +35,19 @@ import FreeCAD as App
 import Part
 import Mesh
 
-_here = os.path.dirname(os.path.abspath(__file__)) if "__file__" in globals() else os.getcwd()
+def _script_dir():
+    """Thư mục chứa script — chạy được cả khi exec() trong FreeCAD GUI (không có __file__)."""
+    if "__file__" in globals():
+        return os.path.dirname(os.path.abspath(__file__))
+    _cwd = os.getcwd()
+    for _d in (_cwd, os.path.join(_cwd, "hardware", "finger_fixation")):
+        if os.path.isfile(os.path.join(_d, "params.py")):
+            return _d
+    raise RuntimeError("Không tìm thấy params.py cạnh script — hãy chạy run_in_freecad.py "
+                       "(hoặc cd hardware/finger_fixation trước khi exec).")
+
+
+_here = _script_dir()
 if _here not in sys.path:
     sys.path.insert(0, _here)
 
@@ -269,4 +281,5 @@ extras = [
     "D. ENVELOPE: %.2f × %.2f × %.2f mm | ΔX = %+.2f mm (ngân sách 2,00)"
     % (ENV[0], ENV[1], ENV[2], st["dx_lat"]),
 ]
-sys.exit(RC.finish(ring, pads, "Idea2_RatchetCinch", extras, subdir="idea2"))
+_rc = RC.finish(ring, pads, "Idea2_RatchetCinch", extras, subdir="idea2")
+RC.exit_code(_rc)   # FF_NO_SYS_EXIT=1 khi chạy trong FreeCAD GUI

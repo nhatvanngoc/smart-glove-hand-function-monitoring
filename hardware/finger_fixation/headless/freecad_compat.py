@@ -212,29 +212,50 @@ class Shape(object):
         algo.Build()
         return Shape(algo.Shape())
 
+    def _reject_sequence(self, other, name):
+        """FreeCAD KHÔNG nhận danh sách cho cut/fuse/common ⇒ báo lỗi y như thật.
+
+        Bằng chứng: src/Mod/Part/App/TopoShapePyImp.cpp (nhánh 0.21/1.0) —
+        cut/fuse/common đều PyArg_ParseTuple(args, \"O!\", …) ⇒ chỉ MỘT TopoShape.
+        Nếu lớp mô phỏng âm thầm chấp nhận list thì script sẽ PASS headless nhưng
+        TypeError trong FreeCAD. Cố ý ném lỗi để bắt được ngay ở đây.
+        """
+        if isinstance(other, (list, tuple)):
+            raise TypeError(
+                "Shape.%s() chỉ nhận MỘT đối tượng trong FreeCAD (không nhận danh sách);"
+                " hãy dùng ring_common.cut_all(shape, [...]) / fuse_chain([...])." % name)
+
     def cut(self, other):
+        self._reject_sequence(other, "cut")
         return self._binop(other, BRepAlgoAPI_Cut)
 
     def fuse(self, other):
+        self._reject_sequence(other, "fuse")
         return self._binop(other, BRepAlgoAPI_Fuse)
 
     def common(self, other):
+        self._reject_sequence(other, "common")
         return self._binop(other, BRepAlgoAPI_Common)
 
     def multiFuse(self, others):
-        """Hợp NHẤT nhiều khối thành MỘT khối liền (giống Part.multiFuse của FreeCAD).
+        """GIỐNG FreeCAD: multiFuse = GENERAL FUSE (BRepAlgoAPI_BuilderAlgo).
 
-        GHI CHÚ KỸ THUẬT: BRepAlgoAPI_BuilderAlgo (general fuse) cho ra đúng THỂ TÍCH
-        hợp nhưng giữ các mảnh rời trong compound (vd hợp 2 hộp chồng nhau → 3 solid),
-        nên KHÔNG dùng được để kiểm tra "1 khối đặc liền". Ở đây dùng chuỗi
-        BRepAlgoAPI_Fuse hai ngôi — kết quả đúng 1 solid khi các khối giao nhau.
+        FreeCAD gọi TopoShape::fuse(shapeVec, tol) — chính là general fuse — nên kết
+        quả có thể là compound còn NHIỀU mảnh rời (đúng thể tích hợp nhưng không phải
+        1 solid). Vì vậy script build KHÔNG dùng multiFuse cho mục kiểm "1 khối liền";
+        chúng dùng chuỗi fuse hai ngôi (ring_common.fuse_chain / Shape.fuse).
         """
-        acc = self
+        args = TopTools_ListOfShape()
+        args.Append(self._s)
         for o in others:
             if o is None:
                 continue
-            acc = acc.fuse(o)
-        return acc
+            args.Append(o.Shape if isinstance(o, Shape) else o)
+        algo = BRepAlgoAPI_BuilderAlgo()
+        algo.SetArguments(args)
+        algo.SetRunParallel(False)
+        algo.Build()
+        return Shape(algo.Shape())
 
     def removeSplitter(self):
         """Gộp các mặt ĐỒNG PHẲNG/ĐỒNG TRỤC bị chia nhỏ do boolean (giống FreeCAD).
@@ -248,19 +269,8 @@ class Shape(object):
         algo.Build()
         return Shape(algo.Shape())
 
-    def cutMany(self, others):
-        """Cắt một lần với NHIỀU dao (nhanh hơn chuỗi cut rời)."""
-        args = TopTools_ListOfShape()
-        args.Append(self._s)
-        tools = TopTools_ListOfShape()
-        for o in others:
-            tools.Append(o.Shape if isinstance(o, Shape) else o)
-        algo = BRepAlgoAPI_Cut()
-        algo.SetArguments(args)
-        algo.SetTools(tools)
-        algo.SetRunParallel(False)
-        algo.Build()
-        return Shape(algo.Shape())
+    # GHI CHÚ: KHÔNG có cutMany — FreeCAD không có hàm này. Muốn cắt nhiều
+    # dao: ring_common.cut_all(shape, [...]) hoặc lặp shape = shape.cut(t).
 
     # ---------- biến đổi ----------
     def translate(self, v):

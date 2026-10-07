@@ -1,0 +1,19 @@
+==============================================================================
+KIỂM TRA LƯỚI STL (trimesh)
+==============================================================================
+  idea1/Pad1_TPU.stl F=   28 V=   16  kín=có định_hướng=có  V=375.98 mm³  X×Y×Z=7.43×9.02×14.02  mảnh=1  tam_giác_0=0
+  idea1/Pad2_TPU.stl F=   28 V=   16  kín=có định_hướng=có  V=375.98 mm³  X×Y×Z=7.43×9.02×14.02  mảnh=1  tam_giác_0=0
+  idea1/Pad3_TPU.stl F=   28 V=   16  kín=có định_hướng=có  V=374.92 mm³  X×Y×Z=7.69×8.88×14.02  mảnh=1  tam_giác_0=0
+  idea1/Pad4_TPU.stl F=   28 V=   16  kín=có định_hướng=có  V=362.53 mm³  X×Y×Z=9.24×5.67×14.02  mảnh=1  tam_giác_0=0
+  idea1/Ring_PETG.stl F= 8780 V= 4380  kín=có định_hướng=có  V=2170.57 mm³  X×Y×Z=24.06×35.98×14.00  mảnh=1  tam_giác_0=0
+  idea2/Pad1_TPU.stl F=   28 V=   16  kín=có định_hướng=có  V=375.98 mm³  X×Y×Z=7.43×9.02×14.02  mảnh=1  tam_giác_0=0
+  idea2/Pad2_TPU.stl F=   28 V=   16  kín=có định_hướng=có  V=375.98 mm³  X×Y×Z=7.43×9.02×14.02  mảnh=1  tam_giác_0=0
+  idea2/Pad3_TPU.stl F=   28 V=   16  kín=có định_hướng=có  V=374.92 mm³  X×Y×Z=7.69×8.88×14.02  mảnh=1  tam_giác_0=0
+  idea2/Pad4_TPU.stl F=   28 V=   16  kín=có định_hướng=có  V=362.53 mm³  X×Y×Z=9.24×5.67×14.02  mảnh=1  tam_giác_0=0
+  idea2/Ring_PETG.stl F= 6812 V= 3386  kín=có định_hướng=có  V=1753.26 mm³  X×Y×Z=25.26×30.62×14.00  mảnh=1  tam_giác_0=0
+  idea3/Band_TPU.stl F= 4088 V= 2046  kín=có định_hướng=có  V=1166.73 mm³  X×Y×Z=25.46×26.76×9.00  mảnh=1  tam_giác_0=0
+  idea3/Ring_PETG.stl F= 3632 V= 1814  kín=có định_hướng=có  V=429.47 mm³  X×Y×Z=13.81×10.41×13.00  mảnh=1  tam_giác_0=0
+  idea3/Wedge_PETG.stl F=   16 V=   10  kín=có định_hướng=có  V=42.55 mm³  X×Y×Z=5.06×4.25×7.80  mảnh=1  tam_giác_0=0
+==============================================================================
+TẤT CẢ LƯỚI STL ĐẠT.
+==============================================================================

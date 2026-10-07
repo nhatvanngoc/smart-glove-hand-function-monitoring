@@ -1,0 +1,27 @@
+==============================================================================
+RÀ SOÁT API FREECAD — script build Ý tưởng 1/2/3 + ring_common.py
+==============================================================================
+  CHẾ ĐỘ 1 — ngoài FreeCAD: đối chiếu danh sách trắng API (0.20+/1.0)
+
+  build_idea1_toggle_clasp.py      API module: App.Vector, App.newDocument, Mesh.export, Part.Face, Part.makeCylinder, Part.makePolygon
+                                   phương thức trên biến CAD: common, cut, extrude, fuse, isValid, removeSplitter
+                                   bẫy cú pháp FreeCAD: sys.exit() trong script build: trong FreeCAD GUI sẽ ném SystemExit và ĐÓNG app ⇒ bọc bằng FF_NO_SYS_EXIT (xem ring_common.exit_code); thuộc tính .Name là của ĐỐI TƯỢNG TÀI LIỆU (Part::Feature), không có trên TopoShape trần ⇒ chỉ dùng sau doc.addObject()
+                                   (cảnh báo: 2)
+
+  build_idea2_ratchet_cinch.py     API module:                                           
+                                   phương thức trên biến CAD: cut, isValid, removeSplitter
+                                   bẫy cú pháp FreeCAD: KHÔNG có
+
+  build_idea3_wrap_band.py         API module:                                           
+                                   phương thức trên biến CAD: common, cut, isValid
+                                   bẫy cú pháp FreeCAD: KHÔNG có
+
+  ring_common.py                   API module: App.Vector, App.newDocument, Mesh.export, Part.Face, Part.makeCylinder, Part.makePolygon
+                                   phương thức trên biến CAD: common, cut, extrude, fuse, isValid
+                                   bẫy cú pháp FreeCAD: sys.exit() trong script build: trong FreeCAD GUI sẽ ném SystemExit và ĐÓNG app ⇒ bọc bằng FF_NO_SYS_EXIT (xem ring_common.exit_code); thuộc tính .Name là của ĐỐI TƯỢNG TÀI LIỆU (Part::Feature), không có trên TopoShape trần ⇒ chỉ dùng sau doc.addObject()
+                                   (cảnh báo: 2)
+
+------------------------------------------------------------------------------
+KẾT LUẬN: API HỢP LỆ — script build chỉ dùng API FreeCAD chuẩn.
+   (headless vẫn dùng được vì freecad_compat.py phủ đúng các API này)
+==============================================================================

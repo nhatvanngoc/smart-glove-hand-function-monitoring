@@ -42,7 +42,19 @@ import FreeCAD as App
 import Part
 import Mesh
 
-_here = os.path.dirname(os.path.abspath(__file__)) if "__file__" in globals() else os.getcwd()
+def _script_dir():
+    """Thư mục chứa script — chạy được cả khi exec() trong FreeCAD GUI (không có __file__)."""
+    if "__file__" in globals():
+        return os.path.dirname(os.path.abspath(__file__))
+    _cwd = os.getcwd()
+    for _d in (_cwd, os.path.join(_cwd, "hardware", "finger_fixation")):
+        if os.path.isfile(os.path.join(_d, "params.py")):
+            return _d
+    raise RuntimeError("Không tìm thấy params.py cạnh script — hãy chạy run_in_freecad.py "
+                       "(hoặc cd hardware/finger_fixation trước khi exec).")
+
+
+_here = _script_dir()
 if _here not in sys.path:
     sys.path.insert(0, _here)
 
@@ -147,9 +159,11 @@ notch = RC.band_prism(P.a_in() + GROOVE_FLOOR - 0.15, P.b_in() + GROOVE_FLOOR - 
 riser_slot = RC.band_prism(P.a_in() + BAND_R0 - 0.45, P.b_in() + BAND_R0 - 0.45,
                           P.a_in() + OUT_R1 + 0.25, P.b_in() + OUT_R1 + 0.25,
                           RISER_PHI - 5.2, RISER_PHI + 5.2, OUT_Z0 - 0.20, OUT_Z1 + 0.20, n=60)
-# CẮT MỘT LƯỢT (cutMany): ba dao dùng chung mặt phẳng z = 2,40 / 10,60 — cắt
+# CẮT MỘT LƯỢT: ba dao dùng chung mặt phẳng z = 2,40 / 10,60 — cắt
 # trong một phép BOP để OCCT hợp nhất mặt trùng giữa các dao thay vì để lại vết.
-frame = frame.cutMany([ch_out, notch, riser_slot])
+# Cắt lần lượt từng dao (FreeCAD chỉ nhận 1 đối tượng cho cut()); sau đó
+# removeSplitter() hợp nhất các mặt đồng phẳng do boolean để lại ⇒ lưới sạch.
+frame = frame.cut(ch_out).cut(notch).cut(riser_slot).removeSplitter()
 
 # ======================================================= 3. ĐAI TPU 85A =====
 band = RC.band_prism(P.a_in() + BAND_R0, P.b_in() + BAND_R0,
@@ -275,5 +289,6 @@ extras = [
     % (frame.BoundBox.XLength, frame.BoundBox.YLength, frame.BoundBox.ZLength,
        st["dx_lat"], st["x_max"]),
 ]
-sys.exit(RC.finish(frame, [], "Idea3_WrapBand", extras, subdir="idea3",
-                   extra_parts=[("Band_TPU", belt), ("Wedge_PETG", wedge)]))
+_rc = RC.finish(frame, [], "Idea3_WrapBand", extras, subdir="idea3",
+                extra_parts=[("Band_TPU", belt), ("Wedge_PETG", wedge)])
+RC.exit_code(_rc)   # FF_NO_SYS_EXIT=1 khi chạy trong FreeCAD GUI

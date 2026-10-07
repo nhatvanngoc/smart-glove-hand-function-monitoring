@@ -30,5 +30,5 @@ BẢNG TỔNG HỢP HEADLESS VERIFY (giả lập FreeCAD-API trên nhân OCCT)
   build_idea3_wrap_band.py           PASS        11     0     0
 ------------------------------------------------------------------------------
   3/3 script PASS
-   Tổng STL trong hardware/finger_fixation/stl: 18
+   Tổng STL trong hardware/finger_fixation/stl: 13
 ==============================================================================

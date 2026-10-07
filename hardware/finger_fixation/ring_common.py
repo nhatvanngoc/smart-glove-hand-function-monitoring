@@ -20,7 +20,24 @@ import FreeCAD as App
 import Part
 import Mesh
 
-_HERE = os.path.dirname(os.path.abspath(__file__)) if "__file__" in globals() else os.getcwd()
+def script_dir():
+    """Thư mục chứa script này — hoạt động cả khi được exec() trong FreeCAD GUI.
+
+    Trong FreeCAD GUI, `__file__` không tồn tại nếu người dùng dán lệnh
+    exec(open(...).read()) vào cửa sổ Python ⇒ dò tiếp trong thư mục làm việc.
+    """
+    if "__file__" in globals():
+        return os.path.dirname(os.path.abspath(__file__))
+    cwd = os.getcwd()
+    for d in (cwd, os.path.join(cwd, "hardware", "finger_fixation")):
+        if os.path.isfile(os.path.join(d, "params.py")):
+            return d
+    raise RuntimeError(
+        "Không tìm thấy params.py cạnh script. Hãy chạy bằng run_in_freecad.py "
+        "(hoặc cd vào hardware/finger_fixation trước khi exec).")
+
+
+_HERE = script_dir()
 for _p in (_HERE, os.path.join(_HERE, "synthesis")):
     if _p not in sys.path:
         sys.path.insert(0, _p)
@@ -79,7 +96,9 @@ def _add(doc, name, shape):
 def prism(pts2d, z0, z1):
     if len(pts2d) < 3:
         raise ValueError("prism cần >= 3 điểm")
-    w = Part.makePolygon([App.Vector(x, y, z0) for (x, y) in pts2d], closed=True)
+    # LƯU Ý: makePolygon là varargs-method của FreeCAD ⇒ KHÔNG nhận keyword;
+    # tham số "closed" phải truyền THEO VỊ TRÍ (closed=True sẽ TypeError).
+    w = Part.makePolygon([App.Vector(x, y, z0) for (x, y) in pts2d], True)
     return Part.Face(w).extrude(App.Vector(0.0, 0.0, float(z1) - float(z0)))
 
 
@@ -103,7 +122,7 @@ def rad_prism(pts_zv, phi):
     that = (-math.sin(t), math.cos(t))
     pts3 = [(rhat[0] * v + that[0] * (-60.0), rhat[1] * v + that[1] * (-60.0), z)
             for (z, v) in pts_zv]
-    f = Part.Face(Part.makePolygon([App.Vector(*p) for p in pts3], closed=True))
+    f = Part.Face(Part.makePolygon([App.Vector(*p) for p in pts3], True))
     return f.extrude(App.Vector(that[0] * 120.0, that[1] * 120.0, 0.0))
 
 
@@ -117,9 +136,48 @@ def cyl(radius, z0, z1, center_xy):
                              App.Vector(0.0, 0.0, 1.0))
 
 
-def union_all(parts):
+def fuse_chain(parts):
+    """Hợp nhiều khối bằng CHUỖI fuse HAI NGÔI — API FreeCAD chuẩn, kết quả tất định.
+
+    Vì sao KHÔNG dùng Shape.multiFuse(): trong FreeCAD, multiFuse() chạy
+    BRepAlgoAPI_BuilderAlgo (general fuse) và có thể trả về một compound còn NHIỀU
+    mảnh rời (đúng thể tích hợp nhưng không phải 1 solid) ⇒ mục kiểm "1 khối liền"
+    sẽ báo sai. Chuỗi fuse hai ngôi (Shape.fuse) cho đúng MỘT solid khi các khối
+    giao nhau — đúng như thiết kế (các chi tiết đều ngập vào nhau ≥ 0,05 mm).
+    """
     parts = [p for p in parts if p is not None]
-    return parts[0].multiFuse(parts[1:]) if len(parts) > 1 else parts[0]
+    acc = parts[0]
+    for p in parts[1:]:
+        acc = acc.fuse(p)
+    return acc
+
+
+def union_all(parts):
+    return fuse_chain(parts)
+
+
+def cut_all(shape, tools):
+    """Cắt LẦN LƯỢT từng dao — API FreeCAD chuẩn (cut() chỉ nhận MỘT đối tượng).
+
+    FreeCAD không có `shape.cut([a, b, c])` (0.19–1.0 đều chỉ parse một TopoShape;
+    xem src/Mod/Part/App/TopoShapePyImp.cpp → PyArg_ParseTuple "O!"). Tương tự với
+    fuse()/common(); chỉ multiFuse()/generalFuse() nhận danh sách và chỉ dùng cho
+    PHÉP HỢP. Vì vậy mọi phép cắt nhiều dao phải lặp ở đây.
+    """
+    for t in tools:
+        shape = shape.cut(t)
+    return shape
+
+
+def exit_code(rc):
+    """Kết thúc script với mã rc — TRỪ KHI biến môi trường FF_NO_SYS_EXIT=1.
+
+    Lý do: trong FreeCAD (nhất là bản GUI), sys.exit() ném SystemExit làm ĐÓNG ứng
+    dụng. run_in_freecad.py đặt FF_NO_SYS_EXIT=1 trước khi exec các script build.
+    """
+    if os.environ.get("FF_NO_SYS_EXIT") == "1":
+        return rc
+    sys.exit(rc)
 
 
 # ------------------------------------------------------ số học kiểm khe hở ---
