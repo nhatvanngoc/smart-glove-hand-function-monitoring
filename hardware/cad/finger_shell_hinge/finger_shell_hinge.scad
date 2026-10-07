@@ -30,6 +30,16 @@
 // Kích thước đốt ngón (W_in/H_in/L) là SỐ GIẢ ĐỊNH, PHẢI đo lại bằng
 // thước cặp trước khi in bản dùng thật.
 //
+// LỖI ĐÃ SỬA 2026-10-07 (phát hiện bởi chủ dự án khi mở file này bằng
+// chính OpenSCAD trên máy mình — cảm ơn vì đã bắt lỗi!): tay đòn ngàm cài
+// (latch_arm, nửa lòng tay) từng cách thành vỏ ~2.8mm, không chạm vào đâu
+// -> xuất STL bị tách thành 2 mảnh RỜI, không in được nguyên khối. Đã vá
+// bằng cách thêm "gốc nối" (rib) trong module latch_arm(). Kiểm chứng lại
+// bằng check_connectivity.py (đếm connected components qua trimesh) — xem
+// README §5a để biết chi tiết đầy đủ. BÀI HỌC: file CAD "chạy được, không
+// lỗi CGAL/OCCT" KHÔNG đồng nghĩa là mọi chi tiết đều liền 1 khối in được —
+// luôn chạy check_connectivity.py sau khi sửa hình học.
+//
 // CÁCH DÙNG:
 //   1. Cài OpenSCAD: https://openscad.org/downloads.html
 //   2. Mở file này. Các biến có khối "/* [Tên nhóm] */" phía trên sẽ hiện
@@ -207,17 +217,39 @@ module latch_catch() {
     }
 }
 
+// SUA LOI 2026-10-07 (phat hien boi chu du an khi mo file nay bang chinh
+// OpenSCAD -- xem README Sec.5a "Loi da sua"): ban goc dat `arm` bat dau tu
+// y = y0 + catch_t + arm_t/2 + 0.6 ~= 15.05mm, trong khi mep ngoai cung cua
+// vo (shell) chi toi y = y0 = W_out/2 ~= 11.7mm -- lech mot khoang trong
+// ~2.8mm, KHONG cham vo o bat ky lat cat Z nao. He qua: tay don (+ moc) la
+// mot khoi ROI, troi lo lung, khong in duoc. Da kiem chung bang trimesh
+// (xem check_connectivity.py): STL cu tach thanh 2 manh roi nhau.
+// Khac phuc: them "goc noi" (root/rib) dac, bac cau tu mep vo that (lan
+// 0.3mm vao vo, giong add_latch_catch) toi mat trong tay don (lan them
+// 0.3mm vao tay don), nam gon trong vung z <= 0 (nua long tay), khong dung
+// khoi rang o nua mu tay.
 module latch_arm() {
     y0 = W_out / 2;
     x0 = margin_x; x1 = L - margin_x;
     w  = x1 - x0;
     xc = (x0 + x1) / 2;
 
-    translate([xc, y0 + catch_t + arm_t / 2 + 0.6, arm_h / 2])
+    y_arm_center = y0 + catch_t + arm_t / 2 + 0.6;
+    y_arm_outer  = y_arm_center + arm_t / 2;
+
+    translate([xc, y_arm_center, arm_h / 2])
         cube([w, arm_t, arm_h], center = true);
 
     translate([xc, y0 + catch_t + arm_t - arm_hook / 2 + 0.2, arm_h - 1.0])
         cube([w, arm_hook + arm_t, 1.6], center = true);
+
+    // Goc noi (rib): bac cau khoang trong giua vo that va chan tay don.
+    root_h = 3.0;
+    eps = 0.2;
+    y_root_in  = y0 - 0.3;
+    y_root_out = y_arm_outer + 0.3;
+    translate([xc, (y_root_in + y_root_out) / 2, -root_h / 2 + eps / 2])
+        cube([w, y_root_out - y_root_in, root_h + eps], center = true);
 }
 
 // =====================================================================

@@ -229,16 +229,32 @@ def add_latch_catch(shell):
 
 def add_latch_arm(shell):
     """Tay đòn đàn hồi gắn vào nửa lòng tay (shell dưới), cạnh Y=+W_out/2,
-    vươn lên phía mu tay để móc vào khối răng."""
+    vươn lên phía mu tay để móc vào khối răng.
+
+    SỬA LỖI 2026-10-07 (phát hiện bởi chủ dự án khi mở file .scad bằng
+    OpenSCAD thật — xem README §5a "Lỗi đã sửa"): bản gốc đặt `arm` bắt đầu
+    từ y = y0 + catch_t + arm_t/2 + 0.6 ≈ 15.05mm, trong khi mép ngoài cùng
+    của vỏ (shell) chỉ tới y = y0 = W_out/2 ≈ 11.7mm — tức LỆCH một khoảng
+    trống ~2.8mm, KHÔNG chạm vào vỏ ở bất kỳ lát cắt Z nào. Hệ quả: tay đòn
+    (+ móc) là một khối RỜI, trôi lơ lửng trong không gian, không in được
+    (không có gì đỡ nó). Đã kiểm chứng bằng `trimesh` (xem
+    check_connectivity.py): STL cũ tách thành 2 mảnh rời nhau.
+    Khắc phục: thêm một "gốc nối" (root/rib) đặc, bắc cầu từ mép vỏ thật
+    (lấn 0.3mm vào vỏ, giống cách `add_latch_catch` đã làm) tới mặt trong
+    của tay đòn (lấn thêm 0.3mm vào tay đòn), nằm gọn trong vùng Z của nửa
+    lòng tay (z <= 0, không đụng khối răng ở nửa mu tay)."""
     y0 = p.W_out / 2.0
     x0, x1 = p.margin_x, p.L - p.margin_x
     w = x1 - x0
     xc = (x0 + x1) / 2.0
 
+    y_arm_center = y0 + p.catch_t + p.arm_t / 2.0 + 0.6
+    y_arm_outer = y_arm_center + p.arm_t / 2.0
+
     arm = (
         cq.Workplane("XY")
         .box(w, p.arm_t, p.arm_h)
-        .translate((xc, y0 + p.catch_t + p.arm_t / 2.0 + 0.6, p.arm_h / 2.0))
+        .translate((xc, y_arm_center, p.arm_h / 2.0))
     )
     # móc ở đầu tay đòn, nhô vào phía khối răng (hướng -Y) để ăn khớp
     hook = (
@@ -246,7 +262,18 @@ def add_latch_arm(shell):
         .box(w, p.arm_hook + p.arm_t, 1.6)
         .translate((xc, y0 + p.catch_t + p.arm_t - p.arm_hook / 2.0 + 0.2, p.arm_h - 1.0))
     )
-    shell = shell.union(arm).union(hook)
+    # Gốc nối (rib) — bắc cầu khoảng trống giữa vỏ thật và chân tay đòn,
+    # nằm trong z <= 0 (nửa lòng tay), KHÔNG tràn sang nửa mu tay.
+    root_h = 3.0
+    eps = 0.2
+    y_root_in = y0 - 0.3
+    y_root_out = y_arm_outer + 0.3
+    root = (
+        cq.Workplane("XY")
+        .box(w, y_root_out - y_root_in, root_h + eps)
+        .translate((xc, (y_root_in + y_root_out) / 2.0, -root_h / 2.0 + eps / 2.0))
+    )
+    shell = shell.union(root).union(arm).union(hook)
     return shell
 
 

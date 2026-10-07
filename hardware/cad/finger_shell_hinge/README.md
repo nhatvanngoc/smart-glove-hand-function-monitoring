@@ -140,7 +140,30 @@ python3 cross_check.py      # so the tich + bounding-box voi out/*.stl (ban CadQ
 
 (Nếu máy bạn thiếu `libGL.so.1` khi chạy bản CadQuery — ví dụ container tối giản — chỉ cần cài `libgl1` qua `apt` bình thường; sandbox này mới cần thủ thuật stub vì không có `apt`. Cách FreeCAD GUI thật nếu máy bạn có đủ mạng: `sudo apt-get install freecad && freecad hardware/cad/finger_shell_hinge/out/top_shell_dorsal.step`.)
 
+## 5a. Lỗi đã sửa — tay đòn ngàm cài từng là 1 khối RỜI, không in được (2026-10-07)
 
+**Người dùng phát hiện bằng mắt** khi tự mở `finger_shell_hinge.scad` bằng chính OpenSCAD trên máy mình: ở trạng thái "mở" (`assembly_open`), một mảnh phẳng nhỏ nổi lơ lửng tách rời hẳn khỏi phần vỏ chính — ảnh chụp cho thấy rõ khoảng trống giữa 2 khối.
+
+**Kiểm chứng lại bằng số:** tay đòn ngàm cài (`latch_arm`, tay đòn đàn hồi gắn vào nửa lòng tay) được đặt ở toạ độ Y bắt đầu từ ~15.05mm (tâm) trong khi mép ngoài cùng của vỏ chỉ tới Y = W_out/2 ≈ 11.7mm — **lệch một khoảng trống ~2.8mm, không chạm vào vỏ ở bất kỳ lát cắt nào**. Dùng thư viện `trimesh` tách mảnh rời (`check_connectivity.py`) xác nhận: file STL `bottom_shell_palmar` (cả bản CadQuery lẫn bản OpenSCAD) bị tách thành **2 mảnh độc lập** — vỏ chính (~1660 mm³) và tay đòn+móc (~321 mm³) bay riêng, không hề dính vào nhau.
+
+**Quan trọng:** đây là **lỗi thiết kế thật, tồn tại ở CẢ bản `.py` (CadQuery) VÀ bản `.scad` (OpenSCAD)** — không phải lỗi chuyển soạn từ file này sang file kia. Vì `cross_check.py` (mục 5) chỉ so khớp 2 bản **với nhau**, một lỗi giống hệt nhau ở cả 2 bản sẽ không bị phát hiện bằng cách đó — đây là lý do quan trọng để **luôn kiểm tra bằng mắt / bằng công cụ độc lập thứ 3**, không chỉ tin vào việc 2 bản khớp nhau.
+
+**Đã sửa** (cả 2 file): thêm một **"gốc nối" (rib) đặc**, bắc cầu từ mép vỏ thật (lấn 0.3mm vào vỏ, giống cách khối răng `latch_catch` đã làm) tới mặt trong của tay đòn (lấn thêm 0.3mm vào tay đòn), nằm gọn trong vùng Z của nửa lòng tay (không đụng khối răng ở nửa mu tay). Đã chạy lại toàn bộ pipeline kiểm chứng sau khi sửa:
+
+```
+$ python3 check_connectivity.py
+Nguon     File                          So manh roi   Ket qua
+CadQuery  top_shell_dorsal.stl          1             OK (1 khoi lien)
+CadQuery  bottom_shell_palmar.stl       1             OK (1 khoi lien)   <- truoc khi sua: 2
+CadQuery  hinge_pin.stl                 1             OK (1 khoi lien)
+OpenSCAD  top_shell_dorsal.stl          1             OK (1 khoi lien)
+OpenSCAD  bottom_shell_palmar.stl       1             OK (1 khoi lien)   <- truoc khi sua: 2
+OpenSCAD  hinge_pin.stl                 1             OK (1 khoi lien)
+```
+
+và `cross_check.py` vẫn PASS sau khi sửa (2 bản vẫn khớp nhau, lệch <0.3%). **`check_connectivity.py` đã được thêm làm bước kiểm tra bắt buộc** — chạy nó mỗi khi chỉnh sửa hình học, trước khi tin tưởng bất kỳ chi tiết nào in được nguyên khối.
+
+Bài học: dù CAD đã "chạy được" (không lỗi CGAL/OCCT, bbox/thể tích đúng dự kiến), **không có nghĩa là hình học đó in được thành 1 khối** — vẫn cần kiểm tra tính liên kết (connectivity) riêng, vì phép hợp (`union`/`fuse`) của 2 khối không chạm nhau sẽ "thành công" về mặt code nhưng tạo ra 2 vật thể độc lập.
 
 ## 6. Hướng dẫn in 3D (khuyến nghị — chưa kiểm chứng bằng mẫu in thật)
 
@@ -191,6 +214,7 @@ hardware/cad/finger_shell_hinge/
 ├── render_preview.py         ← dựng ảnh PNG xem nhanh từ STL CadQuery (matplotlib, không cần GPU)
 ├── render_scad_wasm.mjs      ← chạy chính engine OpenSCAD (qua Node.js) để render .scad ra STL, kiểm chứng
 ├── cross_check.py            ← so thể tích + bounding-box giữa out/*.stl (CadQuery) và out/scad/*.stl (OpenSCAD)
+├── check_connectivity.py     ← kiểm tra mỗi chi tiết là 1 khối LIỀN (không tách mảnh rời) — xem §5a
 ├── package.json / package-lock.json  ← khai báo gói npm openscad-wasm-prebuilt dùng cho render_scad_wasm.mjs
 └── out/
     ├── top_shell_dorsal.step / .stl       ← nửa mu tay (mang khối ngàm + 3 khớp bản lề)
