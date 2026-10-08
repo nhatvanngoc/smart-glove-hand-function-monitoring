@@ -123,7 +123,22 @@ strap_slot_w = 3.2;
 strap_slot_h = 6.0;
 
 /* [8. Xem trước / xuất file] */
-PART = "assembly_open"; // "top" | "bottom" | "pin" | "assembly_closed" | "assembly_open"
+// 2026-10-08: SỬA LỖI HIỂN THỊ -- "top_print"/"bottom_print" (hướng ĐÃ XOAY
+// 90° để GIẢM SUPPORT, xem README §6a) đã có trong code (xem if/else bên
+// dưới) nhưng bị QUÊN liệt kê ở đây -- mặc định PART="assembly_open" nên
+// mở file lên chỉ thấy cảnh lắp ráp BÌNH THƯỜNG, KHÔNG PHẢI hướng in --
+// đây là lý do nhìn "không khác gì". Đổi PART bên dưới thành "top_print"
+// hoặc "bottom_print" rồi nhấn F5 để xem ĐÚNG hướng đã xoay (mảnh sẽ đứng
+// DỌC, trục bản lề thẳng đứng, khác hẳn hướng nằm ngang mặc định).
+PART = "assembly_open"; // [top,bottom,top_print,bottom_print,pin,assembly_closed,assembly_open]
+// top          = nửa mu tay, hướng CAD gốc (để xem/chỉnh sửa thiết kế)
+// bottom       = nửa lòng tay, hướng CAD gốc
+// top_print    = nửa mu tay, ĐÃ XOAY 90° quanh Y -- hướng ÍT SUPPORT NHẤT
+//                (xem README §6a, check_print_orientation.py) -- DÙNG FILE
+//                NÀY (hoặc out/*_print_ready.stl có sẵn) để IN, không dùng "top"
+// bottom_print = nửa lòng tay, tương tự "top_print"
+// pin          = trục bản lề riêng (tham khảo kích thước)
+// assembly_closed / assembly_open = xem cả cụm lắp ráp (KHÔNG phải hướng in)
 // LỖI NGHIÊM TRỌNG ĐÃ SỬA 2026-10-07 (§5e): dấu CŨ của OPEN_ANGLE (+150) là
 // HƯỚNG XOAY SAI -- 2 nửa vỏ ĐÂM XUYÊN NHAU thật (giao nhau hình học tới
 // ~600mm3 ở bản .py tương đương) trong khoảng góc +5..+100°, chỉ "trông ổn"
