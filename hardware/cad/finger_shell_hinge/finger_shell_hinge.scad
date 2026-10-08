@@ -460,11 +460,23 @@ module hinge_pin() {
     }
 }
 
-// Đặt mảnh để in: xoay 90° quanh Y để trục bản lề (X cục bộ) nằm DỌC
-// (trùng trục Z máy in) — lỗ chốt sẽ in theo từng lớp tròn, không cần support.
-// Dùng chức năng "đặt lại lên bàn in / lay flat" của slicer sau khi xuất STL.
-module top_shell_print_ready()    { rotate([0, -90, 0]) top_shell(); }
-module bottom_shell_print_ready() { rotate([0, -90, 0]) bottom_shell(); }
+// Đặt mảnh để in: xoay quanh Y để trục bản lề (X cục bộ) nằm DỌC (trùng
+// trục Z máy in) — lỗ chốt sẽ in theo từng lớp tròn, không cần support.
+// 2026-10-08 (theo yêu cầu "xoay chỉnh sửa sao cho support it nhat"): đã
+// quét 24 hướng đặt theo trục chính bằng check_print_orientation.py (đo
+// THẬT diện tích tam giác chúc xuống >45° trên lưới tam giác hoá, đúng
+// tiêu chí slicer FDM dùng để sinh support) -- xoay 90° quanh Y là hướng
+// TỐT NHẤT trong 24 hướng cho CẢ 2 mảnh (xem README §6a để có bảng số).
+// QUAN TRỌNG VỀ DẤU: dùng +90 (không phải -90 như bản cũ) -- đã kiểm
+// chứng cả 2 dấu, +90 cho kết quả bằng hoặc tốt hơn -90 (bottom_shell:
+// 5.06% vs 5.16% dien tich overhang). Sau khi xoay, translate() nâng mảnh
+// lên để đáy chạm đúng Z=0 (mặt bàn in) -- khớp với print_ready() bên
+// .py (cùng công thức, xem cross_check.py đối chiếu 2 bản).
+top_lift_z    = PIN_INTEGRATED ? max(L, L - margin_x + 2.5) : L;
+bottom_lift_z = L;
+module top_shell_print_ready()    { translate([0, 0, top_lift_z])    rotate([0, 90, 0]) top_shell(); }
+module bottom_shell_print_ready() { translate([0, 0, bottom_lift_z]) rotate([0, 90, 0]) bottom_shell(); }
+
 
 // =====================================================================
 // 8) TRẠNG THÁI LẮP RÁP (chỉ để XEM, KHÔNG xuất STL ở các module này)

@@ -304,10 +304,37 @@ Thiết kế từ trước (§5b) đã có phần: `top_shell` hàn liền (unio
 
 **Giới hạn tự khai (QUAN TRỌNG):** đây là bằng chứng HÌNH HỌC rằng cần đâm xuyên vật liệu mới trượt qua được vai chặn — **KHÔNG phải** bằng chứng về LỰC cần thiết để thực sự kéo tuột (độ bền kéo/cắt của PETG tại vùng vai chặn, độ đàn hồi khi lắp ráp lần đầu lên trục, dung sai in thật). Bán kính/chiều dài vai chặn (2.2mm / 2.0mm) là **lựa chọn thiết kế trên CAD**, chưa kiểm chứng bằng mẫu in thật hay thử lực kéo — vẫn cần in thử và thử kéo tay trước khi coi là "chắc chắn không rơi ra" trong thực tế. Lỗi này cũng là ví dụ cụ thể cho bài học ở §5e: **một bộ kiểm tra chỉ quét 1 loại chuyển động (góc xoay) sẽ bỏ sót lỗi ở loại chuyển động khác (trượt dọc trục)** — từ nay cả `check_hinge_sweep.py` (xoay) VÀ `check_axial_retention.py` (trượt dọc trục) đều chạy mỗi khi đổi tham số hình học liên quan đến bản lề.
 
+## 6a. Xoay hướng đặt lên bàn in để GIẢM SUPPORT tối đa (2026-10-08)
+
+**Yêu cầu chủ dự án:** "xoay chỉnh sửa sao cho khi để lên slicer thì support tạo ra sẽ ít nhất đi".
+
+Sandbox này **không có trình cắt lớp (slicer) thật** nào chạy được (không có PrusaSlicer/Cura CLI, không có mạng ra ngoài danh sách host cho phép) — nên không thể "mở file trong slicer rồi đếm số support" theo đúng nghĩa đen. Thay vào đó, đã viết `check_print_orientation.py` dùng đúng **tiêu chí hình học mà mọi slicer FDM dùng để quyết định sinh support**: một tam giác bề mặt cần support nếu nó **chúc xuống** và góc giữa pháp tuyến với phương ngang nhỏ hơn 45° (ngưỡng mặc định phổ biến của PrusaSlicer/Cura) — tính TRÊN CHÍNH lưới tam giác hoá thật của khối CAD (CadQuery `tessellate()`), không phải ước lượng bằng mắt.
+
+**Cách làm:** quét **24 hướng đặt theo trục chính** (mọi cách "đặt phẳng 1 mặt xuống bàn rồi xoay quanh trục đứng" — đúng kiểu hay dùng khi tự xoay tay trong slicer), đo tổng diện tích overhang ở mỗi hướng, cho cả `top_shell_dorsal` và `bottom_shell_palmar`:
+
+| Chi tiết | Hướng THIẾT KẾ GỐC (như xuất STL trước đây, không xoay) | Hướng TỐT NHẤT trong 24 hướng (đã chọn) |
+|---|---|---|
+| `top_shell_dorsal` | 522.2 mm² overhang (18.4% bề mặt) | **245.3 mm² (8.6% bề mặt)** — giảm 53% |
+| `bottom_shell_palmar` | 249.1 mm² overhang (9.0% bề mặt) | **140.5 mm² (5.1% bề mặt)** — giảm 44% |
+
+![so sanh overhang truoc/sau xoay huong in](out/renders/11_print_orientation_overhang_before_after.png)
+*Tam giác màu ĐỎ = bề mặt cần support (chúc xuống >45° so với phương ngang). Trái: hướng thiết kế gốc. Phải: hướng đã xoay (90° quanh trục Y, trục bản lề thẳng đứng) — vùng đỏ giảm rõ rệt.*
+
+**Hướng tốt nhất tìm được: xoay 90° quanh trục Y, đưa trục bản lề (trục X cục bộ) về THẲNG ĐỨNG, trùng trục Z máy in** — đây CHÍNH LÀ hướng đã được khuyến nghị bằng lời ở mục 6 bên dưới từ trước (để lỗ chốt in theo từng lớp tròn hoàn chỉnh) — nay được **xác nhận bằng số** là cũng tối ưu cho overhang, không phải 2 tiêu chí mâu thuẫn nhau. (Đã thử xoay thêm góc nghiêng nhỏ quanh 2 trục còn lại quanh hướng này — chỉ cải thiện thêm ~1 điểm % cho `top_shell_dorsal` và không đáng kể cho `bottom_shell_palmar`, trong khi đặt nghiêng làm mất mặt phẳng tựa bàn in ổn định — **không đáng đánh đổi**, giữ nguyên hướng xoay theo trục chính.)
+
+**Đã triển khai — xuất sẵn file ĐÃ XOAY, không cần người dùng tự xoay tay trong slicer nữa:**
+- `out/top_shell_dorsal_print_ready.stl` / `.step`
+- `out/bottom_shell_palmar_print_ready.stl` / `.step`
+- Bản `.scad` tương đương: `out/scad/top_shell_dorsal_print_ready.stl` / `out/scad/bottom_shell_palmar_print_ready.stl` (gọi qua `PART="top_print"`/`"bottom_print"`, module `top_shell_print_ready()`/`bottom_shell_print_ready()` — đã sửa dấu góc xoay từ `-90°` thành `+90°` cho khớp với hướng tối ưu tìm được, và thêm `translate()` nâng mảnh lên để đáy chạm đúng Z=0 mặt bàn in).
+- Đã đối chiếu `cross_check.py`: 2 bản `.py`/`.scad` của cả 2 file print-ready khớp hình học (lệch thể tích 0.10%, bbox khớp) — không hồi quy.
+- **Nạp các file `*_print_ready.stl` này thẳng vào slicer là đã đúng hướng khuyến nghị**, không cần dùng chức năng "đặt lại lên bàn in / lay flat" nữa (vẫn còn `top_shell_dorsal.stl`/`bottom_shell_palmar.stl` bản KHÔNG xoay để xem/chỉnh sửa CAD, không khuyến nghị in trực tiếp từ bản đó).
+
+**Giới hạn tự khai (QUAN TRỌNG):** đây là **thước đo hình học thay thế (proxy)**, không phải chạy slicer thật — số mm² support THẬT sự mà PrusaSlicer/Cura sinh ra phụ thuộc thêm vào: cài đặt support cụ thể (góc ngưỡng, support kiểu "chỉ trên bàn in" hay "mọi nơi", mật độ, support tree/organic...), khả năng tự bắc cầu (bridging) của máy in/vật liệu với các khoảng hở nhỏ, và có thể khác đôi chút tuỳ bản slicer. 8.6%/5.1% diện tích còn lại (chủ yếu ở rìa khớp ống bản lề cantilever, tay đòn ngàm cài, mép hốc cảm biến) là **overhang nhỏ, cục bộ** — phần lớn nằm trong khả năng tự bắc cầu (bridge) của FDM thông thường mà không cần support thật sự, nhưng CHƯA kiểm chứng bằng slicer/máy in thật.
+
 ## 6. Hướng dẫn in 3D (khuyến nghị — chưa kiểm chứng bằng mẫu in thật)
 
 - **Vật liệu:** PETG (đồng bộ với `docs/04` §6), ≥ 5 vòng tường, 100% hoặc ≥ 60% infill ở vùng ngàm/bản lề (chịu lực lặp lại).
-- **Hướng in bản lề:** đặt sao cho **trục chốt (trục X của mảnh) thẳng đứng theo trục Z máy in** — lỗ chốt sẽ in theo từng lớp tròn hoàn chỉnh, không cần support, không bị méo do in ngang qua lỗ.
+- **Hướng in bản lề:** đặt sao cho **trục chốt (trục X của mảnh) thẳng đứng theo trục Z máy in** — lỗ chốt sẽ in theo từng lớp tròn hoàn chỉnh, không cần support, không bị méo do in ngang qua lỗ. **MỚI 2026-10-08 (xem §6a): dùng thẳng file `out/*_print_ready.stl` đã xoay sẵn đúng hướng này, không cần tự xoay tay trong slicer nữa.**
 - **Hướng in ngàm/tay đòn:** tay đòn đàn hồi (`arm`) nên in với lớp vân (layer line) **vuông góc hướng uốn** để bền mỏi hơn — nghĩa là in đứng theo chiều dày `arm_t`, không in nằm phẳng.
 - **Khớp ống xen kẽ (knuckle):** chừa khe in `knuckle_gap = 0.5 mm` đã tính sẵn trong tham số; nếu máy in dung sai lớn, tăng `knuckle_gap` lên 0.6–0.8 mm để tránh 2 mảnh dính nhau.
 - **Chốt bản lề:** mặc định (`PIN_INTEGRATED = true`, xem mục 5b) trục đã **hàn liền vào `top_shell_dorsal.stl`** — in nửa mu tay là có sẵn trục, không cần in/lắp chốt riêng. File `hinge_pin.stl`/`.step` vẫn được xuất riêng chỉ để **tham khảo kích thước** (không cần in). Nếu đổi `PIN_INTEGRATED = false` để quay lại thiết kế chốt rời: nên dùng que nhựa/kim loại cứng có sẵn (que hàn nhựa, đinh ghim, hoặc đoạn dây đồng/thép Ø2 mm) thay vì in — in một que nhựa mảnh dài 20 mm bằng FDM dễ cong/gãy hơn là dùng vật liệu sẵn có (nhưng dễ thay thế hơn nếu gãy — xem đánh đổi ở mục 5b).
@@ -358,15 +385,19 @@ hardware/cad/finger_shell_hinge/
 ├── check_latch_engagement.py ← kiểm tra móc/răng ngàm cài có THỰC SỰ giao nhau hình học — xem §5c
 ├── check_hinge_sweep.py      ← [MỚI 2026-10-07] quét va chạm 2 nửa vỏ qua TOÀN BỘ dải góc mở — xem §5e
 ├── check_axial_retention.py  ← [MỚI 2026-10-08] quét chuyển vị dọc trục, kiểm tra chống tuột — xem §5f
+├── check_print_orientation.py ← [MỚI 2026-10-08] quét 24 hướng đặt bàn in, đo overhang — xem §6a
 ├── package.json / package-lock.json  ← khai báo gói npm openscad-wasm-prebuilt dùng cho render_scad_wasm.mjs
 └── out/
-    ├── top_shell_dorsal.step / .stl       ← nửa mu tay (mang khối ngàm + 3 khớp bản lề)
-    ├── bottom_shell_palmar.step / .stl    ← nửa lòng tay (mang tay đòn ngàm + 2 khớp bản lề)
+    ├── top_shell_dorsal.step / .stl       ← nửa mu tay (mang khối ngàm + 3 khớp bản lề), hướng CAD gốc (để chỉnh sửa, KHÔNG khuyến nghị in trực tiếp)
+    ├── bottom_shell_palmar.step / .stl    ← nửa lòng tay (mang tay đòn ngàm + 2 khớp bản lề), hướng CAD gốc
+    ├── top_shell_dorsal_print_ready.step / .stl     ← [MỚI 2026-10-08] ĐÃ XOAY sẵn hướng overhang tối thiểu — xem §6a, dùng file này để in
+    ├── bottom_shell_palmar_print_ready.step / .stl  ← [MỚI 2026-10-08] tương tự, nửa lòng tay
     ├── hinge_pin.step / .stl              ← chốt bản lề (tham khảo kích thước, xem mục 6)
     ├── assembly_closed.step / assembly_open.step   ← lắp ráp 2 trạng thái (có màu, mở bằng FreeCAD/Fusion/...)
     ├── assembly_closed__{top,bottom}.stl / assembly_open__{top,bottom}.stl  ← mesh từng trạng thái (chỉ để XEM)
     ├── assembly_open_print_in_place.stl   ← [MỚI 2026-10-07] file IN THẬT gộp 2 nửa (trạng thái MỞ) — xem §5e
     ├── renders/                           ← ảnh PNG xem nhanh từ bản CadQuery (dùng trong README này)
     └── scad/                              ← STL xuất từ chính OpenSCAD (render_scad_wasm.mjs) — dùng để đối chiếu
-                                              (scad/assembly_open.stl cũng dùng được để in-tại-chỗ, xem §5e)
+                                              (scad/assembly_open.stl cũng dùng được để in-tại-chỗ, xem §5e;
+                                               scad/*_print_ready.stl đối chiếu với bản .py, xem §6a)
 ```

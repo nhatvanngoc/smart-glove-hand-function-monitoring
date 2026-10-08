@@ -26,6 +26,9 @@ const PARTS = [
   ["pin", "hinge_pin.stl"],
   ["assembly_closed", "assembly_closed.stl"],
   ["assembly_open", "assembly_open.stl"],
+  // 2026-10-08 (xoay sang huong overhang-toi-thieu, xem README §6a):
+  ["top_print", "top_shell_dorsal_print_ready.stl"],
+  ["bottom_print", "bottom_shell_palmar_print_ready.stl"],
 ];
 
 async function renderPart(part, outName) {

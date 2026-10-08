@@ -26,6 +26,8 @@ PAIRS = [
     ("top_shell_dorsal.stl", "top_shell_dorsal.stl"),
     ("bottom_shell_palmar.stl", "bottom_shell_palmar.stl"),
     ("hinge_pin.stl", "hinge_pin.stl"),
+    ("top_shell_dorsal_print_ready.stl", "top_shell_dorsal_print_ready.stl"),
+    ("bottom_shell_palmar_print_ready.stl", "bottom_shell_palmar_print_ready.stl"),
 ]
 
 TOL_VOL_PCT = 1.0   # sai số thể tích chấp nhận được (%), chỉ do rời rạc hoá hình tròn

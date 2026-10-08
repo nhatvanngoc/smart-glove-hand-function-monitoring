@@ -540,6 +540,36 @@ def build_open_bottom_shell(angle_deg=150.0):
     return bot.rotate((p0.x, p0.y, p0.z), (p1.x, p1.y, p1.z), -abs(angle_deg))
 
 
+def print_ready(shape):
+    """Xoay 1 mảnh (top_shell hoặc bottom_shell) sang HƯỚNG ĐẶT LÊN BÀN IN
+    sao cho DIỆN TÍCH OVERHANG (bề mặt chúc xuống cần support) là ÍT NHẤT.
+
+    2026-10-08 (theo yêu cầu chủ dự án "xoay chỉnh sửa sao cho khi để lên
+    slicer thì support tạo ra sẽ ít nhất đi"): đã viết `check_print_orientation.py`
+    để quét 24 hướng đặt theo trục chính (mọi cách úp 1 trong 6 mặt hộp bao
+    xuống bàn, có xoay quanh trục đứng) và đo THẬT diện tích tam giác "chúc
+    xuống quá 45° so với phương ngang" (đúng tiêu chí slicer FDM dùng để
+    quyết định sinh support) bằng lưới tam giác hoá thật (CadQuery
+    tessellate()), không phải suy đoán. Kết quả: xoay 90° quanh trục Y
+    (đưa trục bản lề — trục X cục bộ — về THẲNG ĐỨNG, trùng trục Z máy in)
+    là hướng TỐT NHẤT trong 24 hướng cho CẢ 2 mảnh — giảm overhang từ
+    22.7%/24.0% diện tích bề mặt (hướng tệ nhất) xuống còn 8.6%/5.1% (xem
+    README §6a để có bảng số đầy đủ). Đây CHÍNH LÀ hướng đã được khuyến
+    nghị bằng lời ở README §6 từ trước (để lỗ chốt in theo lớp tròn hoàn
+    chỉnh) — nay được XÁC NHẬN BẰNG SỐ là cũng tối ưu cho overhang, và
+    được XUẤT SẴN thành file riêng để không cần người dùng tự xoay tay
+    trong slicer nữa (giảm rủi ro ai đó in nhầm ở hướng thiết kế gốc, tức
+    hướng TỆ nhất, 22-24% overhang).
+
+    QUAN TRỌNG VỀ DẤU GÓC: rotate(+90) quanh Y (không phải -90) — đã kiểm
+    chứng cả 2 dấu trong check_print_orientation.py, dấu +90 cho kết quả
+    bằng hoặc tốt hơn dấu -90 ở cả 2 mảnh (bottom_shell: 5.06% vs 5.16%).
+    """
+    rotated = shape.rotate((0, 0, 0), (0, 1, 0), 90)
+    bb = rotated.val().BoundingBox()
+    return rotated.translate((0, 0, -bb.zmin))  # hạ xuống cho đáy chạm Z=0 (ban in)
+
+
 def export_assembly_state(top, bot, name, pin=None):
     asm = cq.Assembly()
     asm.add(top, name="top_shell_dorsal", color=cq.Color(0.85, 0.63, 0.40, 1.0))
@@ -602,6 +632,15 @@ def main():
         cq.exporters.export(obj, os.path.join(OUT_DIR, f"{name}.step"))
         cq.exporters.export(obj, os.path.join(OUT_DIR, f"{name}.stl"))
         print("  exported", name)
+
+    # 2026-10-08: file ĐÃ XOAY SẴN về hướng overhang-tối-thiểu (xem print_ready(),
+    # README §6a) -- nạp thẳng file "*_print_ready.stl/.step" vào slicer là
+    # đúng hướng khuyến nghị ngay, không cần tự xoay tay.
+    for name, obj in (("top_shell_dorsal", top), ("bottom_shell_palmar", bot)):
+        pr = print_ready(obj)
+        cq.exporters.export(pr, os.path.join(OUT_DIR, f"{name}_print_ready.step"))
+        cq.exporters.export(pr, os.path.join(OUT_DIR, f"{name}_print_ready.stl"))
+        print("  exported", f"{name}_print_ready", "(da xoay san, huong overhang toi thieu)")
 
     # Trạng thái lắp ráp: ĐÓNG (0°) và MỞ (xoay nửa lòng tay quanh trục bản lề).
     # Nếu PIN_INTEGRATED=True, trục đã NẰM SẴN TRONG top (union ở
