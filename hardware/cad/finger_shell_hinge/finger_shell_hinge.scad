@@ -90,6 +90,22 @@ r_knuckle       = 3.0; // bán kính ngoài khớp ống
 r_pin           = 1.3; // bán kính lỗ xỏ chốt/khớp xoay (lỗ phi ~2.6mm)
 pin_clearance   = 0.3; // khe hở BÁN KÍNH trục-lỗ (mm) -- CẦN HIỆU CHỈNH
                         // theo máy in/vật liệu thật, xem README §5e
+// 2026-10-08 (§5f, theo yêu cầu "đảm bảo không dễ rơi ra ngoài"): LỖI PHÁT
+// HIỆN -- trục cũ (hinge_pin() dưới đây) là hình trụ bán kính KHÔNG ĐỔI
+// suốt chiều dài, 2 đầu chỉ bo tròn (capsule) chứ KHÔNG có vai/mũ chặn lớn
+// hơn lỗ khớp ống -> KHÔNG CÓ GÌ ngăn nửa lòng tay trượt dọc trục X và
+// tuột hẳn ra khỏi trục. Khắc phục: thêm 2 "vai chặn" hình TRỤ ĐỒNG TRỤC
+// (collar, bán kính pin_retain_r > r_pin) ở GIỮA khớp ống ĐẦU và CUỐI
+// thuộc nửa mu tay (đã có sẵn vật liệu boss r_knuckle=3.0mm bao quanh ở
+// đó) -- vai chặn ẩn gọn trong boss có sẵn, KHÔNG tạo gờ nhô mới. Mọi khớp
+// ống nửa lòng tay (lỗ bán kính r_pin) đều nằm GIỮA 2 vai chặn này theo
+// trục X nên không thể trượt dọc trục để tuột ra ngoài (kiểm chứng bằng
+// check_axial_retention.py). Dùng hình TRỤ (không phải hình CẦU) vì hình
+// cầu tạo điểm cực kỳ dị khi xuất STL -> check_connectivity.py báo nhầm
+// "mảnh rời". Chỉ áp dụng khi PIN_INTEGRATED=true.
+pin_retain_r    = 2.2; // bán kính vai chặn (mm) -- phải > r_pin (1.3mm) để
+                        // chặn tuột, và < r_knuckle (3.0mm) để ẩn gọn
+pin_retain_len  = 2.0;  // chiều dài mỗi vai chặn (mm)
 knuckle_overlap = 0.5; // phần khớp ống "ăn" vào thành vỏ để liền khối
 
 /* [6. Ngàm cài - cạnh Y = +W_out/2] */
@@ -419,14 +435,29 @@ module bottom_shell() {
     }
 }
 
+// Toạ độ X TOÀN CỤC (global) của tâm khớp ống "top" thứ `i` (xem hinge_knuckles()).
+function knuckle_center_x(i) = margin_x + i * (seg_width() + knuckle_gap) + seg_width() / 2;
+
 module hinge_pin() {
     hole_len = (L - 2 * margin_x) + 4;
     pin_len  = hole_len + 1;
-    translate([margin_x - 2.5 + pin_len / 2, y_hinge, 0])
-        // 2026-10-07: bo tròn (capsule) thay vì cắt vuông -- 2 đầu trục giờ
-        // là chỏm bán cầu, không còn cạnh sắc, dễ dùng làm mồi luồn qua các
-        // khớp ống khi lắp ráp và an toàn hơn khi đầu trục lộ ra ngoài.
-        capsule_x(r_pin - pin_clearance, pin_len); // khe hở = pin_clearance (xem §5e)
+    x_origin = margin_x - 2.5; // gốc cục bộ của trục, khớp với translate() bên dưới
+    union() {
+        translate([x_origin + pin_len / 2, y_hinge, 0])
+            // 2026-10-07: bo tròn (capsule) thay vì cắt vuông -- 2 đầu trục giờ
+            // là chỏm bán cầu, không còn cạnh sắc, dễ dùng làm mồi luồn qua các
+            // khớp ống khi lắp ráp và an toàn hơn khi đầu trục lộ ra ngoài.
+            capsule_x(r_pin - pin_clearance, pin_len); // khe hở = pin_clearance (xem §5e)
+        // SỬA LỖI 2026-10-08 (§5f): 2 vai chặn chống tuột dọc trục -- xem
+        // giải thích đầy đủ ở khai báo pin_retain_r phía trên.
+        if (PIN_INTEGRATED) {
+            x_first = knuckle_center_x(0);
+            x_last  = knuckle_center_x(n_knuckle_total() - 1);
+            for (xg = [x_first, x_last])
+                translate([xg, y_hinge, 0])
+                    cyl_x(pin_retain_r, pin_retain_len);
+        }
+    }
 }
 
 // Đặt mảnh để in: xoay 90° quanh Y để trục bản lề (X cục bộ) nằm DỌC

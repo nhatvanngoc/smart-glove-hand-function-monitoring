@@ -280,6 +280,30 @@ Thiết kế từ trước (§5b) đã có phần: `top_shell` hàn liền (unio
 
 **Giới hạn tự khai (QUAN TRỌNG — chưa in thật):** khe hở 0.3mm là **điểm khởi đầu phổ biến theo tài liệu hướng dẫn chung**, KHÔNG phải số đã hiệu chỉnh cho máy in/vật liệu cụ thể nào — từng máy in (độ chính xác cơ khí, hiệu chỉnh dòng nhựa/flow, "chân voi" lớp đầu) có thể cần tăng/giảm. Khuyến nghị in thử 1 bản lề nhỏ (chỉ đoạn có khớp ống, vài cm) với 3-4 mức khe hở (0.2/0.25/0.3/0.35mm) trước khi in bản đầy đủ, theo đúng tinh thần "ngân sách thiết kế, không phải kết quả đo" của `docs/04`. Việc bản lề "xoay được trên CAD" (hình học) KHÔNG đảm bảo "xoay được khi in" (vật lý) — vẫn cần thử nghiệm in thật.
 
+## 5f. LỖI đã sửa — trục bản lề KHÔNG CÓ gì chặn, nửa lòng tay có thể TUỘT dọc trục ra ngoài (2026-10-08)
+
+**Yêu cầu chủ dự án:** kiểm chứng lại bản lề đủ 3 điều: (1) xoay tự do quanh trục, (2) không có lỗi, (3) **không dễ rơi/tuột ra ngoài**. (1) và (2) đã có bằng chứng từ §5e (`check_hinge_sweep.py`), nhưng (3) là một yêu cầu MỚI — khi kiểm tra lại, phát hiện đây KHÔNG CHỈ là một quan ngại giả thuyết mà là **một lỗi hình học thật sự chưa từng được kiểm tra**.
+
+**Lỗi phát hiện:** `check_hinge_sweep.py` (§5e) chỉ quét **góc xoay**, chưa bao giờ quét **chuyển vị dọc trục** (translate dọc theo trục X của bản lề). Khi xem lại `build_pin()`, trục bản lề là một hình trụ **bán kính không đổi suốt chiều dài** (chỉ bo tròn 2 đầu thành chỏm bán cầu) — **không có vai/mũ/gờ nào rộng hơn lỗ khớp ống** ở bất kỳ đâu dọc trục. Vì 2 khớp ống của nửa lòng tay là 1 khối cứng duy nhất (di chuyển cùng nhau), **không có gì về mặt hình học ngăn cả nửa lòng tay trượt dọc theo trục và tuột hẳn ra khỏi 1 trong 2 đầu trục** — một rủi ro thật khi thao tác, tháo/lắp lên tay bệnh nhân, hoặc rung lắc khi dùng.
+
+**Đã sửa:** thêm **2 "vai chặn" hình TRỤ ĐỒNG TRỤC** (collar, bán kính `pin_retain_r = 2.2mm`, dài `pin_retain_len = 2.0mm`) hàn liền vào trục, đặt đúng **tâm của khớp ống ĐẦU và CUỐI** thuộc nửa mu tay (đã có sẵn vật liệu boss `r_knuckle = 3.0mm` bao quanh ở đó) — vai chặn **ẩn gọn trong khối vật liệu có sẵn, không tạo gờ nhô mới ra ngoài vỏ** (2.2mm < 3.0mm). Vì bán kính vai chặn (2.2mm) lớn hơn hẳn bán kính lỗ khớp ống của nửa lòng tay (`r_pin = 1.3mm`), và mọi khớp ống của nửa lòng tay đều nằm **giữa** 2 vai chặn này theo trục X, nửa lòng tay **không thể trượt dọc trục qua khỏi vai chặn mà không đâm xuyên vật liệu thật** — chặn được cả 2 hướng tuột.
+
+*Vì sao dùng hình TRỤ chứ không phải hình CẦU (phương án thử đầu tiên):* hình cầu tạo ra 1 điểm cực (pole) kỳ dị về mặt tham số hoá bề mặt — khi xuất STL, lưới tam giác hoá tại điểm cực này sinh ra 1 tam giác thể tích gần-bằng-0 bị `check_connectivity.py` báo nhầm là "mảnh rời" (artefact dựng lưới, không phải lỗi hình học thật — đã xác nhận bằng `.clean()` không giải quyết được). Đổi sang hình trụ **đồng trục với chính trục bản lề** thì không còn điểm kỳ dị nào — hết lỗi mảnh rời ngay, xác nhận lại bằng `check_connectivity.py` (PASS, 1 khối liền cho cả `.py` và `.scad`).
+
+**Công cụ kiểm tra mới — `check_axial_retention.py`:** quét chuyển vị dọc trục X từ 0 đến ±25mm, tính thể tích giao nhau (boolean intersection) thật giữa `bottom_shell` đã dịch chuyển và trục (`build_pin()`), ở CẢ 2 phiên bản trục (cũ: không vai chặn / mới: có vai chặn) để làm đối chứng trước/sau:
+
+| Hướng trượt | Trục CŨ (không vai chặn) | Trục MỚI (có vai chặn) |
+|---|---|---|
+| +X | 0.0 mm³ ở MỌI bước quét — **không chặn gì cả** | tới **9.90 mm³** giao nhau trước khi qua được — **bị chặn thật** |
+| −X | 0.0 mm³ ở MỌI bước quét — **không chặn gì cả** | tới **9.90 mm³** giao nhau trước khi qua được — **bị chặn thật** |
+
+![minh hoa truoc/sau vai chan chong tuot truc](out/renders/10_axial_retention_fix_before_after.png)
+*Trái: trục CŨ — nửa lòng tay trượt thẳng ra ngoài (dịch 20mm, 0mm³ giao nhau, không có gì cản). Phải: trục MỚI — 2 vai chặn hình trụ (khối đen) chặn đường trượt, nửa lòng tay đâm xuyên vào vai chặn (dịch 4mm, ~9.9mm³ giao nhau) trước khi có thể đi xa hơn.*
+
+**Đã kiểm tra lại toàn bộ sau khi sửa (không hồi quy):** `check_hinge_sweep.py` vẫn PASS (0.0246mm³ tối đa trong vùng mở thật, không đổi so với §5e — vai chặn nằm ẩn trong boss sẵn có nên không ảnh hưởng va chạm khi xoay), `check_connectivity.py` PASS (1 khối liền cho cả `.py`/`.scad`), `check_latch_engagement.py` PASS (không đổi so với §5c), `cross_check.py` PASS (`.py` và `.scad` khớp hình học, lệch thể tích <0.3%).
+
+**Giới hạn tự khai (QUAN TRỌNG):** đây là bằng chứng HÌNH HỌC rằng cần đâm xuyên vật liệu mới trượt qua được vai chặn — **KHÔNG phải** bằng chứng về LỰC cần thiết để thực sự kéo tuột (độ bền kéo/cắt của PETG tại vùng vai chặn, độ đàn hồi khi lắp ráp lần đầu lên trục, dung sai in thật). Bán kính/chiều dài vai chặn (2.2mm / 2.0mm) là **lựa chọn thiết kế trên CAD**, chưa kiểm chứng bằng mẫu in thật hay thử lực kéo — vẫn cần in thử và thử kéo tay trước khi coi là "chắc chắn không rơi ra" trong thực tế. Lỗi này cũng là ví dụ cụ thể cho bài học ở §5e: **một bộ kiểm tra chỉ quét 1 loại chuyển động (góc xoay) sẽ bỏ sót lỗi ở loại chuyển động khác (trượt dọc trục)** — từ nay cả `check_hinge_sweep.py` (xoay) VÀ `check_axial_retention.py` (trượt dọc trục) đều chạy mỗi khi đổi tham số hình học liên quan đến bản lề.
+
 ## 6. Hướng dẫn in 3D (khuyến nghị — chưa kiểm chứng bằng mẫu in thật)
 
 - **Vật liệu:** PETG (đồng bộ với `docs/04` §6), ≥ 5 vòng tường, 100% hoặc ≥ 60% infill ở vùng ngàm/bản lề (chịu lực lặp lại).
@@ -333,6 +357,7 @@ hardware/cad/finger_shell_hinge/
 ├── check_connectivity.py     ← kiểm tra mỗi chi tiết là 1 khối LIỀN (không tách mảnh rời) — xem §5a
 ├── check_latch_engagement.py ← kiểm tra móc/răng ngàm cài có THỰC SỰ giao nhau hình học — xem §5c
 ├── check_hinge_sweep.py      ← [MỚI 2026-10-07] quét va chạm 2 nửa vỏ qua TOÀN BỘ dải góc mở — xem §5e
+├── check_axial_retention.py  ← [MỚI 2026-10-08] quét chuyển vị dọc trục, kiểm tra chống tuột — xem §5f
 ├── package.json / package-lock.json  ← khai báo gói npm openscad-wasm-prebuilt dùng cho render_scad_wasm.mjs
 └── out/
     ├── top_shell_dorsal.step / .stl       ← nửa mu tay (mang khối ngàm + 3 khớp bản lề)

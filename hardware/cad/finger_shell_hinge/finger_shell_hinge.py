@@ -90,6 +90,23 @@ class P:
                            # THAM SỐ CẦN HIỆU CHỈNH THEO TỪNG MÁY IN/VẬT LIỆU
                            # THẬT (xem README §5e) — 0.3mm chỉ là điểm khởi đầu
                            # phổ biến, CHƯA kiểm chứng bằng mẫu in thật.
+    # 2026-10-08 (theo yêu cầu chủ dự án: "đảm bảo không dễ rơi ra ngoài"):
+    # LỖI PHÁT HIỆN — trục cũ là hình trụ ĐỀU bán kính không đổi suốt chiều
+    # dài, 2 đầu chỉ bo tròn (fillet) chứ KHÔNG có vai/mũ chặn lớn hơn lỗ
+    # khớp ống -> KHÔNG CÓ GÌ ngăn nửa lòng tay trượt dọc trục (X) và tuột
+    # hẳn ra khỏi trục. Khắc phục: thêm 2 "vai chặn" (retention shoulder,
+    # hình cầu bán kính pin_retain_r > r_pin) ở giữa khớp ống ĐẦU và CUỐI
+    # thuộc nửa mu tay (nơi đã có sẵn vật liệu boss r_knuckle=3.0mm, nên vai
+    # chặn ẩn gọn bên trong, KHÔNG tạo gờ nhô mới ra ngoài vỏ). Mọi khớp ống
+    # nửa lòng tay (bán kính lỗ r_pin) đều nằm GIỮA 2 vai chặn này theo trục
+    # X -> không thể trượt qua được vai chặn để tuột ra ngoài. Chỉ áp dụng
+    # khi PIN_INTEGRATED=True (trục hàn liền); nếu PIN_INTEGRATED=False
+    # (trục rời, xỏ tay), vai chặn sẽ chặn luôn việc XỎ trục qua lỗ của
+    # chính nửa mu tay -> xem README §5f về rủi ro tuột trục còn lại ở chế
+    # độ không tích hợp.
+    pin_retain_r = 2.2     # bán kính "vai chặn" (mm) — phải > r_pin (lỗ khớp
+                           # ống, hiện 1.3mm) để chặn tuột, và < r_knuckle
+                           # (3.0mm) để ẩn gọn trong boss có sẵn, không lộ ra
     knuckle_overlap = 0.5  # phần khớp ống "ăn" vào thành vỏ để union liền khối
 
     # --- Ngàm cài (snap latch) — cạnh Y = +W_out/2 ---
@@ -444,7 +461,11 @@ def build_bottom_shell():
     return shell
 
 
-def build_pin():
+def build_pin(with_retention=None):
+    """with_retention=None (mặc định): tự quyết theo PIN_INTEGRATED (chỉ thêm
+    vai chặn khi trục hàn liền — xem giải thích tham số pin_retain_r ở P)."""
+    if with_retention is None:
+        with_retention = p.PIN_INTEGRATED
     y_axis = -p.W_out / 2.0 - p.r_knuckle + p.knuckle_overlap
     hole_len = (p.L - 2 * p.margin_x) + 4.0
     pin_len = hole_len + 1.0
@@ -459,8 +480,36 @@ def build_pin():
     # không còn cạnh sắc ở 2 đầu thò ra, dễ dùng làm mồi luồn qua các khớp
     # ống khi lắp ráp và an toàn hơn khi đầu trục lộ ra ngoài vỏ.
     pin = pin.edges("%CIRCLE").fillet(r * 0.999)
+    if with_retention:
+        # SỬA LỖI 2026-10-08 (§5f, "đảm bảo không dễ rơi ra ngoài"): thêm 2
+        # vai chặn hình TRỤ ĐỒNG TRỤC (collar, bán kính pin_retain_r > r_pin)
+        # đặt đúng GIỮA khớp ống ĐẦU và CUỐI thuộc nửa mu tay (đã có sẵn vật
+        # liệu boss r_knuckle=3.0mm bao quanh ở đó -- xem knuckle_segments())
+        # -- vai chặn ẩn gọn trong boss có sẵn, KHÔNG tạo gờ nhô mới. Mọi
+        # khớp ống nửa lòng tay (lỗ bán kính r_pin=1.3mm) đều nằm GIỮA 2 vai
+        # chặn này theo trục X nên không thể trượt dọc trục để tuột ra
+        # ngoài. (Thử dùng hình CẦU trước, nhưng cực của hình cầu tạo ra
+        # 1 tam giác suy biến thể tích ~0 khi xuất STL -- bị check_connectivity.py
+        # báo nhầm thành "mảnh rời"; đổi sang hình TRỤ ĐỒNG TRỤC với trục
+        # chính của chốt thì không còn điểm cực kỳ dị nào -> hết lỗi.)
+        segs = knuckle_segments()
+        top_segs = [s for s in segs if s[2] == "top"]
+        x_first = (top_segs[0][0] + top_segs[0][1]) / 2.0
+        x_last = (top_segs[-1][0] + top_segs[-1][1]) / 2.0
+        x_origin = p.margin_x - 2.5  # khớp với translate() bên dưới
+        collar_len = 2.0  # mm, đủ ngắn để nằm gọn trong 1 doan knuckle (3.6mm)
+        for x_global in (x_first, x_last):
+            x_local_start = (x_global - x_origin) - collar_len / 2.0
+            head = (
+                cq.Workplane("YZ")
+                .circle(p.pin_retain_r)
+                .extrude(collar_len)
+                .translate((x_local_start, 0, 0))
+            )
+            pin = pin.union(head)
     pin = pin.translate((p.margin_x - 2.5, y_axis, 0))
     return pin
+
 
 
 def hinge_axis_points():
