@@ -96,15 +96,30 @@ pin_clearance   = 0.3; // khe hở BÁN KÍNH trục-lỗ (mm) -- CẦN HIỆU C
 // hơn lỗ khớp ống -> KHÔNG CÓ GÌ ngăn nửa lòng tay trượt dọc trục X và
 // tuột hẳn ra khỏi trục. Khắc phục: thêm 2 "vai chặn" hình TRỤ ĐỒNG TRỤC
 // (collar, bán kính pin_retain_r > r_pin) ở GIỮA khớp ống ĐẦU và CUỐI
-// thuộc nửa mu tay (đã có sẵn vật liệu boss r_knuckle=3.0mm bao quanh ở
-// đó) -- vai chặn ẩn gọn trong boss có sẵn, KHÔNG tạo gờ nhô mới. Mọi khớp
-// ống nửa lòng tay (lỗ bán kính r_pin) đều nằm GIỮA 2 vai chặn này theo
-// trục X nên không thể trượt dọc trục để tuột ra ngoài (kiểm chứng bằng
-// check_axial_retention.py). Dùng hình TRỤ (không phải hình CẦU) vì hình
-// cầu tạo điểm cực kỳ dị khi xuất STL -> check_connectivity.py báo nhầm
-// "mảnh rời". Chỉ áp dụng khi PIN_INTEGRATED=true.
+// thuộc nửa mu tay. Mọi khớp ống nửa lòng tay (lỗ bán kính r_pin) đều nằm
+// GIỮA 2 vai chặn này theo trục X nên không thể trượt dọc trục để tuột ra
+// ngoài (kiểm chứng bằng check_axial_retention.py). Dùng hình TRỤ (không
+// phải hình CẦU) vì hình cầu tạo điểm cực kỳ dị khi xuất STL ->
+// check_connectivity.py báo nhầm "mảnh rời". Chỉ áp dụng khi
+// PIN_INTEGRATED=true.
+//
+// ĐÍNH CHÍNH 2026-10-08 (phát hiện khi làm QA bằng ảnh render + đo thể
+// tích boolean chính xác trên bản .py, theo yêu cầu "dùng vision kiểm tra
+// tới khi hết lỗi"): ghi chú trước đây nói vai chặn "ẩn gọn trong boss có
+// sẵn, KHÔNG tạo gờ nhô mới" -- ĐÃ KIỂM CHỨNG SAI. Boss của nửa mu tay chỉ
+// là NỬA hình trụ (nửa Z>=0, xem hinge_knuckles()), còn vai chặn là hình
+// trụ TRÒN ĐỦ -- nên nửa Z<0 của mỗi vai chặn lộ ra thành 1 cục u nhỏ (bán
+// kính 2.2mm, dài 2mm) trong khe hở giữa các khớp ống, phía lòng tay. Đây
+// là CHỦ Ý CẦN THIẾT (không phải lỗi): vai chặn phải có vật liệu ở đúng
+// nửa Z<0 thì mới thực sự chặn được khớp ống lòng tay (có lỗ nằm ở Z<0).
+// Đã xác nhận (trên bản .py, hình học giống hệt) cục u này KHÔNG va chạm
+// khi xoay bản lề và KHÔNG vượt bán kính ngoài lớn nhất của vỏ
+// (2.2mm < r_knuckle=3.0mm) -- chỉ lộ nhẹ về thẩm mỹ trong khe hở, không
+// "ẩn hoàn toàn" như ghi chú cũ từng nói. Xem README §5f.
 pin_retain_r    = 2.2; // bán kính vai chặn (mm) -- phải > r_pin (1.3mm) để
-                        // chặn tuột, và < r_knuckle (3.0mm) để ẩn gọn
+                        // chặn tuột. LƯU Ý: không ẩn hoàn toàn -- xem đính
+                        // chính 2026-10-08 ở trên (tạo 1 cục u nhỏ lộ ra ở
+                        // khe hở giữa các khớp ống, đã xác nhận an toàn).
 pin_retain_len  = 2.0;  // chiều dài mỗi vai chặn (mm)
 knuckle_overlap = 0.5; // phần khớp ống "ăn" vào thành vỏ để liền khối
 

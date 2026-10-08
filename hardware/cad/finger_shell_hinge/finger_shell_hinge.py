@@ -95,18 +95,36 @@ class P:
     # dài, 2 đầu chỉ bo tròn (fillet) chứ KHÔNG có vai/mũ chặn lớn hơn lỗ
     # khớp ống -> KHÔNG CÓ GÌ ngăn nửa lòng tay trượt dọc trục (X) và tuột
     # hẳn ra khỏi trục. Khắc phục: thêm 2 "vai chặn" (retention shoulder,
-    # hình cầu bán kính pin_retain_r > r_pin) ở giữa khớp ống ĐẦU và CUỐI
-    # thuộc nửa mu tay (nơi đã có sẵn vật liệu boss r_knuckle=3.0mm, nên vai
-    # chặn ẩn gọn bên trong, KHÔNG tạo gờ nhô mới ra ngoài vỏ). Mọi khớp ống
-    # nửa lòng tay (bán kính lỗ r_pin) đều nằm GIỮA 2 vai chặn này theo trục
-    # X -> không thể trượt qua được vai chặn để tuột ra ngoài. Chỉ áp dụng
-    # khi PIN_INTEGRATED=True (trục hàn liền); nếu PIN_INTEGRATED=False
-    # (trục rời, xỏ tay), vai chặn sẽ chặn luôn việc XỎ trục qua lỗ của
-    # chính nửa mu tay -> xem README §5f về rủi ro tuột trục còn lại ở chế
-    # độ không tích hợp.
+    # hình trụ đồng trục bán kính pin_retain_r > r_pin) ở giữa khớp ống ĐẦU
+    # và CUỐI thuộc nửa mu tay.
+    #
+    # SỬA LẠI GHI CHÚ 2026-10-08 (phát hiện khi làm QA bằng ảnh render +
+    # đo thể tích chính xác, theo yêu cầu "dùng vision kiểm tra tới khi hết
+    # lỗi"): ghi chú CŨ ở đây từng viết sai là vai chặn "ẩn gọn trong boss có
+    # sẵn, KHÔNG tạo gờ nhô mới ra ngoài vỏ" — ĐÃ KIỂM CHỨNG ĐIỀU NÀY SAI.
+    # Đo bằng boolean cut(top_shell CÓ vai chặn, top_shell KHÔNG có vai
+    # chặn) ra ~24mm3 vật liệu MỚI, nằm hoàn toàn ở Z<0 (nửa không gian của
+    # lòng tay) — vì boss của nửa mu tay (add_hinge_knuckles) chỉ là NỬA
+    # hình trụ (intersect half_space Z>=0, xem add_hinge_knuckles()), trong
+    # khi vai chặn là hình trụ TRÒN ĐỦ (cả 2 nửa Z). Vậy mỗi vai chặn thực
+    # tế lộ ra thành 1 "cục u" nửa-hình-trụ nhỏ (bán kính 2.2mm, dài 2mm)
+    # nhô vào đúng khe hở (knuckle_gap) giữa 2 khớp ống, phía lòng tay.
+    # ĐÂY LÀ CHỦ Ý CẦN THIẾT, KHÔNG PHẢI LỖI: vai chặn PHẢI có vật liệu ở
+    # đúng nửa Z<0 thì mới thực sự "chặn" được khớp ống lòng tay (có lỗ nằm
+    # ở Z<0) khi nó cố trượt dọc trục tới đúng vị trí X này — nếu giới hạn
+    # vai chặn về chỉ Z>=0 (giống boss) thì sẽ MẤT TÁC DỤNG chặn hoàn toàn.
+    # Đã xác nhận cục u này KHÔNG gây va chạm khi xoay bản lề (vẫn PASS
+    # check_hinge_sweep.py, xem README §5f) và KHÔNG vượt quá bán kính
+    # ngoài lớn nhất của vỏ (2.2mm < r_knuckle=3.0mm) nên không ảnh hưởng
+    # kích thước bao ngoài tổng thể — nhưng về mặt thẩm mỹ nó CÓ lộ ra một
+    # chút trong khe hở giữa các khớp ống, không "ẩn hoàn toàn" như ghi chú
+    # cũ từng nói. Xem README §5f (mục cập nhật) để biết chi tiết + ảnh.
     pin_retain_r = 2.2     # bán kính "vai chặn" (mm) — phải > r_pin (lỗ khớp
-                           # ống, hiện 1.3mm) để chặn tuột, và < r_knuckle
-                           # (3.0mm) để ẩn gọn trong boss có sẵn, không lộ ra
+                           # ống, hiện 1.3mm) để chặn tuột. LƯU Ý: KHÔNG ẩn
+                           # hoàn toàn — xem ghi chú 2026-10-08 ở trên, tạo 1
+                           # cục u nhỏ lộ ra ở khe hở giữa các khớp ống (đã
+                           # xác nhận không va chạm, không vượt quá bán kính
+                           # ngoài lớn nhất r_knuckle=3.0mm của vỏ).
     knuckle_overlap = 0.5  # phần khớp ống "ăn" vào thành vỏ để union liền khối
 
     # --- Ngàm cài (snap latch) — cạnh Y = +W_out/2 ---
@@ -483,15 +501,22 @@ def build_pin(with_retention=None):
     if with_retention:
         # SỬA LỖI 2026-10-08 (§5f, "đảm bảo không dễ rơi ra ngoài"): thêm 2
         # vai chặn hình TRỤ ĐỒNG TRỤC (collar, bán kính pin_retain_r > r_pin)
-        # đặt đúng GIỮA khớp ống ĐẦU và CUỐI thuộc nửa mu tay (đã có sẵn vật
-        # liệu boss r_knuckle=3.0mm bao quanh ở đó -- xem knuckle_segments())
-        # -- vai chặn ẩn gọn trong boss có sẵn, KHÔNG tạo gờ nhô mới. Mọi
-        # khớp ống nửa lòng tay (lỗ bán kính r_pin=1.3mm) đều nằm GIỮA 2 vai
-        # chặn này theo trục X nên không thể trượt dọc trục để tuột ra
-        # ngoài. (Thử dùng hình CẦU trước, nhưng cực của hình cầu tạo ra
-        # 1 tam giác suy biến thể tích ~0 khi xuất STL -- bị check_connectivity.py
-        # báo nhầm thành "mảnh rời"; đổi sang hình TRỤ ĐỒNG TRỤC với trục
-        # chính của chốt thì không còn điểm cực kỳ dị nào -> hết lỗi.)
+        # đặt đúng GIỮA khớp ống ĐẦU và CUỐI thuộc nửa mu tay. Mọi khớp ống
+        # nửa lòng tay (lỗ bán kính r_pin=1.3mm) đều nằm GIỮA 2 vai chặn này
+        # theo trục X nên không thể trượt dọc trục để tuột ra ngoài. (Thử
+        # dùng hình CẦU trước, nhưng cực của hình cầu tạo ra 1 tam giác suy
+        # biến thể tích ~0 khi xuất STL -- bị check_connectivity.py báo nhầm
+        # thành "mảnh rời"; đổi sang hình TRỤ ĐỒNG TRỤC với trục chính của
+        # chốt thì không còn điểm cực kỳ dị nào -> hết lỗi.)
+        #
+        # ĐÍNH CHÍNH 2026-10-08 (QA bằng ảnh + đo thể tích, xem ghi chú đầy
+        # đủ ở định nghĩa `pin_retain_r` trong class P phía trên): vai chặn
+        # này KHÔNG "ẩn gọn trong boss có sẵn" như ghi chú cũ từng nói nhầm —
+        # vì boss của nửa mu tay chỉ là NỬA hình trụ (Z>=0), còn vai chặn là
+        # hình trụ TRÒN ĐỦ nên nửa Z<0 của nó lộ ra thành 1 cục u nhỏ trong
+        # khe hở giữa các khớp ống. Đây là CHỦ Ý CẦN THIẾT để vai chặn thực
+        # sự chặn được khớp ống lòng tay (đã xác nhận không va chạm khi xoay
+        # và không vượt bán kính ngoài lớn nhất của vỏ — xem README §5f).
         segs = knuckle_segments()
         top_segs = [s for s in segs if s[2] == "top"]
         x_first = (top_segs[0][0] + top_segs[0][1]) / 2.0
