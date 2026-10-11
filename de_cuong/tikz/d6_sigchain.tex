@@ -1,0 +1,39 @@
+% d6 — Chuỗi tín hiệu (2 hàng, hình chữ Z): đúng thứ tự mục 11.1--11.2 + vòng tự kiểm tra
+\documentclass[border=4pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta}
+\begin{document}
+\begin{tikzpicture}[font=\scriptsize,
+  box/.style={draw=black!55, rounded corners=2.5pt, fill=#1, minimum width=1.68cm, minimum height=1.3cm, align=center, inner sep=1pt}]
+% ---- hàng trên (y=0): trái -> phải
+\node[box=blue!9]   (a) {Lực ép ngón đè lên vách\\(12 kênh + ô tham chiếu)};
+\node[box=teal!9, right=0.15cm of a] (b) {2 mạch chia áp / vách\\$d=S_{\text{lòng}}-S_{\text{mu}}$\\Velostat nén: $\Delta R<0$};
+\node[box=green!9, right=0.15cm of b] (c) {INA128 / INA333\\khuếch đại vi sai};
+\node[box=yellow!12, right=0.15cm of c] (d) {2$\times$CD74HC4067\\chọn kênh};
+% ---- hàng dưới (y=-1.75): phải -> trái (hình chữ Z)
+\node[box=orange!9, below=1.75cm of d] (e) {Đệm MCP6001 rồi\\ADS1115 16-bit (PGA)};
+\node[box=purple!8, left=0.15cm of e]  (f) {ESP32-S3\\trung bình mẫu · BLE};
+\node[box=gray!12,  left=0.15cm of f]  (g) {Orange Pi 5 Pro\\học máy INT8 · NPU};
+\node[box=gray!9,   left=0.15cm of g]  (h) {EI · GAP · RAL\\+ mức tin cậy};
+
+\draw[->, >=stealth, thick, black!60] (a.east) -- (b.west);
+\draw[->, >=stealth, thick, black!60] (b.east) -- (c.west);
+\draw[->, >=stealth, thick, black!60] (c.east) -- (d.west);
+\draw[->, >=stealth, thick, black!60] (d.south) -- (e.north);
+\draw[->, >=stealth, thick, black!60] (e.west) -- (f.east);
+\draw[->, >=stealth, thick, black!60] (f.west) -- (g.east);
+\draw[->, >=stealth, thick, black!60] (g.west) -- (h.east);
+
+% ---- vòng tự kiểm tra KHÉP KÍN dắt theo LANE RIÊNG dưới hàng hộp (không xuyên vùng hộp):
+%      từ (f.south) xuống lane y=-3.25, chạy ngang sang trái, rồi lên móc vào (a.south).
+\draw[->, >=stealth, dashed, black!55]
+  (f.south) -- (f.south |- 0,-3.25)                % cột dọc từ ESP32 xuống lane
+  -- (a.south |- 0,-3.25)                          % lane ngang
+  -- (a.south);                                    % cột dọc lên hộp đầu chuỗi
+\node[anchor=north, font=\scriptsize\itshape, black!70, align=center] at (c.south |- 0,-3.25)
+  {tự cân chỉnh điểm 0 · đối chiếu ô tham chiếu};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,30 @@
+% d8 — Giàn đo (rig) kiểm chứng: trục trượt dẫn hướng + tải chuẩn + động cơ + phantom
+\documentclass[border=4pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\begin{document}
+\begin{tikzpicture}[font=\footnotesize,
+  blk/.style={draw=black!55, rounded corners=2.5pt, fill=#1, minimum width=1.9cm, minimum height=0.95cm, align=center, inner sep=2pt}]
+% upper row: tạo lực đã biết (chuỗi dẫn động có dẫn hướng tuyến tính)
+\node[blk=blue!9]  (load)  {Tải chuẩn\\lò xo + khối lượng};
+\node[blk=teal!9, right=0.3cm of load] (guide) {Trục trượt\\+ ổ bi trượt};
+\node[blk=teal!9, right=0.3cm of guide] (drive) {Khớp nối +\\vít me · 2 tốc độ};
+\node[blk=purple!8, right=0.3cm of drive] (brake) {Phanh từ\\chặn tư thế};
+% lower row: đối tượng đo lường
+\node[blk=orange!10, below=0.9cm of guide] (phantom) {Mô hình tay giả\\(phantom) mang găng};
+\node[blk=green!9, right=0.35cm of phantom] (ref) {Chuẩn đối chứng\\load cell + HX711};
+% arrows
+\draw[->, >=stealth, thick, black!60] (load.east) -- (guide.west);
+\draw[->, >=stealth, thick, black!60] (guide.east) -- (drive.west);
+\draw[->, >=stealth, thick, black!60] (drive.east) -- (brake.west);
+% mũi tên kéo dãn bắt nguồn từ khối vít me (nơi sinh 2 tốc độ), gập góc xuống phantom
+\draw[->, >=stealth, thick, black!60] (drive.south) -- (drive.south |- phantom.north) -- (phantom.north);
+\node[anchor=south, font=\scriptsize, fill=white, inner sep=1pt] at (drive.south |- 0,-1.05) {kéo dãn 2 tốc độ};
+\draw[->, >=stealth, thick, black!55] (phantom.east) -- (ref.west);
+% annotation
+\node[anchor=north west, font=\scriptsize, black!60] at (-0.3,-2.35)
+  {Trục trượt + ổ bi dẫn hướng cho kéo dãn mượt, không rung — nếu thiếu, lực kéo lắc sẽ làm sai lệch phép đo GAP.};
+\end{tikzpicture}
+\end{document}

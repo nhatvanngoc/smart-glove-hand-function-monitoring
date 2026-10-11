@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="phalanx1_concentric_clasp">
+    <static>false</static>
+
+    <!-- Máng mu ngón (Dorsal Shell) -->
+    <link name="dorsal_link">
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0.0045 0.0075 0 0 0</pose>
+        <mass>0.008</mass>
+        <inertia>
+          <ixx>1.2e-6</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>1.5e-6</iyy><iyz>0</iyz>
+          <izz>1.8e-6</izz>
+        </inertia>
+      </inertial>
+      <visual name="dorsal_vis">
+        <geometry>
+          <mesh>
+            <uri>file://phalanx1_dorsal_only.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.05 0.55 0.85 1</ambient>
+          <diffuse>0.05 0.55 0.85 1</diffuse>
+        </material>
+      </visual>
+      <collision name="dorsal_col">
+        <geometry>
+          <mesh>
+            <uri>file://phalanx1_dorsal_only.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Quai bụng ngón (Palmar Arm) -->
+    <link name="palmar_link">
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 -0.0085 0.0062 0 0 0</pose>
+        <mass>0.004</mass>
+        <inertia>
+          <ixx>0.6e-6</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>0.8e-6</iyy><iyz>0</iyz>
+          <izz>0.9e-6</izz>
+        </inertia>
+      </inertial>
+      <visual name="palmar_vis">
+        <geometry>
+          <mesh>
+            <uri>file://phalanx1_palmar_arm_only.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.95 0.60 0.10 1</ambient>
+          <diffuse>0.95 0.60 0.10 1</diffuse>
+        </material>
+      </visual>
+      <collision name="palmar_col">
+        <geometry>
+          <mesh>
+            <uri>file://phalanx1_palmar_arm_only.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Khớp bản lề H(-13.6mm, -1.0mm) -->
+    <joint name="hinge_joint" type="revolute">
+      <parent>dorsal_link</parent>
+      <child>palmar_link</child>
+      <pose>-0.0136 -0.0010 0.0 0 0 0</pose>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1.570796</lower>
+          <upper>0.0</upper>
+        </limit>
+        <dynamics>
+          <damping>0.001</damping>
+          <friction>0.02</friction>
+        </dynamics>
+      </axis>
+    </joint>
+  </model>
+</sdf>

@@ -33,3 +33,8 @@ research/queries/private/
 research/cache/
 research/downloads/
 research/generated/
+
+# Media / Audio artifacts
+*.m4a
+*.mp3
+research/notebooklm_sync/audio/

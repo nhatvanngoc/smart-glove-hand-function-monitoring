@@ -16,6 +16,10 @@
 ├── INDEX.md                       ← File này
 ├── LICENSE
 ├── requirements.txt               ← numpy, matplotlib, scikit-learn
+├── 3d_model/                          ← ⭐ Thiết kế cơ cấu cơ khí nẹp ngón tay (CAD & 3D Print)
+│   ├── custom_exo/full_finger_modular/ ← Bộ 3 đốt module hóa Print-in-Place + Khớp rãnh trượt 13.5mm (STL/STEP/FCStd)
+│   ├── generate_full_finger_modular.py ← Script FreeCAD Python sinh tham số toàn bộ ngón tay
+│   └── render_full_finger.py          ← Script kết xuất đồ họa trực quan 4 góc nhìn
 ├── docs/
 │   ├── DE_CUONG.pdf / DE_CUONG.txt    ← ⭐ BẢN ĐÃ NỘP (15 tr., 2026-09-26) + trích text tra cứu
 │   ├── DE_CUONG_NOP_TRUONG.md         ← Đề cương nộp trường (bản md; danh tính đã điền từ PDF)
@@ -24,6 +28,7 @@
 │   ├── 03_Literature_Gap_Analysis_Plan.md ← Kế hoạch rà soát khoảng trống 2011–2026
 │   ├── 04_Hardware_Architecture.md    ← Bố trí kênh, MUX, ngân sách nhiễu (…+ §8 cấu hình đã nộp ADS1115+INA333)
 │   ├── 05_De_Cuong_Dang_Ky_DRAFT.md   ← Outline nội bộ (không nộp)
+│   ├── 06_Co_Cau_Co_Khi_Exoskeleton.md ← ⭐ THIẾT KẾ CƠ CẤU CƠ KHÍ KHUNG NGOÀI (Khớp rãnh trượt bù 13.5mm, Preload Velostat)
 │   ├── OUTLINE_BAOCAO_VISEFD.md       ← Khung báo cáo toàn văn A/B/C theo mẫu ViSEF
 │   └── bao_cao/
 │       ├── A1_ly_do_chon_de_tai.md    ← Tiêu chí A của ViSEF

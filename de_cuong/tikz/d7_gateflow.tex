@@ -1,0 +1,32 @@
+% d7 — Lộ trình các giai đoạn thử nghiệm (bậc thang dọc, có cạnh HỒI TIẾP "đo lại")
+\documentclass[border=4pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\begin{document}
+\begin{tikzpicture}[font=\footnotesize,
+  gate/.style={draw=black!50, rounded corners=3pt, fill=#1, minimum width=3.2cm, minimum height=1.0cm, align=center, inner sep=2pt}]
+\node[gate=blue!10] (g1) at (0,0) {Giai đoạn 1\\Khảo sát độ nhạy\\cảm biến};
+\node[gate=teal!10, below=0.55cm of g1] (g2) {Giai đoạn 2\\Đọc hướng gập/duỗi\\từng ngón};
+\node[gate=teal!10, below=0.55cm of g2] (g3) {Giai đoạn 3\\Hiệu chỉnh và\\độ lặp lại};
+\node[gate=orange!14, below=0.55cm of g3] (g4) {\textbf{Giai đoạn 4}\\\textbf{Kiểm tra ổn định}\\\textbf{theo thời gian}};
+\node[gate=green!10, below=0.55cm of g4] (g5) {Giai đoạn 5\\Đo mức trợ giúp\\cần thiết (RAL)};
+\node[gate=green!10, below=0.55cm of g5] (g6) {Giai đoạn 6\\Tự phát hiện và cảnh báo\\khi đeo sai};
+\node[gate=purple!10, below=0.55cm of g6] (g7) {Giai đoạn 7\\Học máy trên Orange Pi\\INT8 · độ trễ};
+% ---- mũi tên nối tiếp chính (xuống)
+\foreach \x/\y in {g1/g2,g2/g3,g3/g4,g4/g5,g5/g6,g6/g7}
+  \draw[->, >=stealth, thick, black!55] (\x.south) -- (\y.north);
+% ---- chú thích bên phải với leader line
+\node[right=0.7cm of g1, font=\scriptsize, black!60, align=left] (a1) {chốt 10 chỉ tiêu\\trước khi đo};
+\draw[black!55] (a1.west) -- (g1.east);
+\node[right=0.7cm of g4, font=\scriptsize, red!70!black, align=left] (a4) {cột mốc quan trọng nhất};
+\draw[red!60!black] (a4.west) -- (g4.east);
+\node[right=0.7cm of g6, font=\scriptsize, black!60, align=left] (a6) {thử cố tình đeo lỏng\\để xem máy có tự báo};
+\draw[black!55] (a6.west) -- (g6.east);
+% ---- cạnh HỒI TIẾP bên trái: Giai đoạn 4 chưa ổn -> hiệu chỉnh -> quay về Giai đoạn 1 đo lại
+\draw[->, >=stealth, red!60!black, thick] (-1.6,-4.65) -- (-3.1,-4.65) -- (-3.1,0) -- (-1.6,0);
+\node[font=\scriptsize, red!70!black, align=left, anchor=east] at (-3.2,-2.3)
+  {nếu chưa ổn:\\hiệu chỉnh thiết kế\\rồi đo lại};
+\end{tikzpicture}
+\end{document}

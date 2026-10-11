@@ -1,0 +1,185 @@
+{
+  "name": "Dự đoán kết quả vận động sau tai biến mạch máu não",
+  "children": [
+    {
+      "name": "Tổng quan và Thách thức lâm sàng",
+      "children": [
+        {
+          "name": "Tầm quan trọng của việc dự đoán",
+          "children": [
+            {
+              "name": "Định hướng mục tiêu trị liệu ban đầu"
+            },
+            {
+              "name": "Xác định nơi xuất viện phù hợp"
+            },
+            {
+              "name": "Hỗ trợ bệnh nhân và gia đình lập kế hoạch"
+            }
+          ]
+        },
+        {
+          "name": "Hạn chế khi dựa vào cảm tính lâm sàng",
+          "children": [
+            {
+              "name": "Độ chính xác thấp: Tỷ lệ chung chỉ 59%"
+            },
+            {
+              "name": "Nguy cơ phân bổ nguồn lực không hiệu quả"
+            },
+            {
+              "name": "Gây bất bình đẳng trong tiếp cận dịch vụ"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Đánh giá và Dự đoán Chi trên (Upper Limb)",
+      "children": [
+        {
+          "name": "Công cụ chỉ dùng thông tin lâm sàng",
+          "children": [
+            {
+              "name": "Mô hình EPOS-UL: Dựa trên vận động ngón tay và vai"
+            },
+            {
+              "name": "Thang đo SALGOT: Đánh giá qua ARAT và sức nắm"
+            },
+            {
+              "name": "Độ chính xác cao hơn với bệnh nhân nhẹ"
+            }
+          ]
+        },
+        {
+          "name": "Công cụ kết hợp sinh dấu ấn (Biomarkers)",
+          "children": [
+            {
+              "name": "Thuật toán PREP2",
+              "children": [
+                {
+                  "name": "Điểm SAFE: Kết hợp dạng và duỗi ngón tay"
+                },
+                {
+                  "name": "Kích thích từ trường xuyên sọ (TMS)"
+                },
+                {
+                  "name": "Phân loại 4 mức: Xuất sắc, tốt, hạn chế, kém"
+                }
+              ]
+            },
+            {
+              "name": "Nghiên cứu Hoonhorst: Đánh giá chức năng khéo léo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Đánh giá và Dự đoán Khả năng Đi lại (Lower Limb)",
+      "children": [
+        {
+          "name": "Các yếu tố dự đoán lâm sàng",
+          "children": [
+            {
+              "name": "Kiểm soát thân người và thăng bằng"
+            },
+            {
+              "name": "Sức mạnh cơ chi dưới và hông"
+            },
+            {
+              "name": "Tuổi và mức độ đột quỵ ban đầu"
+            }
+          ]
+        },
+        {
+          "name": "Các mô hình dự đoán chính",
+          "children": [
+            {
+              "name": "Mô hình EPOS-LL",
+              "children": [
+                {
+                  "name": "Trắc nghiệm kiểm soát thân TCT"
+                },
+                {
+                  "name": "Chỉ số Motricity chi dưới LL-MI"
+                }
+              ]
+            },
+            {
+              "name": "Công cụ TWIST",
+              "children": [
+                {
+                  "name": "Dự đoán thời gian phục hồi đi lại độc lập"
+                },
+                {
+                  "name": "Sử dụng thang đo thăng bằng Berg"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Vai trò của Sinh dấu ấn (Biomarkers)",
+      "children": [
+        {
+          "name": "Sinh dấu ấn thần kinh sinh lý",
+          "children": [
+            {
+              "name": "Điện thế vận động gợi ý (MEP): Đánh giá qua TMS"
+            },
+            {
+              "name": "Điện não đồ (EEG): Phân tích đối xứng bán cầu"
+            }
+          ]
+        },
+        {
+          "name": "Sinh dấu ấn thần kinh hình ảnh",
+          "children": [
+            {
+              "name": "Tổn thương bó tháp (CST): Đánh giá qua MRI"
+            },
+            {
+              "name": "Chụp sức căng khuếch tán (DTI): Đo tính bất đối xứng FA"
+            },
+            {
+              "name": "Chụp cộng hưởng từ chức năng (fMRI): Đánh giá hoạt hóa vỏ não"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hòa nhập cộng đồng và Chất lượng cuộc sống",
+      "children": [
+        {
+          "name": "Thực trạng sau xuất viện",
+          "children": [
+            {
+              "name": "Điểm hòa nhập trung bình: 26,64 ± 8,03"
+            },
+            {
+              "name": "Hòa nhập gia đình: Điểm cao nhất"
+            },
+            {
+              "name": "Mạng xã hội: Điểm thấp nhất"
+            }
+          ]
+        },
+        {
+          "name": "Yếu tố liên quan và giải pháp",
+          "children": [
+            {
+              "name": "Chất lượng cuộc sống: Tương quan ý nghĩa với hòa nhập"
+            },
+            {
+              "name": "Giải pháp: Cải thiện vận động và tự chăm sóc"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

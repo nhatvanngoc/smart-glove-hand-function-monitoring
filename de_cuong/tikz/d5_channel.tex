@@ -1,0 +1,64 @@
+% d5 — Sơ đồ 3 ngón (12 kênh = 3 ngón x 2 khớp x 2 vách), HÌNH CHIẾU CẠNH
+% màu thống nhất với Hình 4: lam = vách lòng, cam = vách mu
+\documentclass[border=4pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{amsmath}
+\begin{document}
+\begin{tikzpicture}[font=\footnotesize,
+  palm/.style={draw=black!60, fill=black!6, rounded corners=3pt}]
+\definecolor{clong}{RGB}{43,108,176}   % lam — vách lòng (trùng C_BLUE Hình 4)
+\definecolor{cmu}{RGB}{221,107,32}     % cam — vách mu (trùng C_ORANGE Hình 4)
+
+% ---- cổ tay / hộp mạch
+\draw[palm] (-2.0,-1.5) rectangle (2.0,-0.6);
+\node at (0,-1.05) {đai cổ tay + hộp mạch};
+% ---- lòng bàn tay
+\draw[palm] (-2.0,-0.6) rectangle (2.0,0.35);
+\node at (0,-0.12) {lòng bàn tay};
+% ---- 3 ngón (hình chiếu cạnh): cái ngắn nhất, giữa dài nhất
+\draw[draw=black!55, fill=black!4, rounded corners=2pt] (-1.55,0.35) rectangle (-0.83,2.35);  % ngón cái
+\draw[draw=black!55, fill=black!4, rounded corners=2pt] (-0.36,0.35) rectangle (0.36,3.65);   % ngón trỏ
+\draw[draw=black!55, fill=black!4, rounded corners=2pt] ( 0.83,0.35) rectangle (1.55,4.00);   % ngón giữa
+\node[above=0.12cm] at (-1.19,2.35) {ngón cái};
+\node[above=0.12cm] at ( 0.00,3.65) {ngón trỏ};
+\node[above=0.12cm] at ( 1.19,4.00) {ngón giữa};
+
+% ---- chấm cảm biến: cạnh TRÁI = vách lòng (lam), cạnh PHẢI = vách mu (cam)
+% hàng khớp gần MCP (y=0.85); hàng trên: cái=IP (y=1.95), trỏ/giữa=PIP (y=2.95)
+\def\dorow#1#2#3{ % #1=tâm x, #2=y hàng trên, #3=nửa rộng
+  \node[circle, fill=clong, inner sep=1.2mm] at (#1-#3,0.85) {};
+  \node[circle, fill=cmu,   inner sep=1.2mm] at (#1+#3,0.85) {};
+  \node[circle, fill=clong, inner sep=1.2mm] at (#1-#3,#2) {};
+  \node[circle, fill=cmu,   inner sep=1.2mm] at (#1+#3,#2) {};}
+\dorow{-1.19}{1.95}{0.36}   % ngón cái: MCP + IP
+\dorow{ 0.00}{2.95}{0.36}   % ngón trỏ: MCP + PIP
+\dorow{ 1.19}{2.95}{0.36}   % ngón giữa: MCP + PIP
+
+% ---- nhãn khớp bên trái (leader chạm mép ngón / chạy ngang đúng hàng khớp)
+\draw[black!55, densely dotted] (-2.62,0.85) -- (-1.50,0.85);
+\node[anchor=east,font=\scriptsize,black!70] at (-2.64,0.85) {MCP (khớp gần)};
+\draw[black!55, densely dotted] (-2.70,1.95) -- (-1.50,1.95);
+\node[anchor=east,font=\scriptsize,black!70] at (-2.72,1.95) {IP (khớp liên đốt) -- ngón cái};
+\draw[black!55, densely dotted] (-2.62,2.95) -- (1.55,2.95);
+\node[anchor=east,font=\scriptsize,black!70] at (-2.64,2.95) {PIP (khớp giữa) -- trỏ, giữa};
+
+% ---- chú giải bên phải: KHÔNG có khung cố định (tránh tràn chữ), chỉ chấm màu + chữ
+\node[circle, fill=clong, inner sep=1.25mm] at (2.35,3.55) {};
+\node[anchor=west,font=\scriptsize,black!80] at (2.60,3.55) {chấm lam = vách mặt lòng};
+\node[circle, fill=cmu,   inner sep=1.25mm] at (2.35,3.03) {};
+\node[anchor=west,font=\scriptsize,black!80] at (2.60,3.03) {chấm cam = vách mặt lưng (mu)};
+\node[anchor=north west,font=\scriptsize,align=left,black!70] at (2.35,2.55)
+  {hình chiếu cạnh: mỗi ngón\\là 2 khớp $\times$ 2 vách = 4 kênh\\3 ngón $\times$ 4 = 12 kênh};
+\node[anchor=north west,font=\scriptsize,align=left,black!70] at (2.35,1.65)
+  {đọc vi sai: $d=S_{\text{lòng}}-S_{\text{mu}}$};
+
+% ---- ghi chú 12 kênh + mặt phẳng gập ngón cái (đáy hình)
+\node[anchor=north,font=\scriptsize,black!70] at (0,-1.85)
+  {12 kênh đo + ô tham chiếu + kênh dự phòng $\rightarrow$ 2$\times$CD74HC4067 ghép về một ADC};
+\node[anchor=north,font=\scriptsize,black!65] at (0,-2.35)
+  {mặt phẳng gập của ngón cái xoay $\approx 90^\circ$ so với các ngón};
+\end{tikzpicture}
+\end{document}

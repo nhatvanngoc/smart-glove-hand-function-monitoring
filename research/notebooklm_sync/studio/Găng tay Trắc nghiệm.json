@@ -1,0 +1,707 @@
+{
+  "title": "Găng tay Trắc nghiệm",
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Trong thiết kế găng tay thông minh, giải pháp mạch cầu vi sai hai vách (lòng – mu) giải quyết được hạn chế cốt lõi nào của các cảm biến áp trở màng đơn thuần?",
+      "answerOptions": [
+        {
+          "text": "Triệt tiêu trôi tín hiệu đồng pha do nhiệt độ/độ ẩm và xác định trực tiếp hướng gập/duỗi mà không cần cảm biến góc quay.",
+          "isCorrect": true,
+          "rationale": "Việc đặt hai cảm biến đối xứng ở mặt lòng và mặt mu tạo ra tín hiệu vi sai giúp loại bỏ biến dạng nhiệt độ/độ ẩm chung, đồng thời sự chênh lệch áp lực giữa hai mặt phản ánh chính xác hướng chuyển động gập hoặc duỗi."
+        },
+        {
+          "text": "Tăng gấp đôi lực trợ kéo tối đa của động cơ servo khi thực hiện bài tập thụ động.",
+          "isCorrect": false,
+          "rationale": "Mạch vi sai là giải pháp đo lường tín hiệu cảm biến chứ không làm tăng công suất cơ học của động cơ chấp hành."
+        },
+        {
+          "text": "Loại bỏ hoàn toàn nhiễu sóng cao tần RF phát ra từ vi điều khiển và mô-đun Bluetooth.",
+          "isCorrect": false,
+          "rationale": "Mạch vi sai triệt tiêu nhiễu đồng pha môi trường xung quanh cảm biến chứ không phải là giải pháp bọc kim chống nhiễu vô tuyến RF."
+        },
+        {
+          "text": "Cho phép hệ thống ghi nhận trực tiếp điện thế hoạt động sEMG của các nhóm cơ cẳng tay.",
+          "isCorrect": false,
+          "rationale": "Mạch đo áp trở ghi nhận lực nén cơ học trên vách ốp ngón, khác hoàn toàn với nguyên lý đo điện thế sinh học bề mặt cơ sEMG."
+        }
+      ],
+      "hint": "Hãy chú ý đến đặc tính đối xứng của hai mặt ngón tay và tác động của môi trường lên màng cảm biến."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Nguyên lý suy luận hướng vận động của ngón tay dựa trên hiệu số vi sai $d = S_{\\text{lòng}} - S_{\\text{mu}}$ được quy ước như thế nào?",
+      "answerOptions": [
+        {
+          "text": "$d > 0$ tương ứng với cử động gập ngón, $d < 0$ tương ứng với cử động duỗi ngón.",
+          "isCorrect": true,
+          "rationale": "Khi gập ngón, lực nén lên vách mặt lòng tăng lên làm $S_{\\text{lòng}}$ lớn hơn $S_{\\text{mu}}$ làm $d > 0$, ngược lại khi duỗi ngón thì áp lực chuyển sang vách mặt mu khiến $d < 0$."
+        },
+        {
+          "text": "$d > 0$ tương ứng với cử động duỗi ngón, $d < 0$ tương ứng với cử động gập ngón.",
+          "isCorrect": false,
+          "rationale": "Quy ước này bị ngược với bản chất cơ học vì cử động gập ngón sinh ra áp lực chính ở mặt lòng bàn tay."
+        },
+        {
+          "text": "$d = 0$ báo hiệu ngón tay đang bị co cứng nghiêm trọng ở tư thế gập tối đa.",
+          "isCorrect": false,
+          "rationale": "Khi $d = 0$, áp lực hai mặt lòng và mu cân bằng nhau, thể hiện trạng thái duỗi nghỉ hoặc áp lực tiền tải cân bằng chứ không phải co cứng gập."
+        },
+        {
+          "text": "$d > 0$ chỉ ra ngón tay đang chịu tác động lực kéo cưỡng bức từ cơ cấu trợ lực.",
+          "isCorrect": false,
+          "rationale": "Dấu của $d$ phản ánh hướng biến dạng lực của ngón tay (gập hay duỗi) chứ không phân biệt lực đó do chủ động hay cưỡng bức."
+        }
+      ],
+      "hint": "Cân nhắc vách mặt nào chịu áp lực nén lớn hơn khi ngón tay thực hiện động tác nắm vào."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Chỉ số Mức gắng sức chủ động (EI) được tính toán bằng công thức tích phân lực vi sai $\\text{EI} = \\left[ \\frac{\\int_{t_0}^{t_1} |F_{\\text{diff}}(t)| dt}{F_{\\text{target}} \\cdot (t_1 - t_0)} \\right] \\times 100\\%$. Ý nghĩa lâm sàng chính của chỉ số này là gì?",
+      "answerOptions": [
+        {
+          "text": "Định lượng tỷ lệ phần trăm nỗ lực co cơ chủ động thực tế của bệnh nhân so với lực mục tiêu trong cửa sổ vận động.",
+          "isCorrect": true,
+          "rationale": "Tích phân lực vi sai theo thời gian so với tổng xung lực mục tiêu cung cấp thước đo chính xác về mức độ phát lực phát sinh từ sự co cơ chủ động của bệnh nhân."
+        },
+        {
+          "text": "Đo tầm vận động góc tối đa mà khớp ngón tay đạt được trong phiên tập thụ động.",
+          "isCorrect": false,
+          "rationale": "Chỉ số EI đo lường xung lực co cơ chủ động chứ không đo góc quay hình học của khớp."
+        },
+        {
+          "text": "Đánh giá mức độ lệch trục cơ học giữa khung găng tay và các khớp xương bàn tay.",
+          "isCorrect": false,
+          "rationale": "Lệch trục cơ học là thông số hình học công thái học, không liên quan đến tích phân lực phát động chủ động."
+        },
+        {
+          "text": "Tính toán điện năng tiêu thụ của cơ cấu servo trợ lực khi thực hiện hỗ trợ vận động.",
+          "isCorrect": false,
+          "rationale": "Chỉ số EI đại diện cho sinh lý phát lực của người bệnh, không phải thông số tiêu thụ năng lượng của động cơ."
+        }
+      ],
+      "hint": "Hãy xem xét các thành phần trong công thức: lực vi sai đo được so với lực mục tiêu đề ra."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Trong lượng giá chức năng bàn tay sau đột quỵ, chỉ số $\\text{GAP} = \\text{PROM} - \\text{AROM}$ mang lại giá trị chẩn đoán khác biệt nào so với việc chỉ đo góc gập/duỗi bằng cảm biến uốn thông thường?",
+      "answerOptions": [
+        {
+          "text": "Phân tách rõ ràng giữa tình trạng hạn chế vận động do yếu cơ chủ động với hạn chế do co cứng cơ đối kháng.",
+          "isCorrect": true,
+          "rationale": "Hiệu số giữa Tầm vận động thụ động (PROM) và Tầm vận động chủ động (AROM) cho phép bóc tách được phần biên độ bị mất do co cứng cản trở so với lực cơ yếu không tự co được."
+        },
+        {
+          "text": "Cho biết tốc độ truyền dẫn xung thần kinh vận động từ vỏ não xuống các cơ chi trên.",
+          "isCorrect": false,
+          "rationale": "Chỉ số GAP đo lường chênh lệch biên độ vận động cơ học, không đo vận tốc dẫn truyền xung thần kinh."
+        },
+        {
+          "text": "Xác định chính xác vị trí tổn thương dây thần kinh giữa tại vùng cổ tay.",
+          "isCorrect": false,
+          "rationale": "Chỉ số này phản ánh chức năng cơ vận động ngón tay chứ không chẩn đoán vị trí tổn thương thần kinh ngoại biên."
+        },
+        {
+          "text": "Đo khoảng cách vật lý giữa ngón cái và ngón trỏ khi thực hiện cử động cầm nắm.",
+          "isCorrect": false,
+          "rationale": "GAP đại diện cho độ thiếu hụt góc/biên độ vận động khớp, không phải khoảng cách không gian giữa hai ngón tay."
+        }
+      ],
+      "hint": "Suy ngẫm về sự khác biệt giữa khả năng tự di chuyển khớp (AROM) và khả năng khớp được kéo di chuyển hết biên độ (PROM)."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Chỉ số Mức trợ giúp cần thiết (RAL) được xác định như thế nào trên hệ thống và có ý nghĩa gì đối với tiến trình phục hồi?",
+      "answerOptions": [
+        {
+          "text": "Là mức tải trợ giúp tối thiểu để bệnh nhân đạt tỷ lệ hoàn thành nhịp vận động $\\ge 80\\%$; RAL giảm dần theo thời gian thể hiện sự tiến bộ định lượng.",
+          "isCorrect": true,
+          "rationale": "RAL xác định ngưỡng trợ lực nhỏ nhất giúp bệnh nhân vượt qua bài tập, và việc mức trợ giúp này giảm dần qua các phiên chứng minh sức cơ chủ động của bệnh nhân đang hồi phục."
+        },
+        {
+          "text": "Là công suất điện cực đại mà bộ nguồn pin LiPo phải cung cấp cho hệ thống xử lý biên.",
+          "isCorrect": false,
+          "rationale": "RAL là một chỉ số phục hồi chức năng của người bệnh, không phải chỉ số điện năng phần cứng."
+        },
+        {
+          "text": "Là góc nghiêng tối đa của bàn tay so với trọng lực mà tại đó động cơ trợ lực bắt đầu kích hoạt.",
+          "isCorrect": false,
+          "rationale": "Góc nghiêng bàn tay do cảm biến IMU ghi nhận để bù trọng lực, không phải khái niệm mức trợ giúp RAL."
+        },
+        {
+          "text": "Là lực cản tối đa của cơ co cứng mà cơ cấu cơ khí có thể vượt qua mà không gây chấn thương.",
+          "isCorrect": false,
+          "rationale": "Lực cản co cứng tối đa được giới hạn bởi ngưỡng an toàn cơ học $F_{\\text{max}}$, trong khi RAL đo lường mức tải cần bù đắp để đạt mục tiêu hoàn thành."
+        }
+      ],
+      "hint": "Liên hệ giữa mức lực trợ lực kéo bên ngoài và khả năng tự hoàn thành bài tập của người bệnh."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Cấu trúc phần tử cảm biến Velostat trong dự án sử dụng thiết kế dạng sandwich kết hợp bu-lông kẹp cơ khí vi chỉnh. Mục đích của việc đặt lực tiền tải $F_p$ ban đầu là gì?",
+      "answerOptions": [
+        {
+          "text": "Đưa điểm làm việc của màng cảm biến Velostat vào tâm dải tuyến tính và duy trì tiếp xúc điện ổn định.",
+          "isCorrect": true,
+          "rationale": "Màng áp trở Velostat có đặc tính phi tuyến mạnh ở vùng lực rất nhỏ; việc nén tiền tải $F_p$ đưa cảm biến vào vùng đáp ứng tuyến tính và tránh lỏng lẻo tiếp xúc điện."
+        },
+        {
+          "text": "Triệt tiêu hoàn toàn dòng điện rò chạy qua màng Velostat khi không có lực tác động.",
+          "isCorrect": false,
+          "rationale": "Lực tiền tải làm tăng tiếp xúc làm giảm điện trở, do đó dòng điện ban đầu sẽ tăng lên chứ không phải triệt tiêu dòng rò."
+        },
+        {
+          "text": "Tạo ra lực co kéo thụ động ép ngón tay bệnh nhân luôn ở tư thế duỗi thẳng.",
+          "isCorrect": false,
+          "rationale": "Lực tiền tải $F_p$ chỉ tác dụng nội bộ bên trong cấu trúc phần tử cảm biến, không tác dụng lực cơ học lên khớp ngón tay."
+        },
+        {
+          "text": "Tăng điện trở ban đầu của cảm biến lên mức cực đại để tiết kiệm năng lượng pin.",
+          "isCorrect": false,
+          "rationale": "Khi nén lực tiền tải, điện trở của màng Velostat giảm xuống chứ không tăng lên mức cực đại."
+        }
+      ],
+      "hint": "Cảm biến màng áp trở thường có phản ứng phi tuyến ở giai đoạn bắt đầu tiếp xúc lực rất nhẹ."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Cấu hình mảng cảm biến gồm 12 phần tử trên 3 ngón tay chủ đạo (cái, trỏ, giữa) được bố trí dựa trên sơ đồ phân bổ kênh như thế nào?",
+      "answerOptions": [
+        {
+          "text": "Mỗi ngón bố trí cảm biến ở 2 khớp (MCP và PIP/IP), mỗi khớp có 2 phần tử ở vách lòng và vách mu để tạo thành 6 cặp vi sai.",
+          "isCorrect": true,
+          "rationale": "3 ngón $\\times$ 2 khớp/ngón $\\times$ 2 vách/khớp = 12 phần tử cảm biến, ghép thành 6 kênh đo vi sai độc lập phân tách cử động từng khớp."
+        },
+        {
+          "text": "Mỗi ngón bố trí 4 phần tử cảm biến tập trung toàn bộ ở mặt lòng bàn tay để đo lực kẹp.",
+          "isCorrect": false,
+          "rationale": "Tập trung ở mặt lòng sẽ không tạo được cấu trúc vi sai hai vách (lòng – mu) để đo chiều cử động gập/duỗi."
+        },
+        {
+          "text": "3 ngón chủ đạo mỗi ngón mang 2 kênh vi sai ở khớp MCP, 6 kênh còn lại đặt tại khớp mu bàn tay.",
+          "isCorrect": false,
+          "rationale": "Các kênh đo vi sai được bố trí trực tiếp tại cả khớp gần (MCP) và khớp giữa (PIP/IP) của từng ngón tay."
+        },
+        {
+          "text": "12 cảm biến được rải đều trên 5 ngón tay, mỗi ngón 2 kênh vi sai và 2 kênh dự phòng ở cổ tay.",
+          "isCorrect": false,
+          "rationale": "Thiết kế tập trung vào 3 ngón chủ đạo đảm nhiệm 80% chức năng cầm nắm tinh (cái, trỏ, giữa) thay vì chia đều cho cả 5 ngón."
+        }
+      ],
+      "hint": "Nhân số lượng ngón chủ đạo với số khớp đo trên mỗi ngón và số vách mặt cảm biến."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Vai trò của \"ô cảm biến tham chiếu tĩnh\" không tải tích hợp trên găng tay là gì trong quy trình kiểm soát chất lượng dữ liệu?",
+      "answerOptions": [
+        {
+          "text": "Theo dõi trôi nhiệt độ/độ ẩm môi trường và dão tải tĩnh để đối chiếu với độ trôi tín hiệu của các kênh đo thực tế.",
+          "isCorrect": true,
+          "rationale": "Ô tham chiếu đặt ở trạng thái không chịu lực cơ học, giúp vi điều khiển đo lường mức biến thiên tín hiệu thuần túy do môi trường để tiến hành bù trừ."
+        },
+        {
+          "text": "Cung cấp điện áp chuẩn 3,3V cố định cho bộ chuyển đổi tương tự - số ADS1115.",
+          "isCorrect": false,
+          "rationale": "Điện áp chuẩn được cấp bởi IC nguồn LDO HT7333, không phải lấy từ ô cảm biến áp trở."
+        },
+        {
+          "text": "Thay thế cảm biến gia tốc IMU trong việc xác định góc nghiêng trọng trường của bàn tay.",
+          "isCorrect": false,
+          "rationale": "Ô tham chiếu tĩnh là cảm biến áp trở, không có khả năng đo gia tốc hay góc nghiêng trong không gian."
+        },
+        {
+          "text": "Đo lực ép trực tiếp của lòng bàn tay lên các vật thể khi thực hiện bài tập cầm nắm thực tế.",
+          "isCorrect": false,
+          "rationale": "Ô tham chiếu được giữ ở trạng thái không tải tĩnh (không chịu lực ép) để làm mốc đối chiếu trôi."
+        }
+      ],
+      "hint": "Suy nghĩ về một phần tử không chịu lực nén cơ học nhưng chịu chung điều kiện nhiệt độ và độ ẩm với các cảm biến khác."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Thuật toán tự cân chỉnh điểm 0 (Auto-zero) vận hành như thế nào ở đầu mỗi phiên đo và xử lý ra sao nếu phát hiện bất thường?",
+      "answerOptions": [
+        {
+          "text": "Ghi nhận điện áp tĩnh khi tay duỗi nghỉ trong 3 giây đầu; nếu trôi vượt $\\pm 5\\%$ dải đo so với ô tham chiếu, hệ thống sẽ phát cảnh báo kiểm tra cơ khí.",
+          "isCorrect": true,
+          "rationale": "Hệ thống lấy mẫu 3 giây đầu để trừ nhiễu offset, và nếu sai số trôi tĩnh quá lớn so với mốc chuẩn sẽ đưa ra cảnh báo lỏng khung hoặc lệch cơ khí."
+        },
+        {
+          "text": "Tự động ngắt nguồn pin và tái khởi động lại vi điều khiển ESP32-S3 nếu dòng điện vượt ngưỡng 1A.",
+          "isCorrect": false,
+          "rationale": "Auto-zero là thuật toán cân chỉnh tín hiệu cảm biến ở đầu phiên, không phải cơ chế ngắt mạch bảo vệ quá dòng nguồn."
+        },
+        {
+          "text": "Liên tục điều chỉnh góc quay của động cơ servo trợ lực cho đến khi lực ép trên màng Velostat bằng 0.",
+          "isCorrect": false,
+          "rationale": "Thuật toán này xử lý số liệu điện áp tĩnh bằng phần mềm chứ không điều khiển động cơ xoay để triệt tiêu lực."
+        },
+        {
+          "text": "Căn chỉnh tự động dải đo của ADC ADS1115 về mức 8-bit nếu tần số lấy mẫu giảm xuống dưới 10 Hz.",
+          "isCorrect": false,
+          "rationale": "ADS1115 hoạt động ở độ phân giải cố định 16-bit và không hạ độ phân giải xuống 8-bit khi cân chỉnh điểm 0."
+        }
+      ],
+      "hint": "Chú ý đến khoảng thời gian duỗi nghỉ ban đầu và ngưỡng phần trăm điện áp trôi cho phép."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Kiến trúc hệ thống găng tay thông minh được phân thành 3 tầng xử lý. Tầng 2 (đặt tại cổ tay) đảm nhận những chức năng chính nào?",
+      "answerOptions": [
+        {
+          "text": "Ghép kênh tín hiệu analog, khuếch đại vi sai, chuyển đổi ADC 16-bit, lọc số IIR và truyền dữ liệu qua BLE 5.0.",
+          "isCorrect": true,
+          "rationale": "Tầng 2 thu thập chuỗi tín hiệu phần cứng tại đai cổ tay gồm IC dồn kênh CD74HC4067, INA333, ADS1115, vi điều khiển ESP32-S3 thực hiện lọc và gửi dữ liệu không dây."
+        },
+        {
+          "text": "Thu nhận dữ liệu cử động ngón tay, tính toán chỉ số EI/GAP/RAL và hiển thị trực tiếp lên màn hình Dashboard.",
+          "isCorrect": false,
+          "rationale": "Việc tính toán bộ ba chỉ số và quản lý Dashboard do máy tính nhúng Orange Pi 5 Pro ở Tầng 3 thực hiện."
+        },
+        {
+          "text": "Chạy mô hình học máy NPU 6 TOPS để phân loại tư thế cầm nắm và điều khiển động cơ servo AAN.",
+          "isCorrect": false,
+          "rationale": "NPU 6 TOPS tích hợp trên chip RK3588 thuộc Tầng 3 (Xử lý biên), không nằm ở Tầng 2 đai cổ tay."
+        },
+        {
+          "text": "Cung cấp nguồn điện Adapter 5V cách ly lưới điện và quản lý cơ sở dữ liệu tiến triển bệnh nhân.",
+          "isCorrect": false,
+          "rationale": "Nguồn Adapter 5V và cơ sở dữ liệu thuộc Tầng 3; Tầng 2 dùng nguồn pin LiPo 3,7V nhỏ gọn đeo trên cổ tay."
+        }
+      ],
+      "hint": "Tầng 2 đóng vai trò trung gian thu thập tín hiệu phần cứng từ găng đeo và đóng gói truyền lên thiết bị xử lý trung tâm."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Tầng 3 (Xử lý biên) sử dụng máy tính nhúng Orange Pi 5 Pro (RK3588, NPU 6 TOPS) mang lại lợi ích gì cho hệ thống theo dõi tại nhà?",
+      "answerOptions": [
+        {
+          "text": "Xử lý luồng dữ liệu 20 Hz thời gian thực, trích xuất bộ ba chỉ số EI, GAP, RAL, phát hiện dị thường tín hiệu và quản lý Dashboard y tế từ xa.",
+          "isCorrect": true,
+          "rationale": "Orange Pi 5 Pro đóng vai trò máy trạm biên đủ cấu hình mạnh để tính toán các thuật toán toán học phức tạp, phân loại nhiễu và lưu trữ báo cáo tiến triển."
+        },
+        {
+          "text": "Giảm trọng lượng bộ thiết bị đeo trên tay xuống dưới 50g bằng cách chuyển toàn bộ mạch ADC lên tầng 3.",
+          "isCorrect": false,
+          "rationale": "Mạch ADC ADS1115 vẫn nằm ở Tầng 2 đai cổ tay để số hóa ngay tín hiệu analog, tránh truyền dây analog xa bị nhiễu."
+        },
+        {
+          "text": "Thay thế hoàn toàn kết nối không dây BLE bằng đường truyền quang cơ học có độ trễ cực thấp.",
+          "isCorrect": false,
+          "rationale": "Kết nối giữa Tầng 2 và Tầng 3 là chuẩn không dây Bluetooth BLE 5.0."
+        },
+        {
+          "text": "Tự động phát ra dòng điện kích thích thần kinh cơ (FES) khi phát hiện bệnh nhân bị gập cứng ngón tay.",
+          "isCorrect": false,
+          "rationale": "Dự án tập trung vào đo lường vi sai và trợ lực cơ học AAN, không tích hợp tính năng kích thích điện FES."
+        }
+      ],
+      "hint": "Cân nhắc khả năng tính toán của vi xử lý RK3588 kết hợp NPU đối với các chỉ số định lượng nâng cao."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Thiết kế nguồn điện của hệ thống đảm bảo an toàn tuyệt đối cho người bệnh tại nhà dựa trên nguyên tắc nào?",
+      "answerOptions": [
+        {
+          "text": "Khối đeo tay (Tầng 1 & 2) dùng pin LiPo 3,7V cách ly hoàn toàn với lưới điện; Tầng 3 cấp nguồn Adapter 5V riêng biệt.",
+          "isCorrect": true,
+          "rationale": "Bộ phận tiếp xúc trực tiếp với cơ thể người bệnh được cấp nguồn bởi pin DC điện áp thấp (3,7V), loại bỏ hoàn toàn nguy cơ rò điện từ lưới 220V."
+        },
+        {
+          "text": "Sử dụng máy biến áp cách ly công suất lớn cắm trực tiếp từ nguồn điện lưới 220V vào đai cổ tay.",
+          "isCorrect": false,
+          "rationale": "Đưa dây điện lưới 220V lên đai cổ tay (dù có biến áp) vẫn tiềm ẩn nguy cơ mất an toàn điện cho thiết bị đeo gia đình."
+        },
+        {
+          "text": "Tích hợp cầu chì tự ngắt trên tất cả các đường tín hiệu cảm biến với dòng cắt $10\\text{ mA}$.",
+          "isCorrect": false,
+          "rationale": "Biện pháp an toàn cốt lõi là cách ly nguồn pin DC thấp áp chứ không phụ thuộc vào cầu chì ngắt tín hiệu."
+        },
+        {
+          "text": "Toàn bộ hệ thống chạy chung một khối nguồn cắm dây trực tiếp vào máy tính PC qua cổng USB 12V.",
+          "isCorrect": false,
+          "rationale": "Thiết bị đeo tay được cách ly không cắm dây nối với máy tính hay nguồn điện lưới sinh hoạt."
+        }
+      ],
+      "hint": "Phân tích sự phân tách nguồn điện giữa bộ phần tử đeo trên người và trạm máy tính xử lý trung tâm."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Việc kết hợp ADC 16-bit ADS1115 ngoại vi thay vì dùng ADC nội bộ của ESP32-S3 mang lại ưu thế kỹ thuật quan trọng nào?",
+      "answerOptions": [
+        {
+          "text": "Khắc phục hiện tượng phi tuyến nặng ở hai biên dải đo và triệt tiêu nhiễu RF, đảm bảo độ phân giải thực sự cho tín hiệu vi sai.",
+          "isCorrect": true,
+          "rationale": "ADC tích hợp của ESP32-S3 nổi tiếng bị lỗi phi tuyến tính nghiêm trọng ở vùng điện áp cận 0V và 3,3V cùng nhiễu từ Wi-Fi/Bluetooth; ADS1115 giải quyết triệt để vấn đề này."
+        },
+        {
+          "text": "Tăng tốc độ lấy mẫu tín hiệu lên mức $100\\text{ kHz}$ trên tất cả 12 kênh đo đồng thời.",
+          "isCorrect": false,
+          "rationale": "ADS1115 có tốc độ lấy mẫu tối đa 860 SPS, phù hợp cho sinh hiệu cơ học (20 Hz) chứ không phải tốc độ $100\\text{ kHz}$."
+        },
+        {
+          "text": "Giảm số lượng dây dẫn từ các phần tử cảm biến về đai cổ tay từ 12 dây xuống còn 2 dây.",
+          "isCorrect": false,
+          "rationale": "Số lượng dây dẫn cảm biến phụ thuộc vào mạch ghép kênh CD74HC4067, không phải do chip ADS1115."
+        },
+        {
+          "text": "Cho phép vi điều khiển ESP32-S3 đi vào chế độ ngủ sâu (Deep Sleep) trong suốt quá trình đo.",
+          "isCorrect": false,
+          "rationale": "Vi điều khiển ESP32-S3 vẫn phải hoạt động liên tục để đọc dữ liệu I2C từ ADS1115 và lọc số IIR trước khi truyền BLE."
+        }
+      ],
+      "hint": "Nhớ lại nhược điểm cố hữu của bộ chuyển đổi ADC tích hợp sẵn trên chip vi điều khiển ESP32."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Trong firmware thu thập dữ liệu, chân ngắt phần cứng ALRT của ADS1115 nối với GPIO của ESP32-S3 được cấu hình theo chế độ Conversion Ready nhằm mục đích gì?",
+      "answerOptions": [
+        {
+          "text": "Chỉ đọc dữ liệu I2C ngay khi ADS1115 hoàn tất chuyển đổi, triệt tiêu jitter thời gian thực và tránh đọc trùng hoặc rớt mẫu.",
+          "isCorrect": true,
+          "rationale": "Sử dụng ngắt ALRT thông báo khi có mẫu mới giúp ESP32-S3 đọc dữ liệu tức thì, loại bỏ trễ giao tiếp và tránh hiện tượng đọc dữ liệu cũ chưa cập nhật."
+        },
+        {
+          "text": "Kích hoạt chuông cảnh báo bằng âm thanh khi lực ép ngón tay vượt quá ngưỡng an toàn $5\\text{ N}$.",
+          "isCorrect": false,
+          "rationale": "Chân ALRT ở đây được cấu hình cho ngắt báo mẫu ADC sẵn sàng (Conversion Ready), không phải ngắt so sánh cảnh báo lực quá tải."
+        },
+        {
+          "text": "Tự động ngắt kết nối không dây BLE khi tốc độ truyền dữ liệu giảm xuống dưới $10\\text{ Hz}$.",
+          "isCorrect": false,
+          "rationale": "Tín hiệu ngắt ALRT quản lý việc đồng bộ đọc dữ liệu nội bộ giữa ADS1115 và ESP32-S3, không quản lý kết nối BLE."
+        },
+        {
+          "text": "Đảo chiều quay của động cơ servo trợ lực mỗi khi ngón tay chuyển từ trạng thái gập sang duỗi.",
+          "isCorrect": false,
+          "rationale": "Việc điều khiển servo do thuật toán AAN xử lý dựa trên giá trị lực sau khi tính toán, không do chân ngắt ALRT trực tiếp chi phối."
+        }
+      ],
+      "hint": "Liên hệ giữa chân báo hoàn tất chuyển đổi tín hiệu phần cứng với việc đồng bộ lấy mẫu của vi điều khiển."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Trong chuỗi tín hiệu, tại sao trở kháng ngõ ra dẫn ($R_{\\text{ON}} \\approx 70\\,\\Omega$) của IC dồn kênh CD74HC4067 không làm suy giảm độ chính xác của tầng khuếch đại INA333 phía sau?",
+      "answerOptions": [
+        {
+          "text": "Vì tầng khuếch đại thuật toán INA333 có trở kháng ngõ vào cực lớn (lên tới $100\\text{ G}\\Omega$), khiến điện áp rơi trên $R_{\\text{ON}}$ là không đáng kể.",
+          "isCorrect": true,
+          "rationale": "Theo quy tắc chia điện áp, trở kháng vào $100\\text{ G}\\Omega$ của INA333 áp đảo hoàn toàn điện trở dẫn $70\\,\\Omega$ của IC ghép kênh, giữ nguyên vẹn điện áp tín hiệu đo."
+        },
+        {
+          "text": "Vì mạch CD74HC4067 tự động khuếch đại dòng điện lên gấp 100 lần trước khi đưa vào INA333.",
+          "isCorrect": false,
+          "rationale": "CD74HC4067 là IC dồn kênh thụ động (Passive Multiplexer), không có tính năng khuếch đại dòng điện."
+        },
+        {
+          "text": "Vì tụ điện lọc nhiễu ở ngõ ra CD74HC4067 đã triệt tiêu hoàn toàn điện trở nội $R_{\\text{ON}}$.",
+          "isCorrect": false,
+          "rationale": "Tụ điện chỉ lọc nhiễu tần số cao, không thể triệt tiêu được điện trở thuần $R_{\\text{ON}}$ trong mạch một chiều/tần số thấp."
+        },
+        {
+          "text": "Vì ADC ADS1115 có khả năng tự bù trừ điện trở dẫn $R_{\\text{ON}}$ bằng thuật toán phần mềm.",
+          "isCorrect": false,
+          "rationale": "Độ chính xác tín hiệu được bảo toàn ngay tại tầng ngõ vào của INA333 nhờ trở kháng cực cao, trước khi tới ADC ADS1115."
+        }
+      ],
+      "hint": "Suy nghĩ về mối quan hệ phân áp giữa điện trở ngõ ra của MUX và trở kháng ngõ vào của khuếch đại định lượng INA333."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Nguyên tắc \"Can thiệp tối thiểu\" (Minimal Intervention) trong cơ cấu trợ lực AAN của găng tay robot được thực thi như thế nào?",
+      "answerOptions": [
+        {
+          "text": "Cơ cấu trợ lực chỉ bù đắp đúng phần lực thiếu hụt $F_{\\text{assist}}(t) = \\max(0, F_{\\text{target}}(t) - F_{\\text{phantom}}(t))$ khi phát hiện nỗ lực chủ động nhưng chưa đạt mục tiêu.",
+          "isCorrect": true,
+          "rationale": "AAN không kéo cưỡng bức mà chỉ can thiệp bù phần lực bị thiếu sau khi nhận diện được tín hiệu nỗ lực của người bệnh, thúc đẩy tái tổ chức thần kinh."
+        },
+        {
+          "text": "Động cơ kéo thụ động liên tục (CPM) cưỡng bức ngón tay bệnh nhân di chuyển theo chu kỳ cố định bất kể bệnh nhân có nỗ lực hay không.",
+          "isCorrect": false,
+          "rationale": "Kéo thụ động liên tục (CPM) cản trở sự chủ động của bệnh nhân và vi phạm nguyên tắc can thiệp tối thiểu."
+        },
+        {
+          "text": "Động cơ chỉ phát lực tối đa ngay khi ngón tay chạm vào vật thể để đảm bảo vật thể không bị rơi.",
+          "isCorrect": false,
+          "rationale": "Phát lực tối đa đột ngột có thể gây nguy cơ chấn thương cơ khớp và không phù hợp với thuật toán thích ứng theo nỗ lực."
+        },
+        {
+          "text": "Hệ thống tự động giảm $50\\%$ lực trợ giúp sau mỗi 5 phút tập luyện liên tục mà không cần căn cứ vào tín hiệu nỗ lực.",
+          "isCorrect": false,
+          "rationale": "Mức trợ lực phải căn chỉnh linh hoạt theo thời gian thực dựa trên sai lệch lực $F_{\\text{target}} - F_{\\text{phantom}}$, không giảm cố định theo thời gian."
+        }
+      ],
+      "hint": "Tập trung vào cách tính toán lực hỗ trợ dựa trên sự chênh lệch giữa lực nỗ lực thực tế và lực mục tiêu."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Cơ cấu truyền động trợ lực chủ động cho từng ngón tay trong hệ thống AAN sử dụng cấu hình cơ khí nào?",
+      "answerOptions": [
+        {
+          "text": "Cấu hình dưới dẫn động với khớp truyền lực cứng 4 khâu, trong đó 1 động cơ servo điều khiển đồng thời cặp khớp MCP-PIP.",
+          "isCorrect": true,
+          "rationale": "Cấu hình dưới dẫn động (Under-actuated) giúp tối ưu số lượng động cơ (1 servo cho cả ngón), tự điều chỉnh tự do theo hình dáng khớp ngón tay."
+        },
+        {
+          "text": "Cấu hình dẫn động độc lập hoàn toàn, trong đó mỗi khớp ngón tay được trang bị 1 động cơ bước mini riêng biệt.",
+          "isCorrect": false,
+          "rationale": "Trang bị động cơ riêng cho từng khớp sẽ làm tăng trọng lượng và kích thước đai găng vượt quá ngưỡng 150g."
+        },
+        {
+          "text": "Cấu hình khí nén mềm (Soft pneumatics) sử dụng các buồng bơm hơi dạng xơ vải co giãn.",
+          "isCorrect": false,
+          "rationale": "Dự án sử dụng cơ cấu khớp truyền lực cứng dưới dẫn động phối hợp với dây gân chứ không dùng túi khí nén."
+        },
+        {
+          "text": "Cấu hình truyền động từ tính không dây sử dụng nam châm vĩnh cửu đặt bên trong các đốt ngón tay.",
+          "isCorrect": false,
+          "rationale": "Truyền động từ tính không tạo đủ lực kéo cơ học ổn định và an toàn cho các bài tập vận động ngón tay."
+        }
+      ],
+      "hint": "Chú ý đến từ khóa thể hiện sự tối giản số lượng động cơ bằng cách dùng 1 servo điều khiển liên hợp hai khớp."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Giàn đo cơ học trục trượt vít me kết hợp mô hình tay giả phantom silicone (Shore A 25–30) đóng vai trò gì trong giai đoạn phát triển dự án?",
+      "answerOptions": [
+        {
+          "text": "Cung cấp môi trường kiểm chuẩn lực và hành trình khách quan, lặp lại để đánh giá độ chính xác và độ tin cậy của găng tay trước khi thử nghiệm thực tế.",
+          "isCorrect": true,
+          "rationale": "Giàn đo cơ học với mô hình bàn tay giả silicone chuẩn hóa giúp kiểm tra độ lặp lại (CV), độ chuẩn xác của thuật toán mà không bị ảnh hưởng bởi sự biến động sinh lý người."
+        },
+        {
+          "text": "Thay thế hoàn toàn người bệnh trong việc thực hiện các bài tập phục hồi chức năng vận động tinh tại nhà.",
+          "isCorrect": false,
+          "rationale": "Giàn thử cơ học là công cụ phòng thí nghiệm để kiểm định găng tay, không phải thiết bị điều trị cho người bệnh."
+        },
+        {
+          "text": "Là bộ phận cố định được gắn trực tiếp lên tay người bệnh để hỗ trợ tập luyện cử động gập/duỗi.",
+          "isCorrect": false,
+          "rationale": "Giàn đo là thiết bị kiểm chuẩn đặt tại phòng lab, không phải bộ phận đeo trên người bệnh."
+        },
+        {
+          "text": "Đo điện thế cơ sEMG của mô hình tay giả để hiệu chuẩn các thuật toán học máy phân loại hành vi.",
+          "isCorrect": false,
+          "rationale": "Mô hình tay giả silicone không phát ra điện thế cơ sEMG; giàn thử dùng loadcell chuẩn để kiểm chuẩn lực nén."
+        }
+      ],
+      "hint": "Cân nhắc ý nghĩa của một hệ thống thử nghiệm vật lý chuẩn hóa trong quy trình kiểm chứng kỹ thuật."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Trong quy trình thử nghiệm 3 pha của cơ cấu AAN trên giàn cơ học, khoảng độ trễ vận động danh định $t_{\\text{delay}} = 1,2\\text{ s}$ ở Pha 2 có tác dụng gì?",
+      "answerOptions": [
+        {
+          "text": "Tạo khoảng thời gian chờ để cho phép người tập (hoặc mô hình) thể hiện tối đa nỗ lực cơ chủ động ban đầu trước khi trợ lực máy kích hoạt.",
+          "isCorrect": true,
+          "rationale": "Khoảng trễ $1,2\\text{ s}$ là vàng để hệ thống ghi nhận nỗ lực tự thân của bệnh nhân (EI); nếu tự hoàn thành sẽ không cần máy can thiệp trợ lực."
+        },
+        {
+          "text": "Đảm bảo mạch Bluetooth BLE 5.0 hoàn tất việc truyền gói tin dữ liệu về máy tính nhúng Orange Pi.",
+          "isCorrect": false,
+          "rationale": "Chu kỳ truyền BLE 5.0 chỉ mất 50 ms (20 Hz), không cần khoảng trễ lên tới $1,2\\text{ s}$."
+        },
+        {
+          "text": "Chờ màng cảm biến Velostat đạt trạng thái cân bằng nhiệt độ sau khi bị nén ép.",
+          "isCorrect": false,
+          "rationale": "Thời gian trễ vận động là thông số của thuật toán tương tác trợ lực AAN, không phải khoảng chờ cân bằng nhiệt cảm biến."
+        },
+        {
+          "text": "Cho phép động cơ servo nạp đầy tụ điện dự phòng trước khi phát ra lực kéo tối đa.",
+          "isCorrect": false,
+          "rationale": "Nguồn điện cấp cho động cơ servo luôn sẵn sàng và không phụ thuộc vào tụ nạp dự phòng $1,2\\text{ s}$."
+        }
+      ],
+      "hint": "Xem xét cơ chế ưu tiên khuyến khích nỗ lực tự thân của người bệnh trước khi máy móc can thiệp."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Việc giới hạn lực an toàn cơ học tối đa $F_{\\text{max}} \\le 5\\text{ N}$ trong cơ cấu trợ lực AAN nhằm mục đích quan trọng nào?",
+      "answerOptions": [
+        {
+          "text": "Bảo vệ cấu trúc khớp và mô mềm của bệnh nhân khỏi nguy cơ chấn thương do lực kéo vượt quá ngưỡng chịu đựng.",
+          "isCorrect": true,
+          "rationale": "Bàn tay sau đột quỵ rất dễ tổn thương do co cứng hoặc loãng xương; giới hạn $5\\text{ N}$ đảm bảo an toàn tuyệt đối cho các khớp nhỏ."
+        },
+        {
+          "text": "Tránh làm quá tải dòng điện của vi điều khiển ESP32-S3 làm ngắt kết nối không dây.",
+          "isCorrect": false,
+          "rationale": "Động cơ servo được cấp nguồn riêng, không lấy dòng trực tiếp từ chân GPIO của vi điều khiển ESP32-S3."
+        },
+        {
+          "text": "Giữ cho tuổi thọ của màng cảm biến áp trở Velostat đạt trên 10 năm sử dụng.",
+          "isCorrect": false,
+          "rationale": "Mục đích chính của ngưỡng an toàn $F_{\\text{max}}$ là bảo vệ ngón tay người bệnh chứ không phải bảo vệ tuổi thọ cảm biến."
+        },
+        {
+          "text": "Hạn chế tiếng ồn cơ khí phát ra từ cụm bánh răng truyền động của động cơ servo.",
+          "isCorrect": false,
+          "rationale": "Tiếng ồn cơ khí không phải là yếu tố nguy cơ lâm sàng đòi hỏi phải thiết lập ngưỡng lực an toàn nghiêm ngặt."
+        }
+      ],
+      "hint": "Đặt tiêu chí an toàn cho hệ thống xương khớp sinh học của người bệnh lên hàng đầu."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Trong sơ đồ phân bổ cảm biến vi sai, mặt phẳng cử động của ngón cái có đặc điểm hình học gì khác biệt so với ngón trỏ và ngón giữa?",
+      "answerOptions": [
+        {
+          "text": "Mặt phẳng cử động của ngón cái xoay một góc khoảng $90^\\circ$ so với mặt phẳng cử động của hai ngón trỏ và giữa.",
+          "isCorrect": true,
+          "rationale": "Do giải phẫu sinh học ngón cái có khả năng đối chiếu, mặt phẳng cử động của nó vuông góc (xoay $\\approx 90^\\circ$) so với các ngón còn lại."
+        },
+        {
+          "text": "Mặt phẳng cử động của ngón cái nằm song song hoàn toàn và trùng khớp với ngón trỏ.",
+          "isCorrect": false,
+          "rationale": "Nếu nằm song song, ngón cái sẽ không thể thực hiện chức năng kẹp/đối chiếu với các đầu ngón tay khác."
+        },
+        {
+          "text": "Ngón cái chỉ cử động trong mặt phẳng ngang và không có khả năng thực hiện cử động đối chiếu.",
+          "isCorrect": false,
+          "rationale": "Ngón cái đảm nhiệm cử động đối chiếu linh hoạt trong không gian 3D, không bị giới hạn thuần túy trong mặt phẳng ngang."
+        },
+        {
+          "text": "Ngón cái sử dụng 4 khớp vi sai thay vì 2 khớp như các ngón còn lại.",
+          "isCorrect": false,
+          "rationale": "Ngón cái được đo ở 2 khớp (IP và MCP) giống như các ngón trỏ và giữa (PIP và MCP)."
+        }
+      ],
+      "hint": "Hãy hình dung tư thế ngón cái khi thực hiện động tác cầm nhón một vật nhỏ so với ngón trỏ."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Cảm biến quán tính IMU 6-DOF (LSM6DS3) được tích hợp tại vị trí mu bàn tay (Tầng 1) để thực hiện chức năng gì?",
+      "answerOptions": [
+        {
+          "text": "Đo góc nghiêng của bàn tay so với véctơ trọng trường để bù trừ sai số lực do ảnh hưởng của trọng lực.",
+          "isCorrect": true,
+          "rationale": "Khi bàn tay thay đổi tư thế trong không gian, trọng lượng bản thân của ngón tay và khung găng gây ra áp lực giả; IMU giúp bù trừ thành phần trọng lực này."
+        },
+        {
+          "text": "Đo trực tiếp lực kẹp của các ngón tay khi cầm nắm vật thể tròn.",
+          "isCorrect": false,
+          "rationale": "Cảm biến IMU đo gia tốc và vận tốc góc, không thể đo trực tiếp lực nén tiếp xúc."
+        },
+        {
+          "text": "Thay thế các cảm biến áp trở Velostat trong việc xác định góc gập của khớp PIP.",
+          "isCorrect": false,
+          "rationale": "IMU đặt tại mu bàn tay chỉ đo định hướng không gian của bàn tay, không đo trực tiếp góc gập từng khớp ngón đơn lẻ."
+        },
+        {
+          "text": "Phát sóng dữ liệu không dây trực tiếp về máy trạm trung tâm mà không cần qua ESP32-S3.",
+          "isCorrect": false,
+          "rationale": "LSM6DS3 giao tiếp qua chuẩn SPI/I2C với ESP32-S3, việc truyền không dây do chip ESP32-S3 đảm nhiệm."
+        }
+      ],
+      "hint": "Cân nhắc ảnh hưởng của tư thế bàn tay (ngửa, úp, dốc) đối với áp lực tĩnh lên các cảm biến màng."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Chỉ tiêu kỹ thuật nghiệm thu định lượng về tỷ số tín hiệu trên nhiễu (SNR) và hệ số biến thiên (CV) của hệ thống được quy định như thế nào?",
+      "answerOptions": [
+        {
+          "text": "$\\text{SNR} \\ge 18\\text{ dB}$, $\\text{CV} \\le 5\\%$ nội phiên, và $\\text{CV} \\le 8\\%$ liên ngày trên mô hình tay giả.",
+          "isCorrect": true,
+          "rationale": "Đây là các chỉ tiêu chính xác để đảm bảo tín hiệu đủ rõ (SNR cao) và độ lặp lại đo lường ổn định theo thời gian tại nhà."
+        },
+        {
+          "text": "$\\text{SNR} \\ge 5\\text{ dB}$, $\\text{CV} \\le 15\\%$ nội phiên, và $\\text{CV} \\le 20\\%$ liên ngày trên mô hình tay giả.",
+          "isCorrect": false,
+          "rationale": "Mức CV 15-20% là quá cao đối với một thiết bị đo lường định lượng dùng cho theo dõi y tế."
+        },
+        {
+          "text": "$\\text{SNR} \\ge 50\\text{ dB}$, $\\text{CV} = 0\\%$ hoàn toàn không có sai số giữa các phiên đo.",
+          "isCorrect": false,
+          "rationale": "Trong thực tế cảm biến sinh học và màng áp trở, không thể đạt hệ số biến thiên bằng $0\\%$ tuyệt đối."
+        },
+        {
+          "text": "$\\text{SNR} \\le 10\\text{ dB}$, $\\text{CV} \\le 2\\%$ chỉ tính riêng cho kênh đo góc nghiêng IMU.",
+          "isCorrect": false,
+          "rationale": "Chỉ tiêu SNR yêu cầu $\\ge 18\\text{ dB}$ (tín hiệu lớn hơn nhiễu rõ rệt) chứ không phải $\\le 10\\text{ dB}$."
+        }
+      ],
+      "hint": "Tìm các con số thể hiện độ sạch tín hiệu (SNR) trên 18 dB và độ lặp lại (CV) dưới 5%–8%."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Đề tài đặt ra các mục tiêu thực tiễn nào về chi phí phần cứng đeo tay và khối lượng thiết bị để đảm bảo tính khả thi khi triển khai tại nhà?",
+      "answerOptions": [
+        {
+          "text": "Chi phí phần cứng đeo tay dưới 1,5 triệu đồng và khối lượng thiết bị đeo nhẹ dưới 150 gram.",
+          "isCorrect": true,
+          "rationale": "Mục tiêu chi phí rẻ (< 1,5 triệu VNĐ) và siêu nhẹ (< 150g) giúp bệnh nhân đột quỵ dễ dàng tiếp cận và tự mang đeo tại nhà mà không gây mỏi."
+        },
+        {
+          "text": "Chi phí phần cứng dưới 10 triệu đồng và khối lượng thiết bị đeo dưới 500 gram.",
+          "isCorrect": false,
+          "rationale": "Mức giá 10 triệu và trọng lượng 500g là quá đắt và nặng đối với bàn tay yếu của người bệnh sau đột quỵ."
+        },
+        {
+          "text": "Chi phí phần cứng từ 350 đến 6.000 USD tương đương các dòng robot tập thương mại.",
+          "isCorrect": false,
+          "rationale": "Đây là mức giá của các robot nhập khẩu thương mại – khoảng trống mà đề tài muốn khắc phục bằng giải pháp giá rẻ."
+        },
+        {
+          "text": "Chi phí phần cứng không giới hạn nhưng khối lượng phải tuyệt đối nhẹ dưới 20 gram.",
+          "isCorrect": false,
+          "rationale": "Khối lượng 20g là không khả thi khi phải tích hợp cả khung in 3D, 12 cảm biến, vi điều khiển và pin LiPo."
+        }
+      ],
+      "hint": "Nhớ lại tiêu chuẩn thiết bị đeo giá rẻ phù hợp với thu nhập tại Việt Nam và mức trọng lượng rất nhẹ."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Giao diện phản hồi sinh học thị giác (Visual Biofeedback) hiển thị thanh đo EI và lực hỗ trợ theo thời gian thực mang lại tác dụng gì cho bệnh nhân?",
+      "answerOptions": [
+        {
+          "text": "Kích thích sự tập trung và khuyến khích bệnh nhân tăng cường nỗ lực co cơ chủ động thông qua việc quan sát kết quả trực quan.",
+          "isCorrect": true,
+          "rationale": "Phản hồi thị giác giúp bệnh nhân nhận biết ngay lập tức mức phát lực của mình, tạo động lực tâm lý để cố gắng gia tăng nỗ lực co cơ trong từng nhịp tập."
+        },
+        {
+          "text": "Cho phép người nhà bệnh nhân tự điều chỉnh thông số phần cứng của mạch điện mà không cần chuyên gia y tế.",
+          "isCorrect": false,
+          "rationale": "Giao diện phản hồi sinh học phục vụ việc quan sát nỗ lực tập luyện, không dùng để can thiệp phần cứng mạch điện."
+        },
+        {
+          "text": "Tự động chẩn đoán vùng脑 bị tổn thương do đột quỵ mà không cần chụp cộng hưởng từ MRI.",
+          "isCorrect": false,
+          "rationale": "Thiết bị chỉ đo đạc vận động ngoại biên, không có khả năng chẩn đoán tổn thương hình ảnh học thần kinh trung ương."
+        },
+        {
+          "text": "Giảm bớt số lượng phần tử cảm biến cần gắn trên khung găng tay từ 12 kênh xuống 4 kênh.",
+          "isCorrect": false,
+          "rationale": "Phản hồi thị giác là tính năng phần mềm giao diện người dùng, không làm thay đổi số lượng cảm biến phần cứng."
+        }
+      ],
+      "hint": "Cân nhắc tác động tâm lý - thần kinh khi người bệnh nhìn thấy thanh đo nỗ lực của mình dịch chuyển trên màn hình."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Giải pháp găng tay thông minh giải quyết khoảng trống lâm sàng nào lớn nhất trong quản lý phục hồi chức năng bàn tay sau đột quỵ hiện nay?",
+      "answerOptions": [
+        {
+          "text": "Cung cấp công cụ đo lường định lượng liên tục, khách quan tại nhà giữa các kỳ tái khám xa nhau (1–3 tháng), khắc phục sai số tự ghi chép thủ công.",
+          "isCorrect": true,
+          "rationale": "Hệ thống lấp đầy khoảng trống dữ liệu giữa các lần khám bệnh viện bằng cách đo lường tự động, liên tục các chỉ số EI, GAP, RAL tại nhà với độ chính xác cao."
+        },
+        {
+          "text": "Thay thế hoàn toàn vai trò thăm khám lâm sàng và chỉ định phác đồ của bác sĩ chuyên khoa phục hồi chức năng.",
+          "isCorrect": false,
+          "rationale": "Thiết bị đóng vai trò công cụ hỗ trợ đo lường theo dõi dữ liệu, không thay thế chuyên môn chẩn đoán của bác sĩ."
+        },
+        {
+          "text": "Chữa lành hoàn toàn tổn thương vỏ não do đột quỵ chỉ sau 2 tuần sử dụng thiết bị tại nhà.",
+          "isCorrect": false,
+          "rationale": "Phục hồi chức năng thần kinh là một quá trình dài hạn; thiết bị không phải là công cụ chữa lành tổn thương tức thì."
+        },
+        {
+          "text": "Cung cấp khả năng vận động cưỡng bức thay thế hoàn toàn chức năng bàn tay bị liệt vĩnh viễn.",
+          "isCorrect": false,
+          "rationale": "Mục tiêu chính của đề tài là đánh giá, theo dõi xu hướng định lượng và hỗ trợ theo nhu cầu chứ không phải chân tay giả thay thế vĩnh viễn."
+        }
+      ],
+      "hint": "Hãy nghĩ về khoảng cách thời gian giữa các kỳ tái khám tại bệnh viện và sự thiếu hụt công cụ đo định lượng tại nhà."
+    }
+  ]
+}

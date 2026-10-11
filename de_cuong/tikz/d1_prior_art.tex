@@ -1,0 +1,45 @@
+% d1 — Bản đồ tổng quan: 3 nhóm giải pháp hiện có + khoảng trống đề tài nhắm tới
+\documentclass[border=4pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\begin{document}
+\begin{tikzpicture}[font=\footnotesize, every node/.style={align=center}]
+% ---- three group boxes (bottom edge at y=-1.45)
+\node[draw=black!55, rounded corners=3pt, fill=blue!7, minimum width=4.3cm,
+      minimum height=2.9cm] (g1) at (0,0)
+  {\textbf{Nhóm 1: Cảm biến đo}\\
+   găng dữ liệu Velostat + IMU,\\
+   đo lực tiếp xúc khi nắm\\[2pt]
+   \scriptsize\textit{IROS 2017 [9] · ART-Glove 2026 [8]}};
+\node[draw=black!55, rounded corners=3pt, fill=orange!8, minimum width=4.3cm,
+      minimum height=2.9cm] (g2) at (5.4,0)
+  {\textbf{Nhóm 2: Robot tập luyện}\\
+   găng robot trợ lực, có động cơ\\
+   giá 350--6.000 USD\\[2pt]
+   \scriptsize\textit{Neofect, ironHand [6][10][11][14]}};
+\node[draw=black!55, rounded corners=3pt, fill=green!7, minimum width=4.3cm,
+      minimum height=2.9cm] (g3) at (10.8,0)
+  {\textbf{Nhóm 3: Đánh giá lâm sàng}\\
+   thang điểm FMA, ARAT,\\
+   Box-and-Block, lực kế Jamar\\[2pt]
+   \scriptsize\textit{chỉ đo tại phòng khám, một thời điểm}};
+
+% ---- gap box (bullet lines), top edge at y=-2.55
+\node[draw=black!70, rounded corners=3pt, fill=purple!10, text width=13.2cm, align=left,
+      inner sep=6pt] (gap) at (5.4,-3.42)
+  {\textbf{KHOẢNG TRỐNG ĐỀ TÀI NHẮM TỚI}\\[3pt]
+   --~đo \textbf{tại nhà} với chi phí thấp\\
+   --~phân biệt được \textbf{chủ động/thụ động}\\
+   --~mỗi con số đo đều kèm \textbf{mức độ tin cậy}};
+
+% ---- labeled arrows: mỗi mũi tên mang nhãn ở bên phải, chỉ rõ vì sao nhóm đó chưa lấp được khoảng trống
+\draw[->, >=stealth, black!55] (0,-1.45)  -- (0,-2.55);
+\draw[->, >=stealth, black!55] (5.4,-1.45) -- (5.4,-2.55);
+\draw[->, >=stealth, black!55] (10.8,-1.45) -- (10.8,-2.55);
+\node[font=\scriptsize\itshape, anchor=west] at (0.35,-1.98)  {phức tạp, đắt};
+\node[font=\scriptsize\itshape, anchor=west] at (5.75,-1.98)  {là thiết bị tập, không đo};
+\node[font=\scriptsize\itshape, anchor=west] at (11.05,-1.98) {chỉ một thời điểm};
+\end{tikzpicture}
+\end{document}

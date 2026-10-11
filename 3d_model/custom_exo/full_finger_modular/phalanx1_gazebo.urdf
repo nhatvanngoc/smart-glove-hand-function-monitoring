@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="phalanx1_modular_exo">
+  <!-- Link 1: Máng mu ngón (Dorsal Shell) cố định làm đế -->
+  <link name="phalanx1_dorsal">
+    <inertial>
+      <origin xyz="0 4.5 7.5" rpy="0 0 0"/>
+      <mass value="0.008"/>
+      <inertia ixx="1.2e-6" ixy="0" ixz="0" iyy="1.5e-6" iyz="0" izz="1.8e-6"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://full_finger_modular/phalanx1_dorsal_only.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="cyan">
+        <color rgba="0.05 0.55 0.85 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://full_finger_modular/phalanx1_dorsal_only.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Link 2: Quai bụng ngón (Palmar Clam-shell Arm) -->
+  <link name="phalanx1_palmar">
+    <inertial>
+      <origin xyz="0 -8.5 6.2" rpy="0 0 0"/>
+      <mass value="0.004"/>
+      <inertia ixx="0.6e-6" ixy="0" ixz="0" iyy="0.8e-6" iyz="0" izz="0.9e-6"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://full_finger_modular/phalanx1_palmar_arm_only.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="amber">
+        <color rgba="0.95 0.60 0.10 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://full_finger_modular/phalanx1_palmar_arm_only.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Khớp xoay bản lề H(-13.6mm, -1.0mm) -->
+  <joint name="hinge_joint" type="revolute">
+    <parent link="phalanx1_dorsal"/>
+    <child link="phalanx1_palmar"/>
+    <origin xyz="-0.0136 -0.0010 0.0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.570796" upper="0.0" effort="0.5" velocity="5.0"/>
+    <dynamics damping="0.001" friction="0.02"/>
+  </joint>
+
+  <!-- Gazebo Material Settings -->
+  <gazebo reference="phalanx1_dorsal">
+    <material>Gazebo/SkyBlue</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+  </gazebo>
+
+  <gazebo reference="phalanx1_palmar">
+    <material>Gazebo/Orange</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+  </gazebo>
+</robot>
