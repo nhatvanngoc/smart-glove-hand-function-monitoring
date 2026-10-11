@@ -1,0 +1,42 @@
+% d9 — Lưu đồ tự kiểm tra khi thiết bị bắt đầu ghi một phiên đo mới (có vòng HỒI TIẾP đầy đủ)
+\documentclass[border=4pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.geometric}
+\begin{document}
+\begin{tikzpicture}[font=\footnotesize,
+  proc/.style={draw=black!55, rounded corners=2.5pt, fill=blue!6, minimum width=3.6cm, minimum height=0.9cm, align=center, inner sep=2pt},
+  dec/.style={diamond, draw=black!55, fill=yellow!12, minimum width=3.6cm, minimum height=1.2cm, align=center, font=\scriptsize, inner sep=1pt},
+  ok/.style={draw=black!55, rounded corners=2.5pt, fill=green!12, minimum width=3.4cm, minimum height=0.9cm, align=center},
+  bad/.style={draw=black!60, rounded corners=2.5pt, fill=red!12, minimum width=3.9cm, minimum height=1.1cm, align=center, font=\small}]
+% ---- cột chính
+\node[proc] (start) at (0,0) {Bắt đầu ghi phiên đo\\tín hiệu sạch, nhiệt độ bình thường};
+\node[dec, below=0.9cm of start] (d1) {Tín hiệu đủ rõ và\\điều kiện đo bình thường?};
+\node[proc, below=0.9cm of d1] (proc) {Tính các chỉ số\\EI · GAP · RAL};
+\node[dec, below=0.9cm of proc] (d2) {Số đo ổn định, phù hợp\\chuẩn đã đăng ký?};
+\node[ok, below=0.9cm of d2] (ok) {\textbf{PHIÊN ĐẠT}\\đưa vào đồ thị theo tuần};
+% ---- nhánh xấu
+\node[bad, right=1.5cm of d1] (bad1) {\textbf{BÁO: CẦN KIỂM TRA}\\nhắc đeo lại găng cho đúng};
+\node[bad, right=1.5cm of d2] (bad2) {\textbf{BÁO: SỐ LIỆU NGHI VẤN}\\đo lại, không đưa vào kết luận};
+% ---- cột chính
+\draw[->, >=stealth, thick, black!60] (start.south) -- (d1.north);
+\draw[->, >=stealth, thick, black!60] (d1.south) -- node[right, font=\tiny]{đạt} (proc.north);
+\draw[->, >=stealth, thick, black!60] (proc.south) -- (d2.north);
+\draw[->, >=stealth, thick, black!60] (d2.south) -- node[right, font=\tiny]{đạt} (ok.north);
+% ---- nhánh xấu
+\draw[->, >=stealth, thick, black!60] (d1.east) -- node[above, font=\tiny]{chưa đạt} (bad1.west);
+\draw[->, >=stealth, thick, black!60] (d2.east) -- node[above, font=\tiny]{chưa đạt} (bad2.west);
+% ---- VÒNG HỒI TIẾP đầy đủ (đo lại)
+% (1) đeo lại găng -> quay về Bắt đầu phiên
+\draw[->, >=stealth, black!60, dashed] (bad1.north) -- (bad1.north |- 0,0.7)
+  -- (start.east |- 0,0.7) -- (start.east);
+\node[anchor=south, font=\scriptsize, black!65] at (1.6,0.7)
+  {đeo lại găng rồi đo lại};
+% (2) số liệu nghi vấn -> quay về bước tính chỉ số (đo lại)
+\draw[->, >=stealth, black!60, dashed] (bad2.north) -- (bad2.north |- proc.east)
+  -- (proc.east);
+\node[anchor=south, font=\scriptsize, black!65] at (bad2.north |- proc.east)
+  {đo lại};
+\end{tikzpicture}
+\end{document}

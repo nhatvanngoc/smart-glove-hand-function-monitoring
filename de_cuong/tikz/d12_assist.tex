@@ -1,0 +1,47 @@
+% d12 — Cơ cấu hỗ trợ trên giàn đo: trợ giúp thụ động chia nấc + servo kéo qua dây gân + phản hồi thị giác
+\documentclass[border=4pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\begin{document}
+\begin{tikzpicture}[font=\footnotesize,
+  blk/.style={draw=black!55, rounded corners=3pt, fill=#1, minimum width=2.9cm,
+              minimum height=1.2cm, align=center, inner sep=2pt}]
+% mô hình tay giả (trung tâm)
+\node[blk=blue!9] (phantom) at (0,0) {Mô hình tay giả\\(phantom) mang găng};
+% trợ giúp thụ động (phía trên)
+\node[blk=yellow!18, above=1.55cm of phantom] (spring)
+  {Cơ cấu trợ giúp thụ động\\lò xo / tải treo chia nấc\\\scriptsize (mức trợ giúp đã hiệu chuẩn)};
+% servo trợ lực (trái) — kéo qua dây gân trong ống dẫn PTFE
+\node[blk=green!9, left=1.75cm of phantom] (servo)
+  {Servo trợ lực\\kéo qua dây gân\\+ ống dẫn PTFE (Bowden)\\\scriptsize (chỉ kéo mô hình tay giả)};
+% phản hồi thị giác (phải)
+\node[blk=purple!8, right=1.85cm of phantom] (fb)
+  {Phản hồi thị giác\\thanh nỗ lực\\và tỷ lệ hoàn thành};
+% ---- ba mũi tên chính, nhãn kèm đúng cạnh (sloped cho mũi dọc)
+% (1) trợ giúp thụ động -> phantom: giảm tải từng nấc
+\draw[->, >=stealth, thick, black!60] (spring.south) -- (phantom.north)
+  node[midway, right=3pt, font=\scriptsize, black!65, fill=white, inner sep=1.5pt] {giảm tải từng nấc};
+% (2) servo -> phantom: kéo dây gân khi thiếu lực
+\draw[->, >=stealth, thick, black!60] (servo.east) -- (phantom.west)
+  node[midway, above=1pt, font=\scriptsize, black!65, fill=white, inner sep=1.5pt] {kéo dây gân khi thiếu lực};
+% (3) phantom -> phản hồi thị giác: số đo nỗ lực và biên độ
+\draw[->, >=stealth, thick, black!60] (phantom.east) -- (fb.west)
+  node[midway, above=1pt, font=\scriptsize, black!65, fill=white, inner sep=1.5pt] {số đo nỗ lực và biên độ};
+% ---- VÒNG 1 (assist-as-needed): tín hiệu nỗ lực từ phantom -> servo quyết định bù
+\draw[->, >=stealth, black!55, dashed]
+  (phantom.south) to[out=-115, in=-60]
+  node[midway, font=\scriptsize, below=6pt, black!60] {tín hiệu nỗ lực (chưa đạt mục tiêu)}
+  (servo.south);
+% ---- VÒNG 2 (thị giác -> người tập -> tay): nhìn thanh nỗ lực -> tăng nỗ lực, quay về phantom
+\draw[->, >=stealth, black!55, dotted]
+  (fb.south) to[out=-85, in=-30]
+  node[midway, font=\scriptsize, below=6pt, black!60] {người tập nhìn → tăng nỗ lực}
+  (phantom.south east);
+% nguyên tắc
+\node[anchor=north west, font=\scriptsize, black!60, align=left] at (-0.7,-3.5)
+  {Nguyên tắc ``hỗ trợ theo nhu cầu'' (assist-as-needed): servo kéo dây gân trong ống dẫn hướng (Bowden),\\
+   chỉ bù phần lực còn thiếu khi có tín hiệu nỗ lực; mức bù giảm dần khi người tập làm được nhiều hơn.};
+\end{tikzpicture}
+\end{document}

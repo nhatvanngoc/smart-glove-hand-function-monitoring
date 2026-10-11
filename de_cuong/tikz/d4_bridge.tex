@@ -1,0 +1,61 @@
+% d4 — Mạch đọc vi sai: hai mạch chia áp độc lập + khuếch đại vi sai (INA128) trước ADC
+% Quy ước dấu thống nhất với Hình 4 / 8 / 10:
+%   cảm biến ở NHÁNH TRÊN, R_ref ở nhánh dưới nên S = V_EX * R_ref/(R_ref + R_wall):
+%   vách bị nén -> R_wall giảm -> S tăng.  d = V1(lòng) - V2(mu): gập -> d > 0, duỗi -> d < 0.
+\documentclass[border=4pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\usepackage{circuitikz}
+\usetikzlibrary{positioning,arrows.meta}
+\usepackage{amsmath}
+\begin{document}
+\begin{circuitikz}[american, font=\footnotesize]
+  % nguồn kích V_EX (cột trái), rail trên y=2.6, rail dưới GND y=0
+  \draw (0,0) to[battery2, l=$V_{EX}$, invert] (0,2.6) -- (5.4,2.6);
+  % ---- nhánh 1 (vách lòng): R_palmar trên + R_ref dưới, junction có chấm
+  \draw (2.7,2.6) to[R, l_=$R_{palmar}$, -*] (2.7,1.3)
+                  to[R, l_=$R_{ref}$, -*] (2.7,0);
+  % ---- nhánh 2 (vách mu): R_dorsal trên + R_ref dưới
+  \draw (5.4,2.6) to[R, l=$R_{dorsal}$, -*] (5.4,1.3)
+                  to[R, l=$R_{ref}$, -*] (5.4,0);
+  % ---- khép vòng rail dưới về cực âm pin + MỘT điểm đất (tham chiếu chung, không vướng leader)
+  \draw (0,0) -- (2.7,0) -- (5.4,0);
+  \node[ground] at (0.4,0) {};
+  % ---- nhãn các điểm lấy điện áp: đặt BÊN CẠNH junction, không ngồi lên dây
+  %      (dây V1 chạy về trái, dây V2 chạy về phải nên nhãn đặt ngược phía)
+  \node[font=\scriptsize, anchor=west] at (2.85,1.32) {$V_1$ (lòng)};
+  \node[font=\scriptsize, anchor=east] at (5.25,1.32) {$V_2$ (mu)};
+  % ---- nhãn cặp R_ref matched: hai leader ngắn trỏ thẳng vào thân hai R_ref
+  \draw[black!60] (2.7,0.30) -- (2.7,-0.28);
+  \draw[black!60] (5.4,0.30) -- (5.4,-0.28);
+  \node[anchor=north, font=\scriptsize, black!65] at (4.05,-0.32)
+    {cặp $R_{ref}$ matched, sai số 0,1\%};
+
+  % ---- khuếch đại vi sai: tam giác 2 ngõ vào, 1 ngõ ra, chân REF
+  \draw[fill=teal!12, draw=black!55] (8.2,2.05) -- (8.2,0.55) -- (10.0,1.3) -- cycle;
+  \node[font=\scriptsize] at (8.35,1.88) {$+$};
+  \node[font=\scriptsize] at (8.35,0.70) {$-$};
+  \node[font=\scriptsize, left=1pt] at (10.0,1.3) {OUT};
+  % chân REF
+  \draw (9.1,0.925) -- (9.1,0.25);
+  \draw (9.1,0.25) -- (9.8,0.25);
+  \node[ground] at (9.8,0.25) {};
+  \node[font=\scriptsize, right=1pt] at (9.1,0.25) {REF};
+  % tên mạch bên dưới (không đè thân)
+  \node[anchor=north, font=\scriptsize, black!70] at (9.1,-0.6)
+    {INA128 / INA333 — khuếch đại vi sai};
+
+  % ---- hai net RIÊNG BIỆT, rời junction rồi mới đổi hướng, không cắt thân điện trở
+  \draw[->, >=stealth] (2.7,1.3) -- (1.5,1.3) -- (1.5,2.9) -- (8.2,2.9) -- (8.2,2.05);
+  \draw[->, >=stealth] (5.4,1.3) -- (6.9,1.3) -- (6.9,0.70) -- (8.2,0.70);
+
+  % ---- ngõ ra -> ADC
+  \node[draw, align=center, font=\scriptsize, minimum width=2.15cm,
+        minimum height=1.15cm] (adc) at (11.85,1.3) {ADC ngoài\\ADS1115 16-bit, PGA $\times G$};
+  \draw[->, >=stealth] (10.0,1.3) -- (adc.west);
+
+  % ---- công thức tổng quát
+  \node[anchor=north west, font=\scriptsize, black!65] at (-0.6,-1.55)
+    {$d \;=\; V_1 - V_2 \;=\; V_{EX}\!\left(\dfrac{R_{ref}}{R_{ref}+R_{palmar}} - \dfrac{R_{ref}}{R_{ref}+R_{dorsal}}\right)$};
+\end{circuitikz}
+\end{document}

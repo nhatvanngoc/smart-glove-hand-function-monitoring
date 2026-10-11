@@ -1,0 +1,143 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="phalanx1_clasp_world">
+    <!-- Ánh sáng mặt trời trực tiếp (Inline - Không cần tải từ internet) -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.2 -1.0</direction>
+    </light>
+
+    <!-- Mặt phẳng sàn (Inline - Không cần tải từ internet) -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>2 2</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>2 2</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.3 0.3 0.35 1</ambient>
+            <diffuse>0.3 0.3 0.35 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Mô hình Đốt 1 Khóa Gối Đồng Tâm -->
+    <model name="phalanx1_concentric_clasp">
+      <pose>0 0 0.05 0 0 0</pose>
+      
+      <!-- Máng mu ngón (Dorsal Shell) - Cố định làm đế -->
+      <link name="dorsal_link">
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0.0045 0.0075 0 0 0</pose>
+          <mass>0.015</mass>
+          <inertia>
+            <ixx>1.2e-6</ixx><ixy>0</ixy><ixz>0</ixz>
+            <iyy>1.5e-6</iyy><iyz>0</iyz>
+            <izz>1.8e-6</izz>
+          </inertia>
+        </inertial>
+        <visual name="dorsal_vis">
+          <geometry>
+            <mesh>
+              <uri>file:///home/nhatv/exo_phalanx1_sim/phalanx1_dorsal_only.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.1 0.6 0.9 1</ambient>
+            <diffuse>0.1 0.6 0.9 1</diffuse>
+            <specular>0.3 0.3 0.3 1</specular>
+          </material>
+        </visual>
+        <collision name="dorsal_col">
+          <geometry>
+            <mesh>
+              <uri>file:///home/nhatv/exo_phalanx1_sim/phalanx1_dorsal_only.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Quai bụng ngón (Palmar Clam-shell Arm) -->
+      <link name="palmar_link">
+        <!-- Đặt tư thế ban đầu ở góc mở -90 độ quanh bản lề -->
+        <pose>0 0 0 0 0 -1.570796</pose>
+        <inertial>
+          <pose>0 -0.0085 0.0062 0 0 0</pose>
+          <mass>0.008</mass>
+          <inertia>
+            <ixx>0.6e-6</ixx><ixy>0</ixy><ixz>0</ixz>
+            <iyy>0.8e-6</iyy><iyz>0</iyz>
+            <izz>0.9e-6</izz>
+          </inertia>
+        </inertial>
+        <visual name="palmar_vis">
+          <geometry>
+            <mesh>
+              <uri>file:///home/nhatv/exo_phalanx1_sim/phalanx1_palmar_arm_only.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.95 0.65 0.1 1</ambient>
+            <diffuse>0.95 0.65 0.1 1</diffuse>
+            <specular>0.3 0.3 0.3 1</specular>
+          </material>
+        </visual>
+        <collision name="palmar_col">
+          <geometry>
+            <mesh>
+              <uri>file:///home/nhatv/exo_phalanx1_sim/phalanx1_palmar_arm_only.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Khớp xoay bản lề H(-13.6mm, -1.0mm) -->
+      <joint name="hinge_joint" type="revolute">
+        <parent>dorsal_link</parent>
+        <child>palmar_link</child>
+        <pose>-0.0136 -0.0010 0.0 0 0 0</pose>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1.570796</lower>
+            <upper>0.0</upper>
+            <effort>1.0</effort>
+            <velocity>5.0</velocity>
+          </limit>
+          <dynamics>
+            <damping>0.005</damping>
+            <friction>0.01</friction>
+          </dynamics>
+        </axis>
+      </joint>
+    </model>
+  </world>
+</sdf>

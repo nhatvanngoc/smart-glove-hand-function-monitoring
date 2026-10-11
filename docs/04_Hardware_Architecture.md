@@ -92,6 +92,8 @@ Mỗi khớp có **cặp sensing element đối xứng** trên hai vách đối 
 Với 24 kênh dùng **2 × CD74HC4067**: cả hai MUX đưa tín hiệu về **cùng một chân ADC1**, chọn bằng chân **EN** (chỉ một chip hoạt động tại mỗi thời điểm) → tránh phải dùng ADC2 (ADC2 dùng chung tài nguyên với Wi-Fi).
 
 > **Nguyên tắc thiết kế cơ khí đi kèm:** mỗi sensing element phải được **kéo trước (preload)** một lực nhỏ, xác định, để tín hiệu có cả nhánh dương và nhánh âm quanh điểm làm việc. Không preload thì không đo được chiều.
+> 
+> *Chi tiết triển khai cơ cấu cơ khí nẹp ngón, khoang âm preload $9.5 \times 6.8 \times 1.2\,\text{mm}$, bản lề Print-in-Place và khớp rãnh trượt tự lựa bù 13.5mm: xem tài liệu chuyên sâu [`docs/06_Co_Cau_Co_Khi_Exoskeleton.md`](06_Co_Cau_Co_Khi_Exoskeleton.md) và thư mục CAD 3D [`3d_model/custom_exo/full_finger_modular/`](../3d_model/custom_exo/full_finger_modular/).*
 
 ---
 

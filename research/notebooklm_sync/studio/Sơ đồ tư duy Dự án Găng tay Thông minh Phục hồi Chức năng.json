@@ -1,0 +1,159 @@
+{
+  "name": "Dự án Găng tay thông minh phục hồi chức năng sau đột quỵ",
+  "children": [
+    {
+      "name": "Cấu trúc phần cứng và mạch đo vi sai 2 vách Velostat",
+      "children": [
+        {
+          "name": "Cấu trúc cảm biến Velostat",
+          "children": [
+            {
+              "name": "Vật liệu áp điện trở: Màng Velostat phi tuyến mạnh"
+            },
+            {
+              "name": "Cấu trúc sandwich: Đế PETG in 3D và điện cực lá đồng"
+            },
+            {
+              "name": "Cửa sổ tiền tải tối ưu: F_p thuộc [0,5 N; 2,0 N]"
+            }
+          ]
+        },
+        {
+          "name": "Mạch cầu chia áp vi sai hai vách",
+          "children": [
+            {
+              "name": "Cấu hình 12 kênh: 2 khớp nhân 2 vách cho 3 ngón chính"
+            },
+            {
+              "name": "Nguyên lý suy luận: d = S(lòng) - S(mu)"
+            },
+            {
+              "name": "Triệt tiêu trôi dạt: Giảm thiểu trôi đồng pha nhiệt độ"
+            }
+          ]
+        },
+        {
+          "name": "Kiến trúc hệ thống ba tầng",
+          "children": [
+            {
+              "name": "Tầng 1 - Cảm biến: Găng tay đeo tay với mảng 12 kênh Velostat"
+            },
+            {
+              "name": "Tầng 2 - Thu thập tín hiệu: Chip dồn kênh, INA333, ADS1115"
+            },
+            {
+              "name": "Tầng 3 - Xử lý biên: Orange Pi 5 Pro trích xuất chỉ số và AI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Cơ cấu dây gân và trợ lực theo nhu cầu (AAN)",
+      "children": [
+        {
+          "name": "Nguyên tắc hoạt động AAN",
+          "children": [
+            {
+              "name": "Can thiệp tối thiểu: Chỉ bù phần lực thiếu hụt khi cần"
+            },
+            {
+              "name": "Bảo vệ khớp: Giới hạn an toàn cơ học F_max <= 5 N"
+            },
+            {
+              "name": "Truyền động dây gân: Dùng ống dẫn PTFE và động cơ Servo"
+            }
+          ]
+        },
+        {
+          "name": "Giàn đo cơ khí kiểm chuẩn",
+          "children": [
+            {
+              "name": "Trục trượt ổ bi: Bảo đảm chuyển động thẳng mượt mà"
+            },
+            {
+              "name": "Mô hình tay giả: Phantom silicone Shore A 25 - 30"
+            },
+            {
+              "name": "Chuẩn đối chứng: Load cell chuẩn kết hợp HX711"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Bộ ba chỉ số định lượng đánh giá tiến triển",
+      "children": [
+        {
+          "name": "Mức gắng sức chủ động (EI)",
+          "children": [
+            {
+              "name": "Công thức tích phân: EI = [integral |F_diff| dt / (F_target * delta_t)] * 100%"
+            },
+            {
+              "name": "Cửa sổ đo định danh: Thời gian cửa sổ cố định 2,0 s"
+            },
+            {
+              "name": "Ý nghĩa: Lượng hóa nỗ lực co cơ thực tế so với mục tiêu"
+            }
+          ]
+        },
+        {
+          "name": "Độ thiếu hụt tầm vận động (GAP)",
+          "children": [
+            {
+              "name": "Công thức GAP: GAP = PROM trừ AROM, luôn thỏa mãn GAP >= 0 độ"
+            },
+            {
+              "name": "Đo đạc độc lập: Dùng thước đo góc y tế và camera quang học"
+            },
+            {
+              "name": "Ý nghĩa: Lượng hóa mức yếu cơ hoặc lực cản co cứng"
+            }
+          ]
+        },
+        {
+          "name": "Mức trợ giúp cần thiết (RAL)",
+          "children": [
+            {
+              "name": "Điểm cắt RAL: Mức tải nhỏ nhất đạt tỷ lệ hoàn thành P_complete >= 80%"
+            },
+            {
+              "name": "Quy trình thử nghiệm: Thực hiện 10 chu kỳ giảm dần từ 120 g về 0 g"
+            },
+            {
+              "name": "Ý nghĩa: Phản ánh mức độ giảm phụ thuộc lực trợ giúp ngoại vi"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Quy trình kiểm soát dữ liệu và chất lượng",
+      "children": [
+        {
+          "name": "Thuật toán Auto-zero",
+          "children": [
+            {
+              "name": "Cân chỉnh điểm 0: Ghi nhận điện áp tĩnh V_offset lúc duỗi nghỉ 3 giây"
+            },
+            {
+              "name": "Ngưỡng kiểm tra: Cảnh báo cơ khí nếu trôi tĩnh vượt ngưỡng +-5%"
+            }
+          ]
+        },
+        {
+          "name": "Vòng lặp khép kín kiểm soát dữ liệu",
+          "children": [
+            {
+              "name": "Vòng lặp 1: Tự cân bằng và bù trôi nhiệt đầu mỗi phiên đo"
+            },
+            {
+              "name": "Vòng lặp 2: Gán nhãn Nghi vấn và loại bỏ phiên lỗi khỏi CSDL xu hướng"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

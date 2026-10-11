@@ -1,0 +1,70 @@
+% d2 — Kiến trúc hệ thống (đeo tay + thu thập + xử lý biên + nguồn)
+\documentclass[border=6pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\begin{document}
+\begin{tikzpicture}[font=\footnotesize,
+  tier/.style={draw=black!55, rounded corners=3pt, minimum width=8.6cm, minimum height=1.5cm, align=center},
+  sink/.style={draw=black!50, rounded corners=3pt, minimum width=3.4cm, minimum height=1.7cm, align=center, font=\small}]
+
+% ---- Tầng 1 (giữa y = 0)
+\node[tier, fill=blue!9] (t1) at (0,0)
+  {\textbf{TẦNG 1 -- CẢM BIẾN (đeo trên tay)}\\[1pt]
+   ốp ngón khung cứng · mảng Velostat 12 kênh · 1$\times$ IMU (mu bàn tay) · ô tham chiếu};
+
+% ---- Tầng 2 (giữa y = -2.85) — tách làm hai dòng: chuỗi tín hiệu + nguồn/đệm
+\node[tier, fill=teal!9, minimum height=2.1cm] (t2) at (0,-2.85)
+  {\textbf{TẦNG 2 -- THU THẬP TÍN HIỆU}\\[2pt]
+   chuỗi tín hiệu: 2$\times$CD74HC4067 chọn kênh -- op-amp đệm MCP6001\\[1pt]
+   $\rightarrow$ ADC ADS1115 (PGA) -- ESP32-S3 -- truyền BLE 5\\[1pt]
+   nguồn \& đệm: LDO 3,3 V cấp cho cảm biến và mạch chia áp hai vách};
+
+% ---- Tầng 3 (giữa y = -5.5)
+\node[tier, fill=purple!8] (t3) at (0,-5.5)
+  {\textbf{TẦNG 3 -- XỬ LÝ BIÊN (Orange Pi 5 Pro RK3588)}\\[1pt]
+   trích xuất EI · GAP · RAL · học máy suy luận gập/duỗi (INT8, NPU)\\[1pt]
+   ghi log · dashboard · báo cáo cho KTV\\[1pt]
+   \scriptsize nguồn riêng: adapter 5 V (không lấy từ pin đeo tay)};
+
+% ---- mũi tên dữ liệu chính (giữa chồng khối)
+\draw[->, >=stealth, thick, black!60] (0,-0.75)  -- (0,-1.8)
+  node[midway, right=2pt, font=\scriptsize, fill=white, inner sep=1pt] {tín hiệu tương tự (12 kênh)};
+\draw[->, >=stealth, thick, black!60] (0,-3.9)  -- (0,-4.75)
+  node[midway, right=2pt, font=\scriptsize, fill=white, inner sep=1pt] {số: BLE · USB (gỡ lỗi)};
+
+% ---- hai đối tượng bên dưới
+\node[sink, fill=gray!7] (s1) at (3.1,-7.9) {Người bệnh\\ tại nhà (đeo/cởi găng)};
+\node[sink, fill=gray!7] (s2) at (-3.1,-7.9) {KTV VLTL--PHCN\\ đọc báo cáo theo tuần};
+\draw[->, >=stealth, black!55] (1.9,-6.25)  -- (1.9,-7.05)
+  node[midway, left=2pt, font=\scriptsize, fill=white, inner sep=1pt] {hướng dẫn + theo dõi};
+\draw[->, >=stealth, black!55] (-1.9,-6.25) -- (-1.9,-7.05)
+  node[midway, left=2pt, font=\scriptsize, fill=white, inner sep=1pt] {báo cáo theo tuần};
+
+% ---- khối NGUỒN: nằm hẳn BÊN TRÁI tầng 2, không chồng lấn bất kỳ khối nào
+\node[draw=black!55, rounded corners=3pt, fill=yellow!14, minimum width=4.0cm,
+      minimum height=2.1cm, align=center]
+      (pwr) at (-7.6,-2.85)
+  {\textbf{NGUỒN (đeo tay)}\\[2pt]
+   Pin LiPo 3,7 V + mạch sạc TP4056\\[1pt]
+   + LDO 3,3 V (HT7333)\\[1pt]
+   \scriptsize cấp cho Tầng 1 và Tầng 2};
+
+% ---- hai đường ray nguồn riêng: đến Tầng 1 và Tầng 2
+\draw[->, >=stealth, black!55, dashed] (pwr.east) -- (t2.west)
+  node[midway, above=1pt, font=\scriptsize] {cấp 3,3 V};
+\draw[->, >=stealth, black!55, dashed] (pwr.north) |- (t1.west)
+  node[pos=0.72, above=1pt, font=\scriptsize, fill=white, inner sep=1pt] {cấp 3,3 V};
+
+% ---- (nguồn Tầng 3 ghi ngay trong hộp Tầng 3, không để ngoài nữa)
+
+% ---- mũi tên NGƯỢC từ người bệnh (không cắt chồng khối nào)
+% (1) đeo găng -> Tầng 1: vòng ra mép phải
+\draw[->, >=stealth, black!55] (4.8,-7.4) -- (6.5,-7.4) -- (6.5,0) -- (4.3,0);
+\node[anchor=west, font=\scriptsize\itshape] at (6.6,-3.8) {đeo găng};
+% (2) phản hồi thời gian thực -> Tầng 3: mũi tên ngắn nối thẳng lên (nhãn bên PHẢI)
+\draw[->, >=stealth, black!55] (3.1,-7.05) -- (3.1,-6.25);
+\node[anchor=west, font=\scriptsize\itshape] at (3.4,-6.72) {phản hồi thời gian thực};
+\end{tikzpicture}
+\end{document}
