@@ -64,7 +64,7 @@ Ba khoảng trống định lượng được, dùng làm căn cứ chọn đề
 1. **Vật liệu & phần tử:** Velostat + đồng lá + khung in 3D có preload; đo `R(p)` trên máy kéo tự chế → chọn điện trở tải `R_f` (khóa `GATE 0`).
 2. **Mạch đọc:** ESP32-S3 + CD74HC4067, 12 kênh tối thiểu / 24 kênh ở cấu hình vi sai; đồng pha theo kênh để giảm trôi (không dùng chữ "loại bỏ drift").
 3. **Suy luận hướng:** hiệu hai vách đối diện `d = S_palmar − S_dorsal`; dấu của `d` + mẫu kích hoạt trên chuỗi vách → dấu gập/duỗi. **Không** ADC→newton, **không** ADC→độ.
-4. **Ba chỉ số lấy từ lý thuyết tập chủ động có trợ lực** (`docs/02` §7.3): `Effort Index`, `GAP AROM−PROM`, `RAL` — mỗi chỉ số có đơn vị riêng và có bảng **những điều cấm suy diễn**.
+4. **Ba chỉ số lấy từ lý thuyết tập chủ động có trợ lực** (`docs/02` §7.3): `Effort Index`, `GAP = PROM − AROM` *(sửa 2026-10-12: nhãn cũ ghi ngược thành "AROM−PROM" — về mặt lâm sàng PROM luôn ≥ AROM nên phải lấy PROM trừ AROM mới ra số ≥ 0, khớp đúng công thức gốc ở `docs/02` §7.3/§11; xem ghi chú đầy đủ ở đó)*, `RAL` — mỗi chỉ số có đơn vị riêng và có bảng **những điều cấm suy diễn**.
 5. **Rig E4 (bắt buộc):** lóng ngón cơ khí + lò xo + puli tải treo (nấc tải hiệu chuẩn bằng lực kế) + **≥ 2 tốc độ kéo** để kiểm tra bộ lọc co cứng. Toàn bộ số liệu của đề cương nằm ở đây.
 6. **E5:** một servo **chỉ** điều khiển rig (không tiếp xúc người) để đóng vòng khép kín và đo độ trễ.
 7. **E6:** tầng sinh liều tập + gắn cờ phiên `UNRELIABLE` + báo cáo tuần cho kỹ thuật viên.

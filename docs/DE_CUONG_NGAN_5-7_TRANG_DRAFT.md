@@ -113,12 +113,17 @@ xác nhận cuối cùng trước khi bật nguồn đo chính thức.)*
 
 ### I. Tổng quan đề tài
 
-Thiết bị là một **găng tay đo, không phải găng tay tập**: khung cứng định vị từng lóng ngón, mặt
-trong vách gắn mảng cảm biến áp trở. Khi ngón ép vào vách nào, hệ thống ghi nhận lực và suy ra
-**hướng** chuyển động — không dùng IMU hay encoder. Từ chuỗi tín hiệu đó, đề tài trích ba chỉ số
-(Effort Index, GAP, RAL) để tách phần bệnh nhân **tự làm** khỏi phần **được trợ giúp**, kèm cờ cảnh
-báo khi một phiên đo không đủ tin cậy. Một cơ cấu trợ lực theo nhu cầu (AAN) chạy trên rig + phantom
-mô phỏng phần "hỗ trợ vận động" ở mức đo được, không tác động lên người.
+Đúng với tên đề tài, thiết bị **vừa đo vừa hỗ trợ vận động theo nhu cầu (Assist-as-Needed, AAN)** —
+không phải chỉ đo đơn thuần: khung cứng định vị từng lóng ngón, mặt trong vách gắn mảng cảm biến áp
+trở. Khi ngón ép vào vách nào, hệ thống ghi nhận lực và suy ra **hướng** chuyển động — không dùng IMU
+hay encoder. Từ chuỗi tín hiệu đó, đề tài trích ba chỉ số (Effort Index, GAP, RAL) để tách phần bệnh
+nhân **tự làm** khỏi phần **được trợ giúp**, kèm cờ cảnh báo khi một phiên đo không đủ tin cậy. Song
+song, một cơ cấu AAN (lò xo trợ giúp + servo, mục B.IV.2) tạo phần lực còn thiếu để bệnh nhân hoàn
+thành động tác — đây là phần "hỗ trợ vận động" thật sự của đề tài. **Giới hạn hiện tại phải nói rõ:**
+phần hỗ trợ lực mới được kiểm chứng trên **giàn cơ khí và mô hình tay giả (phantom)**; **chưa** tác
+động lực lên ngón tay người thật ở giai đoạn này — việc đó chờ phê duyệt đạo đức theo quy định cuộc
+thi.
+
 
 ### II. Bất cập và giới hạn của giải pháp hiện tại và giải pháp của đề tài
 
@@ -138,11 +143,13 @@ mô phỏng phần "hỗ trợ vận động" ở mức đo được, không tá
 
 **2.2. Giải pháp của đề tài**
 
-Từ những giới hạn đó, đề tài ghép ba thành phần đã có sẵn thành một phép đo **tự kiểm chứng được**:
-(1) khung cứng định hướng lực trên vách từng lóng ngón để phân biệt nỗ lực chủ động với co cứng ngay
-trong một phiên đo; (2) ba chỉ số định lượng (Effort Index, GAP, RAL) định nghĩa tường minh trên rig
-có tải đã biết; (3) cờ độ tin cậy theo từng phiên, được kiểm chứng bằng lỗi tiêm có chủ đích. Đóng
-góp không nằm ở một nguyên lý vật lý mới, mà ở cách tổ hợp và ở khung kiểm chứng công khai đi kèm.
+Từ những giới hạn đó, đề tài ghép bốn thành phần đã có sẵn thành một hệ **vừa đo vừa hỗ trợ, tự kiểm
+chứng được**: (1) khung cứng định hướng lực trên vách từng lóng ngón để phân biệt nỗ lực chủ động
+với co cứng ngay trong một phiên đo; (2) ba chỉ số định lượng (Effort Index, GAP, RAL) định nghĩa
+tường minh trên rig có tải đã biết; (3) cờ độ tin cậy theo từng phiên, được kiểm chứng bằng lỗi tiêm
+có chủ đích; (4) cơ cấu **trợ lực theo nhu cầu (AAN)** bù đúng phần lực còn thiếu để bệnh nhân hoàn
+thành động tác, hiện kiểm chứng trên rig + phantom. Đóng góp không nằm ở một nguyên lý vật lý mới, mà
+ở cách tổ hợp bốn thành phần này và ở khung kiểm chứng công khai đi kèm.
 
 ### III. Cơ sở lý thuyết
 
@@ -193,15 +200,18 @@ Bàn tay / phantom → khung cứng + mảng Velostat trên vách từng lóng n
    → ép vào vách → điện trở thay đổi → CD74HC4067 (chọn kênh)
    → INA333 (khuếch đại đo lường) → ADS1115/ESP32-S3 (ADC)
    → xử lý tại biên (RK3588, INT8): bù đồng pha, suy hướng gập/duỗi
-   → 3 chỉ số: Effort Index (EI) · GAP = AROM − PROM · RAL (mức trợ giúp cần)
+   → 3 chỉ số: Effort Index (EI) · GAP = PROM − AROM · RAL (mức trợ giúp cần)
    → cờ "dữ liệu không đáng tin" khi mất điều kiện hợp lệ
    → dashboard theo tuần cho kỹ thuật viên
 ```
 
 - **EI (Effort Index):** tỉ lệ tín hiệu lực khi ngón "cố mà chưa dịch chuyển" so với lúc nghỉ —
   không thứ nguyên (0–1), **không phải** newton hay %MVC.
-- **GAP = AROM − PROM:** chênh lệch tầm vận động chủ động trừ thụ động, đo trong cùng một phiên;
-  GAP tiến về 0 nghĩa là phần "được làm hộ" đang co lại.
+- **GAP = PROM − AROM:** tầm vận động **thụ động** (do kỹ thuật viên/rig kéo) trừ tầm vận động
+  **chủ động** (tự bệnh nhân làm được), đo trong cùng một phiên. Do PROM luôn **lớn hơn hoặc bằng**
+  AROM, GAP luôn **≥ 0**; GAP tiến về 0 nghĩa là phần "được làm hộ" đang co lại — khoảng cách giữa
+  cái khớp **có thể** làm và cái bệnh nhân **tự** làm được đang hẹp lại, đúng hướng kỹ thuật viên
+  muốn thấy trong một tuần tập.
 - **RAL (Required Assistance Level):** mức tải trợ giúp tối thiểu (đo bằng lực kế lò xo trên rig) để
   người bệnh hoàn thành được phần lớn số lần thử — là chỉ số cơ khí, tự chế tạo và tự kiểm chứng
   được, không cần cảm biến y tế chuẩn.
