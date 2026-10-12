@@ -421,5 +421,17 @@ Bản nộp `docs/DE_CUONG.pdf` dùng các định nghĩa **khác** §7.3 ở tr
 | EI | `median\|d\| / (median\|d\| + median\|d_rest\|)` ∈ (0,1] | trung vị biến thiên phổ vi sai **chuẩn hóa theo vận tốc góc** cùng phiên; công thức/cửa sổ/ngưỡng cố định trước khi đo (PDF §9.3) | **công thức tường minh** (PDF mới mô tả chữ) |
 | RAL | `min{ w : hoàn thành ≥ 80 % }`, gam + bậc tải | **khớp** §7.3 + giao thức cụ thể: 10 chu kỳ/nấc, 120 g → 0 g, `P_complete ≥ 80 %`, trên giàn + phantom (PDF §10.3) | chốt giao thức vào `protocols/07` |
 
-Quy tắc đọc file này tới khi `DEC-METRIC-002` được chốt: §7.3 là **định nghĩa nội bộ cũ** (vẫn hiệu lực cho `protocols/07` GATE A′/RAL đang nháp);
+> **⚠️ Lỗi nhãn phát hiện 2026-10-12 (owner chỉ ra qua chat) — cần sửa khi có dịp:** cả §7.3 ở trên
+> **và** bản nộp PDF đều **đồng ý** chiều đúng là `PROM − AROM` (thụ động trừ chủ động, luôn ≥ 0 vì
+> PROM ≥ AROM về mặt lâm sàng — người liệt/co cứng chỉ tự gập được một góc nhỏ hơn hoặc bằng góc mà
+> kỹ thuật viên bẻ thụ động được). Tuy vậy, hai tài liệu khác trong repo đã **ghi nhãn ngược** thành
+> `AROM − PROM` (ra số âm, vô nghĩa): `docs/05_De_Cuong_Dang_Ky_DRAFT.md` §5 mục 4 (đã sửa
+> 2026-10-12) và **bảng mục tiêu M1–M6 trong `docs/DE_CUONG_NOP_TRUONG.md` §5.1 (dòng `GAP = AROM −
+> PROM`, đã NỘP TRƯỜNG 2026-09-26)** — dòng đó mâu thuẫn với chính quy trình đo ở §4.2 cùng tài liệu
+> (`GAP = b − c` với `b` = PROM, `c` = AROM, tức đúng chiều `PROM − AROM`). **Quyết định xử lý:**
+> theo đúng quy ước "không hồi tố hồ sơ đã nộp" (như `DEC-TITLE-003`), file `docs/DE_CUONG_NOP_TRUONG.md`
+> **chưa bị sửa** — chỉ ghi nhận lỗi ở đây; sửa nhãn đó nếu/khi có lần nộp lại. Bản đề cương ngắn mới
+> (`docs/DE_CUONG_NGAN_5-7_TRANG_DRAFT.md`, chưa nộp) đã dùng đúng chiều `PROM − AROM` ngay từ đầu.
+>
+> Quy tắc đọc file này tới khi `DEC-METRIC-002` được chốt: §7.3 là **định nghĩa nội bộ cũ** (vẫn hiệu lực cho `protocols/07` GATE A′/RAL đang nháp);
 định nghĩa trong PDF là **định nghĩa đã nộp** (hiệu lực đối ngoại). Mọi văn bản mới sau `DEC-METRIC-002` phải dùng một bộ duy nhất.
