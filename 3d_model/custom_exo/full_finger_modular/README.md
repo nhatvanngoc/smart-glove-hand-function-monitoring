@@ -1,6 +1,6 @@
 # HỆ THỐNG KHUNG XƯƠNG NGOÀI 3 ĐỐT NGÓN TAY MODULE HÓA (FULL 3-PHALANX MODULAR EXOSKELETON)
 
-> **Dự án:** Nghiên cứu và phát triển găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ  
+> **Dự án:** Nghiên cứu và phát triển găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`)  
 > **Bộ phận:** Cơ cấu cơ khí nẹp ngón tay (Finger Exoskeleton Mechanical Subsystem)  
 > **Cơ cấu chính:** Bản lề in nguyên khối Print-in-Place + Khóa mỏ quạ đa nấc (5 nấc chỉnh chu vi ngón to/nhỏ: phi 18 - 24.5mm) + Khớp chạc đôi đa nấc (4 nấc định vị chiều dài ngón bù 0 - 6.0mm) + Đốt ngoài cùng hở đầu ngón (Open-tip).  
 > **Định dạng file:** STL (FDM 3D Printing), STEP (CAD Exchange), FCStd (FreeCAD 1.1 Source).

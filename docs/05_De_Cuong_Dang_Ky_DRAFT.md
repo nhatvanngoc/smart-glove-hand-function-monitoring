@@ -11,7 +11,7 @@
 
 ## 1. Tên đề tài
 
-**Tiếng Việt:** *Nghiên cứu và phát triển găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ*
+**Tiếng Việt (`DEC-TITLE-003`, 2026-10-11):** *Nghiên cứu và phát triển găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ*
 
 **Tiếng Anh:** *A low-cost smart glove with directional piezoresistive sensing for quantitative hand motor-function assessment and longitudinal monitoring in post-stroke rehabilitation*
 

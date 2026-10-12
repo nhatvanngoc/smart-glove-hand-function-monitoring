@@ -95,7 +95,7 @@ Bản điền đầu tiên (lượt 1) nằm trong **`research/reviews/2026-09-1
 | Hạ C | Đã có **sản phẩm** theo dõi bàn tay tại nhà theo tuần | ⚠️ một phần: nguyên mẫu học thuật từ 2006 + app đã chuẩn hóa MDC (2021); chưa thấy sản phẩm thương mại cho PHCN đột quỵ tại nhà | Chưa kích hoạt. Nhưng **cấm** mọi câu "hệ thống đầu tiên theo dõi tại nhà". |
 | Dừng | **Cả** A và C đều bị chiếm | ❌ | Tiếp tục. GATE A và GATE C vẫn là hai cổng quyết định. |
 
-**Bản novelty đề xuất sau lượt 1** (chờ `DEC-NOV-001` + lane R5):
+**Bản novelty — ĐÃ CHỐT bởi chủ dự án (`DEC-NOV-001`, 2026-10-11)**, bổ sung bằng chứng lượt 2 (`research/reviews/2026-10-11_prior_art_novelty_velostat_AAN.md`); lane R5 độc lập + tra IPC có hệ thống **vẫn còn nợ**:
 
 - **A** = cải tiến cấu hình + cách lập luận hướng khớp; bắt buộc trích `SRC-SIDEWALL-PIEZO-2015`, `SRC-INTERLOCKED-MICRODOME-2014`, `SRC-ARTGLOVE-2026`, `SRC-CN116954366A-ARRAYGLOVE`.
 - **B** = phát biểu lại: "dấu gập/duỗi suy ra **chỉ** từ mẫu kích hoạt trên vách có preload — không encoder, không IMU, không camera".
