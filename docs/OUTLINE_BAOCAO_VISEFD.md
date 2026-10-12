@@ -1,6 +1,6 @@
 # OUTLINE BÁO CÁO TOÀN VĂN — ViSEF
 
-## Đề tài: Nghiên cứu và phát triển găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ
+## Đề tài: Nghiên cứu và phát triển găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`)
 
 > **Học sinh:** Văn Ngọc Nhật Anh (11A2) + Nguyễn Duy Quân (12A1) — THPT Quảng Trị · GVHD: Lê Công Long
 > **Phiên bản:** v3.0 — 2026-09-29 (đồng bộ cấu hình đã nộp ADS1115+INA333; áp dụng checklist M-01..M-27; chốt đồ nghề + trần E2E; AI chuyển thành thực nghiệm đối chứng; bỏ mục tiêu 3D/clinical)

@@ -9,13 +9,15 @@
 
 ## 1. Tên đề tài
 
-**Tiếng Việt (chính thức):**
+> **Cập nhật `DEC-TITLE-003` (2026-10-11):** tên hiển thị đổi để phản ánh AAN là trụ cột thứ 4 (`DEC-SCOPE-006`). Hồ sơ đã nộp (`docs/DE_CUONG.pdf` 26/09, `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` 03/10) vẫn dùng tên cũ `DEC-TOPIC-019` cho tới khi nộp lại. **Lưu ý khi dùng tên mới:** cụm "hỗ trợ vận động" phải luôn đi kèm câu giới hạn phạm vi (chỉ trên giàn đo + mô hình tay giả, không tác động lực lên người thật) — không được đứng một mình.
 
-> **Nghiên cứu và phát triển găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ**
+**Tiếng Việt (chính thức, từ `DEC-TITLE-003`):**
+
+> **Nghiên cứu và phát triển găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ**
 
 **Tiếng Anh (dùng khi nộp ISEF/ViSEF bản tiếng Anh):**
 
-> A low-cost smart glove with directional piezoresistive sensing for quantitative hand motor-function assessment and longitudinal monitoring in post-stroke rehabilitation.
+> A glove with directional piezoresistive sensing for quantitative hand motor-function assessment, longitudinal monitoring, and assist-as-needed movement support (bench/phantom-verified) in post-stroke rehabilitation.
 
 **Pitch 1 câu (nói với giám khảo):**
 
@@ -48,6 +50,8 @@
 ---
 
 ## 4. Điểm mới (nói trung thực — theo đúng mức ViSEF)
+
+> **`DEC-NOV-001` — ĐÃ CHỐT 2026-10-11 (chủ dự án):** bảng dưới đây là mức novelty **chính thức** của đề tài — tầng **tổ hợp + phương pháp lập luận**, KHÔNG phải tầng nguyên lý vật lý/cơ khí. Lý do chủ dự án nêu: *"nếu mới hoàn toàn thì học sinh THPT sao làm được"* — đây đúng là chuẩn novelty mà ISEF/ViSEF chấp nhận (xem `CLM-NOV-006`/`CLM-NOV-007`, ví dụ ROBO065T giải Tư ISEF 2025 dùng 100% công nghệ có sẵn). Được phép dùng câu *"first to integrate A+B cho [nhóm người dùng cụ thể]"* khi kèm số liệu tự đo. **Cảnh báo bắt buộc giữ:** quyết định này chốt ở mức **phán đoán/khung**, không phải ở mức "đã rà soát prior art đầy đủ" — 3 việc còn nợ (đọc toàn văn 5 nguồn hệ trọng, tra bằng sáng chế theo IPC có hệ thống qua Espacenet/WIPO, lane R5 độc lập) **vẫn phải làm xong trước khi nộp hồ sơ chính thức** (xem `docs/03` §7, `research/context/DECISION_LOG.md` DEC-NOV-001).
 
 | # | Thành phần | Mức mới | Ghi chú |
 |---|---|---|---|

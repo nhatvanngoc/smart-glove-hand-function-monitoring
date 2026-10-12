@@ -97,3 +97,25 @@ Toàn bộ mô hình được tạo tự động bằng mã Python FreeCAD có k
   - `full_finger_assembly_flexed.stl` & `.step`
   - `full_finger_modular.FCStd`
   - `full_finger_preview.png`
+
+---
+
+## 4. Nhánh khám phá song song: Cơ cấu đóng/mở nẹp quanh một đốt ngón (chưa tích hợp)
+
+Các mục 1–3 ở trên giải quyết bài toán **bản lề liên-đốt** (nối Đốt 1–2–3 với nhau). Một bài toán
+**khác, độc lập**, là: với mỗi đốt riêng lẻ, dùng cơ cấu nào để **đóng/mở vỏ nẹp quanh ngón tay**
+sao cho bệnh nhân (có thể yếu/run tay) tự đeo và tháo được bằng một tay?
+
+Chủ dự án đã tự thiết kế và in thử thực tế **9 phương án cơ cấu khác nhau** cho bài toán này
+(Mech 1 → Mech 9), loại dần 8 phương án đầu vì các lý do thực tế quan sát trên vật in (lực kẹp yếu,
+khó thao tác một tay, chi tiết rời dễ rơi, mỏi/nứt vật liệu khi phải bẻ cong nhựa để mở...). Phương
+án hiện tại triển vọng nhất (Mech 9 — bản lề kép + quai gông chữ U, đóng/mở hoàn toàn bằng khớp
+xoay) **chưa có file CAD trong repo và chưa được chốt chính thức**.
+
+Toàn bộ bảng so sánh, lý do loại từng phương án, và chi tiết 2 lỗi kỹ thuật đã xử lý khi dựng
+Mech 9: xem [`3d_model/custom_exo/fixation_mechanisms_benchmark/README.md`](../3d_model/custom_exo/fixation_mechanisms_benchmark/README.md)
+(quyết định liên quan: `DEC-MECH-005`, `DEC-MECH-006`).
+
+**Quan hệ với cơ cấu ở mục 2.5 (Khớp Bấm Ngàm Bên Hông) ở trên vẫn là câu hỏi mở** — chưa xác nhận
+được liệu Mech 9 sẽ thay thế/bổ sung cho cơ cấu đó, hay đây là hai nhánh thiết kế song song chưa
+hợp nhất. Xem checklist "Open decisions" cuối `research/context/DECISION_LOG.md`.

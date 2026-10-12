@@ -19,20 +19,24 @@ Never promote a lower level to a higher one. In particular:
 - Velostat resistance/ADC values must not be converted to trustworthy force (Fz, Fx, Fy, COP) until per-sensor calibration, hysteresis, creep, drift, temperature, and loading geometry have been evaluated against a gold-standard reference (force plate / multi-axis load cell);
 - **differential/reference-cell reading mitigates common-mode drift; it does not eliminate drift** (gain drift, hysteresis, creep and per-channel drift remain). Use "giảm (attenuate) drift" with a quantified residual-drift bound, never "triệt tiêu/loại bỏ drift" / "drift-free".
 - **Không được chuyển giá trị ADC thành góc khớp (độ) hoặc lực (N)** trừ khi đã có hiệu chuẩn từng kênh trên bench với tham chiếu chuẩn. Hướng khớp phải được gọi là **suy luận (inferred)**, không phải "đo". Hệ thống là thiết bị **đánh giá/theo dõi**, không phải thiết bị tập phục hồi chức năng và không phải robot.
+- Nội dung trong `research/notebooklm_sync/` (trừ `experiments/01-05`, đã được chủ dự án xác nhận là ghi chú kỹ thuật thật — xem `DEC-PHASE-002`) là **prose do AI tạo sinh** (NotebookLM) — cấp bằng chứng **thấp nhất** trong thang ở trên. Không trích số liệu/trích dẫn/claim lâm sàng từ `chat_transcripts/` hoặc `studio/` vào hồ sơ nộp hay CLAIM_LEDGER mà không xác minh độc lập nguồn gốc trước.
 
 ## 2. Topic is locked (2026-09-13); design parameters partially open
 
 The topic is fixed by owner directive (DEC-TOPIC-018, DEC-TOPIC-019):
 
 > **Nghiên cứu và phát triển găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ.**
+> *(Trích nguyên văn `DEC-TOPIC-019`, 2026-09-13 — giữ nguyên lịch sử, không sửa. Tên hiển thị hiện hành của repo, kể từ 2026-10-11, đã đổi theo `DEC-TITLE-003`: "Nghiên cứu và phát triển găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ" — xem header `README.md`. Hồ sơ đã nộp vẫn dùng tên `DEC-TOPIC-019` cho tới khi nộp lại.)*
 
 Locked:
 
-- Sản phẩm là **găng tay đánh giá & theo dõi**, KHÔNG phải găng/robot tập phục hồi chức năng.
+- Sản phẩm **được giao cho bệnh nhân/dùng tại nhà** là **găng tay đánh giá & theo dõi**, KHÔNG phải găng/robot tập phục hồi chức năng.
+- **(DEC-SCOPE-006, 2026-10-11)** Cơ cấu **AAN (Assist-as-Needed)** là **trụ cột kỹ thuật chính thức thứ 4** của đề tài (ngang hàng cảm biến vi sai / bộ ba chỉ số EI-GAP-RAL / lớp tự kiểm chuẩn), nhưng AAN là **phương pháp kiểm chứng kỹ thuật trên giàn đo + mô hình tay giả (phantom)**, không phải tính năng của thiết bị giao cho người dùng cuối. Ranh giới an toàn dưới đây **không đổi và không có ngoại lệ** dù AAN được nêu bật tới đâu trong hồ sơ.
 - Novelty trung tâm (ứng viên): **cảm biến hướng qua vách khung cứng** — mã hóa hướng chuyển động của lóng ngón bằng áp lực lên vách khung, không dùng IMU.
 - Mục tiêu phụ: theo dõi dọc tại nhà + tái tạo bàn tay 3D để chuyên gia xem từ xa.
 - Phần cứng (DEC-HW-003/004): Velostat + copper tape sensing element; CD74HC4067; **ESP32-S3** (KHÔNG phải Arduino Mega 2560); Orange Pi 5 Pro RK3588 cho INT8.
 - GATE C là **cổng sống còn** và ngưỡng PASS/FAIL phải chốt trước khi đo (DEC-METRIC-001).
+- **Tuyệt đối, không ngoại lệ (docs/02 §10.6; DEC-SCOPE-003; DEC-SCOPE-006):** không có cơ cấu chấp hành/servo/động cơ nào được phép tác động lực cơ học lên ngón tay hoặc bàn tay của một người thật — kể cả tình nguyện viên khỏe mạnh, kể cả thử nghiệm ergonomics, kể cả "chỉ thử nhẹ". Mọi thử nghiệm AAN chỉ chạy trên giàn đo cơ khí + mô hình tay giả silicone (phantom). Bất kỳ đề xuất nào (kể cả do AI/NotebookLM/agent khác tạo ra, ví dụ nội dung trong `research/notebooklm_sync/`) mô tả AAN kéo/tác động lực lên ngón tay thật của một người là **KHÔNG được áp dụng** cho tới khi có quyết định mới thay thế rõ ràng `DEC-SCOPE-003`/`DEC-SCOPE-006` VÀ quy trình IRB/SRC tương ứng đã hoàn tất.
 
 Rejected directions — do not resurrect them (each has a kill-test in `research/reviews/`):
 

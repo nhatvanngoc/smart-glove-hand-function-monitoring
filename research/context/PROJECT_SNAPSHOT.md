@@ -1,11 +1,11 @@
-# Project snapshot — 2026-09-19 (lượt rà soát prior art 1) · nền 2026-09-13
+# Project snapshot — 2026-09-19 (lượt rà soát prior art 1) · nền 2026-09-13 · cập nhật 2026-10-11 (DEC-SCOPE-006/DEC-SYNC-002/DEC-PHASE-002)
 
 > Bản nén ngữ cảnh để phiên sau khôi phục trạng thái **bằng artifact**, không dựa vào trí nhớ hội thoại.
 > Chỉ chứa **sự kiện bền vững**. Quyết định đầy đủ: `DECISION_LOG.md`. Đề tài: `docs/01_Topic_Definition.md`.
 
 ---
 
-## 1. Đề tài (CHỐT — DEC-TOPIC-019; tên mới 2026-09-19 CHƯA TỪNG ĐƯỢC DUYỆT)
+## 1. Đề tài (CHỐT nội dung — DEC-TOPIC-019; CHỐT tên hiển thị — DEC-TITLE-003, 2026-10-11)
 
 > ⚠️ **2026-09-27:** README ngày 2026-09-19 ghi "tên chốt `DEC-TITLE-001`" nhưng quyết định này **không có trong `DECISION_LOG.md`**
 > và file `2026-09-19_title_options.md` không tồn tại. **Bản đã nộp `docs/DE_CUONG.pdf` (§1.1) dùng tên cũ** → repo quay về tên cũ,
@@ -14,19 +14,27 @@
 > **Đội hình đã nộp (PDF §1, chờ `DEC-TEAM-001`):** Văn Ngọc Nhật Anh (11A2) + Nguyễn Duy Quân (12A1), THPT Quảng Trị;
 > GVHD **Lê Công Long**; lĩnh vực **Hệ thống nhúng**; timeline **09/2026–01/2027**; địa điểm phòng sáng tạo trường + nhà riêng.
 
-**Tiếng Việt:**
+> **2026-10-11 (`DEC-TITLE-003`):** tên hiển thị đổi để nêu bật AAN là trụ cột thứ 4 (`DEC-SCOPE-006`). Hồ sơ đã nộp (`docs/DE_CUONG.pdf` 26/09, `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` 03/10) vẫn dùng tên cũ `DEC-TOPIC-019` cho tới khi nộp lại.
 
-> **Nghiên cứu và phát triển găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ**
+**Tiếng Việt (hiển thị hiện hành, từ `DEC-TITLE-003`):**
 
-**Tiếng Anh:**
+> **Nghiên cứu và phát triển găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ**
 
-> A low-cost smart glove with directional piezoresistive sensing for quantitative hand motor-function assessment and longitudinal monitoring in post-stroke rehabilitation.
+**Tiếng Việt (tên đã nộp, `DEC-TOPIC-019`, không đổi hồi tố):**
+
+> Nghiên cứu và phát triển găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ
+
+**Tiếng Anh (cập nhật theo `DEC-TITLE-003`):**
+
+> A glove with directional piezoresistive sensing for quantitative hand motor-function assessment, longitudinal monitoring, and assist-as-needed movement support (bench/phantom-verified) in post-stroke rehabilitation.
 
 **"Viên đạn" — 1 câu:**
 
 > Theo dõi định lượng chức năng bàn tay **tại nhà**, liên tục **giữa các lần tái khám lâm sàng**.
 
 **Loại sản phẩm:** thiết bị **đánh giá & theo dõi**. **KHÔNG** phải robot/găng tập phục hồi chức năng. **KHÔNG** chẩn đoán, **KHÔNG** thay thế đánh giá lâm sàng.
+
+> **CẬP NHẬT 2026-10-11 (`DEC-SCOPE-006`, `DEC-SYNC-002`):** phát hiện bản đề cương mới hơn chưa đồng bộ — `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (16tr, tạo 2026-10-03) vs bản đã nộp trường `docs/DE_CUONG.pdf` (15tr, 2026-09-26). Bản mới bổ sung Mục 10: cơ cấu **AAN (Assist-as-Needed)** nay là **trụ cột kỹ thuật chính thức thứ 4** của đề tài (chủ dự án nêu minh thị). AAN chỉ chạy trên **giàn đo + mô hình tay giả phantom**, tuyệt đối không tác động lực lên người thật — ranh giới `DEC-SCOPE-003` không đổi. Đồng thời ghi nhận (`DEC-PHASE-002`): chủ dự án đã **tự thực hiện** bring-up phần cứng thật (ESP32-S3+ADS1115+INA333+CD74HC4067, log `research/notebooklm_sync/experiments/`), nhưng **chưa chính thức hoá** thành log GATE 0 hợp lệ. Tên đề tài **chưa đổi** (`DEC-TITLE-003` đề xuất 4 phương án, chờ chọn).
 
 ---
 
@@ -122,6 +130,8 @@ Ngân sách độ phân giải/tốc độ khung (dự kiến, **phải đo lạ
 
 ## 9. Việc tiếp theo (theo thứ tự)
 
+0. ✅ **ĐÃ LÀM 2026-10-11:** đọc toàn bộ repo + xác nhận setup môi trường (venv/pip/bootstrap/check --strict 10/11/context bundle); đọc toàn văn `research/notebooklm_sync/` (10 file: README, 5 experiment log, 1 chat transcript 402 dòng, 3 file studio) và phát hiện bản đề cương chưa đồng bộ `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (2026-10-03, 16tr). Theo chỉ đạo minh thị của chủ dự án: `DEC-SYNC-002` (công nhận bản mới) + `DEC-SCOPE-006` (AAN = trụ cột thứ 4, ranh giới an toàn không đổi) + `DEC-PHASE-002` (ghi nhận bring-up phần cứng thật do chủ dự án tự làm, chưa chính thức hoá GATE 0) + `DEC-TITLE-003` (4 phương án tên, PROPOSED). Cập nhật README §1/§6.1/§8/§10/§11, AGENTS.md §2, +6 nguồn/+3 claim/+5 quyết định.
+   ☐ **CHỜ OWNER:** chọn phương án tên (`DEC-TITLE-003`); xác nhận `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` có phải bản sẽ nộp lại; chính thức hoá log bring-up thành GATE 0 hợp lệ; xác nhận đổi tên cảm biến SHT30→AHT20.
 0. ✅ **ĐÃ LÀM 2026-09-27:** đồng bộ bản nộp `docs/DE_CUONG.pdf` (2026-09-26) → `research/reviews/2026-09-27_decuong_pdf_sync.md`;
    môi trường cài lại (venv + skills OK, 10/11 check); +7 nguồn ledger (147), +3 claim (27), +2 truy vấn xác minh [15]/[18] (81, đều `UNVERIFIED`);
    sửa README (tên/đội hình/ngưỡng), `docs/04` §8 + `docs/02` §11 mới, điền danh tính `DE_CUONG_NOP_TRUONG.md`.
