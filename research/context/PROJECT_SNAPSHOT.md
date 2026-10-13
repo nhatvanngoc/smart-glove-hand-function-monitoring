@@ -3,7 +3,7 @@
 > Bản nén ngữ cảnh để phiên sau khôi phục trạng thái **bằng artifact**, không dựa vào trí nhớ hội thoại.
 > Chỉ chứa **sự kiện bền vững**. Quyết định đầy đủ: `DECISION_LOG.md`. Đề tài: `docs/01_Topic_Definition.md`.
 
-> **2026-10-13 (`DEC-ARCH-001`, `DEC-GATE-002`):** Xác lập kiến trúc tích hợp sâu: (1) AAN + Velostat là trụ cột cốt lõi không thể tách rời theo nguyên lý Hebbian đóng kín vòng phản hồi cảm giác-vận động. (2) Reinforcement Learning (RL) giải quyết 2 bài toán chuyên sâu: Bù trừ phi tuyến động (Hysteresis/Creep/Drift) cho Velostat dạng MDP, và học chính sách trợ lực AAN thích ứng chống ỷ lại (Anti-Slacking Actor-Critic). (3) Orange Pi 5 Pro (RK3588, NPU 6 TOPS) làm Trạm Y Sinh Biên (Edge Medical Intelligence Station), chạy mô hình `.rknn` INT8 thời gian thực (trễ < 20 ms), xử lý thị giác đối chứng ArUco và bảo mật dữ liệu y tế độc lập. Chi tiết: `research/protocols/06_glove_hand_GATE_experiment.md` §0/§4; `research/protocols/07_ral_phantom_and_ktv_interview.md` §3b.
+> **2026-10-13 (`DEC-ARCH-001`, `DEC-GATE-003`, `DEC-GATE-004`, `DEC-GATE-005`):** Xác lập kiến trúc tích hợp sâu & tinh gọn hệ thống GATE: (1) AAN + Velostat là trụ cột cốt lõi không thể tách rời theo nguyên lý Hebbian đóng kín vòng phản hồi cảm giác-vận động. (2) Reinforcement Learning (RL) giải quyết 2 bài toán chuyên sâu: Bù trừ phi tuyến động (Hysteresis/Creep/Drift) cho Velostat dạng MDP (RL Inversion), và học chính sách trợ lực AAN thích ứng chống ỷ lại (Anti-Slacking Actor-Critic). (3) Orange Pi 5 Pro (RK3588, NPU 6 TOPS) làm Trạm Y Sinh Biên (Edge Medical Intelligence Station), chạy mô hình `.rknn` INT8 thời gian thực (trễ $\le 20\text{ ms}$) và bảo mật dữ liệu y tế độc lập. (4) **Zero-Camera Policy (`DEC-GATE-005`):** Loại bỏ hoàn toàn camera và ArUco, 100% xử lý bằng cảm biến nội tại. (5) Loại bỏ GATE D, E, AAN-3 (`DEC-GATE-003`), hủy GATE B và gộp vào GATE A (`DEC-GATE-004`). Hệ GATE chuẩn chốt đúng 6 cổng: `GATE 0 → GATE A → GATE C⭐` (Nhánh Đo); `GATE AAN-1 → GATE AAN-2⭐` (Nhánh AAN); `GATE EDGE` (Trạm biên AI). Chi tiết: `research/protocols/06_glove_hand_GATE_experiment.md`.
 
 ---
 
@@ -141,33 +141,16 @@ Ngân sách độ phân giải/tốc độ khung (dự kiến, **phải đo lạ
 
 ## 9. Việc tiếp theo (theo thứ tự)
 
--2. ✅ **ĐÃ LÀM 2026-10-13 (phiên này, `DEC-GATE-002`):** tái cấu trúc hệ GATE thành 2 nhánh song
-   song (Đo: 0→A→B→C⭐ không đổi; Trợ lực-AAN: AAN-1→AAN-2⭐→AAN-3 mới) trong `06_glove_hand_GATE_
-   experiment.md` + `07_ral_phantom_and_ktv_interview.md`; tạm hoãn GATE F (INT8/NPU), thay bằng
-   "GATE EDGE — đang chọn" với 2 ứng viên (camera+ArUco 2 kênh ưu tiên cao nhất / INT8 phân loại
-   hướng phụ); tách thuật toán multi-armed bandit rút ngắn lượt thử dò RAL ra khỏi câu chuyện Orange
-   Pi — nay là M9, một đóng góp phương pháp độc lập cho GATE AAN-2, không gắn phần cứng cụ thể. Đã
-   cập nhật `docs/DE_CUONG_NOP_BAN_KHKT_2026-10-18.md` (bảng M1–M9, sơ đồ khối, kế hoạch thời gian),
-   `DECISION_LOG.md` (+`DEC-GATE-002`), file này (§5/§6). Đã xuất lại .docx/.pdf và re-upload Drive
-   (`tai_lieu_KHKT_2027`): docx id mới `1Zs-nSopzDPQ9mz-iqL006H55wJehP3Oz`, pdf id mới
-   `1-nQsGN-5u2ruOhYnT8lLLiYcvzunBGiC` — 2 bản cũ (docx `1gBNoJJSPfkl8W5Sj5n7m2SnKMKZcs9pa`, pdf
-   `1E3hhbf_QstPE9kIHQJ18zNGbfRB2DBda`, và một cặp trung gian tạo rồi trash cùng phiên) **đã bị
-   trash**, không còn là bản hiện hành.
-   ☐ **CHỜ OWNER — CHƯA XONG, liệt kê đủ để không lặp lại/quên ở phiên sau:**
-   1. `docs/DE_CUONG_NOP_BAN_KHKT_2026-10-18.md` vẫn tự ghi trạng thái **"DỰ THẢO — chưa chốt, chờ
-      chủ dự án duyệt trước khi nộp"** — owner **chưa xác nhận lần cuối** để nộp thật (hạn 17h
-      18/10/2026, còn ít ngày tính từ lúc soạn). Cũng chưa có xác nhận link nộp chính thức từ Ban
-      KHKT (chỉ mới có ảnh chụp thông báo).
-   2. Ngưỡng số của nhánh AAN hoàn toàn **CHƯA CHỐT**: GATE AAN-2 (participation ratio không được
-      giảm quá X% trong ≥Y% số phiên — X,Y để trống) và GATE AAN-3 (dung sai thực tế quanh
-      `F_max≤5N`/`t_delay≤1,2s`, tiêu chí fail-safe cụ thể) đều đang chờ owner — agent cố ý không tự
-      điền theo `DEC-METRIC-001`.
-   3. **GATE EDGE (nhiệm vụ Orange Pi 5 Pro) chưa chốt ứng viên cuối cùng** — mới dừng ở mức phân
-      tích + khuyến nghị (ưu tiên camera+ArUco). Khi chốt, phải viết lại §4 của `06_...` thành tiêu
-      chí PASS/FAIL thật, không còn là "đang chọn".
-   4. **M9 (bandit cho GATE AAN-2) mới là PROPOSED**, chưa có quyết định owner có nhận hướng này
-      không; nếu nhận, còn phải thiết kế phép so sánh công bằng (bandit vs quét cố định) và chốt
-      ngưỡng % cải thiện tối thiểu trước khi chạy — chưa làm.
+-2. ✅ **ĐÃ LÀM 2026-10-13 (phiên này, `DEC-GATE-003`, `DEC-GATE-004`, `DEC-GATE-005`):** 
+   - Tinh gọn dứt khoát hệ thống cổng kiểm chứng thành đúng **6 GATE**:
+     * Nhánh Đo: `GATE 0 (M1) → GATE A (M2) → GATE C⭐ (M3)`
+     * Nhánh Trợ lực: `GATE AAN-1 (M4) → GATE AAN-2⭐ (M5)`
+     * Trạm Y Sinh Biên: `GATE EDGE (M6)`
+   - Loại bỏ GATE D, GATE E, GATE AAN-3 vì thẩm quyền kiểm định y tế lâm sàng thuộc phòng kiểm chuẩn độc lập, học sinh không tự cấp chứng nhận (`DEC-GATE-003`).
+   - Hủy bỏ GATE B (tái tạo góc 3D do phi thực tế), gộp toàn bộ vào GATE A mới (nhận diện hướng gập/duỗi vi sai $\ge 90\%$ & bản đồ kích hoạt nỗ lực động $\ge 85\%$) (`DEC-GATE-004`).
+   - Chốt Hướng 1: M1/GATE 0 làm baseline cơ lý thô trên băng thử, M6/GATE EDGE chạy RL Inversion trên Orange Pi 5 Pro để bù trừ trôi/trễ thời gian thực.
+   - Chốt **Zero-Camera Policy**: Không dùng camera ngoài hay marker ArUco; 100% cảm biến nội tại (`DEC-GATE-005`).
+   - Đã đồng bộ toàn bộ vào `research/context/DECISION_LOG.md`, `research/protocols/06_glove_hand_GATE_experiment.md`, `docs/DE_CUONG_NOP_BAN_KHKT_2026-10-18.md` và git (`origin/main`).
    5. **Nợ đồng bộ xuyên repo (phát hiện khi rà soát, chưa sửa):** nhiều file khác vẫn còn nhắc tên
       GATE cũ, không phải lỗi số liệu — chỉ là tên gọi/cấu trúc GATE chưa theo kịp `DEC-GATE-002`:
       - còn nhắc **"GATE F"** kiểu cũ (coi là cổng cam kết cứng, không phải "GATE EDGE — đang chọn"):
