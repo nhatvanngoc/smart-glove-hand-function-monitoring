@@ -1,9 +1,12 @@
-# Project snapshot — 2026-09-19 (lượt rà soát prior art 1) · nền 2026-09-13 · cập nhật 2026-10-11 (DEC-SCOPE-006/DEC-SYNC-002/DEC-PHASE-002)
+# Project snapshot — 2026-09-19 (lượt rà soát prior art 1) · nền 2026-09-13 · cập nhật 2026-10-13 (DEC-GATE-002, hai nhánh GATE + tách RL khỏi nhiệm vụ Orange Pi)
 
 > Bản nén ngữ cảnh để phiên sau khôi phục trạng thái **bằng artifact**, không dựa vào trí nhớ hội thoại.
 > Chỉ chứa **sự kiện bền vững**. Quyết định đầy đủ: `DECISION_LOG.md`. Đề tài: `docs/01_Topic_Definition.md`.
 
+> **2026-10-13 (`DEC-GATE-002`):** hệ GATE tái cấu trúc thành **hai nhánh song song, mỗi nhánh một cổng sống còn ⭐** — Đo (GATE 0→A→B→C⭐, không đổi) và Trợ lực-AAN (GATE AAN-1→AAN-2⭐→AAN-3, mới). **GATE F (INT8/NPU) tạm hoãn**, thay bằng "GATE EDGE — đang chọn" (ứng viên ưu tiên: camera+ArUco nâng thành kênh tự kiểm tra 2 chiều độc lập cho GATE E). Thuật toán multi-armed bandit để rút ngắn số lượt thử dò RAL (GATE AAN-2) **đã tách hẳn khỏi câu chuyện Orange Pi 5 Pro** — đây là một quyết định về phương pháp thí nghiệm, không phải nhiệm vụ phần cứng; không cần NPU, không cần gắn với bất kỳ thiết bị cụ thể nào. Chi tiết: `research/protocols/06_glove_hand_GATE_experiment.md` §0/§4; `research/protocols/07_ral_phantom_and_ktv_interview.md` §2-3b. Tất cả ngưỡng số của nhánh AAN và của GATE EDGE **CHƯA CHỐT** (`DEC-METRIC-001`).
+
 ---
+
 
 ## 1. Đề tài (CHỐT nội dung — DEC-TOPIC-019; CHỐT tên hiển thị — DEC-TITLE-003, 2026-10-11)
 
@@ -79,7 +82,8 @@ Cấu hình 1      : 12 kênh (11 đo + 1 tham chiếu) — 1× CD74HC4067 — b
 Cấu hình 2      : 24 kênh, mỗi khớp 1 CẶP đối xứng → đọc vi sai — 2× CD74HC4067 — GATE A/B/C/D/E
 MCU             : ESP32-S3 (ADC1 12-bit + trung bình N mẫu, BLE 5, logic 3.3 V)
                   [thay Arduino Mega 2560 — DEC-HW-003]
-Edge            : Orange Pi 5 Pro RK3588 (NPU ~6 TOPS), mô hình INT8 (RKNN)
+Edge            : Orange Pi 5 Pro RK3588 (NPU ~6 TOPS) — nhiệm vụ cụ thể CHƯA CHỐT (DEC-GATE-002,
+                  GATE EDGE); ứng viên ưu tiên = camera+ArUco làm kênh tự kiểm tra 2 chiều cho GATE E
 Tham chiếu bench: load cell + HX711  (GATE A trở đi; GATE 0 dùng **khối lượng chuẩn**, F = m·g)
 Sở hữu   (2026-09-19, DEC-RESOURCE-001): Velostat + copper tape + ESP32-S3 + Orange Pi 5 Pro = ĐÃ CÓ;
            còn thiếu cho GATE 0: CD74HC4067?, DMM 4 dây?, khối lượng chuẩn, in 3D  → kiểm kê: research/context/EQUIPMENT_AND_ACCESS.md
@@ -87,17 +91,24 @@ Sở hữu   (2026-09-19, DEC-RESOURCE-001): Velostat + copper tape + ESP32-S3 +
 
 Ngân sách độ phân giải/tốc độ khung (dự kiến, **phải đo lại**): ~11 bit hiệu dụng sau trung bình 16 mẫu; tốc độ khung mục tiêu 45–100 Hz; đủ cho động tác 0,5–2 Hz. Chi tiết: `docs/04_Hardware_Architecture.md`.
 
-## 6. GATE — tiêu chí sống còn
+## 6. GATE — tiêu chí sống còn (tái cấu trúc 2026-10-13, `DEC-GATE-002`)
 
-`research/protocols/06_glove_hand_GATE_experiment.md`. Tóm:
+`research/protocols/06_glove_hand_GATE_experiment.md` + `07_ral_phantom_and_ktv_interview.md`. Hai nhánh song song:
 
+**Nhánh Đo (không đổi):**
 - **GATE 0** lặp lại (CV ≤ 5% trong phiên, ICC ≥ 0,75 giữa phiên)
 - **GATE A** phân biệt hướng (4 hướng ≥ 85%; cặp đối lập ≥ 90%)
 - **GATE B** tái tạo 3D (MAE ≤ 15°, r ≥ 0,8)
-- **GATE C ⭐ SỐNG CÒN** Δ giữa các mức chức năng ≥ 2σ_noise; Cohen's d ≥ 0,8; MDC < mức chênh liền kề
-- **GATE D** không báo động giả (≤ 10% số phiên qua ≥ 10 ngày)
-- **GATE E** tự phát hiện lỗi (≥ 90%, báo động giả ≤ 5%)
-- **GATE F** INT8 trên NPU (≤ 50 ms, mất mát ≤ 2%)
+- **GATE C ⭐ SỐNG CÒN** Δ giữa các mức chức năng ≥ 2σ_noise; Cohen's d ≥ 0,8; MDC < mức chênh liền kề — **fail ⇒ dừng cả đề tài**
+
+**Nhánh Trợ lực - AAN (mới, ngang hàng, ngưỡng CHƯA CHỐT):**
+- **GATE AAN-1** (đổi tên từ "GATE A′") — phát hiện nỗ lực trước khi ngón di chuyển (AUC≥0,85/báo nhầm≤10%/trễ≤300ms, ĐỀ XUẤT)
+- **GATE AAN-2 ⭐** (đổi tên + nâng cấp từ "GATE RAL") — cổng sống còn của nhánh AAN: đường cong tải-hoàn thành ổn định (ICC≥0,75) **+** participation ratio không xói mòn về 0 (chống ỷ lại) — **fail ⇒ không dừng đề tài, chỉ hạ nhãn AAN xuống "trợ lực cố định phân bậc"**
+- **GATE AAN-3** (mới) — chính thức hoá an toàn chấp hành lực: `F_assist` đúng công thức trong `F_max≤5N`/`t_delay≤1,2s`, fail-safe khi lỗi cảm biến (liên kết GATE E)
+
+**Dùng chung:** GATE D (không báo động giả, ≤10%/≥10 ngày), GATE E (tự phát hiện lỗi ≥90%/báo nhầm≤5%).
+
+**GATE F (INT8/NPU) TẠM HOÃN** → thay bằng **"GATE EDGE — đang chọn"**: ứng viên ưu tiên cao nhất là nâng camera+ArUco (đã test OK) thành kênh tự kiểm tra 2 chiều độc lập chạy liên tục cho GATE E; ứng viên phụ là INT8 phân loại hướng gốc. Thuật toán bandit rút ngắn lượt thử dò RAL (cho GATE AAN-2) **đã tách khỏi quyết định này** — là phương pháp thí nghiệm độc lập với phần cứng, không cần NPU.
 
 **Ngưỡng phải chốt trước khi đo (DEC-METRIC-001).** GATE C fail ⇒ dừng đề tài, báo cáo trung thực.
 
@@ -129,6 +140,50 @@ Ngân sách độ phân giải/tốc độ khung (dự kiến, **phải đo lạ
 - ❌ Điền số `[X]` vào A.3 hoặc mục C khi chưa có log đo thật
 
 ## 9. Việc tiếp theo (theo thứ tự)
+
+-2. ✅ **ĐÃ LÀM 2026-10-13 (phiên này, `DEC-GATE-002`):** tái cấu trúc hệ GATE thành 2 nhánh song
+   song (Đo: 0→A→B→C⭐ không đổi; Trợ lực-AAN: AAN-1→AAN-2⭐→AAN-3 mới) trong `06_glove_hand_GATE_
+   experiment.md` + `07_ral_phantom_and_ktv_interview.md`; tạm hoãn GATE F (INT8/NPU), thay bằng
+   "GATE EDGE — đang chọn" với 2 ứng viên (camera+ArUco 2 kênh ưu tiên cao nhất / INT8 phân loại
+   hướng phụ); tách thuật toán multi-armed bandit rút ngắn lượt thử dò RAL ra khỏi câu chuyện Orange
+   Pi — nay là M9, một đóng góp phương pháp độc lập cho GATE AAN-2, không gắn phần cứng cụ thể. Đã
+   cập nhật `docs/DE_CUONG_NOP_BAN_KHKT_2026-10-18.md` (bảng M1–M9, sơ đồ khối, kế hoạch thời gian),
+   `DECISION_LOG.md` (+`DEC-GATE-002`), file này (§5/§6). Đã xuất lại .docx/.pdf và re-upload Drive
+   (`tai_lieu_KHKT_2027`): docx id mới `1Zs-nSopzDPQ9mz-iqL006H55wJehP3Oz`, pdf id mới
+   `1-nQsGN-5u2ruOhYnT8lLLiYcvzunBGiC` — 2 bản cũ (docx `1gBNoJJSPfkl8W5Sj5n7m2SnKMKZcs9pa`, pdf
+   `1E3hhbf_QstPE9kIHQJ18zNGbfRB2DBda`, và một cặp trung gian tạo rồi trash cùng phiên) **đã bị
+   trash**, không còn là bản hiện hành.
+   ☐ **CHỜ OWNER — CHƯA XONG, liệt kê đủ để không lặp lại/quên ở phiên sau:**
+   1. `docs/DE_CUONG_NOP_BAN_KHKT_2026-10-18.md` vẫn tự ghi trạng thái **"DỰ THẢO — chưa chốt, chờ
+      chủ dự án duyệt trước khi nộp"** — owner **chưa xác nhận lần cuối** để nộp thật (hạn 17h
+      18/10/2026, còn ít ngày tính từ lúc soạn). Cũng chưa có xác nhận link nộp chính thức từ Ban
+      KHKT (chỉ mới có ảnh chụp thông báo).
+   2. Ngưỡng số của nhánh AAN hoàn toàn **CHƯA CHỐT**: GATE AAN-2 (participation ratio không được
+      giảm quá X% trong ≥Y% số phiên — X,Y để trống) và GATE AAN-3 (dung sai thực tế quanh
+      `F_max≤5N`/`t_delay≤1,2s`, tiêu chí fail-safe cụ thể) đều đang chờ owner — agent cố ý không tự
+      điền theo `DEC-METRIC-001`.
+   3. **GATE EDGE (nhiệm vụ Orange Pi 5 Pro) chưa chốt ứng viên cuối cùng** — mới dừng ở mức phân
+      tích + khuyến nghị (ưu tiên camera+ArUco). Khi chốt, phải viết lại §4 của `06_...` thành tiêu
+      chí PASS/FAIL thật, không còn là "đang chọn".
+   4. **M9 (bandit cho GATE AAN-2) mới là PROPOSED**, chưa có quyết định owner có nhận hướng này
+      không; nếu nhận, còn phải thiết kế phép so sánh công bằng (bandit vs quét cố định) và chốt
+      ngưỡng % cải thiện tối thiểu trước khi chạy — chưa làm.
+   5. **Nợ đồng bộ xuyên repo (phát hiện khi rà soát, chưa sửa):** nhiều file khác vẫn còn nhắc tên
+      GATE cũ, không phải lỗi số liệu — chỉ là tên gọi/cấu trúc GATE chưa theo kịp `DEC-GATE-002`:
+      - còn nhắc **"GATE F"** kiểu cũ (coi là cổng cam kết cứng, không phải "GATE EDGE — đang chọn"):
+        `AGENTS.md`, `README.md`, `docs/01_Topic_Definition.md`.
+      - còn nhắc tên cũ **"GATE A′"/"GATE RAL"** (chưa đổi thành AAN-1/AAN-2): `INDEX.md`,
+        `docs/02_Theoretical_Foundation.md`, `docs/bao_cao/A7_AAT_rationale_DRAFT.md`.
+      - `docs/05_De_Cuong_Dang_Ky_DRAFT.md` cũng còn "GATE F" kiểu cũ.
+      - **KHÔNG được sửa** (đã nộp/đóng băng theo quy ước không hồi tố — `DEC-TITLE-003` tiền lệ):
+        `docs/DE_CUONG_NOP_TRUONG.md` (đã nộp trường 2026-09-26), `docs/DE_CUONG_NGAN_5-7_TRANG_
+        DRAFT.md`, `research/reviews/2026-09-19_active_assisted_scope_options.md` (review lịch sử,
+        giữ nguyên làm hồ sơ).
+      - Việc nên làm ở phiên tới: một lượt quét-sửa có chủ đích các file **được phép sửa** ở trên để
+        tên GATE nhất quán toàn repo, tránh người đọc lẫn giữa bản cũ/mới.
+   6. Vẫn **chưa có bất kỳ dữ liệu bench thật nào** cho nhánh AAN hay cho GATE EDGE — hai mảng này
+      toàn bộ còn ở giai đoạn giao thức/lý thuyết; nhánh Đo (GATE 0/A/B) là mảng duy nhất có khả
+      năng ra số liệu thật trước cuối 11/2026 (xem §9 phần `-1.` bên dưới về GATE C cần ≥28 ngày).
 
 -1. ✅ **ĐÃ LÀM 2026-10-13 (`DEC-PROP-003`):** Ban KHKT ra thông báo chính thức khuôn đề cương nộp
    vòng trường (6 mục: Tên dự án/Lý do/Mục tiêu/Ý tưởng-nội dung/Sản phẩm dự kiến/Tính khả thi),

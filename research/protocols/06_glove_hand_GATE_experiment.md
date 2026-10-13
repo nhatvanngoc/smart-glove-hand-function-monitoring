@@ -1,16 +1,21 @@
-# 06 — GATE experiment: Găng tay đánh giá & theo dõi chức năng bàn tay sau đột quỵ
+# 06 — GATE experiment: Găng tay đánh giá, theo dõi & hỗ trợ (AAN) chức năng bàn tay sau đột quỵ
 
-> **Ngày soạn:** 2026-09-13 · **Trạng thái:** CHỜ vật liệu + phần cứng (Velostat, khung in 3D, ESP32-S3, CD74HC4067, load cell).
+> **Ngày soạn:** 2026-09-13 · **Cập nhật cấu trúc lớn: 2026-10-13** (owner, qua `ask_user`, xem `DEC-GATE-002` ở `DECISION_LOG.md`).
+> **Trạng thái:** CHỜ vật liệu + phần cứng (Velostat, khung in 3D, ESP32-S3, CD74HC4067, load cell).
 > **Đây là thí nghiệm quyết định đề tài sống hay chết.** Không có GATE pass ⇒ không viết kết luận.
 >
-> **Nguyên tắc bắt buộc:**
-> - Toàn bộ GATE 0–F chạy trên **bench/phantom**, **không cần người tham gia** ⇒ không cần IRB cho các cổng này.
+> **Lý do tái cấu trúc (2026-10-13):** `DEC-SCOPE-006` (2026-10-11) đã chốt AAN là **trụ cột kỹ thuật thứ 4**, ngang hàng với mảng cảm biến/bộ ba chỉ số/lớp tự kiểm chuẩn — nhưng bảng GATE ở bản cũ của file này **chỉ kiểm chứng nhánh ĐO** (0/A/B/C), còn phần AAN chỉ nằm rải rác dưới tên phụ "GATE A′"/"GATE RAL" trong `07_ral_phantom_and_ktv_interview.md`, không có vị thế ngang hàng. Từ bản này: **hai nhánh song song**, mỗi nhánh có cổng sống còn (⭐) riêng. Đồng thời, **GATE F (INT8/NPU) bị tạm hoãn** — xem §4 — cho tới khi chốt được nhiệm vụ phù hợp nhất cho Orange Pi 5 Pro.
+>
+> **Nguyên tắc bắt buộc (không đổi):**
+> - Toàn bộ GATE ở cả hai nhánh chạy trên **bench/phantom**, **không cần người tham gia** ⇒ không cần IRB cho các cổng này (`DEC-SCOPE-003`/`DEC-SCOPE-006` — ranh giới an toàn phantom-only không có ngoại lệ).
 > - Mọi log phải lưu thô, có timestamp, có mã phiên, vào `research/bench/` (và bản gốc không bị sửa).
-> - Ngưỡng PASS/FAIL phải **chốt trước khi đo** và ghi vào file này; cấm chỉnh ngưỡng sau khi thấy kết quả.
+> - Ngưỡng PASS/FAIL phải **chốt trước khi đo** và ghi vào file này; cấm chỉnh ngưỡng sau khi thấy kết quả. Các ngưỡng đánh dấu **ĐỀ XUẤT — CHƯA CHỐT** là kế thừa nguyên trạng từ `07_ral_phantom_and_ktv_interview.md` (chủ dự án hoãn chốt từ 2026-09-19), không phải số liệu agent tự bịa ra ở bản cập nhật này.
 
 ---
 
-## 0. Bảng tổng hợp
+## 0. Bảng tổng hợp — hai nhánh song song
+
+### Nhánh ĐO (assessment) — GATE 0 → A → B → C⭐
 
 | Cổng | Câu hỏi | Nếu FAIL |
 |---|---|---|
@@ -18,9 +23,25 @@
 | **GATE A** | Hệ thống có phân biệt được **hướng** tác động không? | Bỏ tính năng "cảm biến hướng"; lùi về đo lực đơn thuần |
 | **GATE B** | Có tái tạo được bàn tay 3D đủ trung thực không? | Bỏ mục tiêu 3D, chỉ báo cáo chỉ số lực |
 | **GATE C** ⭐ | Thay đổi chức năng thật có **lớn hơn** drift/nhiễu không? | **DỪNG ĐỀ TÀI** hoặc đổi trục nghiên cứu |
-| **GATE D** | Chạy nhiều ngày có báo động giả không? | Phải tăng ngưỡng hoặc bỏ tính năng cảnh báo |
-| **GATE E** | Có tự phát hiện được sensing element lỗi không? | Bỏ tính năng self-validation |
-| **GATE F** | INT8 trên NPU có đủ nhanh/chính xác không? | Chạy trên CPU, ghi rõ là chưa dùng NPU |
+
+### Nhánh TRỢ LỰC — AAN (trụ cột thứ 4, `DEC-SCOPE-006`) — GATE AAN-1 → AAN-2⭐ → AAN-3
+
+| Cổng | Câu hỏi | Nếu FAIL |
+|---|---|---|
+| **GATE AAN-1** | Có phát hiện được **nỗ lực** khi ngón **chưa** di chuyển không? (trước đây gọi "GATE A′" trong `07`) | Bỏ Effort Index khỏi đề tài; AAN chỉ còn là lò xo trợ lực cố định, không "theo nhu cầu" |
+| **GATE AAN-2** ⭐ | Đường cong tải–hoàn thành (RAL) có đơn điệu + ổn định không, **và** mức tham gia chủ động (participation ratio) có được giữ/tăng qua các lần thử, không bị xói mòn về 0 (chống ỷ lại)? (trước đây gọi "GATE RAL" trong `07`) | RAL chỉ là thông số bench, **không** được gọi là "trợ lực thích ứng"; AAN bị hạ xuống "trợ lực cố định phân bậc" |
+| **GATE AAN-3** | Cơ cấu chấp hành có luôn tạo **đúng** `F_assist = max(0, F_target − F_phantom)` trong giới hạn an toàn (`F_max ≤ 5 N`, `t_delay ≤ 1,2 s`), **và** có tự chuyển về trạng thái an toàn khi cảm biến báo lỗi (liên kết GATE E) không? | Không được trình bày AAN là "tự điều chỉnh an toàn"; phải có công tắc/ngắt cơ khí độc lập trước khi công bố |
+
+### Cổng dùng chung cho cả hai nhánh
+
+| Cổng | Câu hỏi | Nếu FAIL |
+|---|---|---|
+| **GATE D** | Chạy nhiều ngày có báo động giả không? (áp dụng cho chỉ số của nhánh Đo) | Phải tăng ngưỡng hoặc bỏ tính năng cảnh báo |
+| **GATE E** | Có tự phát hiện được sensing element lỗi không? (phần chấp hành lực xem thêm GATE AAN-3) | Bỏ tính năng self-validation |
+
+**GATE F (INT8/NPU) — TẠM HOÃN, xem §4.** Không còn là một cổng cam kết cứng cho tới khi chốt nhiệm vụ cho Orange Pi 5 Pro.
+
+**Vì sao đặt ⭐ ở cả hai nhánh:** GATE C trả lời "nhánh Đo có còn lý do tồn tại không" (nếu không nhạy hơn nhiễu thì đo để làm gì); GATE AAN-2 trả lời đúng câu hỏi tương đương cho nhánh Trợ lực — "AAN có thực sự khác gì một lò xo trợ lực cố định không, hay chỉ là trợ lực cố định được gọi tên hoa mỹ". Nếu AAN-2 fail, đề tài **không bị dừng** (khác GATE C) nhưng **bắt buộc đổi nhãn marketing**, không được gọi là "theo nhu cầu"/"thích ứng".
 
 ---
 
@@ -169,20 +190,29 @@ Mỗi loại lặp ≥ 20 lần.
 
 ---
 
-## GATE F — Suy luận tại biên (INT8 trên NPU)
+## §4. Nhiệm vụ cho Orange Pi 5 Pro — ĐANG CHỌN (GATE F tạm hoãn)
 
-**Quy trình:**
-1. Huấn luyện mô hình trên PC (baseline trước: hồi quy tuyến tính / rừng ngẫu nhiên; chỉ dùng mạng nơ-ron nếu baseline không đủ).
-2. Lượng tử hóa INT8 → chuyển sang RKNN → chạy trên NPU của Orange Pi 5 Pro.
-3. Đo: độ trễ trung bình/độ trễ đuôi (p95), mức tiêu thụ điện, mức giảm độ chính xác so với FP32.
-4. Đo độ trễ end-to-end (từ lúc kết thúc frame trên ESP32-S3 đến lúc cập nhật mô hình 3D).
+> **Vì sao tạm hoãn:** bản cũ của GATE F chỉ cam kết một việc hẹp ("suy luận INT8 cho mô hình phân loại hướng"). Owner (2026-10-13) yêu cầu loại bỏ cam kết cứng đó cho tới khi xác định được **nhiệm vụ đáng giá nhất** cho phần cứng này (RK3588, NPU ~6 TOPS, **đã test chạy OK**: xử lý ảnh/camera, suy luận INT8 — xem `docs/CHANGELOG_2026-09-29.md` T-14, `research/context/EQUIPMENT_AND_ACCESS.md`). Ba ứng viên dưới đây được xếp hạng theo mức độ "đáng làm" (tận dụng đúng năng lực đã kiểm chứng + giải quyết đúng điểm yếu lớn nhất hiện tại của đề tài là **độ tin cậy**), không phải theo thứ tự dễ làm.
 
-**Tiêu chí PASS (chốt trước):**
-- Độ trễ suy luận ≤ **50 ms** (đủ để phản hồi gần tức thời cho người dùng).
-- Mức giảm độ chính xác sau INT8 so với FP32 ≤ **2%**.
-- Chạy liên tục 30 phút không treo, không rò bộ nhớ.
+### Ứng viên 1 (khuyến nghị ưu tiên cao nhất) — Camera + ArUco làm KÊNH TỰ KIỂM TRA ĐỘC LẬP, chạy liên tục, không chỉ dùng một lần trên bench
 
-> Nếu NPU không dùng được: chạy trên CPU **và ghi rõ trong báo cáo là chưa triển khai NPU** — không được nói "đã triển khai INT8 trên NPU" khi chưa có log.
+**Hiện trạng:** camera USB + nhận diện marker ArUco đã được test chạy OK trên Orange Pi (`docs/OUTLINE_BAOCAO_VISEFD.md` §5), nhưng mới được xếp vai trò **P1, một lần**: đối chứng góc khi hiệu chuẩn GATE B, song song với thước đo góc chuẩn chính (P0).
+
+**Đề xuất nâng cấp vai trò:** thay vì chỉ dùng trong phòng thí nghiệm lúc hiệu chuẩn, chạy nhận diện ArUco **song song, liên tục, trong mọi phiên đo** như một **kênh thứ hai độc lập** đối chiếu chéo với góc suy luận từ tín hiệu áp trở. Khi hai kênh **lệch nhau vượt ngưỡng**, hệ thống tự gắn cờ phiên đo "không đáng tin" — đây chính là việc mở rộng trực tiếp cho **GATE E** (hiện chỉ tự kiểm tra bằng tín hiệu nội tại của chính mình) thành một hệ tự kiểm tra **hai kênh vật lý độc lập thật sự**, mạnh hơn hẳn so với một hệ chỉ tự đối chiếu với chính nó.
+
+**Vì sao đây là ứng viên sáng nhất:** (a) không cần dữ liệu huấn luyện mới — ArUco là thuật toán hình học cổ điển, không phải mô hình học máy cần huấn luyện; (b) giải quyết đúng điểm yếu lớn nhất mà hội đồng chắc chắn sẽ hỏi ("làm sao biết cảm biến không nói dối?"); (c) tận dụng đúng năng lực NPU đã kiểm chứng hoạt động, không hứa hẹn một thứ chưa test; (d) chi phí gần như bằng 0 (camera USB ~0,3 triệu đã có trong dự toán `research/notebook/2026-09-29_measurability_M-checklist.md`).
+
+**Giới hạn phải nói rõ:** camera chỉ nhìn được khi không bị khung ngoại cốt/tay che khuất một phần (`SRC-VISION-GLOVE-OCCLUSION-TONG-2025` đã ghi nhận hạn chế này cho thị giác máy nói chung) — vì vậy đây là kênh **đối chứng bổ sung**, không thay thế cảm biến áp trở, và không dùng được khi đeo thiết bị thực tế tại nhà (chỉ dùng trong các phiên hiệu chuẩn/kiểm định định kỳ có camera).
+
+### Ứng viên 2 — Suy luận INT8 cho mô hình phân loại hướng (ý tưởng GATE F gốc)
+
+Giữ nguyên quy trình gốc: huấn luyện baseline (hồi quy tuyến tính/rừng ngẫu nhiên; chỉ dùng mạng nơ-ron nếu baseline không đủ) → lượng tử hóa INT8 → RKNN → chạy trên NPU; đo độ trễ (mục tiêu tham khảo cũ: ≤ 50 ms), mức giảm độ chính xác so với FP32, độ ổn định khi chạy liên tục. **Vẫn là một việc hợp lệ và nên làm**, nhưng xếp sau ứng viên 1 vì: đây là việc "NPU nào cũng làm được" (không phải điểm khác biệt), và chưa giải quyết thêm điểm yếu nào mới của đề tài ngoài tốc độ.
+
+### Ứng viên 3 — ĐÃ TÁCH RA KHỎI DANH SÁCH NHIỆM VỤ ORANGE PI (2026-10-13)
+
+> **Vì sao tách:** ban đầu đặt bandit/RL ở đây vì nó *có thể* chạy trên Orange Pi 5 Pro, nhưng thuật toán bandit cực nhẹ (chỉ cập nhật vài con số sau mỗi lượt thử) — không cần NPU, thậm chí không cần CPU mạnh, nên gắn nó vào "nhiệm vụ của Orange Pi 5 Pro" là một cách đóng gói yếu: giá trị thật của nó nằm ở phương pháp thí nghiệm, không nằm ở phần cứng chạy nó. Ép nó phải "xứng" với một con chip 6 TOPS sẽ tạo ra một câu hỏi phản biện tự hại ("sao cần NPU cho việc này?"). Quyết định: Orange Pi 5 Pro **không cần** nhiệm vụ này để có lý do tồn tại, và nhiệm vụ này **không cần** Orange Pi để có giá trị. Hai việc độc lập — xem `07_ral_phantom_and_ktv_interview.md` §3b, nơi bandit/RL đứng bằng chính giá trị phương pháp luận của nó (ít lượt thử hơn mà vẫn tin được), không gắn với bất kỳ thiết bị cụ thể nào. Thuật toán này có thể chạy trên máy tính đang điều khiển rig hiện có (laptop/PC), hoặc trên Orange Pi 5 Pro nếu tiện — việc đó không ảnh hưởng tới giá trị học thuật của nó.
+
+**Quyết định cuối cùng cho nhiệm vụ Orange Pi 5 Pro** (chọn ứng viên 1, ứng viên 2, hay cả hai) **chờ owner chốt** — file này chỉ trình bày phân tích, không tự ý chọn thay. Khi chốt, cập nhật lại §4 này thành một "GATE EDGE" chính thức có tiêu chí PASS/FAIL, theo đúng nguyên tắc `DEC-METRIC-001`.
 
 ---
 
