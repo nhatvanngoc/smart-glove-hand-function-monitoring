@@ -18,7 +18,9 @@
 | **Gap AROM−PROM** | `dịch_chủ_động − dịch_thụ_động` (cùng phiên, cùng mảng cảm biến) | mẫu ADC chuẩn hóa | không quy đổi ra độ |
 | **Participation ratio** | tỷ lệ dịch chuyển do người tạo ra trong tổng dịch chuyển (học từ `SRC-MPC-AAN-2026`) | % | không diễn giải thành điểm lâm sàng |
 
-## 2. GATE A′ — "có phát hiện được nỗ lực khi ngón chưa di chuyển không?"
+## 2. GATE AAN-1 (trước đây "GATE A′") — "có phát hiện được nỗ lực khi ngón chưa di chuyển không?"
+
+> **Đổi tên 2026-10-13 (`DEC-GATE-002`):** gọi là "A′" khiến cổng này trông như phụ lục của nhánh Đo. Từ nay dùng **GATE AAN-1**, đứng ngang hàng trong bảng tổng hợp ở `06_glove_hand_GATE_experiment.md` §0 — nội dung kỹ thuật và ngưỡng **không đổi**, chỉ đổi tên để phản ánh đúng vị thế trụ cột thứ 4 (`DEC-SCOPE-006`).
 
 **Thiết kế (trên rig):** giữ ngón ở góc cố định bằng chốt; treo các tải 0/20/40/80/120 g; mỗi tải 20 nhịp "kéo cố ý" + 20 nhịp nghỉ, xen kẽ ngẫu nhiên.
 **Số phải ghi:** phổ biên độ nhóm cố ý vs nghỉ, `σ_noise` của giai đoạn nghỉ, AUC, tỷ lệ báo nhầm, độ trễ phát hiện (ms).
@@ -26,11 +28,39 @@
 **Ngưỡng ĐỀ XUẤT — CHƯA CHỐT (chủ dự án hoãn, 2026-09-19):** AUC ≥ **0,85**; báo nhầm ≤ **10%**; độ trễ ≤ **300 ms**; lặp lại được trên ≥ **8** mẫu cảm biến.
 **Nếu FAIL:** bỏ Effort/EI khỏi đề tài; AAT chỉ còn là phần *động lực* trong `docs/02`; **không** được viết "phát hiện ý định vận động".
 
-## 3. GATE RAL — "đường cong tải–hoàn thành có dùng làm chỉ số theo dõi được không?"
+## 3. GATE AAN-2 ⭐ (trước đây "GATE RAL") — cổng sống còn của nhánh AAN: "đường cong tải–hoàn thành có dùng làm chỉ số theo dõi được không, và AAN có thực sự chống ỷ lại không?"
 
-**Thiết kế:** với mỗi mức "sức cơ" của rig (tắt/bật 1 servo trợ lực theo luật AAN), ghi tỷ lệ hoàn thành theo tải 0→120 g, 3 phiên cách nhau ≥ 24 h.
+> **Đổi tên + nâng cấp 2026-10-13 (`DEC-GATE-002`):** cổng này được nâng thành **cổng sống còn (⭐) của nhánh AAN** — vai trò tương đương GATE C ở nhánh Đo. Lý do: nếu đường cong RAL không ổn định, HOẶC nếu mức tham gia chủ động cứ giảm dần về 0 qua các lần thử (ỷ lại), thì AAN không khác gì một lò xo trợ lực cố định được đặt tên hoa mỹ — mất lý do tồn tại của nhãn "theo nhu cầu". Tiêu chí RAL gốc (đơn điệu + ICC) **giữ nguyên, không đổi**; bổ sung thêm tiêu chí participation ratio (đã có sẵn định nghĩa ở bảng §1, lấy cảm hứng từ `SRC-MPC-AAN-2026`, nhưng **chưa từng được gắn vào một cổng PASS/FAIL nào** trước bản cập nhật này).
+
+**Thiết kế (phần RAL, giữ nguyên):** với mỗi mức "sức cơ" của rig (tắt/bật 1 servo trợ lực theo luật AAN), ghi tỷ lệ hoàn thành theo tải 0→120 g, 3 phiên cách nhau ≥ 24 h.
 **Ngưỡng ĐỀ XUẤT — CHƯA CHỐT:** đơn điệu 100% (không được có điểm nghịch hướng); **ICC ≥ 0,75** giữa phiên 1 và 3 trên cùng tải; biến thiên giữa-phiên nhỏ hơn khoảng cách 2 bậc tải.
-**Nếu FAIL:** RAL chỉ là thông số bench, **không** được quảng bá thành chỉ số lâm sàng.
+
+**Thiết kế bổ sung (phần chống ỷ lại, MỚI 2026-10-13 — ĐỀ XUẤT, CHƯA CHỐT NGƯỠNG):** mô phỏng trên phantom một chuỗi phiên "người bệnh cải thiện dần" (tăng dần tỉ lệ lực chủ động phantom tạo ra qua các phiên theo kịch bản đã biết trước); đo participation ratio ở mỗi phiên. **Ngưỡng cần owner chốt trước khi đo** (gợi ý sơ bộ, KHÔNG phải số đã duyệt): participation ratio không được giảm quá X% so với phiên trước trong ≥ Y% số phiên liên tiếp khi kịch bản mô phỏng đang ở pha "cải thiện"; X, Y để trống chờ chốt.
+
+**Nếu FAIL (RAL):** RAL chỉ là thông số bench, **không** được quảng bá thành chỉ số lâm sàng.
+**Nếu FAIL (chống ỷ lại):** AAN hiện tại **không** được gọi là "trợ lực theo nhu cầu/thích ứng" — chỉ được gọi trung thực là "trợ lực cố định phân bậc"; vẫn giữ được làm sản phẩm (lò xo chia nấc vẫn hữu ích), chỉ phải đổi câu quảng bá.
+
+## 3b. Đề xuất nâng cấp GATE AAN-2 bằng thuật toán thích ứng kiểu "nhiều tay máy" (multi-armed bandit) — nơi học tăng cường (RL) sáng nhất của đề tài (MỚI 2026-10-13, PROPOSED; đã tách khỏi câu chuyện "nhiệm vụ Orange Pi" ngày 2026-10-13 — xem ghi chú dưới)
+
+> **Đây là một quyết định về PHƯƠNG PHÁP THÍ NGHIỆM của GATE AAN-2, độc lập hoàn toàn với việc chọn nhiệm vụ cho Orange Pi 5 Pro** (xem `06_glove_hand_GATE_experiment.md` §4). Hai việc này từng bị gộp chung ("ứng viên 3") nhưng đã tách ra: giá trị học thuật của bandit nằm ở **thiết kế thí nghiệm** (giảm số lượt thử mà vẫn tin được), không nằm ở việc nó chạy trên con chip nào. Thuật toán này nhẹ tới mức chạy trên CPU của bất kỳ máy tính nào đang điều khiển rig (laptop/PC hiện có) cũng đủ — không cần, và không nên viện tới NPU/Orange Pi 5 Pro để "tăng cân" cho nó, vì điều đó chỉ tạo ra một câu hỏi phản biện tự hại ("sao cần NPU 6 TOPS cho một bandit 5 tay máy?").
+
+**Vấn đề của thiết kế hiện tại:** quét RAL theo kiểu cố định (0/20/40/80/120 g × 10 chu kỳ/nấc × 3 phiên ≥24h) tốn rất nhiều lượt thử lặp lại (tối thiểu 5 nấc × 10 chu kỳ × 3 phiên = 150 lượt) để tìm ra đúng MỘT con số (nấc tải nhỏ nhất đạt `P_complete ≥ 80%`). Phần lớn lượt thử ở các nấc "rõ ràng quá dễ" hoặc "rõ ràng quá khó" không mang thêm thông tin.
+
+**Đề xuất:** thay bước "chọn nấc tải kế tiếp để thử" bằng một thuật toán **multi-armed bandit** đơn giản (ví dụ Thompson Sampling hoặc UCB trên phân phối Beta-Bernoulli cho từng nấc tải), coi mỗi nấc tải là một "tay máy" với xác suất hoàn thành chưa biết — thuật toán tự chọn nấc nào đáng thử tiếp theo dựa trên lịch sử hoàn thành, hội tụ nhanh hơn về nấc tải biên (nơi `P_complete` gần 80%) thay vì rải đều số lượt thử cho mọi nấc.
+
+**Vì sao đây là nơi "sáng" nhất để dùng RL trong đề tài này** (so với các khả năng khác đã cân nhắc — xem `06_glove_hand_GATE_experiment.md` §4 Ứng viên 3):
+
+| Tiêu chí | RL điều khiển lực liên tục (bị loại) | RL/bandit chọn nấc tải RAL (đề xuất) |
+|---|---|---|
+| Không gian hành động | Liên tục, không giới hạn rõ ràng | **Rời rạc, chỉ 5 giá trị đã duyệt sẵn** (0/20/40/80/120 g) |
+| Cần simulator động lực học ngón tay? | **Có** — không khả thi trong khung thời gian | **Không** — "môi trường" chính là rig/phantom thật, học trực tiếp từ kết quả hoàn thành/không hoàn thành của từng lượt thử |
+| Rủi ro an toàn nếu policy sai | Có thể ra lực bất kỳ | Chỉ có thể chọn trong các nấc tải cơ khí **đã được duyệt an toàn từ trước** — không tạo ra lực mới nằm ngoài dải đã kiểm định |
+| Phần cứng cần | NPU + huấn luyện offline phức tạp | Thuật toán rất nhẹ, chạy được trên CPU của bất kỳ máy tính nào đang điều khiển rig (laptop/PC hiện có, hoặc Orange Pi 5 Pro nếu tiện) — không cần NPU, không phụ thuộc thiết bị cụ thể |
+| Lợi ích đo được, trình bày được trước hội đồng | Chưa rõ, chưa kiểm chứng được trong thời gian còn lại | **Số lượt thử cần để đạt cùng độ tin cậy giảm bao nhiêu %** so với quét cố định — một con số tự đo được, rõ ràng |
+
+**Việc cần làm trước khi coi đây là một GATE chính thức:** (1) owner quyết định có muốn thêm nhánh thực nghiệm này không (đây là thay đổi **thuật toán vận hành thí nghiệm**, không phải thay đổi phạm vi phần cứng/đạo đức — vẫn trong ranh giới `DEC-SCOPE-003`/`006`); (2) nếu đồng ý, thiết kế một phép so sánh công bằng: chạy cả hai cách (quét cố định vs bandit) trên cùng một rig/phantom với cùng kịch bản mô phỏng "sức cơ" ẩn, đo số lượt thử mỗi cách cần để đạt cùng sai số ước lượng RAL; (3) ngưỡng PASS/FAIL (bandit phải nhanh hơn quét cố định ít nhất bao nhiêu % thì mới đáng dùng) **chốt trước khi chạy so sánh**, theo đúng `DEC-METRIC-001`.
+
+**Giới hạn phải nói rõ nếu trình bày:** đây **không phải** AI "thông minh" hiểu bệnh nhân — chỉ là một thuật toán thống kê cổ điển (bandit) tối ưu hoá *thứ tự thử nghiệm* để tiết kiệm thời gian của người dùng; không được gọi là "AI cá nhân hoá điều trị" hay bất kỳ cụm từ nào ngụ ý năng lực lâm sàng chưa kiểm chứng.
 
 ## 4. Rig E5 (tuỳ chọn) — 1 servo, chỉ kéo phantom
 

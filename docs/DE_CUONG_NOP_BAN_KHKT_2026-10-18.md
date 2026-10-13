@@ -17,9 +17,10 @@
 
 | Cần điền (không tự điền) | Giá trị |
 |---|---|
-| Họ và tên học sinh | *⟨điền⟩* |
-| Lớp / Trường / Tỉnh | *⟨điền⟩* |
-| Giáo viên hướng dẫn | *⟨điền⟩* |
+| Học sinh 1 | Văn Ngọc Nhật Anh - Lớp 11A2 |
+| Học sinh 2 | Nguyễn Duy Quân - Lớp 12A1 |
+| Trường / Tỉnh | THPT Quảng Trị, tỉnh Quảng Trị |
+| Giáo viên hướng dẫn | Lê Công Long |
 
 ---
 
@@ -63,20 +64,43 @@ hoàn thành động tác, với ngưỡng kiểm chứng công khai thay vì ch
 
 ## 3. Mục tiêu nghiên cứu
 
+Đề tài kiểm chứng theo **hai nhánh song song, ngang hàng** (không chỉ có nhánh đo): nhánh **Đo**
+(sensing/đánh giá) và nhánh **Trợ lực - AAN** (Assist-as-Needed), vì cơ cấu AAN là một trong bốn trụ
+cột kỹ thuật chính thức của đề tài, không phải tính năng phụ thêm vào phần đo.
+
+**Nhánh Đo:**
+
 | # | Mục tiêu | Cổng kiểm chứng (GATE) |
 |---|---|---|
 | M1 | Chế tạo sensing element áp trở (Velostat) trên vách khung ngón tay, có độ lặp lại đo được | GATE 0 |
 | M2 | Suy luận dấu gập/duỗi của khớp ngón từ mẫu kích hoạt trên vách, không cần encoder/IMU | GATE A |
 | M3 | Tái tạo tầm vận động dưới dạng chỉ số tương đối, đối chiếu với chuẩn cơ khí đã biết | GATE B |
-| M4 (quan trọng nhất) | Chứng minh hệ thống phát hiện được thay đổi chức năng mô phỏng thật, lớn hơn nhiễu/trôi của chính nó | GATE C |
-| M5 | Tự gắn cờ phiên đo "không đáng tin" khi dữ liệu không đạt điều kiện | GATE D/E |
-| M6 | Chạy được mô hình nhận dạng rút gọn (lượng tử hóa INT8) tại biên, không phụ thuộc mạng | GATE F |
+| M4 ⭐ (cổng sống còn của nhánh Đo) | Chứng minh hệ thống phát hiện được thay đổi chức năng mô phỏng thật, lớn hơn nhiễu/trôi của chính nó | GATE C |
+
+**Nhánh Trợ lực - AAN:**
+
+| # | Mục tiêu | Cổng kiểm chứng (GATE) |
+|---|---|---|
+| M5 | Phát hiện được nỗ lực chủ động của người dùng trước khi ngón thực sự di chuyển - nền tảng để trợ lực đúng lúc | GATE AAN-1 |
+| M6 ⭐ (cổng sống còn của nhánh Trợ lực) | Chứng minh AAN không chỉ là một lò xo trợ lực cố định: đường cong tải-hoàn thành (RAL) ổn định VÀ mức tham gia chủ động không bị xói mòn về 0 qua các lần thử (không gây ỷ lại) | GATE AAN-2 |
+
+**Cổng dùng chung và một hạng mục đang chọn:**
+
+| # | Mục tiêu | Cổng kiểm chứng (GATE) |
+|---|---|---|
+| M7 | Tự gắn cờ phiên đo "không đáng tin" khi dữ liệu đo hoặc lực chấp hành không đạt điều kiện | GATE D/E/AAN-3 |
+| M8 | Xác định nhiệm vụ suy luận tại biên phù hợp nhất cho Orange Pi 5 Pro (ứng viên đang xét: camera đối chứng hai kênh độc lập cho GATE E - ưu tiên cao nhất; mô hình phân loại hướng INT8 - phụ) | GATE EDGE - đang chọn, chưa chốt ngưỡng |
+| M9 | Rút ngắn số lượt thử cần thiết để xác định RAL bằng thuật toán thích ứng (multi-armed bandit), độc lập với lựa chọn phần cứng ở M8 - đóng góp về thiết kế thí nghiệm cho GATE AAN-2, không phải một nhiệm vụ phần cứng | Đề xuất bổ sung cho GATE AAN-2, chưa chốt ngưỡng so sánh |
 
 **Kết quả dự kiến:** đề tài không đặt mục tiêu "bệnh nhân phục hồi tốt hơn", vì đó là điều một đề
 tài học sinh không có cơ sở lâm sàng để khẳng định. Mục tiêu cụ thể và kiểm chứng được là: một thiết
-bị nguyên mẫu đo được ba chỉ số (Effort Index, GAP, RAL), một bộ ngưỡng GATE đăng ký trước khi đo, và
-một cơ cấu trợ lực AAN hoạt động trên giàn cơ khí và mô hình tay giả (phantom). Nếu cổng sống còn
-(GATE C) không đạt, đề tài sẽ dừng và báo cáo trung thực đó là một kết quả âm tính có giá trị.
+bị nguyên mẫu đo được ba chỉ số (Effort Index, GAP, RAL), một bộ ngưỡng GATE đăng ký trước khi đo cho
+cả hai nhánh, và một cơ cấu trợ lực AAN hoạt động trên giàn cơ khí và mô hình tay giả (phantom). Hai
+cổng sống còn (⭐) có hệ quả khác nhau khi không đạt: nếu **GATE C** (nhánh Đo) không đạt, **toàn bộ
+đề tài dừng lại** vì không còn lý do để đo. Nếu **GATE AAN-2** (nhánh Trợ lực) không đạt, đề tài
+**không dừng**, nhưng cơ cấu trợ lực chỉ còn được gọi trung thực là "trợ lực cố định phân bậc", không
+được gọi là "theo nhu cầu/thích ứng". Cả hai trường hợp đều sẽ được báo cáo trung thực, kể cả khi là
+kết quả âm tính.
 
 ---
 
@@ -94,7 +118,8 @@ vách nào, hệ thống ghi nhận lực và suy ra hướng chuyển động, 
 Bàn tay / phantom -> khung cứng + mảng Velostat trên vách từng lóng ngón
    -> ép vào vách -> điện trở thay đổi -> CD74HC4067 (chọn kênh)
    -> INA333 (khuếch đại đo lường) -> ADS1115/ESP32-S3 (ADC)
-   -> xử lý tại biên (RK3588, INT8): bù đồng pha, suy hướng gập/duỗi
+   -> xử lý tại biên (Orange Pi 5 Pro, RK3588): bù đồng pha, suy hướng gập/duỗi
+      (nhiệm vụ suy luận cụ thể của phần biên đang được xác định - xem GATE EDGE, mục 3)
    -> 3 chỉ số: Effort Index (EI) · GAP = PROM - AROM · RAL (mức trợ giúp cần)
    -> cờ "dữ liệu không đáng tin" khi mất điều kiện hợp lệ
    -> dashboard theo tuần cho kỹ thuật viên
@@ -159,7 +184,7 @@ mại không công bố ngưỡng pass/fail.
 | Nguyên mẫu găng | Khung ngón có vách cứng, mảng cảm biến áp trở Velostat, mạch đo ESP32-S3/ADS1115/INA333/CD74HC4067 | Ảnh thiết bị đang chạy và tín hiệu thật trên màn hình |
 | Cơ cấu AAN | Lò xo trợ giúp chia nấc + servo, hoạt động trên giàn cơ khí và phantom | Lực bù đo được bằng lực kế, giới hạn an toàn xác nhận |
 | Ba chỉ số định lượng | Effort Index, GAP, RAL, định nghĩa tường minh kèm đơn vị | Có công thức, có dữ liệu minh họa trên rig |
-| Bộ giao thức và ngưỡng GATE | 10 mục GATE 0 cùng các GATE A đến F | Ngưỡng được chốt trước khi đo, có ngày ghi |
+| Bộ giao thức và ngưỡng GATE | 10 mục GATE 0, các GATE A/B/C (nhánh Đo), GATE AAN-1/AAN-2/AAN-3 (nhánh Trợ lực), GATE D/E dùng chung | Ngưỡng được chốt trước khi đo, có ngày ghi |
 | Cơ cấu đeo/tháo một tay | Khóa ngàm xoay hai bản lề (Mech 9), đã qua 8 phương án loại bỏ trước đó | Mẫu in 3D vận hành được bằng một tay |
 | Báo cáo/poster | Trình bày kết quả đạt và không đạt theo từng GATE | Mỗi GATE có một ô kết quả, kể cả khi fail |
 
@@ -185,11 +210,13 @@ tham khảo tại thời điểm viết, chưa phải báo giá.
 
 **Kế hoạch thời gian và một điểm cần nói rõ trước:** theo kế hoạch kỹ thuật đã lập (xem
 `research/protocols/08_gate0_execution_plan.md`), riêng GATE 0 cần khoảng 3 tuần lịch (bao gồm 10
-ngày log trôi liên tục bắt buộc), và GATE C (cổng sống còn) cần tối thiểu 28 ngày theo dõi trôi theo
-đúng giao thức đã đăng ký. Với mốc thi dự kiến cuối tháng 11/2026, đề tài **không hứa** hoàn tất toàn
-bộ chuỗi GATE 0 đến GATE F trước thời điểm đó. Mục tiêu khả thi trong khung thời gian này là hoàn tất
-GATE 0 và tiến hành một phần GATE A/B, đồng thời hoàn thiện cơ cấu cơ khí Mech 9; báo cáo nộp vòng
-trường sẽ trình bày trung thực những gì đã đạt, những gì đang chạy (ví dụ log trôi 28 ngày của GATE C
+ngày log trôi liên tục bắt buộc), và GATE C (cổng sống còn của nhánh Đo) cần tối thiểu 28 ngày theo
+dõi trôi theo đúng giao thức đã đăng ký. Với mốc thi dự kiến cuối tháng 11/2026, đề tài **không hứa**
+hoàn tất toàn bộ chuỗi GATE của cả hai nhánh trước thời điểm đó. Mục tiêu khả thi trong khung thời
+gian này là hoàn tất GATE 0 và tiến hành một phần GATE A/B (nhánh Đo), đồng thời hoàn thiện cơ cấu cơ
+khí Mech 9; nhánh Trợ lực (GATE AAN-1/AAN-2/AAN-3) và việc chốt nhiệm vụ cho Orange Pi 5 Pro (GATE
+EDGE) dự kiến triển khai sau vòng trường. Báo cáo nộp vòng trường sẽ trình bày trung thực những gì đã
+đạt, những gì đang chạy (ví dụ log trôi 28 ngày của GATE C
 có thể đang trong quá trình thực hiện), và kế hoạch tiếp tục sau vòng trường. Đây là lựa chọn có chủ
 đích để không báo cáo một kết quả chưa có thật, nhất quán với quy ước "không tô hồng" đã áp dụng
 xuyên suốt đề tài.
@@ -204,7 +231,7 @@ Epidemiology*, 9:100199, DOI: 10.1016/j.gloepi.2025.100199.
 *Cochrane Database Syst. Rev.*, 2014(11):CD010820, DOI: 10.1002/14651858.CD010820.pub2.
 [3] Nghiên cứu MDC ứng dụng theo dõi chức năng tay (Manumeter), *Sensors* 2022, 22(18):6938.
 [4] Penfield W., Boldrey E. (1937), "Somatic motor and sensory representation in the cerebral
-cortex of man", *Brain*, 60:389-443.
+cortex of man", *Brain*, 60:389-440.
 [5] Gordon E.M. và cộng sự (2023), "A somato-cognitive action network...", *Nature*, 617:351-359,
 DOI: 10.1038/s41586-023-05964-2.
 [6] Hebb D.O. (1949), *The Organization of Behavior*, New York: Wiley, kiến thức nền, không phải
