@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bộ Sưu Tập Hình Ảnh 9 Cơ Cấu Nẹp Ngón Tay (Exoskeleton Finger Cuff)</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0f141c;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 24px;
+        }
+        h1 {
+            color: #ffffff;
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+        .subtitle {
+            color: #94a3b8;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+        .banner {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            border-color: #64748b;
+        }
+        .card.active {
+            border: 2px solid #22c55e;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+        }
+        .card-header {
+            padding: 14px 16px;
+            background-color: #162032;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .badge {
+            background-color: #3b82f6;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .badge.active {
+            background-color: #16a34a;
+        }
+        .badge.warn {
+            background-color: #d97706;
+        }
+        .badge.stop {
+            background-color: #dc2626;
+        }
+        .date {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+        .img-container {
+            width: 100%;
+            height: 240px;
+            background-color: #0b0f17;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .img-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .card-body {
+            padding: 16px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #f8fafc;
+        }
+        .card-desc {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        .status-tag {
+            font-size: 12px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            background-color: #0f172a;
+            color: #cbd5e1;
+            border: 1px solid #334155;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>TỔNG HỢP HÌNH ẢNH CÁC THIẾT KẾ CƠ CẤU NẸP NGÓN TAY (MECH 1 &rarr; MECH 9)</h1>
+    <div class="subtitle">Dự án Găng tay thông minh phục hồi chức năng sau đột quỵ &bull; Mốc thời gian: 06/10/2026 - 11/10/2026</div>
+
+    <img class="banner" src="all_mechanisms_timeline_poster.png" alt="Bảng tổng hợp đối sánh toàn bộ 9 cơ cấu">
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="card-header">
+                <span class="badge stop">MECH 1</span>
+                <span class="date">06/10/2026</span>
+            </div>
+            <div class="img-container">
+                <img src="mech1.png" alt="Mech 1">
+            </div>
+            <div class="card-body">
+                <div class="card-title">C-Clip Spring Cuff</div>
+                <div class="card-desc">Vòng kẹp hở miệng chữ C đàn hồi. Lực kẹp phụ thuộc nhựa, dễ banh miệng khi kéo tải nặng &gt; 15N.</div>
+                <div class="status-tag">Tình trạng: Đã thử nghiệm (Dừng)</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="badge stop">MECH 2</span>
+                <span class="date">06/10 - 07/10/2026</span>
+            </div>
+            <div class="img-container">
+                <img src="mech2.png" alt="Mech 2">
+            </div>
+            <div class="card-body">
+                <div class="card-title">Dovetail Slide Lock</div>
+                <div class="card-desc">Khóa rãnh trượt mộng đuôi én tịnh tiến dọc ngón tay. Khó thao tác cho bệnh nhân co cứng, dễ kẹt ma sát FDM.</div>
+                <div class="status-tag">Tình trạng: Đã thử nghiệm (Dừng)</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="badge stop">MECH 3</span>
+                <span class="date">06/10/2026</span>
+            </div>
+            <div class="img-container">
+                <img src="mech3.png" alt="Mech 3">
+            </div>
+            <div class="card-body">
+                <div class="card-title">Velcro Strap Slots</div>
+                <div class="card-desc">Vỏ mu tích hợp 2 khe xỏ đai dán Velcro. Dây dán nhanh bai dão, bám bẩn, khó sát khuẩn y tế.</div>
+                <div class="status-tag">Tình trạng: Đã thử nghiệm (Dừng)</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="badge stop">MECH 4</span>
+                <span class="date">06/10/2026</span>
+            </div>
+            <div class="img-container">
+                <img src="mech4.png" alt="Mech 4">
+            </div>
+            <div class="card-body">
+                <div class="card-title">Cross-Pin Latch</div>
+                <div class="card-desc">Bản lề 1 bên, khóa bằng chốt xỏ xuyên qua lỗ. Khóa chắc nhưng chốt rời dễ thất lạc khi thao tác 1 tay.</div>
+                <div class="status-tag">Tình trạng: Đã thử nghiệm (Dừng)</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="badge stop">MECH 5</span>
+                <span class="date">06/10/2026</span>
+            </div>
+            <div class="img-container">
+                <img src="mech5.png" alt="Mech 5">
+            </div>
+            <div class="card-body">
+                <div class="card-title">Top Buckle Snap</div>
+                <div class="card-desc">Khóa lẫy ngàm cài dạng buckle ở đỉnh mu ngón. Chiếm diện tích đỉnh mu ngón, cản trở đường luồn dây gân kéo.</div>
+                <div class="status-tag">Tình trạng: Đã thử nghiệm (Dừng)</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="badge stop">MECH 6</span>
+                <span class="date">06/10/2026</span>
+            </div>
+            <div class="img-container">
+                <img src="mech6.png" alt="Mech 6">
+            </div>
+            <div class="card-body">
+                <div class="card-title">Ratchet Cable Clamp</div>
+                <div class="card-desc">Đai răng cưa uốn cong với cóc giữ. Đai bị mỏi uốn, dễ gãy giòn dọc thớ layer in FDM khi dùng nhiều lần.</div>
+                <div class="status-tag">Tình trạng: Đã thử nghiệm (Dừng)</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="badge stop">MECH 7</span>
+                <span class="date">06/10/2026</span>
+            </div>
+            <div class="img-container">
+                <img src="mech7_closed.png" alt="Mech 7">
+            </div>
+            <div class="card-body">
+                <div class="card-title">Double-Hinge Toggle V2</div>
+                <div class="card-desc">Khóa đòn bẩy Toggle bản lề kép thế hệ 1. Lực kẹp khỏe nhưng nhiều khớp nhỏ sát nhau, dễ dính lớp FDM.</div>
+                <div class="status-tag">Tình trạng: Đã thử nghiệm (Dừng)</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="badge warn">MECH 8</span>
+                <span class="date">07/10 - 11/10/2026</span>
+            </div>
+            <div class="img-container">
+                <img src="mech8_closed.png" alt="Mech 8">
+            </div>
+            <div class="card-body">
+                <div class="card-title">1-Hinge Ratchet Snap</div>
+                <div class="card-desc">1 bản lề nguyên khối PIP + mấu răng đực gài lỗ cái. Đã in 5 lần tinh chỉnh. Đóng chặt nhưng mở phải bẻ uốn mép nhựa làm mỏi/giảm tuổi thọ FDM.</div>
+                <div class="status-tag">Tình trạng: Đã in 5 lần (Chuyển đổi sang Mech 9)</div>
+            </div>
+        </div>
+
+        <div class="card active">
+            <div class="card-header">
+                <span class="badge active">MECH 9 (HIỆN TẠI)</span>
+                <span class="date">11/10/2026</span>
+            </div>
+            <div class="img-container">
+                <img src="mech9_print_ready.png" alt="Mech 9">
+            </div>
+            <div class="card-body">
+                <div class="card-title">Double-Hinge Toggle Clasp</div>
+                <div class="card-desc">Ý tưởng do bạn khởi xướng: Bản lề kép + 2 ngàm đực nhô cao + Quai gông kẹp chữ U. Đóng mở 100% bằng khớp xoay, không bẻ cong nhựa, tuổi thọ vô hạn. Trục bản lề đúc liền vững chắc.</div>
+                <div class="status-tag" style="background:#14532d; color:#86efac; border-color:#22c55e;">Tình trạng: HOÀN THIỆN TỐI ƯU NHẤT</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

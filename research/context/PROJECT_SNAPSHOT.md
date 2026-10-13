@@ -1,9 +1,9 @@
-# Project snapshot — 2026-09-19 (lượt rà soát prior art 1) · nền 2026-09-13 · cập nhật 2026-10-13 (DEC-GATE-002, hai nhánh GATE + tách RL khỏi nhiệm vụ Orange Pi)
+# Project snapshot — 2026-09-19 (lượt rà soát prior art 1) · nền 2026-09-13 · cập nhật 2026-10-13 (DEC-GATE-002, DEC-ARCH-001: AAN + Velostat + RL + Orange Pi 5 Pro Edge Intelligence)
 
 > Bản nén ngữ cảnh để phiên sau khôi phục trạng thái **bằng artifact**, không dựa vào trí nhớ hội thoại.
 > Chỉ chứa **sự kiện bền vững**. Quyết định đầy đủ: `DECISION_LOG.md`. Đề tài: `docs/01_Topic_Definition.md`.
 
-> **2026-10-13 (`DEC-GATE-002`):** hệ GATE tái cấu trúc thành **hai nhánh song song, mỗi nhánh một cổng sống còn ⭐** — Đo (GATE 0→A→B→C⭐, không đổi) và Trợ lực-AAN (GATE AAN-1→AAN-2⭐→AAN-3, mới). **GATE F (INT8/NPU) tạm hoãn**, thay bằng "GATE EDGE — đang chọn" (ứng viên ưu tiên: camera+ArUco nâng thành kênh tự kiểm tra 2 chiều độc lập cho GATE E). Thuật toán multi-armed bandit để rút ngắn số lượt thử dò RAL (GATE AAN-2) **đã tách hẳn khỏi câu chuyện Orange Pi 5 Pro** — đây là một quyết định về phương pháp thí nghiệm, không phải nhiệm vụ phần cứng; không cần NPU, không cần gắn với bất kỳ thiết bị cụ thể nào. Chi tiết: `research/protocols/06_glove_hand_GATE_experiment.md` §0/§4; `research/protocols/07_ral_phantom_and_ktv_interview.md` §2-3b. Tất cả ngưỡng số của nhánh AAN và của GATE EDGE **CHƯA CHỐT** (`DEC-METRIC-001`).
+> **2026-10-13 (`DEC-ARCH-001`, `DEC-GATE-002`):** Xác lập kiến trúc tích hợp sâu: (1) AAN + Velostat là trụ cột cốt lõi không thể tách rời theo nguyên lý Hebbian đóng kín vòng phản hồi cảm giác-vận động. (2) Reinforcement Learning (RL) giải quyết 2 bài toán chuyên sâu: Bù trừ phi tuyến động (Hysteresis/Creep/Drift) cho Velostat dạng MDP, và học chính sách trợ lực AAN thích ứng chống ỷ lại (Anti-Slacking Actor-Critic). (3) Orange Pi 5 Pro (RK3588, NPU 6 TOPS) làm Trạm Y Sinh Biên (Edge Medical Intelligence Station), chạy mô hình `.rknn` INT8 thời gian thực (trễ < 20 ms), xử lý thị giác đối chứng ArUco và bảo mật dữ liệu y tế độc lập. Chi tiết: `research/protocols/06_glove_hand_GATE_experiment.md` §0/§4; `research/protocols/07_ral_phantom_and_ktv_interview.md` §3b.
 
 ---
 

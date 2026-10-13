@@ -190,29 +190,19 @@ Mỗi loại lặp ≥ 20 lần.
 
 ---
 
-## §4. Nhiệm vụ cho Orange Pi 5 Pro — ĐANG CHỌN (GATE F tạm hoãn)
+## §4. Nhiệm vụ cho Orange Pi 5 Pro — Trạm Y Sinh Biên (Edge Medical Intelligence Station) & GATE EDGE (`DEC-ARCH-001`)
 
-> **Vì sao tạm hoãn:** bản cũ của GATE F chỉ cam kết một việc hẹp ("suy luận INT8 cho mô hình phân loại hướng"). Owner (2026-10-13) yêu cầu loại bỏ cam kết cứng đó cho tới khi xác định được **nhiệm vụ đáng giá nhất** cho phần cứng này (RK3588, NPU ~6 TOPS, **đã test chạy OK**: xử lý ảnh/camera, suy luận INT8 — xem `docs/CHANGELOG_2026-09-29.md` T-14, `research/context/EQUIPMENT_AND_ACCESS.md`). Ba ứng viên dưới đây được xếp hạng theo mức độ "đáng làm" (tận dụng đúng năng lực đã kiểm chứng + giải quyết đúng điểm yếu lớn nhất hiện tại của đề tài là **độ tin cậy**), không phải theo thứ tự dễ làm.
+> **Cập nhật kiến trúc 2026-10-13 (`DEC-ARCH-001`):** Chốt vai trò của Orange Pi 5 Pro (RK3588, NPU tri-core 6 TOPS) thành **Trạm Y Sinh Biên (Edge Medical Intelligence Station)**, phân tầng rõ ràng với vi điều khiển ESP32-S3:
+> - **ESP32-S3 (Tầng chấp hành & An toàn cứng - Hard Real-Time):** Thu thập ADC đa kênh, đọc cảm biến vi sai, giám sát dòng động cơ, ngắt khẩn cấp cơ khí nếu lực vượt $5\text{ N}$. Không chạy mô hình AI nặng để tránh trễ ngắt.
+> - **Orange Pi 5 Pro (Tầng trí tuệ biên đa nhân - Edge AI):** Tận dụng kiến trúc 3 nhân NPU và năng lực RKNN INT8 để chạy 3 nhiệm vụ song song, giải quyết trực tiếp các bài toán kỹ thuật chuyên sâu:
+>   1. **Nhân NPU 1 — Bù trừ phi tuyến động cho Velostat (RL Sensor Inversion):** Chạy chính sách bù trễ (hysteresis), từ biến (creep) và trôi nhiệt/lão hóa thời gian thực dạng mô hình nơ-ron hồi quy/MDP được lượng tử hóa sang `.rknn`. Chuyển hóa tín hiệu áp trở phi tuyến thành đại lượng lực tuyến tính ổn định qua hàng trăm giờ làm việc.
+>   2. **Nhân NPU 2 — Suy luận chính sách thích ứng AAN (Anti-Slacking Actor-Critic):** Tiếp nhận nỗ lực $EI$ và chuyển động ngón tay, suy luận lực bù $F_{assist}$ theo thời gian thực (trễ $< 20\text{ ms}$) nhằm tối ưu hóa phục hồi theo nguyên lý Hebbian và triệt tiêu hiện tượng ỷ lại (Motor Slacking).
+>   3. **Nhân NPU 3 + CPU — Kênh thẩm định thị giác độc lập (Camera + Marker ArUco) & Edge Gateway:** Đối chứng chéo quang học góc gập/duỗi với tín hiệu suy luận từ cảm biến vách để kích hoạt cờ tự kiểm chuẩn (GATE E); lưu trữ bảo mật dữ liệu y tế nội bộ không phụ thuộc đám mây (Air-gapped Edge Privacy).
 
-### Ứng viên 1 (khuyến nghị ưu tiên cao nhất) — Camera + ArUco làm KÊNH TỰ KIỂM TRA ĐỘC LẬP, chạy liên tục, không chỉ dùng một lần trên bench
-
-**Hiện trạng:** camera USB + nhận diện marker ArUco đã được test chạy OK trên Orange Pi (`docs/OUTLINE_BAOCAO_VISEFD.md` §5), nhưng mới được xếp vai trò **P1, một lần**: đối chứng góc khi hiệu chuẩn GATE B, song song với thước đo góc chuẩn chính (P0).
-
-**Đề xuất nâng cấp vai trò:** thay vì chỉ dùng trong phòng thí nghiệm lúc hiệu chuẩn, chạy nhận diện ArUco **song song, liên tục, trong mọi phiên đo** như một **kênh thứ hai độc lập** đối chiếu chéo với góc suy luận từ tín hiệu áp trở. Khi hai kênh **lệch nhau vượt ngưỡng**, hệ thống tự gắn cờ phiên đo "không đáng tin" — đây chính là việc mở rộng trực tiếp cho **GATE E** (hiện chỉ tự kiểm tra bằng tín hiệu nội tại của chính mình) thành một hệ tự kiểm tra **hai kênh vật lý độc lập thật sự**, mạnh hơn hẳn so với một hệ chỉ tự đối chiếu với chính nó.
-
-**Vì sao đây là ứng viên sáng nhất:** (a) không cần dữ liệu huấn luyện mới — ArUco là thuật toán hình học cổ điển, không phải mô hình học máy cần huấn luyện; (b) giải quyết đúng điểm yếu lớn nhất mà hội đồng chắc chắn sẽ hỏi ("làm sao biết cảm biến không nói dối?"); (c) tận dụng đúng năng lực NPU đã kiểm chứng hoạt động, không hứa hẹn một thứ chưa test; (d) chi phí gần như bằng 0 (camera USB ~0,3 triệu đã có trong dự toán `research/notebook/2026-09-29_measurability_M-checklist.md`).
-
-**Giới hạn phải nói rõ:** camera chỉ nhìn được khi không bị khung ngoại cốt/tay che khuất một phần (`SRC-VISION-GLOVE-OCCLUSION-TONG-2025` đã ghi nhận hạn chế này cho thị giác máy nói chung) — vì vậy đây là kênh **đối chứng bổ sung**, không thay thế cảm biến áp trở, và không dùng được khi đeo thiết bị thực tế tại nhà (chỉ dùng trong các phiên hiệu chuẩn/kiểm định định kỳ có camera).
-
-### Ứng viên 2 — Suy luận INT8 cho mô hình phân loại hướng (ý tưởng GATE F gốc)
-
-Giữ nguyên quy trình gốc: huấn luyện baseline (hồi quy tuyến tính/rừng ngẫu nhiên; chỉ dùng mạng nơ-ron nếu baseline không đủ) → lượng tử hóa INT8 → RKNN → chạy trên NPU; đo độ trễ (mục tiêu tham khảo cũ: ≤ 50 ms), mức giảm độ chính xác so với FP32, độ ổn định khi chạy liên tục. **Vẫn là một việc hợp lệ và nên làm**, nhưng xếp sau ứng viên 1 vì: đây là việc "NPU nào cũng làm được" (không phải điểm khác biệt), và chưa giải quyết thêm điểm yếu nào mới của đề tài ngoài tốc độ.
-
-### Ứng viên 3 — ĐÃ TÁCH RA KHỎI DANH SÁCH NHIỆM VỤ ORANGE PI (2026-10-13)
-
-> **Vì sao tách:** ban đầu đặt bandit/RL ở đây vì nó *có thể* chạy trên Orange Pi 5 Pro, nhưng thuật toán bandit cực nhẹ (chỉ cập nhật vài con số sau mỗi lượt thử) — không cần NPU, thậm chí không cần CPU mạnh, nên gắn nó vào "nhiệm vụ của Orange Pi 5 Pro" là một cách đóng gói yếu: giá trị thật của nó nằm ở phương pháp thí nghiệm, không nằm ở phần cứng chạy nó. Ép nó phải "xứng" với một con chip 6 TOPS sẽ tạo ra một câu hỏi phản biện tự hại ("sao cần NPU cho việc này?"). Quyết định: Orange Pi 5 Pro **không cần** nhiệm vụ này để có lý do tồn tại, và nhiệm vụ này **không cần** Orange Pi để có giá trị. Hai việc độc lập — xem `07_ral_phantom_and_ktv_interview.md` §3b, nơi bandit/RL đứng bằng chính giá trị phương pháp luận của nó (ít lượt thử hơn mà vẫn tin được), không gắn với bất kỳ thiết bị cụ thể nào. Thuật toán này có thể chạy trên máy tính đang điều khiển rig hiện có (laptop/PC), hoặc trên Orange Pi 5 Pro nếu tiện — việc đó không ảnh hưởng tới giá trị học thuật của nó.
-
-**Quyết định cuối cùng cho nhiệm vụ Orange Pi 5 Pro** (chọn ứng viên 1, ứng viên 2, hay cả hai) **chờ owner chốt** — file này chỉ trình bày phân tích, không tự ý chọn thay. Khi chốt, cập nhật lại §4 này thành một "GATE EDGE" chính thức có tiêu chí PASS/FAIL, theo đúng nguyên tắc `DEC-METRIC-001`.
+### Tiêu chí nghiệm thu GATE EDGE (Thay thế GATE F cũ):
+- **Độ trễ suy luận chính sách (Latency):** $\le 20\text{ ms}$ trên NPU RK3588 (INT8 `.rknn`).
+- **Hiệu quả bù trừ vật liệu Velostat:** Sai số trôi (drift) và trễ (hysteresis) sau bù giảm $\ge 60\%$ so với tín hiệu thô trên cùng một chu kỳ tải 100 lần.
+- **Tính độc lập thời gian thực:** ESP32-S3 duy trì tần số ngắt an toàn $\ge 100\text{ Hz}$ không bị nghẽn bởi truyền thông dữ liệu với Orange Pi.
 
 ---
 

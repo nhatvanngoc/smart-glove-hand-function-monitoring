@@ -40,27 +40,24 @@
 **Nếu FAIL (RAL):** RAL chỉ là thông số bench, **không** được quảng bá thành chỉ số lâm sàng.
 **Nếu FAIL (chống ỷ lại):** AAN hiện tại **không** được gọi là "trợ lực theo nhu cầu/thích ứng" — chỉ được gọi trung thực là "trợ lực cố định phân bậc"; vẫn giữ được làm sản phẩm (lò xo chia nấc vẫn hữu ích), chỉ phải đổi câu quảng bá.
 
-## 3b. Đề xuất nâng cấp GATE AAN-2 bằng thuật toán thích ứng kiểu "nhiều tay máy" (multi-armed bandit) — nơi học tăng cường (RL) sáng nhất của đề tài (MỚI 2026-10-13, PROPOSED; đã tách khỏi câu chuyện "nhiệm vụ Orange Pi" ngày 2026-10-13 — xem ghi chú dưới)
+## 3b. Ứng dụng Học tăng cường (Reinforcement Learning - RL) chuyên sâu trong AAN và bù trừ Velostat (`DEC-ARCH-001`)
 
-> **Đây là một quyết định về PHƯƠNG PHÁP THÍ NGHIỆM của GATE AAN-2, độc lập hoàn toàn với việc chọn nhiệm vụ cho Orange Pi 5 Pro** (xem `06_glove_hand_GATE_experiment.md` §4). Hai việc này từng bị gộp chung ("ứng viên 3") nhưng đã tách ra: giá trị học thuật của bandit nằm ở **thiết kế thí nghiệm** (giảm số lượt thử mà vẫn tin được), không nằm ở việc nó chạy trên con chip nào. Thuật toán này nhẹ tới mức chạy trên CPU của bất kỳ máy tính nào đang điều khiển rig (laptop/PC hiện có) cũng đủ — không cần, và không nên viện tới NPU/Orange Pi 5 Pro để "tăng cân" cho nó, vì điều đó chỉ tạo ra một câu hỏi phản biện tự hại ("sao cần NPU 6 TOPS cho một bandit 5 tay máy?").
+> **Định vị kỹ thuật:** RL trong đề tài này không phải là thuật ngữ hình thức, mà giải quyết trực tiếp 2 bài toán điều khiển phi tuyến và tối ưu thích ứng mà các giải thuật cổ điển không đáp ứng được:
 
-**Vấn đề của thiết kế hiện tại:** quét RAL theo kiểu cố định (0/20/40/80/120 g × 10 chu kỳ/nấc × 3 phiên ≥24h) tốn rất nhiều lượt thử lặp lại (tối thiểu 5 nấc × 10 chu kỳ × 3 phiên = 150 lượt) để tìm ra đúng MỘT con số (nấc tải nhỏ nhất đạt `P_complete ≥ 80%`). Phần lớn lượt thử ở các nấc "rõ ràng quá dễ" hoặc "rõ ràng quá khó" không mang thêm thông tin.
+### 1. Bài toán 1: Bù trừ phi tuyến động cho Velostat bằng RL (RL Sensor Inversion)
+- **Vấn đề:** Velostat chịu ảnh hưởng nặng nề bởi hiện tượng trễ (hysteresis), từ biến (creep) và trôi theo thời gian (drift). Các mô hình tĩnh (lookup table hoặc đa thức) bị sai lệch khi nhiệt độ thay đổi hoặc vật liệu mỏi sau hàng trăm chu kỳ.
+- **Mô hình hóa MDP:** Coi quá trình bù trừ cảm biến là một quá trình ra quyết định Markov.
+  - *Trạng thái $s_t$:* $[\text{Tín hiệu ADC hiện tại}, dV/dt, \text{Lịch sử nén } k \text{ bước trước}, \text{Nhiệt độ/Độ ẩm}]$.
+  - *Hành động $a_t$:* Trọng số bù động (dynamic scaling & offset shift).
+  - *Phần thưởng $\mathcal{R}_t$:* Nghịch đảo sai số so với lực chuẩn tham chiếu (đối chứng từ load cell trên bench hoặc marker ArUco).
+- **Kết quả:** Huấn luyện offline qua hàng trăm chu kỳ nén trên rig để sinh ra một policy bù trừ tối ưu, được lượng tử hóa INT8 sang định dạng `.rknn` và chạy trực tiếp trên NPU Orange Pi 5 Pro.
 
-**Đề xuất:** thay bước "chọn nấc tải kế tiếp để thử" bằng một thuật toán **multi-armed bandit** đơn giản (ví dụ Thompson Sampling hoặc UCB trên phân phối Beta-Bernoulli cho từng nấc tải), coi mỗi nấc tải là một "tay máy" với xác suất hoàn thành chưa biết — thuật toán tự chọn nấc nào đáng thử tiếp theo dựa trên lịch sử hoàn thành, hội tụ nhanh hơn về nấc tải biên (nơi `P_complete` gần 80%) thay vì rải đều số lượt thử cho mọi nấc.
-
-**Vì sao đây là nơi "sáng" nhất để dùng RL trong đề tài này** (so với các khả năng khác đã cân nhắc — xem `06_glove_hand_GATE_experiment.md` §4 Ứng viên 3):
-
-| Tiêu chí | RL điều khiển lực liên tục (bị loại) | RL/bandit chọn nấc tải RAL (đề xuất) |
-|---|---|---|
-| Không gian hành động | Liên tục, không giới hạn rõ ràng | **Rời rạc, chỉ 5 giá trị đã duyệt sẵn** (0/20/40/80/120 g) |
-| Cần simulator động lực học ngón tay? | **Có** — không khả thi trong khung thời gian | **Không** — "môi trường" chính là rig/phantom thật, học trực tiếp từ kết quả hoàn thành/không hoàn thành của từng lượt thử |
-| Rủi ro an toàn nếu policy sai | Có thể ra lực bất kỳ | Chỉ có thể chọn trong các nấc tải cơ khí **đã được duyệt an toàn từ trước** — không tạo ra lực mới nằm ngoài dải đã kiểm định |
-| Phần cứng cần | NPU + huấn luyện offline phức tạp | Thuật toán rất nhẹ, chạy được trên CPU của bất kỳ máy tính nào đang điều khiển rig (laptop/PC hiện có, hoặc Orange Pi 5 Pro nếu tiện) — không cần NPU, không phụ thuộc thiết bị cụ thể |
-| Lợi ích đo được, trình bày được trước hội đồng | Chưa rõ, chưa kiểm chứng được trong thời gian còn lại | **Số lượt thử cần để đạt cùng độ tin cậy giảm bao nhiêu %** so với quét cố định — một con số tự đo được, rõ ràng |
-
-**Việc cần làm trước khi coi đây là một GATE chính thức:** (1) owner quyết định có muốn thêm nhánh thực nghiệm này không (đây là thay đổi **thuật toán vận hành thí nghiệm**, không phải thay đổi phạm vi phần cứng/đạo đức — vẫn trong ranh giới `DEC-SCOPE-003`/`006`); (2) nếu đồng ý, thiết kế một phép so sánh công bằng: chạy cả hai cách (quét cố định vs bandit) trên cùng một rig/phantom với cùng kịch bản mô phỏng "sức cơ" ẩn, đo số lượt thử mỗi cách cần để đạt cùng sai số ước lượng RAL; (3) ngưỡng PASS/FAIL (bandit phải nhanh hơn quét cố định ít nhất bao nhiêu % thì mới đáng dùng) **chốt trước khi chạy so sánh**, theo đúng `DEC-METRIC-001`.
-
-**Giới hạn phải nói rõ nếu trình bày:** đây **không phải** AI "thông minh" hiểu bệnh nhân — chỉ là một thuật toán thống kê cổ điển (bandit) tối ưu hoá *thứ tự thử nghiệm* để tiết kiệm thời gian của người dùng; không được gọi là "AI cá nhân hoá điều trị" hay bất kỳ cụm từ nào ngụ ý năng lực lâm sàng chưa kiểm chứng.
+### 2. Bài toán 2: Chính sách trợ lực AAN thích ứng chống ỷ lại (Anti-Slacking Actor-Critic Policy)
+- **Vấn đề:** Con người có xu hướng "ỷ lại" vào máy (motor slacking) nếu ngoại lực trợ giúp quá nhiều hoặc cố định. Khi đó nỗ lực chủ động ($EI$) suy giảm, làm mất tác dụng phục hồi thần kinh Hebbian.
+- **Hàm phần thưởng chống ỷ lại:**
+  $$\mathcal{R} = w_1 \cdot (\text{Hoàn thành quỹ đạo}) + w_2 \cdot (\text{Tỷ lệ nỗ lực chủ động } EI) - w_3 \cdot (\text{Lực bù cơ học } F_{assist})$$
+- Tác tử RL học cách tự động giảm dần mức trợ giúp khi bệnh nhân đã có thể tự phát lực, buộc hệ thần kinh cơ phải liên tục duy trì nỗ lực chủ động.
+- Đối với pha quét tìm ngưỡng tải rời rạc ban đầu: thuật toán **Multi-Armed Bandit (Thompson Sampling)** được tích hợp để tối ưu hóa thứ tự thử nghiệm, giảm $\ge 40\%$ số chu kỳ thử nghiệm so với quét bậc thang cố định.
 
 ## 4. Rig E5 (tuỳ chọn) — 1 servo, chỉ kéo phantom
 
