@@ -130,6 +130,16 @@ Ngân sách độ phân giải/tốc độ khung (dự kiến, **phải đo lạ
 
 ## 9. Việc tiếp theo (theo thứ tự)
 
+-1. ✅ **ĐÃ LÀM 2026-10-13 (`DEC-PROP-003`):** Ban KHKT ra thông báo chính thức khuôn đề cương nộp
+   vòng trường (6 mục: Tên dự án/Lý do/Mục tiêu/Ý tưởng-nội dung/Sản phẩm dự kiến/Tính khả thi),
+   **hạn nộp 17h 18/10/2026**, nộp Word/PDF qua link sẽ có ở nhóm Zalo CLB KHKT. Đã soạn
+   `docs/DE_CUONG_NOP_BAN_KHKT_2026-10-18.md` theo đúng khuôn này (tái dùng nội dung từ
+   `docs/DE_CUONG_NGAN_5-7_TRANG_DRAFT.md`/`docs/DE_CUONG_NOP_TRUONG.md`). Phát hiện khi soạn mục
+   Tính khả thi: theo `protocols/08` thì GATE 0 (~3 tuần) + GATE C (≥28 ngày trôi) khiến đề tài
+   **không thể xong toàn bộ GATE 0→F trước cuối tháng 11/2026** — đã viết trung thực hướng này
+   thay vì hứa hẹn, nhưng **chưa qua owner duyệt cách đóng khung**.
+   ☐ **CHỜ OWNER (gấp, hạn 18/10):** duyệt nội dung + cách đóng khung "Tính khả thi";
+   điền 3 ô danh tính; xác nhận link nộp khi Ban KHKT công bố; xuất file sang .docx/.pdf để nộp.
 0. ✅ **ĐÃ LÀM 2026-10-11:** đọc toàn bộ repo + xác nhận setup môi trường (venv/pip/bootstrap/check --strict 10/11/context bundle); đọc toàn văn `research/notebooklm_sync/` (10 file: README, 5 experiment log, 1 chat transcript 402 dòng, 3 file studio) và phát hiện bản đề cương chưa đồng bộ `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (2026-10-03, 16tr). Theo chỉ đạo minh thị của chủ dự án: `DEC-SYNC-002` (công nhận bản mới) + `DEC-SCOPE-006` (AAN = trụ cột thứ 4, ranh giới an toàn không đổi) + `DEC-PHASE-002` (ghi nhận bring-up phần cứng thật do chủ dự án tự làm, chưa chính thức hoá GATE 0) + `DEC-TITLE-003` (4 phương án tên, PROPOSED). Cập nhật README §1/§6.1/§8/§10/§11, AGENTS.md §2, +6 nguồn/+3 claim/+5 quyết định.
    ☐ **CHỜ OWNER:** chọn phương án tên (`DEC-TITLE-003`); xác nhận `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` có phải bản sẽ nộp lại; chính thức hoá log bring-up thành GATE 0 hợp lệ; xác nhận đổi tên cảm biến SHT30→AHT20.
 0. ✅ **ĐÃ LÀM 2026-09-27:** đồng bộ bản nộp `docs/DE_CUONG.pdf` (2026-09-26) → `research/reviews/2026-09-27_decuong_pdf_sync.md`;
