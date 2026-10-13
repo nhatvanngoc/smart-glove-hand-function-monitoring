@@ -73,22 +73,21 @@ cột kỹ thuật chính thức của đề tài, không phải tính năng ph�
 | # | Mục tiêu | Cổng kiểm chứng (GATE) |
 |---|---|---|
 | M1 | Chế tạo sensing element áp trở (Velostat) trên vách khung ngón tay, có độ lặp lại đo được | GATE 0 |
-| M2 | Suy luận dấu gập/duỗi của khớp ngón từ mẫu kích hoạt trên vách, không cần encoder/IMU | GATE A |
-| M3 | Tái tạo tầm vận động dưới dạng chỉ số tương đối, đối chiếu với chuẩn cơ khí đã biết | GATE B |
-| M4 ⭐ (cổng sống còn của nhánh Đo) | Chứng minh hệ thống phát hiện được thay đổi chức năng mô phỏng thật, lớn hơn nhiễu/trôi của chính nó | GATE C |
+| M2 | Suy luận chiều gập/duỗi từ mẫu vi sai hai vách và lượng hóa mức độ kích hoạt nỗ lực (Bản đồ động học) | GATE A |
+| M3 ⭐ (cổng sống còn của nhánh Đo) | Chứng minh hệ thống phát hiện được thay đổi chức năng mô phỏng thật, lớn hơn nhiễu/trôi của chính nó | GATE C |
 
 **Nhánh Trợ lực - AAN:**
 
 | # | Mục tiêu | Cổng kiểm chứng (GATE) |
 |---|---|---|
-| M5 | Phát hiện được nỗ lực chủ động của người dùng trước khi ngón thực sự di chuyển - nền tảng để trợ lực đúng lúc | GATE AAN-1 |
-| M6 ⭐ (cổng sống còn của nhánh Trợ lực) | Chứng minh AAN không chỉ là một lò xo trợ lực cố định: đường cong tải-hoàn thành (RAL) ổn định VÀ mức tham gia chủ động không bị xói mòn về 0 qua các lần thử (không gây ỷ lại) | GATE AAN-2 |
+| M4 | Phát hiện được nỗ lực chủ động của người dùng trước khi ngón thực sự di chuyển - nền tảng để trợ lực đúng lúc | GATE AAN-1 |
+| M5 ⭐ (cổng sống còn của nhánh Trợ lực) | Chứng minh AAN không chỉ là một lò xo trợ lực cố định: đường cong tải-hoàn thành (RAL) ổn định VÀ mức tham gia chủ động không bị xói mòn về 0 qua các lần thử (không gây ỷ lại) | GATE AAN-2 |
 
 **Cổng Trạm Y Sinh Biên (Orange Pi 5 Pro):**
 
 | # | Mục tiêu | Cổng kiểm chứng (GATE) |
 |---|---|---|
-| M7 | Trạm biên Orange Pi 5 Pro (RK3588, NPU 6 TOPS) thực thi mô hình RL bù trôi/trễ Velostat và suy luận lực trợ lực AAN thời gian thực ($\le 20\text{ ms}$), kết hợp camera đối chứng góc độc lập | GATE EDGE |
+| M6 | Trạm biên Orange Pi 5 Pro (RK3588, NPU 6 TOPS) thực thi mô hình RL bù trôi/trễ Velostat và suy luận lực trợ lực AAN thời gian thực ($\le 20\text{ ms}$), kết hợp camera đối chứng góc độc lập | GATE EDGE |
 
 *(Lưu ý về phạm vi kiểm định: Các tiêu chuẩn an toàn thiết bị y sinh và độ tin cậy vận hành dài hạn sẽ do cơ quan thử nghiệm lâm sàng độc lập / phòng kiểm định chuyên môn thực hiện, học sinh không tự cấp chứng nhận kiểm định — theo quyết định DEC-GATE-003).*
 

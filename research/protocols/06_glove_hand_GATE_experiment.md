@@ -15,13 +15,12 @@
 
 ## 0. Bảng tổng hợp — hai nhánh song song
 
-### Nhánh ĐO (assessment) — GATE 0 → A → B → C⭐
+### Nhánh ĐO (assessment) — GATE 0 → A → C⭐
 
 | Cổng | Câu hỏi | Nếu FAIL |
 |---|---|---|
 | **GATE 0** | Sensing element tự chế có lặp lại được không? | Dừng — chưa làm được cảm biến thì không có gì để nghiên cứu |
-| **GATE A** | Hệ thống có phân biệt được **hướng** tác động không? | Bỏ tính năng "cảm biến hướng"; lùi về đo lực đơn thuần |
-| **GATE B** | Có tái tạo được bàn tay 3D đủ trung thực không? | Bỏ mục tiêu 3D, chỉ báo cáo chỉ số lực |
+| **GATE A** | Mảng áp trở vi sai có phân biệt được **chiều gập/duỗi** VÀ lượng hóa **mức kích hoạt nỗ lực** (Bản đồ động học) không? | Bỏ tính năng "hướng lực & kích hoạt"; lùi về đo lực một chiều đơn thuần |
 | **GATE C** ⭐ | Thay đổi chức năng thật có **lớn hơn** drift/nhiễu không? | **DỪNG ĐỀ TÀI** hoặc đổi trục nghiên cứu |
 
 ### Nhánh TRỢ LỰC — AAN (trụ cột thứ 4, `DEC-SCOPE-006`) — GATE AAN-1 → AAN-2⭐
@@ -69,51 +68,31 @@
 
 ---
 
-## GATE A — Phân biệt HƯỚNG (điểm kỹ thuật trung tâm của đề tài)
+## GATE A — Nhận diện Hướng vận động & Bản đồ kích hoạt nỗ lực động (`DEC-GATE-004`)
 
-**Câu hỏi:** Với nhiều sensing element trên các vách của khung, hệ thống có xác định đúng **chiều** của lực/phản lực tác động không?
+> **Cập nhật 2026-10-13 (`DEC-GATE-004`):** Đã loại bỏ hoàn toàn khái niệm "tái tạo góc bàn tay 3D" (GATE B cũ) vì mâu thuẫn vật lý: cảm biến áp trở chỉ đo lực nỗ lực tiếp xúc, không có quan hệ đơn ánh với góc khớp sinh học và không thể đổi trực tiếp sang độ ($^\circ$). Toàn bộ việc đánh giá không gian và lực được hợp nhất vào **GATE A mới**: kết hợp suy luận chiều vận động (gập vs duỗi) với lượng hóa các mức nỗ lực (Bản đồ kích hoạt động học).
 
-**Phantom:** khung găng in 3D gắn trên **cánh tay phantom** (hoặc bàn tay giả in 3D) có thể gây lực theo hướng biết trước bằng quả nặng/lò xo.
+**Câu hỏi khoa học:** Với mảng sensing element đối xứng trên hai vách cứng (lòng – mu) của khung nẹp, hệ thống có: (1) Xác định đúng **chiều** gập/duỗi từ dấu vector vi sai $S_{palmar} - S_{dorsal}$; và (2) Lượng hóa được các **mức kích hoạt nỗ lực** để hiển thị trực quan bản đồ động học (Kinetic Activation Map) cho kỹ thuật viên theo dõi không?
 
-**Quy trình:**
-1. Gây lực theo 4 hướng chuẩn trên mặt phẳng (gập, duỗi, trái, phải) ở 3 mức lực (nhỏ/vừa/lớn) × mỗi mức 20 lần.
-2. Ghi đồng thời: nhãn hướng (ground truth do người đặt lực gán) + vector kênh thô.
-3. Lặp ở **3 vị trí đặt lực khác nhau** trên cùng lóng ngón để kiểm tra hệ thống có phụ thuộc điểm đặt lực không.
-4. Phân tích: ma trận nhầm lẫn (confusion matrix) + độ chính xác phân loại hướng.
-
-**Thước đo:** accuracy phân loại hướng, tỷ lệ nhầm lẫn giữa cặp hướng đối diện, khoảng cách Euclid giữa vector trung bình của hai hướng đối lập.
-
-> 📚 **Mốc tham chiếu từ y văn** (thêm 2026-09-19 sau lượt rà soát prior art; **không** đổi ngưỡng — DEC-METRIC-001): các găng đo góc khớp không-IMU đã công bố precision ~1,67% FS / RMS < 3,29° (`SRC-GRATING-GLOVE-2021`), sai số góc ±6° cho găng bend+force dùng để đánh giá chức năng tay (`SRC-FUNCASSESS-2016`), ART-Glove dùng encoder cho 22 DoF (`SRC-ARTGLOVE-2026`). **Nếu GATE A/B chỉ đạt mức "phân loại được hướng" mà sai số lớn hơn hẳn các mốc đó, phải trình bày là bước proof-of-concept và nêu rõ khoảng cách**, không so sánh một chiều với "không dùng IMU".
-
-**Tiêu chí PASS (chốt trước):**
-- Phân loại 4 hướng: accuracy ≥ **85%** trên phantom.
-- Phân biệt **cặp đối lập** (gập vs duỗi): accuracy ≥ **90%**.
-- Vector trung bình của hai hướng đối lập phải **ngược dấu** một cách hệ thống.
-
-**Nếu FAIL:** loại bỏ claim "cảm biến hướng"; chuyển sang báo cáo chỉ số lực đơn hướng và ghi rõ lý do.
-
----
-
-## GATE B — Tái tạo bàn tay 3D
-
-**Câu hỏi:** Từ trường lực-hướng rời rạc, hệ thống suy luận được hướng gập/duỗi từng khớp và dựng lại bàn tay 3D ở mức chuyên gia đọc hiểu được không?
-
-**Ground truth:** phantom có **khớp đặt được góc biết trước** (in 3D với chốt hãm ở các góc 0°, 30°, 60°, 90°) hoặc goniometer trên phantom.
+**Phantom thử nghiệm:** Khung găng in 3D gắn trên bàn tay giả (phantom) có thể tác động lực theo hướng biết trước bằng quả cân/lò xo chuẩn.
 
 **Quy trình:**
-1. Đặt phantom ở từng tổ hợp góc đã biết (bắt đầu đơn khớp, sau đó đa khớp).
-2. Thu dữ liệu, chạy mô hình suy luận, xuất mô hình bàn tay 3D.
-3. So sánh **góc suy luận** với **góc đặt thật**.
-4. Lặp lại 3 lần mỗi tổ hợp để đánh giá độ ổn định.
+1. Tác động lực theo 2 chiều (gập, duỗi) ở 3 mức lực nỗ lực chuẩn ($1\text{ N}, 3\text{ N}, 5\text{ N}$) $\times$ mỗi mức 20 lần lặp.
+2. Ghi đồng thời: nhãn chiều nỗ lực + mức lực chuẩn (ground truth) + vector vi sai nội tại.
+3. Kiểm tra tính độc lập điểm đặt lực: lặp lại ở các vị trí tiếp xúc khác nhau trên cùng lóng ngón.
+4. Trực quan hóa dữ liệu thời gian thực trên Dashboard: hiển thị thanh mức nỗ lực (Activation Bar / Heatmap).
 
-**Thước đo:** MAE (độ) theo khớp; RMSE; tương quan giữa góc suy luận và góc thật; đánh giá định tính của KTV (có đọc được động tác không).
+**Thước đo:**
+- Độ chính xác phân loại chiều gập/duỗi (Accuracy, %).
+- Tỷ lệ phân tách đúng 3 dải nỗ lực ($< 1,5\text{ N}$; $1,5–3,5\text{ N}$; $> 3,5\text{ N}$).
+- Độ tương phản tín hiệu giữa hai trạng thái đối lập (SNR vi sai).
 
 **Tiêu chí PASS (chốt trước):**
-- MAE ≤ **15°** cho các khớp MCP/PIP trên phantom (đây là mức của một hệ thống proof-of-concept, **không** phải mức thiết bị y tế).
-- Tương quan góc suy luận vs góc thật `r ≥ 0,8`.
-- KTVVLTL-PHCN xem mô hình 3D và xác nhận **phân biệt được** gập/duỗi từng ngón (đánh giá định tính, ghi lại nguyên văn).
+- Phân biệt cặp đối lập (gập vs. duỗi): Accuracy $\ge \mathbf{90\%}$ trên phantom. Vector trung bình của hai chiều phải **ngược dấu tuyệt đối**.
+- Phân tách mức kích hoạt nỗ lực: Accuracy phân cấp 3 dải lực $\ge \mathbf{85\%}$.
+- Trực quan hóa bản đồ áp lực: Kỹ thuật viên xem giao diện thời gian thực và phân biệt chính xác trạng thái kích hoạt của từng ngón mà không cần nhìn tay thật.
 
-**Nếu FAIL:** hạ mục tiêu 3D xuống "trực quan hóa mức độ kích hoạt" thay vì "tái tạo góc".
+**Nếu FAIL:** Loại bỏ tính năng "suy luận hướng lực & bản đồ kích hoạt"; lùi về báo cáo chỉ số lực nén một chiều đơn thuần.
 
 ---
 
