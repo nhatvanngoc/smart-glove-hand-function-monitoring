@@ -93,7 +93,7 @@ Với 24 kênh dùng **2 × CD74HC4067**: cả hai MUX đưa tín hiệu về **
 
 > **Nguyên tắc thiết kế cơ khí đi kèm:** mỗi sensing element phải được **kéo trước (preload)** một lực nhỏ, xác định, để tín hiệu có cả nhánh dương và nhánh âm quanh điểm làm việc. Không preload thì không đo được chiều.
 > 
-> *Chi tiết triển khai cơ cấu cơ khí nẹp ngón, khoang âm preload $9.5 \times 6.8 \times 1.2\,\text{mm}$, bản lề Print-in-Place và khớp rãnh trượt tự lựa bù 13.5mm: xem tài liệu chuyên sâu [`docs/06_Co_Cau_Co_Khi_Exoskeleton.md`](06_Co_Cau_Co_Khi_Exoskeleton.md) và thư mục CAD 3D [`3d_model/custom_exo/full_finger_modular/`](../3d_model/custom_exo/full_finger_modular/).*
+> *Chi tiết triển khai cơ cấu cơ khí nẹp ngón, khoang âm preload $9.5 \times 6.8 \times 1.2\,\text{mm}$, bản lề Print-in-Place và khớp rãnh trượt tự lựa bù 13.5mm: xem tài liệu chuyên sâu [`docs/06_Co_Cau_Co_Khi_Exoskeleton.md`](06_Co_Cau_Co_Khi_Exoskeleton.md) và thư mục CAD 3D [`3d_model/custom_exo/full_finger_modular/`](../3d_model/custom_exo/full_finger_modular/). Riêng bài toán đóng/mở vỏ nẹp quanh một đốt ngón (để bệnh nhân tự đeo/tháo một tay) đang được thử nghiệm song song, chưa tích hợp chính thức — xem [`3d_model/custom_exo/fixation_mechanisms_benchmark/README.md`](../3d_model/custom_exo/fixation_mechanisms_benchmark/README.md).*
 
 ---
 
@@ -120,6 +120,8 @@ Velostat (R_sensor thay đổi theo lực)
 | Nhiễu ADC ESP32-S3 (ENOB thực ~9–10 bit) | vài LSB | Lấy trung bình N mẫu |
 | Nhiễu nguồn/đường dẫn | phụ thuộc layout | Tụ lọc, dây ngắn, mass chung chắc chắn |
 | Điện trở tiếp xúc copper–Velostat | có thể lớn, thay đổi theo tải | Preload + kẹp cơ khí ổn định |
+
+> **Xác nhận độc lập từ y văn (2026-10-11, `CLM-HW-005`):** hạn chế độ chính xác của Velostat trong bảng trên không phải suy đoán — 2 nguồn thực nghiệm độc lập đo được sai số **16–48% trên toàn thang đo** khi dùng Velostat làm cảm biến áp lực (`SRC-VELOSTAT-HOPKINS-2020`: ổ khớp chi giả; `SRC-VELOSTAT-INSOLE-DEFAZIO-2021`: lót giày đo dáng đi), kèm hiện tượng trễ (hysteresis). Đây là lý do `docs/02` §7.3 định nghĩa EI/GAP/RAL là chỉ số **tương đối, trong-cùng-một-người**, không phải lực tuyệt đối theo N — khớp đúng với giới hạn vật liệu đã biết, không phải né tránh.
 
 **Lấy trung bình:** nhiễu ngẫu nhiên giảm theo `√N`.
 - N = 16 → giảm ~4 lần (~2 bit hiệu dụng) → **~11 bit hiệu dụng**.

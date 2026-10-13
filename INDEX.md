@@ -1,9 +1,9 @@
 # 📑 INDEX — Sơ đồ file của dự án
 
-> **Đề tài:** Nghiên cứu và phát triển **găng tay thông minh hỗ trợ đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ**
+> **Đề tài (`DEC-TITLE-003`, 2026-10-11):** Nghiên cứu và phát triển **găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ** (hồ sơ đã nộp vẫn dùng tên cũ `DEC-TOPIC-019`, xem README header)
 > **Học sinh:** Văn Ngọc Nhật Anh — THPT Quảng Trị
-> **Cập nhật:** 2026-09-19 (lượt rà soát prior art 1; novelty dịch từ A sang C — chờ `DEC-NOV-001`)
-> **Trạng thái:** định hướng + thiết kế + **prior art lượt 1 chưa hoàn tất**. **Chưa có kết quả thực nghiệm.**
+> **Cập nhật:** 2026-10-11 (đồng bộ bản đề cương mới `de_cuong/` + đọc `research/notebooklm_sync/`; AAN nâng thành trụ cột thứ 4 — `DEC-SCOPE-006`)
+> **Trạng thái:** cơ sở lý thuyết & thiết kế hoàn tất; chủ dự án đã tự thực hiện bring-up phần cứng thật (`DEC-PHASE-002`), **chưa đạt chuẩn GATE 0 chính thức** (`research/bench/logs/` vẫn trống theo schema).
 
 ---
 
@@ -18,10 +18,15 @@
 ├── requirements.txt               ← numpy, matplotlib, scikit-learn
 ├── 3d_model/                          ← ⭐ Thiết kế cơ cấu cơ khí nẹp ngón tay (CAD & 3D Print)
 │   ├── custom_exo/full_finger_modular/ ← Bộ 3 đốt module hóa Print-in-Place + Khớp rãnh trượt 13.5mm (STL/STEP/FCStd)
+│   ├── custom_exo/fixation_mechanisms_benchmark/ ← 9 phương án cơ cấu đóng/mở nẹp 1 đốt (Mech 1-9), đã in thử thực tế; Mech 9 (hiện tại) CHƯA có file CAD — xem README trong thư mục
 │   ├── generate_full_finger_modular.py ← Script FreeCAD Python sinh tham số toàn bộ ngón tay
 │   └── render_full_finger.py          ← Script kết xuất đồ họa trực quan 4 góc nhìn
+├── de_cuong/
+│   ├── DE_CUONG_NGHIEN_CUU.pdf / .docx (= _BAN_MOI, MD5 trùng) ← ⭐ BẢN ĐỀ CƯƠNG MỚI NHẤT (16 tr., tạo 2026-10-03) — có Mục 10 (AAN+RAL trên giàn+phantom); chưa rõ đã nộp lại hay chỉ là bản song song (`DEC-SYNC-002`)
+│   ├── DE_CUONG_NGHIEN_CUU_COBROWSE.docx ← bản rút gọn/khác (40 KB, chưa đọc chi tiết)
+│   └── build_docx.py / make_figures.py / make_plots.py / write_section1.py / figures/ / tikz/ ← script dựng bản PDF/docx ở trên
 ├── docs/
-│   ├── DE_CUONG.pdf / DE_CUONG.txt    ← ⭐ BẢN ĐÃ NỘP (15 tr., 2026-09-26) + trích text tra cứu
+│   ├── DE_CUONG.pdf / DE_CUONG.txt    ← ⭐ BẢN ĐÃ NỘP TRƯỜNG (15 tr., 2026-09-26) + trích text tra cứu
 │   ├── DE_CUONG_NOP_TRUONG.md         ← Đề cương nộp trường (bản md; danh tính đã điền từ PDF)
 │   ├── 01_Topic_Definition.md         ← Đề tài, RQ 2 tầng, novelty, pipeline, killer experiment
 │   ├── 02_Theoretical_Foundation.md   ← CƠ SỞ LÝ THUYẾT (…+ §11 ghi chú định nghĩa theo bản nộp)
@@ -61,6 +66,7 @@
 │   ├── reviews/2026-09-27_decuong_pdf_sync.md ← ⭐ ĐỐI CHIẾU BẢN NỘP với repo (F1–F14, G0↔C1, sổ I/L/R, 6 QĐ chờ chốt)
 │   ├── reviews/2026-09-19_prior_art_novelty_gate1.md ← ⭐ KẾT QUẢ RÀ SOÁT PRIOR ART lượt 1 (ma trận + quyết định hạ/nâng novelty)
 │   ├── reviews/archive/           ← ~20 báo cáo kill-test (đề tài cũ, lưu lịch sử)
+│   ├── notebooklm_sync/           ← ⚠️ Đồng bộ từ Google NotebookLM. `experiments/01-05` = log bring-up phần cứng thật (`DEC-PHASE-002`, chưa chính thức hoá GATE 0); `chat_transcripts/`, `studio/` = prose AI tạo sinh, cấp bằng chứng THẤP NHẤT — không trích trực tiếp vào hồ sơ nộp
 │   └── tooling/SETUP_STATUS.md    ← Trạng thái runtime/tooling
 ├── scripts/
 │   ├── bootstrap_research_tooling.sh
@@ -97,6 +103,7 @@
 
 ## ⚠️ Lịch sử quan trọng (đã xử lý)
 
+- **2026-10-11:** Đọc toàn bộ repo + setup môi trường (10/11 check); đọc toàn văn `research/notebooklm_sync/` (10 file) → phát hiện bản đề cương mới chưa đồng bộ `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (2026-10-03, 16tr, Mục 10 = cơ cấu AAN trên giàn đo + phantom). Theo chỉ đạo minh thị của chủ dự án ("AAN là một trong những trụ cột hạt nhân"): `DEC-SYNC-002` (công nhận bản đề cương mới) + `DEC-SCOPE-006` (nâng AAN thành trụ cột kỹ thuật thứ 4, **ranh giới an toàn phantom-only không đổi, không có ngoại lệ**) + `DEC-PHASE-002` (ghi nhận chủ dự án đã tự thực hiện bring-up phần cứng thật ngoài phạm vi agent — chưa đạt chuẩn GATE 0 chính thức) + `DEC-TITLE-003` (đề xuất 4 phương án tên, PROPOSED, chưa chọn). Cập nhật README (§1, §6.1 mới, §8, §10, §11, lịch sử), AGENTS.md (§2 ranh giới AAN + cảnh báo tier bằng chứng của notebooklm_sync), DECISION_LOG (+5), CLAIM_LEDGER (+3), SOURCE_LEDGER (+6).
 - **2026-08-25:** đề tài "đệm khí thích ứng + AAC" bị **xóa toàn bộ** theo DEC-TOPIC-003 (lịch sử còn trong git).
 - **2026-08-26:** chốt Hướng C — lót giày Velostat theo dõi độ cứng mô gan chân (sàng lọc DFU).
 - **2026-08-28:** **PIVOT** — bỏ DFU vì GATE 3 (Usefulness) yếu; chuyển sang **găng tay theo dõi chức năng bàn tay sau đột quỵ** (DEC-TOPIC-018).
