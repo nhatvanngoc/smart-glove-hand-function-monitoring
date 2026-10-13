@@ -1,5 +1,12 @@
 # ĐỀ CƯƠNG NGHIÊN CỨU KHOA HỌC KỸ THUẬT (BẢN NGẮN - NỘP TRƯỜNG)
 
+> **CẬP NHẬT 2026-10-13:** Ban KHKT đã ra thông báo chính thức yêu cầu đề cương nộp vòng trường theo
+> đúng 6 mục khác với cấu trúc A-D dưới đây (Tên dự án / Lý do chọn đề tài / Mục tiêu nghiên cứu /
+> Ý tưởng và nội dung nghiên cứu / Sản phẩm-kết quả dự kiến / Tính khả thi), hạn nộp 17h 18/10/2026.
+> **File dùng để nộp thật là `docs/DE_CUONG_NOP_BAN_KHKT_2026-10-18.md`**, không phải file này. File
+> này vẫn giữ lại làm tài liệu nội bộ/kho nội dung tham khảo vì nhiều đoạn văn được tái dùng sang
+> file kia.
+
 > **Trạng thái: DỰ THẢO, đề xuất 2026-10-12 - chưa chốt, chờ chủ dự án duyệt.** Mục đích file này là
 > một bản đề cương thật ngắn (5–7 trang) đúng khuôn khổ phiếu đăng ký đề tài cấp trường, khác với
 > báo cáo khoa học toàn văn (15–16 trang, `de_cuong/DE_CUONG_NGHIEN_CUU.pdf`) và bản nộp trước đó
@@ -10,6 +17,7 @@
 > Mọi ngưỡng GATE là mục tiêu cam kết trước khi đo, không phải kết quả.
 
 | Cần điền (không tự điền) | Giá trị |
+
 |---|---|
 | Họ và tên học sinh | *⟨điền⟩* |
 | Lớp / Trường / Tỉnh | *⟨điền⟩* |
