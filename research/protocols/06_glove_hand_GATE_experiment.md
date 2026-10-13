@@ -24,24 +24,22 @@
 | **GATE B** | Có tái tạo được bàn tay 3D đủ trung thực không? | Bỏ mục tiêu 3D, chỉ báo cáo chỉ số lực |
 | **GATE C** ⭐ | Thay đổi chức năng thật có **lớn hơn** drift/nhiễu không? | **DỪNG ĐỀ TÀI** hoặc đổi trục nghiên cứu |
 
-### Nhánh TRỢ LỰC — AAN (trụ cột thứ 4, `DEC-SCOPE-006`) — GATE AAN-1 → AAN-2⭐ → AAN-3
+### Nhánh TRỢ LỰC — AAN (trụ cột thứ 4, `DEC-SCOPE-006`) — GATE AAN-1 → AAN-2⭐
 
 | Cổng | Câu hỏi | Nếu FAIL |
 |---|---|---|
-| **GATE AAN-1** | Có phát hiện được **nỗ lực** khi ngón **chưa** di chuyển không? (trước đây gọi "GATE A′" trong `07`) | Bỏ Effort Index khỏi đề tài; AAN chỉ còn là lò xo trợ lực cố định, không "theo nhu cầu" |
-| **GATE AAN-2** ⭐ | Đường cong tải–hoàn thành (RAL) có đơn điệu + ổn định không, **và** mức tham gia chủ động (participation ratio) có được giữ/tăng qua các lần thử, không bị xói mòn về 0 (chống ỷ lại)? (trước đây gọi "GATE RAL" trong `07`) | RAL chỉ là thông số bench, **không** được gọi là "trợ lực thích ứng"; AAN bị hạ xuống "trợ lực cố định phân bậc" |
-| **GATE AAN-3** | Cơ cấu chấp hành có luôn tạo **đúng** `F_assist = max(0, F_target − F_phantom)` trong giới hạn an toàn (`F_max ≤ 5 N`, `t_delay ≤ 1,2 s`), **và** có tự chuyển về trạng thái an toàn khi cảm biến báo lỗi (liên kết GATE E) không? | Không được trình bày AAN là "tự điều chỉnh an toàn"; phải có công tắc/ngắt cơ khí độc lập trước khi công bố |
+| **GATE AAN-1** | Có phát hiện được **nỗ lực** khi ngón **chưa** di chuyển không? (Effort Index) | Bỏ Effort Index khỏi đề tài; AAN chỉ còn là lò xo trợ lực cố định, không "theo nhu cầu" |
+| **GATE AAN-2** ⭐ | Đường cong tải–hoàn thành (RAL) có đơn điệu + ổn định không, **và** mức tham gia chủ động (participation ratio) có được giữ/tăng qua các lần thử, không bị xói mòn về 0 (chống ỷ lại)? | RAL chỉ là thông số bench, **không** được gọi là "trợ lực thích ứng"; AAN bị hạ xuống "trợ lực cố định phân bậc" |
 
-### Cổng dùng chung cho cả hai nhánh
+### Cổng Trạm Y Sinh Biên (Edge Intelligence Station) — GATE EDGE (`DEC-ARCH-001`)
 
 | Cổng | Câu hỏi | Nếu FAIL |
 |---|---|---|
-| **GATE D** | Chạy nhiều ngày có báo động giả không? (áp dụng cho chỉ số của nhánh Đo) | Phải tăng ngưỡng hoặc bỏ tính năng cảnh báo |
-| **GATE E** | Có tự phát hiện được sensing element lỗi không? (phần chấp hành lực xem thêm GATE AAN-3) | Bỏ tính năng self-validation |
+| **GATE EDGE** | Orange Pi 5 Pro (RK3588, NPU 6 TOPS) có chạy suy luận chính sách AAN & mô hình RL bù trôi/trễ Velostat (MDP) thời gian thực ($\le 20\text{ ms}$) và đối chứng góc ArUco không? | Hạ mức xử lý biên; lùi về các thuật toán lọc tuyến tính cổ điển trên vi điều khiển |
 
-**GATE F (INT8/NPU) — TẠM HOÃN, xem §4.** Không còn là một cổng cam kết cứng cho tới khi chốt nhiệm vụ cho Orange Pi 5 Pro.
+> **Ghi chú quyết định `DEC-GATE-003` (2026-10-13):** Đã chính thức loại bỏ **GATE D** (False Alarm), **GATE E** (Fault Injection) và **GATE AAN-3** (An toàn cơ học chấp hành) khỏi phạm vi tự nghiệm thu của học sinh. Các tiêu chuẩn an toàn thiết bị y sinh và chứng nhận kiểm định độ tin cậy thuộc thẩm quyền của cơ quan thử nghiệm lâm sàng độc lập / phòng đo lường có thẩm quyền, học sinh không tự cấp chứng nhận kiểm định.
 
-**Vì sao đặt ⭐ ở cả hai nhánh:** GATE C trả lời "nhánh Đo có còn lý do tồn tại không" (nếu không nhạy hơn nhiễu thì đo để làm gì); GATE AAN-2 trả lời đúng câu hỏi tương đương cho nhánh Trợ lực — "AAN có thực sự khác gì một lò xo trợ lực cố định không, hay chỉ là trợ lực cố định được gọi tên hoa mỹ". Nếu AAN-2 fail, đề tài **không bị dừng** (khác GATE C) nhưng **bắt buộc đổi nhãn marketing**, không được gọi là "theo nhu cầu"/"thích ứng".
+**Vì sao đặt ⭐ ở cả hai nhánh:** GATE C trả lời "nhánh Đo có còn lý do tồn tại không" (nếu không nhạy hơn nhiễu thì đo để làm gì); GATE AAN-2 trả lời đúng câu hỏi tương đương cho nhánh Trợ lực — "AAN có thực sự khác gì một lò xo trợ lực cố định không, hay chỉ là trợ lực cố định được gọi tên hoa mỹ". Nếu AAN-2 fail, đề tài **không bị dừng** (khác GATE C) nhưng **bắt buộc đổi nhãn**, không được gọi là "theo nhu cầu"/"thích ứng".
 
 ---
 

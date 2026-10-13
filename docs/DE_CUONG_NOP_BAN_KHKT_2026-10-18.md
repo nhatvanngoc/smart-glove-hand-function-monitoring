@@ -84,13 +84,13 @@ cột kỹ thuật chính thức của đề tài, không phải tính năng ph�
 | M5 | Phát hiện được nỗ lực chủ động của người dùng trước khi ngón thực sự di chuyển - nền tảng để trợ lực đúng lúc | GATE AAN-1 |
 | M6 ⭐ (cổng sống còn của nhánh Trợ lực) | Chứng minh AAN không chỉ là một lò xo trợ lực cố định: đường cong tải-hoàn thành (RAL) ổn định VÀ mức tham gia chủ động không bị xói mòn về 0 qua các lần thử (không gây ỷ lại) | GATE AAN-2 |
 
-**Cổng dùng chung và một hạng mục đang chọn:**
+**Cổng Trạm Y Sinh Biên (Orange Pi 5 Pro):**
 
 | # | Mục tiêu | Cổng kiểm chứng (GATE) |
 |---|---|---|
-| M7 | Tự gắn cờ phiên đo "không đáng tin" khi dữ liệu đo hoặc lực chấp hành không đạt điều kiện | GATE D/E/AAN-3 |
-| M8 | Xác định nhiệm vụ suy luận tại biên phù hợp nhất cho Orange Pi 5 Pro (ứng viên đang xét: camera đối chứng hai kênh độc lập cho GATE E - ưu tiên cao nhất; mô hình phân loại hướng INT8 - phụ) | GATE EDGE - đang chọn, chưa chốt ngưỡng |
-| M9 | Rút ngắn số lượt thử cần thiết để xác định RAL bằng thuật toán thích ứng (multi-armed bandit), độc lập với lựa chọn phần cứng ở M8 - đóng góp về thiết kế thí nghiệm cho GATE AAN-2, không phải một nhiệm vụ phần cứng | Đề xuất bổ sung cho GATE AAN-2, chưa chốt ngưỡng so sánh |
+| M7 | Trạm biên Orange Pi 5 Pro (RK3588, NPU 6 TOPS) thực thi mô hình RL bù trôi/trễ Velostat và suy luận lực trợ lực AAN thời gian thực ($\le 20\text{ ms}$), kết hợp camera đối chứng góc độc lập | GATE EDGE |
+
+*(Lưu ý về phạm vi kiểm định: Các tiêu chuẩn an toàn thiết bị y sinh và độ tin cậy vận hành dài hạn sẽ do cơ quan thử nghiệm lâm sàng độc lập / phòng kiểm định chuyên môn thực hiện, học sinh không tự cấp chứng nhận kiểm định — theo quyết định DEC-GATE-003).*
 
 **Kết quả dự kiến:** đề tài không đặt mục tiêu "bệnh nhân phục hồi tốt hơn", vì đó là điều một đề
 tài học sinh không có cơ sở lâm sàng để khẳng định. Mục tiêu cụ thể và kiểm chứng được là: một thiết
