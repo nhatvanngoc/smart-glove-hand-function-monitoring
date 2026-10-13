@@ -72,7 +72,7 @@ cột kỹ thuật chính thức của đề tài, không phải tính năng ph�
 
 | # | Mục tiêu | Cổng kiểm chứng (GATE) |
 |---|---|---|
-| M1 | Chế tạo sensing element áp trở (Velostat) trên vách khung ngón tay, có độ lặp lại đo được | GATE 0 |
+| M1 | Chế tạo sensing element áp trở (Velostat) trên vách khung ngón tay, xác định cửa sổ làm việc ($R_0 \le R_{max}$) và định lượng đặc tính cơ lý thô gốc (độ nhạy $\gamma$, trễ $h$, từ biến $creep$, trôi dạt) trên băng thử | GATE 0 |
 | M2 | Suy luận chiều gập/duỗi từ mẫu vi sai hai vách và lượng hóa mức độ kích hoạt nỗ lực (Bản đồ động học) | GATE A |
 | M3 ⭐ (cổng sống còn của nhánh Đo) | Chứng minh hệ thống phát hiện được thay đổi chức năng mô phỏng thật, lớn hơn nhiễu/trôi của chính nó | GATE C |
 
@@ -80,14 +80,14 @@ cột kỹ thuật chính thức của đề tài, không phải tính năng ph�
 
 | # | Mục tiêu | Cổng kiểm chứng (GATE) |
 |---|---|---|
-| M4 | Phát hiện được nỗ lực chủ động của người dùng trước khi ngón thực sự di chuyển - nền tảng để trợ lực đúng lúc | GATE AAN-1 |
-| M5 ⭐ (cổng sống còn của nhánh Trợ lực) | Chứng minh AAN không chỉ là một lò xo trợ lực cố định: đường cong tải-hoàn thành (RAL) ổn định VÀ mức tham gia chủ động không bị xói mòn về 0 qua các lần thử (không gây ỷ lại) | GATE AAN-2 |
+| M4 | Phát hiện được nỗ lực chủ động của người dùng trước khi ngón thực sự di chuyển - nền tảng để trợ lực đúng lúc (Effort Index) | GATE AAN-1 |
+| M5 ⭐ (cổng sống còn của nhánh Trợ lực) | Chứng minh AAN không chỉ là một lò xo trợ lực cố định: đường cong tải-hoàn thành (RAL) ổn định VÀ mức tham gia chủ động không bị xói mòn về 0 qua các lần thử (triệt tiêu ỷ lại) | GATE AAN-2 |
 
 **Cổng Trạm Y Sinh Biên (Orange Pi 5 Pro):**
 
 | # | Mục tiêu | Cổng kiểm chứng (GATE) |
 |---|---|---|
-| M6 | Trạm biên Orange Pi 5 Pro (RK3588, NPU 6 TOPS) thực thi mô hình RL bù trôi/trễ Velostat và suy luận lực trợ lực AAN thời gian thực ($\le 20\text{ ms}$), kết hợp camera đối chứng góc độc lập | GATE EDGE |
+| M6 | Trạm biên Orange Pi 5 Pro (RK3588, NPU 6 TOPS) thực thi mô hình RL bù động trôi/trễ Velostat (MDP Inversion) và suy luận chính sách trợ lực AAN thời gian thực ($\le 20\text{ ms}$) hoàn toàn bằng cảm biến nội tại (không dùng camera ngoài) | GATE EDGE |
 
 *(Lưu ý về phạm vi kiểm định: Các tiêu chuẩn an toàn thiết bị y sinh và độ tin cậy vận hành dài hạn sẽ do cơ quan thử nghiệm lâm sàng độc lập / phòng kiểm định chuyên môn thực hiện, học sinh không tự cấp chứng nhận kiểm định — theo quyết định DEC-GATE-003).*
 
@@ -116,12 +116,14 @@ vách nào, hệ thống ghi nhận lực và suy ra hướng chuyển động, 
 ```
 Bàn tay / phantom -> khung cứng + mảng Velostat trên vách từng lóng ngón
    -> ép vào vách -> điện trở thay đổi -> CD74HC4067 (chọn kênh)
-   -> INA333 (khuếch đại đo lường) -> ADS1115/ESP32-S3 (ADC)
-   -> xử lý tại biên (Orange Pi 5 Pro, RK3588): bù đồng pha, suy hướng gập/duỗi
-      (nhiệm vụ suy luận cụ thể của phần biên đang được xác định - xem GATE EDGE, mục 3)
-   -> 3 chỉ số: Effort Index (EI) · GAP = PROM - AROM · RAL (mức trợ giúp cần)
-   -> cờ "dữ liệu không đáng tin" khi mất điều kiện hợp lệ
-   -> dashboard theo tuần cho kỹ thuật viên
+   -> INA333 (khuếch đại vi sai) -> ADS1115 / ESP32-S3 (ADC & ngắt an toàn cứng 100 Hz)
+   -> Trạm biên Y sinh (Orange Pi 5 Pro, RK3588, NPU 6 TOPS):
+        + Bù động phi tuyến/trễ/từ biến Velostat qua RL Inversion (MDP)
+        + Suy luận chính sách trợ lực AAN thời gian thực (trễ <= 20 ms, chống ỷ lại)
+        + Bản đồ kích hoạt nỗ lực động thời gian thực (Kinetic Activation Map)
+   -> 3 chỉ số lâm sàng: Effort Index (EI) · GAP = PROM - AROM · RAL (mức trợ giúp cần)
+   -> Cảnh báo mất hợp lệ tín hiệu nội bộ
+   -> Local Dashboard bảo mật tại trạm biên cho kỹ thuật viên
 ```
 
 Ba chỉ số định lượng tách phần bệnh nhân "tự làm" khỏi phần "được trợ giúp":
@@ -167,12 +169,13 @@ MDC/ICC cho theo dõi tại nhà.
 Đóng góp của đề tài không nằm ở một nguyên lý vật lý mới, mà ở cách tổ hợp bốn thành phần đã có sẵn
 thành một hệ vừa đo vừa hỗ trợ, tự kiểm chứng được: (1) khung cứng định hướng lực trên vách từng
 lóng ngón để phân biệt nỗ lực chủ động với co cứng ngay trong một phiên đo; (2) ba chỉ số định lượng
-(Effort Index, GAP, RAL) định nghĩa tường minh trên rig có tải đã biết; (3) cờ độ tin cậy theo từng
-phiên, được kiểm chứng bằng lỗi tiêm có chủ đích (fault injection), tức là cố ý làm hỏng một phần tín
-hiệu để xem cờ cảnh báo có hoạt động thật hay chỉ là trang trí; (4) cơ cấu trợ lực theo nhu cầu (AAN)
-bù đúng phần lực còn thiếu để bệnh nhân hoàn thành động tác. Khung kiểm chứng công khai (ngưỡng GATE
-chốt trước khi đo, không đổi sau khi thấy số) cũng là một điểm khác biệt so với các báo cáo thương
-mại không công bố ngưỡng pass/fail.
+(Effort Index, GAP, RAL) định nghĩa tường minh trên rig có tải đã biết; (3) cơ chế bù trừ phi tuyến
+động (Dynamic Hysteresis/Creep Inversion) trên trạm trí tuệ biên Orange Pi 5 Pro qua mô hình học tăng
+cường (RL), giúp triệt tiêu điểm yếu trôi dạt và từ biến cố hữu của vật liệu màng mỏng (Velostat) hoàn
+toàn bằng cảm biến nội tại, không phụ thuộc camera ngoài cồng kềnh; (4) cơ cấu trợ lực theo nhu cầu
+(AAN) bù đúng phần lực còn thiếu để bệnh nhân hoàn thành động tác kết hợp giải thuật chống ỷ lại vận
+động (Motor Slacking Mitigation). Khung kiểm chứng công khai (ngưỡng GATE chốt trước khi đo, không đổi
+sau khi thấy số) cũng là một điểm khác biệt so với các báo cáo thương mại không công bố ngưỡng pass/fail.
 
 ---
 
@@ -183,7 +186,7 @@ mại không công bố ngưỡng pass/fail.
 | Nguyên mẫu găng | Khung ngón có vách cứng, mảng cảm biến áp trở Velostat, mạch đo ESP32-S3/ADS1115/INA333/CD74HC4067 | Ảnh thiết bị đang chạy và tín hiệu thật trên màn hình |
 | Cơ cấu AAN | Lò xo trợ giúp chia nấc + servo, hoạt động trên giàn cơ khí và phantom | Lực bù đo được bằng lực kế, giới hạn an toàn xác nhận |
 | Ba chỉ số định lượng | Effort Index, GAP, RAL, định nghĩa tường minh kèm đơn vị | Có công thức, có dữ liệu minh họa trên rig |
-| Bộ giao thức và ngưỡng GATE | 10 mục GATE 0, các GATE A/B/C (nhánh Đo), GATE AAN-1/AAN-2/AAN-3 (nhánh Trợ lực), GATE D/E dùng chung | Ngưỡng được chốt trước khi đo, có ngày ghi |
+| Bộ giao thức và ngưỡng GATE | Hệ thống cổng tinh gọn: GATE 0, GATE A, GATE C⭐ (nhánh Đo); GATE AAN-1, GATE AAN-2⭐ (nhánh Trợ lực); GATE EDGE (Trạm biên AI) | Ngưỡng được chốt trước khi đo, có ngày ghi |
 | Cơ cấu đeo/tháo một tay | Khóa ngàm xoay hai bản lề (Mech 9), đã qua 8 phương án loại bỏ trước đó | Mẫu in 3D vận hành được bằng một tay |
 | Báo cáo/poster | Trình bày kết quả đạt và không đạt theo từng GATE | Mỗi GATE có một ô kết quả, kể cả khi fail |
 
@@ -212,9 +215,9 @@ tham khảo tại thời điểm viết, chưa phải báo giá.
 ngày log trôi liên tục bắt buộc), và GATE C (cổng sống còn của nhánh Đo) cần tối thiểu 28 ngày theo
 dõi trôi theo đúng giao thức đã đăng ký. Với mốc thi dự kiến cuối tháng 11/2026, đề tài **không hứa**
 hoàn tất toàn bộ chuỗi GATE của cả hai nhánh trước thời điểm đó. Mục tiêu khả thi trong khung thời
-gian này là hoàn tất GATE 0 và tiến hành một phần GATE A/B (nhánh Đo), đồng thời hoàn thiện cơ cấu cơ
-khí Mech 9; nhánh Trợ lực (GATE AAN-1/AAN-2/AAN-3) và việc chốt nhiệm vụ cho Orange Pi 5 Pro (GATE
-EDGE) dự kiến triển khai sau vòng trường. Báo cáo nộp vòng trường sẽ trình bày trung thực những gì đã
+gian này là hoàn tất GATE 0 và tiến hành một phần GATE A (nhánh Đo), đồng thời hoàn thiện cơ cấu cơ
+khí Mech 9; nhánh Trợ lực (GATE AAN-1/AAN-2) và huấn luyện mô hình RL trên trạm biên Orange Pi 5 Pro
+(GATE EDGE) dự kiến triển khai sâu sau vòng trường. Báo cáo nộp vòng trường sẽ trình bày trung thực những gì đã
 đạt, những gì đang chạy (ví dụ log trôi 28 ngày của GATE C
 có thể đang trong quá trình thực hiện), và kế hoạch tiếp tục sau vòng trường. Đây là lựa chọn có chủ
 đích để không báo cáo một kết quả chưa có thật, nhất quán với quy ước "không tô hồng" đã áp dụng

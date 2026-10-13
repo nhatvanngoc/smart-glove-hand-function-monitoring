@@ -34,9 +34,12 @@
 
 | Cổng | Câu hỏi | Nếu FAIL |
 |---|---|---|
-| **GATE EDGE** | Orange Pi 5 Pro (RK3588, NPU 6 TOPS) có chạy suy luận chính sách AAN & mô hình RL bù trôi/trễ Velostat (MDP) thời gian thực ($\le 20\text{ ms}$) và đối chứng góc ArUco không? | Hạ mức xử lý biên; lùi về các thuật toán lọc tuyến tính cổ điển trên vi điều khiển |
+| **GATE EDGE** | Orange Pi 5 Pro (RK3588, NPU 6 TOPS) có chạy suy luận chính sách AAN & mô hình RL bù động trôi/trễ Velostat (MDP Inversion) thời gian thực ($\le 20\text{ ms}$) hoàn toàn bằng cảm biến nội tại (không camera) không? | Hạ mức xử lý biên; lùi về thuật toán bù tuyến tính tĩnh trên vi điều khiển |
 
-> **Ghi chú quyết định `DEC-GATE-003` (2026-10-13):** Đã chính thức loại bỏ **GATE D** (False Alarm), **GATE E** (Fault Injection) và **GATE AAN-3** (An toàn cơ học chấp hành) khỏi phạm vi tự nghiệm thu của học sinh. Các tiêu chuẩn an toàn thiết bị y sinh và chứng nhận kiểm định độ tin cậy thuộc thẩm quyền của cơ quan thử nghiệm lâm sàng độc lập / phòng đo lường có thẩm quyền, học sinh không tự cấp chứng nhận kiểm định.
+> **Ghi chú quyết định `DEC-GATE-003`, `DEC-GATE-004`, `DEC-GATE-005` (2026-10-13):**
+> 1. Đã chính thức loại bỏ **GATE D** (False Alarm), **GATE E** (Fault Injection) và **GATE AAN-3** (An toàn cơ học chấp hành) khỏi phạm vi tự nghiệm thu của học sinh. Các tiêu chuẩn an toàn thiết bị y sinh và chứng nhận kiểm định độ tin cậy thuộc thẩm quyền của cơ quan kiểm chuẩn/lâm sàng độc lập.
+> 2. Đã hủy bỏ GATE B cũ (Tái tạo góc 3D bàn tay) và hợp nhất toàn bộ đánh giá hướng và lực vào **GATE A mới** (Nhận diện Hướng vận động & Bản đồ kích hoạt nỗ lực động).
+> 3. Tuyệt đối **không sử dụng camera ngoài hay marker ArUco** (`DEC-GATE-005`). Hệ thống hoạt động 100% bằng mảng cảm biến áp trở nội tại tích hợp trên vách cứng khung nẹp, bảo toàn tính gọn nhẹ và độc lập tại chỗ.
 
 **Vì sao đặt ⭐ ở cả hai nhánh:** GATE C trả lời "nhánh Đo có còn lý do tồn tại không" (nếu không nhạy hơn nhiễu thì đo để làm gì); GATE AAN-2 trả lời đúng câu hỏi tương đương cho nhánh Trợ lực — "AAN có thực sự khác gì một lò xo trợ lực cố định không, hay chỉ là trợ lực cố định được gọi tên hoa mỹ". Nếu AAN-2 fail, đề tài **không bị dừng** (khác GATE C) nhưng **bắt buộc đổi nhãn**, không được gọi là "theo nhu cầu"/"thích ứng".
 
@@ -123,63 +126,61 @@
 
 ---
 
-## GATE D — Theo dõi nhiều ngày không báo động giả
+---
 
-**Câu hỏi:** Khi chức năng **không** thay đổi, hệ thống có im lặng không?
+## GATE AAN-1 — Nhận diện nỗ lực tĩnh sớm (Effort Index)
+
+**Câu hỏi khoa học:** Khi ngón tay bị giữ chặn cố định (chế độ isometric/isokinetic trên phantom) và có lực nỗ lực co/duỗi tác động lên vách cảm biến, hệ thống có phát hiện được nỗ lực chủ động ($EI$) **trước khi** ngón tay có bất kỳ chuyển động cơ học nào không?
+
+**Phantom thử nghiệm:** Khung nẹp gắn trên bàn tay giả có cơ cấu chặn cứng hành động (khóa ngón cơ học) và cảm biến lực chuẩn (load cell) đối chứng nỗ lực ép vào vách.
 
 **Quy trình:**
-1. Giữ **nguyên một mức** trên phantom, chạy ≥ 10 ngày (mỗi ngày 1 phiên, mỗi phiên ≥ 10 lần lặp).
-2. Bật logic cảnh báo "có thay đổi" của hệ thống.
-3. Đếm số lần hệ thống báo thay đổi **trong khi thực tế không có thay đổi**.
-4. Lặp lại với điều kiện thay đổi môi trường nhẹ (nhiệt độ phòng khác nhau, tháo và đeo lại găng).
-
-**Thước đo:** tỷ lệ báo động giả (% trên số phiên), biến thiên của chỉ số theo ngày.
+1. Khóa cứng ngón tay phantom ở góc duỗi trung tính ($0^\circ$).
+2. Tạo 30 chu kỳ nỗ lực ngẫu nhiên (ép gập hoặc ép duỗi với lực $0,5–3\text{ N}$) xen kẽ 30 chu kỳ thả lỏng hoàn toàn ($0\text{ N}$).
+3. Đo thời gian trễ từ thời điểm bắt đầu tác dụng lực đến khi thuật toán ngắt phát hiện nỗ lực ($t_{detect}$).
+4. Tính chỉ số diện tích dưới đường cong ROC ($AUC$) và tỷ lệ báo động nhầm khi thả lỏng ($FPR$).
 
 **Tiêu chí PASS (chốt trước):**
-- Tỷ lệ báo động giả ≤ **10%** số phiên.
-- Không có **xu hướng đơn điệu giả** (chỉ số không tự trôi tăng/giảm một chiều theo ngày dù chức năng không đổi).
+- $AUC \ge \mathbf{0,85}$ trong việc phân biệt giữa trạng thái cố gắng vận động và trạng thái nghỉ tĩnh.
+- Thời gian trễ phát hiện $t_{detect} \le \mathbf{300\text{ ms}}$ (đủ nhanh để kích hoạt servo hỗ trợ trước khi phản xạ ỷ lại xuất hiện).
+- Tỷ lệ báo động giả khi thả lỏng tĩnh $FPR \le \mathbf{5\%}$.
 
-**Nếu FAIL:** tăng ngưỡng cảnh báo (và ghi rõ độ nhạy bị giảm), hoặc bỏ tính năng cảnh báo, chỉ báo cáo đường cong cho chuyên gia tự đọc.
+**Nếu FAIL:** Bỏ chỉ số Effort Index khỏi danh mục tính năng; cơ cấu AAN chỉ hoạt động như một lò xo trợ lực thụ động cố định, không phải trợ lực kích hoạt theo nhu cầu.
 
 ---
 
-## GATE E — Tự kiểm tra độ tin cậy (self-validation)
+## GATE AAN-2 ⭐ — Tính đơn điệu RAL & Chống ỷ lại vận động (TIÊU CHÍ SỐNG CÒN NHÁNH TRỢ LỰC)
 
-**Câu hỏi:** Hệ thống có phát hiện được khi **chính nó** hỏng/sai, thay vì đưa ra kết quả sai không?
+**Câu hỏi khoa học:** Đường cong tải–hoàn thành (RAL) có đơn điệu, lặp lại ổn định giữa các phiên ($ICC \ge 0,75$) **và** mức độ tham gia lực chủ động của người dùng (Participation Ratio) có được duy trì/tăng lên qua các chu kỳ thử, không bị sụt giảm về 0 (triệt tiêu hiện tượng ỷ lại vận động - Motor Slacking) không?
 
-**Lỗi mô phỏng có chủ đích (fault injection):**
-| Lỗi | Cách tạo |
-|---|---|
-| Đứt dây một kênh | Ngắt một chân sensing element |
-| Chập/mất tiếp xúc | Nối tắt điện cực |
-| Kênh trôi mạnh | Gia nhiệt cục bộ hoặc thay đổi preload |
-| Suy giảm độ nhạy | Đặt thêm lớp cản cơ khí |
-| Nhiễu tăng vọt | Đưa nguồn nhiễu gần mạch đọc |
-
-Mỗi loại lặp ≥ 20 lần.
-
-**Thước đo:** detection rate (%), false alarm rate (%), thời gian phát hiện (số frame).
+**Thiết kế thử nghiệm:**
+1. Đặt phantom ở 3 mức suy giảm lực chủ động giả lập (Mức Yếu, Mức Vừa, Mức Khỏe).
+2. Chạy thuật toán tìm nấc trợ lực tối ưu (Multi-Armed Bandit / Policy Gradient) qua 50 chu kỳ cử động liên tục.
+3. Ghi nhận: nấc tải cơ khí kích hoạt, mức lực chủ động phantom tự sinh, công sinh bởi cơ cấu servo/lò xo.
+4. Lặp lại qua 3 phiên độc lập ở các ngày khác nhau để đánh giá độ tin cậy tái lập.
 
 **Tiêu chí PASS (chốt trước):**
-- Phát hiện ≥ **90%** các lỗi mô phỏng.
-- Báo động giả trên hệ thống khỏe ≤ **5%**.
-- Thời gian phát hiện ≤ **10 giây** kể từ khi lỗi xuất hiện.
+- **Độ ổn định đường cong RAL:** Hệ số tương quan nội lớp $ICC \ge \mathbf{0,75}$ giữa các phiên đo khác nhau.
+- **Triệt tiêu hiện tượng ỷ lại (Motor Slacking Mitigation):** Tỷ lệ tham gia chủ động $PR = \frac{F_{chủ\_động}}{F_{tổng}} \ge \mathbf{50\%}$ trên các chu kỳ thành công; hệ thống tự giảm nấc hỗ trợ khi phát hiện lực chủ động tăng.
+- **Hiệu quả hội tụ:** Thuật toán Multi-Armed Bandit giảm $\ge \mathbf{40\%}$ số chu kỳ cần thử để tìm nấc tải tối ưu so với phương pháp quét lưới tuần tự.
+
+**Nếu FAIL:** Đề tài **không dừng**, nhưng cơ cấu trợ lực bắt buộc phải đổi nhãn trung thực thành "trợ lực cơ học cố định phân bậc", tuyệt đối không được gọi là "hỗ trợ thích ứng theo nhu cầu (AAN)".
 
 ---
 
-## §4. Nhiệm vụ cho Orange Pi 5 Pro — Trạm Y Sinh Biên (Edge Medical Intelligence Station) & GATE EDGE (`DEC-ARCH-001`)
+## §4. Nhiệm vụ cho Orange Pi 5 Pro — Trạm Y Sinh Biên (Edge Medical Intelligence Station) & GATE EDGE (`DEC-ARCH-001`, `DEC-GATE-005`)
 
-> **Cập nhật kiến trúc 2026-10-13 (`DEC-ARCH-001`):** Chốt vai trò của Orange Pi 5 Pro (RK3588, NPU tri-core 6 TOPS) thành **Trạm Y Sinh Biên (Edge Medical Intelligence Station)**, phân tầng rõ ràng với vi điều khiển ESP32-S3:
-> - **ESP32-S3 (Tầng chấp hành & An toàn cứng - Hard Real-Time):** Thu thập ADC đa kênh, đọc cảm biến vi sai, giám sát dòng động cơ, ngắt khẩn cấp cơ khí nếu lực vượt $5\text{ N}$. Không chạy mô hình AI nặng để tránh trễ ngắt.
-> - **Orange Pi 5 Pro (Tầng trí tuệ biên đa nhân - Edge AI):** Tận dụng kiến trúc 3 nhân NPU và năng lực RKNN INT8 để chạy 3 nhiệm vụ song song, giải quyết trực tiếp các bài toán kỹ thuật chuyên sâu:
->   1. **Nhân NPU 1 — Bù trừ phi tuyến động cho Velostat (RL Sensor Inversion):** Chạy chính sách bù trễ (hysteresis), từ biến (creep) và trôi nhiệt/lão hóa thời gian thực dạng mô hình nơ-ron hồi quy/MDP được lượng tử hóa sang `.rknn`. Chuyển hóa tín hiệu áp trở phi tuyến thành đại lượng lực tuyến tính ổn định qua hàng trăm giờ làm việc.
->   2. **Nhân NPU 2 — Suy luận chính sách thích ứng AAN (Anti-Slacking Actor-Critic):** Tiếp nhận nỗ lực $EI$ và chuyển động ngón tay, suy luận lực bù $F_{assist}$ theo thời gian thực (trễ $< 20\text{ ms}$) nhằm tối ưu hóa phục hồi theo nguyên lý Hebbian và triệt tiêu hiện tượng ỷ lại (Motor Slacking).
->   3. **Nhân NPU 3 + CPU — Kênh thẩm định thị giác độc lập (Camera + Marker ArUco) & Edge Gateway:** Đối chứng chéo quang học góc gập/duỗi với tín hiệu suy luận từ cảm biến vách để kích hoạt cờ tự kiểm chuẩn (GATE E); lưu trữ bảo mật dữ liệu y tế nội bộ không phụ thuộc đám mây (Air-gapped Edge Privacy).
+> **Cập nhật kiến trúc 2026-10-13 (`DEC-ARCH-001`, `DEC-GATE-005`):** Chốt vai trò của Orange Pi 5 Pro (RK3588, NPU tri-core 6 TOPS) thành **Trạm Y Sinh Biên (Edge Medical Intelligence Station)**, phân tầng xử lý rõ rệt với vi điều khiển ESP32-S3 và tuân thủ tuyệt đối quy tắc **Zero-Camera Policy** (không dùng camera ngoài hay marker ArUco; 100% xử lý dựa trên mảng cảm biến áp trở nội tại):
+> - **ESP32-S3 (Tầng chấp hành & An toàn cứng - Hard Real-Time):** Thu thập tín hiệu ADC đa kênh qua CD74HC4067 + ADS1115, quản lý ngắt mẫu, đọc cảm biến vi sai hai vách, giám sát dòng tải động cơ và ngắt khẩn cấp cơ khí nếu lực vượt $5\text{ N}$. Tần số lấy mẫu duy trì $\ge 100\text{ Hz}$.
+> - **Orange Pi 5 Pro (Tầng trí tuệ biên đa nhân - Edge AI & Inversion Layer):** Tận dụng kiến trúc 3 nhân NPU và công cụ lượng tử hóa RKNN INT8 để chạy 3 nhiệm vụ song song:
+>   1. **Nhân NPU 1 — Bù trừ phi tuyến động cho Velostat (RL Sensor Inversion qua MDP):** Tiếp nhận dữ liệu điện trở thô từ M1/GATE 0, mô hình hóa các trạng thái quá khứ để chạy chính sách bù trễ (hysteresis), từ biến (creep) và trôi dạt nhiệt theo thời gian thực dưới dạng mô hình nơ-ron hồi quy lượng tử hóa sang `.rknn`. Chuyển hóa tín hiệu áp trở phi tuyến thành đường lực tuyến tính ổn định qua hàng trăm giờ làm việc liên tục.
+>   2. **Nhân NPU 2 — Suy luận chính sách thích ứng AAN (Anti-Slacking Actor-Critic):** Tiếp nhận chỉ số nỗ lực $EI$ và vector vi sai, suy luận mức lực trợ lực bù $F_{assist}$ theo thời gian thực (đáp ứng trễ $\le 20\text{ ms}$) nhằm tối ưu hóa phục hồi theo nguyên lý Hebbian và triệt tiêu hiện tượng ỷ lại cơ học.
+>   3. **Nhân NPU 3 + CPU — Trạm Y Sinh Biên & Quản trị dữ liệu cục bộ an toàn (Air-gapped Edge Medical Station):** Tính toán bộ chỉ số lâm sàng (EI, GAP, RAL), tổng hợp bản đồ kích hoạt nỗ lực động thời gian thực (Kinetic Activation Map) hiển thị lên Local Telemetry Dashboard; lưu trữ bảo mật hồ sơ tiến trình phục hồi hoàn toàn nội bộ (Air-gapped Edge Privacy), không phụ thuộc đám mây.
 
 ### Tiêu chí nghiệm thu GATE EDGE (Thay thế GATE F cũ):
-- **Độ trễ suy luận chính sách (Latency):** $\le 20\text{ ms}$ trên NPU RK3588 (INT8 `.rknn`).
-- **Hiệu quả bù trừ vật liệu Velostat:** Sai số trôi (drift) và trễ (hysteresis) sau bù giảm $\ge 60\%$ so với tín hiệu thô trên cùng một chu kỳ tải 100 lần.
-- **Tính độc lập thời gian thực:** ESP32-S3 duy trì tần số ngắt an toàn $\ge 100\text{ Hz}$ không bị nghẽn bởi truyền thông dữ liệu với Orange Pi.
+- **Độ trễ suy luận chính sách (Latency):** $\le \mathbf{20\text{ ms}}$ trên NPU RK3588 (INT8 `.rknn`).
+- **Hiệu quả bù trừ vật liệu Velostat:** Sai số trôi (drift) và trễ (hysteresis) sau bù bằng RL giảm $\ge \mathbf{60\%}$ so với tín hiệu thô trên cùng một chu kỳ tải 100 lần.
+- **Tính độc lập thời gian thực:** ESP32-S3 duy trì tần số ngắt an toàn $\ge 100\text{ Hz}$ không bị nghẽn bởi truyền thông dữ liệu hai chiều với Orange Pi.
 
 ---
 
