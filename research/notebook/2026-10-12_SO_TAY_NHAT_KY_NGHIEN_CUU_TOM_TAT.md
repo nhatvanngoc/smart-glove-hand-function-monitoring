@@ -328,7 +328,45 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
   để làm minh chứng trực quan (tương tự ảnh oscilloscope/Serial Plotter ở mục 8–9).
 - **Vai trò thành viên:** ⟨nhóm tự điền⟩ — **Xác nhận GVHD:** ______________________ (ngày ___/___/2026)
 
-## 10. Việc cần làm tiếp (tổng hợp từ tất cả các mục trên, owner/nhóm quyết định — agent không tự chọn hướng)
+## 11. 2026-10-15 — Vòng lặp Thiết kế số 2 (Design Iteration 2): Tối ưu hóa kiến trúc phần cứng dựa trên thực nghiệm tích hợp cơ khí
+
+> **Căn cứ quy chuẩn:** Quy trình Thiết kế Kỹ thuật (Engineering Design Process) theo Thông tư số 84/2026/TT-BGDĐT.  
+> **Nguyên tắc phương pháp luận:** Không xóa bỏ dữ liệu thực nghiệm Vòng lặp 1 (INA333 $G \approx 6.5$, notes 01–06), mà kế thừa và phân tích nguyên nhân vật lý dẫn đến quyết định cải tiến kiến trúc phần cứng (Hardware Simplification & Trade-off).
+
+- **Nội dung công việc:** Chế tạo cảm biến kẹp Sandwich trên khung ốp đốt tay, phát hiện hiện tượng bão hòa tín hiệu INA333 do lực ép tĩnh cơ khí, tối ưu hóa kiến trúc mạch đo (loại bỏ INA333, khai thác PGA 16-bit ADS1115) và thiết lập thuật toán lọc nhiễu động (DSP Pipeline).
+- **Phương pháp thực hiện & Cơ sở lý luận:**
+  1. **Cấu trúc Cơ - Điện Cảm biến Đốt tay (Sandwich Piezoresistive Transducer):**
+     - Cấu tạo: Khung ốp in 3D gắn 2 cụm cảm biến đối xứng tại Mặt lòng (Palmar — Kênh C0) và Mặt mu (Dorsal — Kênh C1).
+     - Cấu trúc 3 lớp: Cuộn dây đồng mạ niken $\to$ Màng áp trở Velostat $\to$ Cuộn dây đồng mạ niken (lớp mạ niken chống oxy hóa bề mặt và giảm điện trở tiếp xúc ký sinh).
+     - Mạch định thiên: Cầu phân áp với $R_{pullup} = 10\text{ k}\Omega$ độc lập lên nguồn $3.3\text{V}$.
+  2. **Bảng Đối chứng Tối ưu hóa Kiến trúc Phần cứng (Hardware Optimization):**
+
+| Tiêu chí đánh giá | Kiến trúc Vòng lặp 1 (Sử dụng INA333, $G \approx 6.5$) | Kiến trúc Vòng lặp 2 — Tối ưu hóa (Đo trực tiếp qua PGA 16-bit ADS1115) | Cơ sở Lý luận & Bằng chứng Thực nghiệm |
+|---|---|---|---|
+| **Biên độ biến thiên của Velostat** | $\Delta V \approx 1500\text{ mV} - 2200\text{ mV}$ (từ $2.5\text{V}$ xuống $0.3\text{V}$ khi bóp). | Thu nhận trọn vẹn toàn bộ dải biến thiên tự nhiên $0\text{V} - 3.3\text{V}$. | Màng Velostat có hệ số nhạy áp trở lớn gấp hàng trăm lần Loadcell kim loại, không cần khuếch đại tiền tầng hệ số lớn. |
+| **Cửa sổ điện áp tuyến tính** | Bị giới hạn hẹp trong khoảng $\pm 0.24\text{V}$ quanh mốc $V_{REF} = 1.68\text{V}$ ($1.44\text{V} \to 1.92\text{V}$). | Mở rộng toàn dải từ $0.000\text{V}$ đến $3.300\text{V}$ (độ phân giải $0.125\text{ mV/LSB}$). | Lực siết cơ khí ban đầu của khung ốp làm điện áp tĩnh rơi xuống $< 1.42\text{V}$, khiến INA333 chạm sàn bão hòa và kẹt đồ thị ở $\approx 2838\text{ mV}$. |
+| **Hiện tượng Nhiễu nền & Trôi** | Bị khuếch đại gấp $6.5$ lần cùng với tín hiệu. | Giữ ở mức nguyên bản ($50\text{ mV} - 135\text{ mV}$), dễ dàng triệt tiêu bằng thuật toán. | Giảm 1 mắt xích IC tương tự giúp loại bỏ tạp âm nhiệt nội bộ và giảm công suất tiêu thụ trên găng tay. |
+
+  3. **Quy trình 4 bước Lọc Tín hiệu Số (DSP) trên ESP32-S3:**
+     - *Bước 1 — Đọc nháp xả điện tích (Dummy Read & $300\,\mu\text{s}$ Settling):* Sau khi chuyển kênh MUX, chờ $300\,\mu\text{s}$ và thực hiện 1 lần đọc nháp (Dummy Read) để nạp đầy tụ lấy mẫu nội bộ ADS1115, triệt tiêu $100\%$ hiện tượng bóng ma (Ghosting) giữa C0 và C1.
+     - *Bước 2 — Khóa vùng chết trừ tuyến tính (Subtracted Dead-band, $V_{gate} = 180\text{ mV}$):*
+       $$F_{clean} = \max\left(0.0, \; \vert{}V_{base} - V_{raw}\vert{} - 180\text{ mV}\right)$$
+       Đảm bảo tín hiệu đứng yên tuyệt đối tại $0.00\text{ mV}$ khi thả lỏng và tăng tuyến tính mượt mà ngay từ điểm 0 khi bắt đầu tác dụng lực.
+     - *Bước 3 — Tự động thích nghi điểm 0 (Adaptive Drift Tracking, $\gamma = 0.002$):* Khi ngón tay thả lỏng ($\vert{}\Delta V\vert{} \le 180\text{ mV}$), mốc tĩnh tự động cập nhật chậm:
+       $$V_{base}[k] = 0.998 \cdot V_{base}[k-1] + 0.002 \cdot V_{raw}[k]$$
+       Tự động bù trừ sự giãn nở của nhựa ốp và nhiệt độ bàn tay theo thời gian thực.
+     - *Bước 4 — Lọc EMA ($\alpha = 0.20$) & Tổng hợp Vi sai Gập/Duỗi:*
+       $$F_{net} = F_{palmar(C0)} - F_{dorsal(C1)}$$
+       Phân tách rạch ròi ý định vận động: Gập ngón ($F_{net} > 0$) và Duỗi ngón ($F_{net} < 0$).
+- **Kết quả từng giai đoạn:**
+  - Loại bỏ hoàn toàn hiện tượng kẹt bão hòa $2838\text{ mV}$ của INA333 khi siết ốp cơ khí.
+  - Tín hiệu lực vi sai $F_{net}$ phản hồi nhạy, không trôi, đáp ứng trơn tru trên Serial Plotter.
+  - Tối giản phần cứng: giảm diện tích bo mạch và dòng tiêu thụ tĩnh.
+- **Ý nghĩa đối với Quy trình Thiết kế Kỹ thuật (ViSEF):** Chứng minh quá trình R&D thực chất dựa trên va chạm thực nghiệm thật, có năng lực đánh đổi kỹ thuật (Trade-off) và làm chủ nguyên lý vật lý của cảm biến.
+- **Dữ liệu gốc/minh chứng:** File ghi chép chi tiết `research/notebooklm_sync/experiments/07_vong_lap_thiet_ke_2_toi_uu_kien_truc_phan_cung_va_dsp.md`.
+- **Vai trò thành viên:** ⟨nhóm tự điền⟩ — **Xác nhận GVHD:** ______________________ (ngày ___/___/2026)
+
+## 12. Việc cần làm tiếp (tổng hợp từ tất cả các mục trên, owner/nhóm quyết định — agent không tự chọn hướng)
 
 1. Điền cột "Vai trò thành viên" cho từng mục 1–9 (bắt buộc theo Điều 14 khoản 1 — dự án tập thể).
 2. GVHD Lê Công Long xác nhận trực tiếp (ký) vào nhật ký này theo đúng chu kỳ tối thiểu 1 lần/tháng

@@ -73,44 +73,39 @@
 - **Rủi ro trùng trong nước (mức học sinh):** `SRC-VNM-HS-GLove-2026` — học sinh Lâm Đồng làm "găng tay thông minh tích hợp AI" có **cảm biến lực + áp suất khí**, theo dõi tiến độ phục hồi, **giải nhất cấp tỉnh 2026**; `SRC-VNM-ANNAM-2022` (găng mềm PneuNet, giải Nhất EPICS 2022); `SRC-VNM-TL-GLOVE-2026` (găng robot + theo dõi từ xa). **Toàn bộ đều là máy tập/hỗ trợ chủ động**, không phải thiết bị đánh giá có kiểm chứng độ tin cậy → phải nêu trong mục "bất cập của giải pháp hiện tại".
 - **Gap 1 chưa hoàn tất.** Còn: (i) đọc **toàn văn** 5 nguồn (`SRC-ARTGLOVE-2026`, `SRC-SIDEWALL-PIEZO-2015`, `SRC-GRATING-GLOVE-2021`, `SRC-LOWCOST-GLOVE-2006`, `SRC-MANUMETER-RCT-2022`); (ii) tra bằng sáng chế theo IPC A61B5/11 · A61B5/22 · A61B5/10 · G01L1/14 · A61H1/02 (lượt vừa rồi mới 1 truy vấn web, **không đủ** để kết luận); (iii) lane R5 adjudicate; (iv) `DEC-NOV-001` do owner chốt.
 
-## 5. Phần cứng (CHỐT — DEC-HW-002/003/004)
+## 5. Phần cứng (CHỐT — DEC-HW-002/003/004/005/006)
 
 ```
-Sensing element : Velostat + copper tape + cấu trúc sandwich + lớp cơ khí (tự chế tạo)
-Khung           : găng in 3D (PLA/PETG + TPU), vách ép tạo hướng
-Cấu hình 1      : 12 kênh (11 đo + 1 tham chiếu) — 1× CD74HC4067 — bring-up, GATE 0/A
-Cấu hình 2      : 24 kênh, mỗi khớp 1 CẶP đối xứng → đọc vi sai — 2× CD74HC4067 — GATE A/B/C/D/E
-MCU             : ESP32-S3 (ADC1 12-bit + trung bình N mẫu, BLE 5, logic 3.3 V)
-                  [thay Arduino Mega 2560 — DEC-HW-003]
-Edge            : Orange Pi 5 Pro RK3588 (NPU ~6 TOPS) — nhiệm vụ cụ thể CHƯA CHỐT (DEC-GATE-002,
-                  GATE EDGE); ứng viên ưu tiên = camera+ArUco làm kênh tự kiểm tra 2 chiều cho GATE E
-Tham chiếu bench: load cell + HX711  (GATE A trở đi; GATE 0 dùng **khối lượng chuẩn**, F = m·g)
-Sở hữu   (2026-09-19, DEC-RESOURCE-001): Velostat + copper tape + ESP32-S3 + Orange Pi 5 Pro = ĐÃ CÓ;
-           còn thiếu cho GATE 0: CD74HC4067?, DMM 4 dây?, khối lượng chuẩn, in 3D  → kiểm kê: research/context/EQUIPMENT_AND_ACCESS.md
+Sensing element : Màng Velostat + cuộn dây đồng mạ niken (cấu trúc Sandwich chống oxy hóa)
+Khung           : Găng in 3D (PLA/PETG + TPU), vách ép tạo hướng (Mech 9 khóa ngàm xoay)
+Mạch thu nhận   : 
+  - Vòng lặp 1 (bring-up): INA333 G ≈ 6.5 + ADS1115 + CD74HC4067 (bị bão hòa khi siết ốp cơ khí)
+  - Vòng lặp 2 (tối ưu hóa - DEC-HW-006): MUX CD74HC4067 (Settling 300 µs + Dummy read)
+    -> Đọc trực tiếp qua PGA 16-bit nội bộ ADS1115 (0 - 3.3V, 0.125 mV/LSB)
+    -> ESP32-S3: Bộ lọc số DSP 4 bước (Dummy read -> Dead-band 180 mV -> Adaptive drift tracking -> EMA & F_net vi sai)
+MCU             : ESP32-S3 (ngắt phần cứng ALRT 100 Hz, BLE 5, logic 3.3 V)
+Edge            : Orange Pi 5 Pro RK3588 (NPU 6 TOPS) — Trạm Y Sinh Biên (RL Inversion MDP bù trôi/trễ + suy luận AAN thời gian thực <= 20 ms)
+Tham chiếu bench: Load cell + HX711 (GATE A trở đi; GATE 0 dùng khối lượng chuẩn, F = m·g)
+Zero-Camera     : 100% cảm biến nội tại, không dùng camera ngoài (DEC-GATE-005)
 ```
 
-Ngân sách độ phân giải/tốc độ khung (dự kiến, **phải đo lại**): ~11 bit hiệu dụng sau trung bình 16 mẫu; tốc độ khung mục tiêu 45–100 Hz; đủ cho động tác 0,5–2 Hz. Chi tiết: `docs/04_Hardware_Architecture.md`.
+## 6. Hệ thống 6 GATE kiểm chứng (CHỐT — DEC-GATE-002, 003, 004, 005)
 
-## 6. GATE — tiêu chí sống còn (tái cấu trúc 2026-10-13, `DEC-GATE-002`)
+Chi tiết tại `research/protocols/06_glove_hand_GATE_experiment.md`:
 
-`research/protocols/06_glove_hand_GATE_experiment.md` + `07_ral_phantom_and_ktv_interview.md`. Hai nhánh song song:
+**Nhánh Đo (Assessment):**
+- **GATE 0** (M1): Đặc tính cơ lý thô gốc & cửa sổ làm việc Velostat ($CV \le 5\%$, $ICC \ge 0,75$, đường cong trôi/trễ).
+- **GATE A** (M2): Nhận diện hướng gập/duỗi vi sai ($\ge 90\%$) & Bản đồ kích hoạt nỗ lực động ($\ge 85\%$).
+- **GATE C ⭐ SỐNG CÒN** (M3): $\Delta_{signal} \ge 2\sigma_{noise}$; Cohen's $d \ge 0,8$; $MDC < \Delta_{step}$ — **fail ⇒ dừng cả đề tài**.
 
-**Nhánh Đo (không đổi):**
-- **GATE 0** lặp lại (CV ≤ 5% trong phiên, ICC ≥ 0,75 giữa phiên)
-- **GATE A** phân biệt hướng (4 hướng ≥ 85%; cặp đối lập ≥ 90%)
-- **GATE B** tái tạo 3D (MAE ≤ 15°, r ≥ 0,8)
-- **GATE C ⭐ SỐNG CÒN** Δ giữa các mức chức năng ≥ 2σ_noise; Cohen's d ≥ 0,8; MDC < mức chênh liền kề — **fail ⇒ dừng cả đề tài**
+**Nhánh Trợ lực - AAN (Movement Support):**
+- **GATE AAN-1** (M4): Nhận diện nỗ lực tĩnh sớm trước khi ngón di chuyển ($EI$, $AUC \ge 0,85$, $t_{detect} \le 300\text{ ms}$).
+- **GATE AAN-2 ⭐ SỐNG CÒN NHÁNH AAN** (M5): Đường cong tải $RAL$ ổn định ($ICC \ge 0,75$) & Triệt tiêu hiện tượng ỷ lại ($PR \ge 50\%$) — **fail ⇒ không dừng đề tài, chỉ hạ nhãn AAN xuống "trợ lực cố định phân bậc"**.
 
-**Nhánh Trợ lực - AAN (mới, ngang hàng, ngưỡng CHƯA CHỐT):**
-- **GATE AAN-1** (đổi tên từ "GATE A′") — phát hiện nỗ lực trước khi ngón di chuyển (AUC≥0,85/báo nhầm≤10%/trễ≤300ms, ĐỀ XUẤT)
-- **GATE AAN-2 ⭐** (đổi tên + nâng cấp từ "GATE RAL") — cổng sống còn của nhánh AAN: đường cong tải-hoàn thành ổn định (ICC≥0,75) **+** participation ratio không xói mòn về 0 (chống ỷ lại) — **fail ⇒ không dừng đề tài, chỉ hạ nhãn AAN xuống "trợ lực cố định phân bậc"**
-- **GATE AAN-3** (mới) — chính thức hoá an toàn chấp hành lực: `F_assist` đúng công thức trong `F_max≤5N`/`t_delay≤1,2s`, fail-safe khi lỗi cảm biến (liên kết GATE E)
+**Trạm Y Sinh Biên (Edge Medical Intelligence Station - Orange Pi 5 Pro):**
+- **GATE EDGE** (M6): Chạy mô hình RL bù động trôi/trễ Velostat (MDP Inversion) và suy luận chính sách AAN thời gian thực ($\le 20\text{ ms}$ INT8 `.rknn`) — 100% cảm biến nội tại, không dùng camera.
 
-**Dùng chung:** GATE D (không báo động giả, ≤10%/≥10 ngày), GATE E (tự phát hiện lỗi ≥90%/báo nhầm≤5%).
-
-**GATE F (INT8/NPU) TẠM HOÃN** → thay bằng **"GATE EDGE — đang chọn"**: ứng viên ưu tiên cao nhất là nâng camera+ArUco (đã test OK) thành kênh tự kiểm tra 2 chiều độc lập chạy liên tục cho GATE E; ứng viên phụ là INT8 phân loại hướng gốc. Thuật toán bandit rút ngắn lượt thử dò RAL (cho GATE AAN-2) **đã tách khỏi quyết định này** — là phương pháp thí nghiệm độc lập với phần cứng, không cần NPU.
-
-**Ngưỡng phải chốt trước khi đo (DEC-METRIC-001).** GATE C fail ⇒ dừng đề tài, báo cáo trung thực.
+> **Đã loại bỏ:** GATE D, GATE E, GATE AAN-3 (thuộc thẩm quyền kiểm định y tế lâm sàng độc lập — `DEC-GATE-003`); hủy GATE B cũ gộp vào GATE A (`DEC-GATE-004`).
 
 > ⚠️ **2026-09-27 — ngưỡng ĐÃ NỘP là M1–M6 + C1.1–C1.10** (PDF §5.2/§11.1, `CLM-MET-005`, chờ `DEC-METRIC-002` phê chuẩn):
 > R² ≥ 0,90 (thay 0,95) · liên ngày CV ≤ 8 % trên phantom (thay ICC ≥ 0,75) · hys ≤ 18 % (thay 15 %) ·

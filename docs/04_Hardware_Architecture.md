@@ -211,3 +211,33 @@ thời gian mang/tháo (don–doff) ở mức người nhà làm được trong 
 **Quy tắc vận hành đi kèm (PDF §9.3/§11.2):** auto-zero 3 s duỗi nghỉ đầu phiên (`V_offset` trừ trực tiếp);
 cảnh báo kiểm tra cơ khí khi trôi tĩnh vượt **±5 %** dải đo so với ô tham chiếu; vòng lặp 1 (`V_base` → chỉnh găng),
 vòng lặp 2 (phương sai → nhãn **"Nghi vấn"** + loại khỏi xu hướng + đo lại).
+
+---
+
+## 9. Vòng lặp Thiết kế số 2 (Design Iteration 2, 2026-10-15 — `DEC-HW-006`): Tối ưu hóa kiến trúc dựa trên thực nghiệm cơ khí
+
+> **Căn cứ:** Quy trình Thiết kế Kỹ thuật (Engineering Design Process) theo Thông tư số 84/2026/TT-BGDĐT.  
+> **Nguyên tắc phương pháp luận:** Không xóa bỏ kiến trúc Vòng lặp 1 (INA333 $G \approx 6.5$), mà ghi nhận trung thực quá trình thực nghiệm phát hiện vấn đề và đánh đổi kỹ thuật (Trade-off).
+
+```
+[Vòng lặp 1 (Thử nghiệm ban đầu)]
+Màng Velostat -> MUX CD74HC4067 -> Tầng INA333 (G ≈ 6.5, V_REF = 1.68V) -> ADS1115 (A0) -> ESP32-S3
+==> VẤN ĐỀ: Lực siết tĩnh của khung ốp ngón tay kéo mốc tĩnh tụt xuống < 1.42V, làm INA333 chạm sàn bão hòa
+            (kẹt ở ≈ 2838 mV). Cửa sổ tuyến tính ±0.24V quá hẹp so với biên độ thật (1.5V - 2.2V) của Velostat.
+
+[Vòng lặp 2 (Tối ưu hóa kiến trúc - DEC-HW-006)]
+Màng Velostat (Sandwich đồng mạ niken) + R_pullup 10 kΩ
+   -> MUX CD74HC4067 (Settling 300 µs + Dummy Read xả điện dung ký sinh)
+   -> Tầng PGA 16-bit nội bộ ADS1115 (Dải đo mở rộng toàn phần 0V - 3.3V, độ phân giải 0.125 mV/LSB)
+   -> ESP32-S3: Bộ lọc số DSP 4 bước (Dummy Read -> Subtracted Dead-band 180 mV -> Adaptive Drift Tracking -> Lọc EMA & F_net vi sai)
+```
+
+**Bảng so sánh tối ưu hóa giữa 2 vòng lặp:**
+
+| Tiêu chí | Vòng lặp 1 (INA333, $G \approx 6.5$) | Vòng lặp 2 (PGA 16-bit ADS1115 + DSP) | Cơ sở lý luận & Bằng chứng thực nghiệm |
+|---|---|---|---|
+| **Dải động thu nhận** | Bị bão hòa khi $\Delta V > 0.24\text{V}$ | Toàn dải $0.000\text{V} - 3.300\text{V}$ | Màng Velostat có độ nhạy lớn hơn hàng trăm lần strain gauge, tự thân tạo biến thiên $1.5\text{V} - 2.2\text{V}$, không cần khuếch đại tương tự hệ số lớn. |
+| **Độ nhạy cơ học tĩnh** | Dễ kẹt sàn khi siết ốc nẹp | Mở rộng biên độ, đo được từ lúc nghỉ có tải tĩnh | Lực siết cơ khí ban đầu không còn làm tê liệt mạch đo. |
+| **Nhiễu nền & Trôi** | Bị nhân $6.5$ lần qua INA333 | Giữ nguyên bản ($50 - 135\text{ mV}$), triệt tiêu bằng DSP | Thuật toán Adaptive Drift Tracking ($\gamma = 0.002$) tự thích nghi với dão nhựa và thân nhiệt. |
+| **Độ phức tạp phần cứng** | Thêm 1 IC tương tự, cần nguồn tham chiếu ảo $V_{REF}$ | Tối giản phần cứng (Hardware Simplification) | Giảm tiêu thụ năng lượng, giảm kích thước mạch trên ngón tay, tăng độ tin cậy. |
+
