@@ -1,7 +1,7 @@
 # 08a — PHIẾU ĐO GATE 0 (bản in được · **không cần máy tính, không cần firmware**)
 
 > **Dùng khi nào:** ngay khi 9 ngưỡng `…/08_gate0_execution_plan.md` §7 được chốt. In 1 phiếu/mã phần tử/điều kiện.
-> **Tại sao tồn tại file này:** chủ dự án chốt giữ pha lý thuyết → **chưa viết script, chưa viết firmware**. Nhưng GATE 0 **không** cần cả hai:
+> **Tại sao tồn tại file này:** nhóm nghiên cứu chốt giữ pha lý thuyết → **chưa viết script, chưa viết firmware**. Nhưng GATE 0 **không** cần cả hai:
 > mọi đại lượng ở đây đo bằng **DMM + cân nhà bếp + đồng hồ bấm giờ**, và mọi phép tính yêu cầu chỉ là **trừ số nguyên** và **so sánh**.
 > **Quy tắc ghi chép:** viết bút mực; sai thì **gạch một lần, viết giá trị mới, ký nháy bên cạnh** — không tẩy, không viết đè. Lý do: hội đồng có thể yêu cầu xem bản gốc.
 > **Không có ô nào ở đây là "kết quả của đề tài"** cho tới khi ngưỡng §7 đã chốt và số liệu được chép vào `research/bench/logs/`.
@@ -85,15 +85,15 @@ Với mỗi `F_p`: ghi `R₀`, rồi **thêm đúng 102 g** (≈1 N) và ghi `ad
 
 | `F_p` [N] | `m_p` [g] | `R₀` DMM [kΩ] | `R` khi +1 N [kΩ] | `adc_raw` nghỉ | `adc_raw` +1 N | **`Δadc` (counts)** | `noise_pp` | `Δadc ≥ 8`? | `R₀ ≤ R_max`? |
 |---|---|---|---|---|---|---|---|---|---|
-| 0 | 0 | | | | | | | ☐ | ☐ |
-| 5 | 510 | | | | | | | ☐ | ☐ |
-| 10 | 1020 | | | | | | | ☐ | ☐ |
-| 20 | 2040 | | | | | | | ☐ | ☐ |
-| 40 | 4080 | | | | | | | ☐ | ☐ |
-| 60 | 6120 | | | | | | | ☐ | ☐ |
-| 80 | 8160 | | | | | | | ☐ | ☐ |
+| 0 | 0 | | | | | | | [ ] | [ ] |
+| 5 | 510 | | | | | | | [ ] | [ ] |
+| 10 | 1020 | | | | | | | [ ] | [ ] |
+| 20 | 2040 | | | | | | | [ ] | [ ] |
+| 40 | 4080 | | | | | | | [ ] | [ ] |
+| 60 | 6120 | | | | | | | [ ] | [ ] |
+| 80 | 8160 | | | | | | | [ ] | [ ] |
 
-> **Đây chính là `G0.1`:** ô "ĐỦ" tích được khi **có ít nhất một dòng** mà cả hai cột ☐ đều đạt. Không có dòng nào → cửa sổ **rỗng**, và đó là một kết luận khoa học (xem cây quyết định `protocols/08` §8), không phải "thí nghiệm hỏng".
+> **Đây chính là `G0.1`:** ô "ĐỦ" tích được khi **có ít nhất một dòng** mà cả hai cột [ ] đều đạt. Không có dòng nào → cửa sổ **rỗng**, và đó là một kết luận khoa học (xem cây quyết định `protocols/08` §8), không phải "thí nghiệm hỏng".
 
 ---
 
@@ -115,7 +115,7 @@ Không cần Velostat. Nối `Vcc — R_series — R_ref — GND`, điểm giữ
 
 **Định nghĩa dùng được mà không cần script (chọn 1 và ghi vào §7 TRƯỚC khi đo — agent không chọn giúp):**
 - **Bản A (đề xuất, đo tay được):** `R_max` = `R_series` lớn nhất sao cho `e ≤ 1 LSB` (LSB = `V_FS / 2^bit`, tra ở chân phiếu) **và** `nhịp_adc ≤ 2 × nhịp_adc` ở dòng 100 Ω.
-- **Bản B (đúng thống kê hơn, cần script):** `e ≤ 1 LSB` **và** `σ ≤ 2σ(100 Ω)` với σ tính trên ≥ 5.000 mẫu → **hoãn**, chỉ chạy khi chủ dự án mở khoá giai đoạn script.
+- **Bản B (đúng thống kê hơn, cần script):** `e ≤ 1 LSB` **và** `σ ≤ 2σ(100 Ω)` với σ tính trên ≥ 5.000 mẫu → **hoãn**, chỉ chạy khi nhóm nghiên cứu mở khoá giai đoạn script.
 
 ---
 

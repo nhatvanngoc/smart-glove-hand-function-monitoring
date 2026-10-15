@@ -1,6 +1,6 @@
 # Golden-filter hunt (problem-first) — 2026-08-26
 
-Bộ lọc vàng mới của owner: **săn problem trước, không săn novelty trước**; system-novelty (không cần thuật toán mới); prototype-first; kill-test sớm; chấm 5 tiêu chí (Human impact / Novelty / Feasibility / Measurability / ViSEF–ISEF fit). **Không nhét Velostat/Orange Pi/Arduino vào trước.**
+Bộ lọc vàng mới của trưởng nhóm: **săn problem trước, không săn novelty trước**; system-novelty (không cần thuật toán mới); prototype-first; kill-test sớm; chấm 5 tiêu chí (Human impact / Novelty / Feasibility / Measurability / ViSEF–ISEF fit). **Không nhét Velostat/Orange Pi/Arduino vào trước.**
 
 ## Bước 1 — Beneficiary
 **Người khuyết tật vận động (SCI/tứ chi, bại não, sau đột quỵ, ALS) + người già yếu.** (Giàu pain point sensing/embedded; đúng gu đề tài ISEF đoạt giải của VN: thiết bị hỗ trợ người khuyết tật.)

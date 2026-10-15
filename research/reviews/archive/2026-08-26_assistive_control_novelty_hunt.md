@@ -25,11 +25,11 @@ None of them **diagnose the CAUSE** of the degradation (fatigue vs electrode shi
 ## The bind, stated plainly
 
 - **Legible application-level novelty** ⇒ crowded (every application direction is occupied).
-- **Uncrowded novelty** ⇒ mechanism-level (metrology / integrity), which the owner judged not ISEF-legible.
+- **Uncrowded novelty** ⇒ mechanism-level (metrology / integrity), which the trưởng nhóm judged not ISEF-legible.
 
 So no *application* swap clears the ≥80/100 bar under the constraints. The only surviving mechanism is cause-level signal-integrity diagnosis.
 
-## Candidate that survives (for owner decision — not adopted)
+## Candidate that survives (for trưởng nhóm decision — not adopted)
 
 > **An assistive control interface that diagnoses WHY the user's control signal degraded — fatigue vs electrode shift vs involuntary movement vs loss of voluntary drive — and adapts per cause, instead of blindly re-calibrating.**
 
@@ -39,4 +39,4 @@ So no *application* swap clears the ≥80/100 bar under the constraints. The onl
 
 ## Decision required (DEC-INSOLE-013)
 
-Either (1) adopt the cause-level signal-integrity direction and accept it moves from pressure-insole to EMG/biosignal + RK3588; or (2) relax a constraint (sensor type / no-reference / legibility bar). Directions F–H can still be attacked if the owner wants, but A–E show the application space is saturated.
+Either (1) adopt the cause-level signal-integrity direction and accept it moves from pressure-insole to EMG/biosignal + RK3588; or (2) relax a constraint (sensor type / no-reference / legibility bar). Directions F–H can still be attacked if the trưởng nhóm wants, but A–E show the application space is saturated.

@@ -52,7 +52,7 @@ Xem `docs/01_Topic_Definition.md` (đề tài), `research/context/DECISION_LOG.m
 - **Prior art gần nhất (phải differentiate):** Zhu lab IROS 2017 (15 IMU + 6 Velostat lực tiếp xúc); Reconfigurable Data Glove 2023 (IMU + Velostat).
 - **Hạn chế của cách đeo ở cổ tay:** PMC9901039 / medRxiv 2023 (không ghi được chuyển động ngón).
 - **Lực ngón có ý nghĩa lâm sàng:** RCT PMC11092254 (2024); PMC10242812 (2023).
-- **Đặc tính Velostat:** Hopkins et al., IEEE Sensors J 2020 🔵 verify.
+- **Đặc tính Velostat:** Hopkins et al., IEEE Sensors J 2020 (cần đối chiếu nguồn).
 - **Self-validation/drift:** dummy-gauge/reference-cell đã có từ lâu → không claim mới.
 
 ## Trạng thái

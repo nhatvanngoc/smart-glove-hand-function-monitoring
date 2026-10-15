@@ -1,8 +1,8 @@
 # ĐỀ CƯƠNG NGHIÊN CỨU KHOA HỌC — BẢN ĐĂNG KÝ VỚI TRƯỜNG (BẢN NHÁP)
 
-> ⚠️ **Bản để nộp là [`DE_CUONG_NOP_TRUONG.md`](DE_CUONG_NOP_TRUONG.md)** (`DEC-PROP-001`). File này là **outline nội bộ** dùng để soạn và đối chiếu; không nộp file này.
+> **Lưu ý: Bản để nộp là [`DE_CUONG_NOP_TRUONG.md`](DE_CUONG_NOP_TRUONG.md)** (`DEC-PROP-001`). File này là **outline nội bộ** dùng để soạn và đối chiếu; không nộp file này.
 
-> **Trạng thái:** `DRAFT — chờ chủ dự án điền mục in nghiêng` · Ngày soạn: 2026-09-19
+> **Trạng thái:** `DRAFT — chờ nhóm nghiên cứu điền mục in nghiêng` · Ngày soạn: 2026-09-19
 > **Dành cho:** phiếu đăng ký đề tài NCKH cấp trường / hồ sơ sơ khảo ViSEF
 > **Nguyên tắc viết:** mỗi con số đều có id nguồn trong `research/evidence/SOURCE_LEDGER.csv` kèm **mức đã đọc**; không có số nào là kết quả đo của đề tài ở thời điểm nộp đề cương.
 > **Cấm (đã chốt):** "hệ thống đầu tiên", "3–6 tháng vàng", "40–50% khối lượng cơ", "đo góc khớp", "loại bỏ drift", "tái tổ chức vỏ não", "thiết bị tập PHCN", trích dẫn thành tích hội thi.
@@ -15,7 +15,7 @@
 
 **Tiếng Anh:** *A low-cost smart glove with directional piezoresistive sensing for quantitative hand motor-function assessment and longitudinal monitoring in post-stroke rehabilitation*
 
-**Học sinh:** *[điền]* · **Giáo viên hướng dẫn:** *[điền]* · **Đơn vị:** *THPT [điền]* · **Lĩnh vực dự thi:** *[chủ dự án chọn]* — khuyến nghị của agent: **chính = Hệ thống nhúng (Embedded Systems)**, **phụ = Y sinh & Khoa học sức khỏe**. Lý do: toàn bộ bằng chứng ta có kế hoạch đo là độ lặp/nhiễu/độ trễ/cổng pass-fail (ngôn ngữ của giám khảo kỹ thuật), còn ô Y sinh sẽ mở ra câu hỏi "người bệnh đâu?" mà đề tài **không** được phép trả lời trước phê duyệt đạo đức (xem `research/reviews/2026-09-19_benchmark_xe_lan_ALS_QG2025.md` §4.1)
+**Học sinh:** *[điền]* · **Giáo viên hướng dẫn:** *[điền]* · **Đơn vị:** *THPT [điền]* · **Lĩnh vực dự thi:** *[nhóm nghiên cứu chọn]* — khuyến nghị của agent: **chính = Hệ thống nhúng (Embedded Systems)**, **phụ = Y sinh & Khoa học sức khỏe**. Lý do: toàn bộ bằng chứng ta có kế hoạch đo là độ lặp/nhiễu/độ trễ/cổng pass-fail (ngôn ngữ của giám khảo kỹ thuật), còn ô Y sinh sẽ mở ra câu hỏi "người bệnh đâu?" mà đề tài **không** được phép trả lời trước phê duyệt đạo đức (xem `research/reviews/2026-09-19_benchmark_xe_lan_ALS_QG2025.md` §4.1)
 
 ## 2. Mở đầu — vấn đề bằng số
 
@@ -41,11 +41,11 @@ Ba khoảng trống định lượng được, dùng làm căn cứ chọn đề
 | M1 | Chế tạo sensing element áp trở trên vách khung có preload, lặp lại được | Phần tử tự chế có ổn định không? | `GATE 0` (độ lặp R–p, trễ, trôi theo phiên) |
 | M2 | Suy luận **dấu** gập/duỗi từ mẫu vách, không encoder/IMU | Hệ phân biệt hướng không? | `GATE A` |
 | M3 | Tái tạo tầm vận động **chỉ số** (không quy đổi ra độ) so với ground truth cơ khí | Đủ trung thực để trình bày không? | `GATE B` |
-| **M4** ⭐ | Phát hiện **thay đổi chức năng thật** lớn hơn biến thiên của chính hệ đo | Chỉ số có dùng để theo dõi dọc được không? | `GATE C` — **nếu fail thì dừng/đổi trục, không xin xỏ** |
+| **M4**  | Phát hiện **thay đổi chức năng thật** lớn hơn biến thiên của chính hệ đo | Chỉ số có dùng để theo dõi dọc được không? | `GATE C` — **nếu fail thì dừng/đổi trục, không xin xỏ** |
 | M5 | Tự phát hiện phiên dữ liệu không tin cậy | Có báo động giả / bỏ sót không? | `GATE D`, `GATE E` |
 | M6 | Mô hình nhỏ chạy được tại biên | INT8 có đủ nhanh/đủ đúng? | `GATE F` |
 
-**Giả thuyết trung tâm (🟡, chưa kiểm chứng):** *với preload và hành trình chặn phù hợp, một mảng phần tử áp trở trên vách của khung cứng có thể ghi được nỗ lực co cơ ngay cả khi đầu ngón chưa dịch chuyển, và tách được nỗ lực đó khỏi lực cản co cứng nhờ sự phụ thuộc vận tốc.* Lí do giả thuyết này đứng được — xem `docs/02_Theoretical_Foundation.md` §5.5 (dự toán chuỗi đo + cửa sổ preload).
+**Giả thuyết trung tâm ([Chờ xử lý], chưa kiểm chứng):** *với preload và hành trình chặn phù hợp, một mảng phần tử áp trở trên vách của khung cứng có thể ghi được nỗ lực co cơ ngay cả khi đầu ngón chưa dịch chuyển, và tách được nỗ lực đó khỏi lực cản co cứng nhờ sự phụ thuộc vận tốc.* Lí do giả thuyết này đứng được — xem `docs/02_Theoretical_Foundation.md` §5.5 (dự toán chuỗi đo + cửa sổ preload).
 
 ## 4. Điểm khác biệt so với công trình đã có (bảng bắt buộc, vì chúng tôi không dùng chữ "đầu tiên")
 
@@ -87,11 +87,11 @@ Ba khoảng trống định lượng được, dùng làm căn cứ chọn đề
 **Điều kiện vật chất đã sẵn (không phải hứa hẹn):** đã có **Velostat, copper tape, ESP32-S3, Orange Pi 5 Pro RK3588** — phần lớn chi phí phần cứng không nằm trong đề tài. Khoản còn lại cho giai đoạn hiệu chuẩn là **vật tư tiêu hao + in 3D + khối lượng chuẩn** (vài trăm nghìn đồng). Ghi trung thực: thiết bị *được cung cấp/đã có*, **không** phải "tổng chi phí đề tài = 0", và hồ sơ **không** nêu con số tiền nếu chưa có hoá đơn (xem `research/context/EQUIPMENT_AND_ACCESS.md`).
 | P1 | `GATE 0`: đặc trưng `R(p)`, chọn `R_f` | 1–2 tuần |
 | P2 | `GATE A/B`: hướng + tầm chỉ số | 2 tuần |
-| P3 | `GATE C` ⭐ + rig E4/E5 + bộ 6 con số | 2–4 tuần |
+| P3 | `GATE C`  + rig E4/E5 + bộ 6 con số | 2–4 tuần |
 | P4 | `GATE D/E/F` + tầng kê đơn E6 | 1–2 tuần |
 | P5 | Viết báo cáo + poster + demo | 2 tuần |
 
-Vật tư chính: Velostat, đồng lá, PLA/TPU in 3D, ESP32-S3, CD74HC4067, tải + lò xo + puli + 1 servo, lực kế lò xo. *[chủ dự án điền bảng giá + nguồn mua]*
+Vật tư chính: Velostat, đồng lá, PLA/TPU in 3D, ESP32-S3, CD74HC4067, tải + lò xo + puli + 1 servo, lực kế lò xo. *[nhóm nghiên cứu điền bảng giá + nguồn mua]*
 
 ## 8. Rủi ro đã lường trước (và cách đề tài tự xử)
 
@@ -103,7 +103,7 @@ Vật tư chính: Velostat, đồng lá, PLA/TPU in 3D, ESP32-S3, CD74HC4067, t�
 | Bộ lọc co cứng không phân biệt được với gồng chủ ý | chỉ số `EI`/`EI_v` bị loại; đề tài quay về đo chuyển động |
 | Không có cơ sở y tế đồng hành / chưa có IRB | **không** thử trên người; mọi tuyên bố lâm sàng để ở tầng giả thuyết (đây là giới hạn, không phải thiếu sót ẩn) |
 
-## 8b. Ba chỗ chủ dự án nên cân nhắc sửa khi viết bản chính thức (agent đề xuất — không tự sửa `A.1`/`A.3`)
+## 8b. Ba chỗ nhóm nghiên cứu nên cân nhắc sửa khi viết bản chính thức (agent đề xuất — không tự sửa `A.1`/`A.3`)
 
 1. **`A.1` đang viết:** “…ghi nhận lực và hướng chuyển động của từng ngón tay, từ đó **tái tạo mô hình bàn tay 3D** và **đánh giá chức năng vận động**…”. Theo `docs/01` §4.1 và `CLM-NOV-001` (PROPOSED), câu này **vượt quá** bằng chứng hiện có (chưa hiệu chuẩn ra newton, chưa có mốc 0°). Bản an toàn hơn:
    > “…ghi nhận **mẫu lực tác dụng lên vách** ở mỗi lóng ngón, từ đó **suy luận hướng và thứ tự co duỗi** của từng ngón; mô hình 3D là **tái dựng minh hoạ** từ các chỉ số đó, không phải phép đo góc khớp.”
@@ -131,7 +131,7 @@ Vật tư chính: Velostat, đồng lá, PLA/TPU in 3D, ESP32-S3, CD74HC4067, t�
 3. Không thu dữ liệu của người khác trước khi có phê duyệt IRB/SRC + giấy đồng ý; mentor/gia đình ký thay không thay được phê duyệt.
 4. Dữ liệu xử lý tại biên, không phụ thuộc mạng; không nêu tên/mã người bệnh trong tài liệu.
 5. Đề cương **không** nêu cam kết về hiệu quả lâm sàng — đề tài chỉ cam kết đo được và nói thật kết quả đo.
-6. Đã **tham khảo ý kiến chuyên gia vật lý trị liệu – phục hồi chức năng** về tính cấp thiết và về giao thức đo. Theo quyết định của chủ dự án (2026-09-19), hồ sơ **chỉ nêu chung chung, không nêu danh tính**. Chuyên gia **không** là đối tượng đo, **không** là nguồn tuyển người bệnh, và ý kiến chuyên gia là bằng chứng **nhu cầu** — không phải bằng chứng **kết quả**.
+6. Đã **tham khảo ý kiến chuyên gia vật lý trị liệu – phục hồi chức năng** về tính cấp thiết và về giao thức đo. Theo quyết định của nhóm nghiên cứu (2026-09-19), hồ sơ **chỉ nêu chung chung, không nêu danh tính**. Chuyên gia **không** là đối tượng đo, **không** là nguồn tuyển người bệnh, và ý kiến chuyên gia là bằng chứng **nhu cầu** — không phải bằng chứng **kết quả**.
 
 ## 10. Tài liệu tham khảo (trích từ ledger; mỗi dòng ghi rõ mức đã đọc)
 

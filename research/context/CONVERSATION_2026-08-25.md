@@ -1,20 +1,20 @@
 # Conversation archive — 2026-08-25 (đổi hướng đề tài)
 
-> ⚠️ **LƯU TRỮ LỊCH SỬ — đề tài trong file này đã bị bỏ (2026-08-28 / 2026-09-13).**
+> **Lưu ý: LƯU TRỮ LỊCH SỬ — đề tài trong file này đã bị bỏ (2026-08-28 / 2026-09-13).**
 > Nội dung nói về đề tài **smart insole 3D-GRF/COP** và **lót giày theo dõi độ cứng mô gan chân (DFU)** — cả hai đã bị loại.
 > Đề tài hiện tại: **găng tay thông minh đánh giá & theo dõi chức năng bàn tay sau đột quỵ** (`docs/01_Topic_Definition.md`, DEC-TOPIC-019).
 > Giữ file để truy vết lịch sử quyết định; **không** dùng làm cơ sở kỹ thuật cho đề tài hiện tại.
 
 
 > **Mục đích:** bản nén (lossy) hội thoại ra quyết định đổi hướng đề tài, lưu trữ bền vững trên GitHub để khôi phục ngữ cảnh mà không phụ thuộc trí nhớ hội thoại.
-> **Phương pháp nén:** tóm tắt có cấu trúc + phụ lục chứa **nguyên văn** chỉ thị của chủ dự án (làm provenance). Bản tóm tắt là **hỗ trợ điều hướng**, không phải bằng chứng; nguồn chuẩn là `DECISION_LOG.md`, `PROJECT_SNAPSHOT.md` và các artifact gốc được trỏ tới.
-> **Trạng thái:** chủ dự án cho biết sẽ gửi **thêm thông tin** sau — các mục "mở" dưới đây chờ cập nhật tiếp theo.
+> **Phương pháp nén:** tóm tắt có cấu trúc + phụ lục chứa **nguyên văn** chỉ thị của nhóm nghiên cứu (làm provenance). Bản tóm tắt là **hỗ trợ điều hướng**, không phải bằng chứng; nguồn chuẩn là `DECISION_LOG.md`, `PROJECT_SNAPSHOT.md` và các artifact gốc được trỏ tới.
+> **Trạng thái:** nhóm nghiên cứu cho biết sẽ gửi **thêm thông tin** sau — các mục "mở" dưới đây chờ cập nhật tiếp theo.
 
 ---
 
 ## 1. Tóm tắt nén (compressed)
 
-### 1.1 Yêu cầu của chủ dự án (8 mục)
+### 1.1 Yêu cầu của nhóm nghiên cứu (8 mục)
 
 1. Vai trò AI: context lớn, điều phối sub-agent, **phản biện**.
 2. Chuẩn bị & clone repo: academic-research-skills, PlotNeuralNet, Caffe, PGF/TikZ, MiKTeX.
@@ -41,18 +41,18 @@
 - Environment check: 7/11 — `pdflatex`/`miktexsetup` chưa cài (cần installer MiKTeX trên máy thật), numpy/matplotlib/scikit-learn chưa cài (cần `.venv`).
 - Ghi quyết định đổi hướng vào `DECISION_LOG.md` (DEC-TOPIC-001; đóng các quyết định kiến trúc cũ).
 - Tạo `docs/30_TOPIC_PIVOT_Smart_Insole.md`, `research/protocols/SMART_INSOLE_CRITIQUE_5_SEATS.md`, `research/reviews/2026-08-25_smart_insole_redteam.md`.
-- Cập nhật `README.md`, `AGENTS.md`, `PROJECT_SNAPSHOT.md`, `INDEX.md`, `research/README.md`, `build_context_bundle.py`.
-- **Đổi tên repo GitHub** → đã **thử** với tên `smart-insole-edge-ai` nhưng bị GitHub từ chối (HTTP 403: token agent không có quyền Administration). Chờ chủ dự án tự đổi tên; xem mục 1.4.
+- Cập nhật `README.md`, `tài liệu nội bộ`, `PROJECT_SNAPSHOT.md`, `INDEX.md`, `research/README.md`, `build_context_bundle.py`.
+- **Đổi tên repo GitHub** → đã **thử** với tên `smart-insole-edge-ai` nhưng bị GitHub từ chối (HTTP 403: token agent không có quyền Administration). Chờ nhóm nghiên cứu tự đổi tên; xem mục 1.4.
 
 ### 1.4 Đổi tên GitHub (CHỜ CHỦ DỰ ÁN THỰC HIỆN)
 
 - Tên cũ: `nhatvanngoc/adaptive_cushion_aac`.
 - Tên đề xuất mới: `nhatvanngoc/smart-insole-edge-ai`.
 - **Trạng thái:** đổi tên bị **chặn** — token GitHub của agent không có quyền Administration (HTTP 403 "Resource not accessible by integration"). Repo hiện vẫn là `adaptive_cushion_aac`.
-- **Cách thực hiện (chủ dự án):** `gh repo rename smart-insole-edge-ai --repo nhatvanngoc/adaptive_cushion_aac --yes`, hoặc GitHub web → Settings → Repository name.
+- **Cách thực hiện (nhóm nghiên cứu):** `gh repo rename smart-insole-edge-ai --repo nhatvanngoc/adaptive_cushion_aac --yes`, hoặc GitHub web → Settings → Repository name.
 - Branch làm việc của phiên giữ nguyên: `arena/01a0372f-adaptive-cushion-aac` (ràng buộc nền tảng; không đổi tên branch).
 
-### 1.5 Mở — chờ thông tin tiếp theo từ chủ dự án
+### 1.5 Mở — chờ thông tin tiếp theo từ nhóm nghiên cứu
 
 - Số ô cảm biến/layout điện cực Velostat trong đế giày (và cách vượt giới hạn 16 kênh ADC).
 - Chuẩn vàng (force plate/load cell) cho Fx, Fy, Fz, COP — blocker số 1.
@@ -62,10 +62,10 @@
 
 ---
 
-## 2. Phụ lục — nguyên văn chỉ thị của chủ dự án (provenance)
+## 2. Phụ lục — nguyên văn chỉ thị của nhóm nghiên cứu (provenance)
 
 <details>
-<summary>Raw owner message (2026-08-25)</summary>
+<summary>Raw trưởng nhóm message (2026-08-25)</summary>
 
 ```
 Để chuẩn bị cho 1 large project, tôi cần bạn là 1 ai có context windows lớn, có khả năng điều phối sub agent làm việc, và phản biện. Sau đó clone cho tôi 1 số repo để chuẩn bị và triển khai, setup.
@@ -102,7 +102,7 @@ Sau đó nén cuộc trò chuyện này, lưu trữ vào github. Rồi đổi t�
 
 - **Khôi phục ngữ cảnh:** đọc mục 1, sau đó mở `DECISION_LOG.md` + `PROJECT_SNAPSHOT.md`.
 - **Truy xuất nguồn gốc:** mục 2 (nguyên văn) là nguồn chuẩn cho mọi diễn giải ở mục 1; nếu khác nhau, nguyên văn thắng.
-- **Cập nhật:** khi chủ dự án gửi thông tin mới, append tệp hội thoại mới `CONVERSATION_YYYY-MM-DD.md` và cập nhật DECISION_LOG/SNAPSHOT, không sửa ngược lịch sử.
+- **Cập nhật:** khi nhóm nghiên cứu gửi thông tin mới, append tệp hội thoại mới `CONVERSATION_YYYY-MM-DD.md` và cập nhật DECISION_LOG/SNAPSHOT, không sửa ngược lịch sử.
 
 ---
 
@@ -128,7 +128,7 @@ Sau đó nén cuộc trò chuyện này, lưu trữ vào github. Rồi đổi t�
 ### 4.2 Nguyên văn chỉ thị (provenance)
 
 <details>
-<summary>Raw owner message — phần 2 (2026-08-25)</summary>
+<summary>Raw trưởng nhóm message — phần 2 (2026-08-25)</summary>
 
 ```
 Hệ thống lót giày Edge-AI ước lượng liên tục 3D-GRF và COP có khả năng chống trôi dạt để phát hiện sớm sự thay đổi động học dáng đi và theo dõi đáp ứng phục hồi ở người có nguy cơ hoặc mắc thoái hóa khớp gối.
@@ -190,7 +190,7 @@ Sau khi reverse-engineer các dự án ISEF/ViSEF, thống nhất không nên b�
 
 ### Tóm tắt bền vững
 
-Chủ dự án yêu cầu đổi cách tìm novelty: **reverse-engineering literature**, không brainstorm tính năng/phần cứng. Định nghĩa làm việc:
+Nhóm nghiên cứu yêu cầu đổi cách tìm novelty: **reverse-engineering literature**, không brainstorm tính năng/phần cứng. Định nghĩa làm việc:
 
 `important unsolved bottleneck + reason existing methods fail + plausible new mechanism + killer experiment`.
 
@@ -200,7 +200,7 @@ Trọng tâm ưu tiên: **measurement reliability/fidelity under time, condition
 
 Yêu cầu đầu ra kế tiếp: **Gap Matrix 20–30 paper (2020–2026)**; mỗi paper bóc: đã làm gì, failure, limitation tác giả tự nêu, ai đã giải tiếp, gap còn lại, và độ khớp hardware. Chỉ giữ gap có điểm cao theo importance/novelty/depth/measurability/ground truth/feasibility/ISEF impact/ceiling.
 
-### Kiểm chứng ban đầu từ dẫn liệu chủ dự án
+### Kiểm chứng ban đầu từ dẫn liệu nhóm nghiên cứu
 
 - Lead “Reliable Vertical Ground Reaction Force Estimation with Smart Insole During Walking” được xác minh là **arXiv preprint 2025** (`arXiv:2501.07748`), không phải paper năm 2021. Nó là close prior art cho IMU + contact-geometry (center of pressed sensors) + ML để giảm lệ thuộc magnitude pressure trong vGRF; chưa phải bằng chứng separation biology-vs-sensor nhiều session.
 - CoP paper 2022 xác minh calibration task-match, vertical force, và số pressure cells ảnh hưởng accuracy; benchmark 2019 xác minh placement/stacking insole ảnh hưởng accuracy. Đây là candidate hidden variables/controlled interventions, chưa phải novelty confirmed.
@@ -225,7 +225,7 @@ Artifacts: `research/reviews/01_prior_art_matrix.md`, `research/protocols/02_per
 
 ---
 
-## 7. Engineering baseline and owner experience (2026-08-25)
+## 7. Engineering baseline and trưởng nhóm experience (2026-08-25)
 
 Owner reports that direct GPIO UART/serial between Orange Pi 5 Pro and Arduino Mega is already functioning. The plan must not treat basic communication as unresolved; it must document the actual UART device/pins, voltage-interface/level-shifting method, common ground, baud rate and measured logic levels before research acquisition. USB remains an optional diagnostic fallback.
 
@@ -235,4 +235,4 @@ Owner also reports prior participation in 2 Vietnamese science-and-engineering (
 
 ## 8. Owner-reported Mega ↔ Orange Pi diagnostic run (2026-08-25)
 
-Owner reports a GPIO UART diagnostic run: Mega configured at 115200 baud, 16 channels × 100-Hz frame target, ADC prescaler 64, 11,511 sent frames and no reported Mega errors. Orange Pi reports 11,510 received frames, zero CRC failures/gaps, one disconnect/reconnect, CPU 47.153 C, and 54.13 fps across 212.6 s. Owner explains firmware deliberately alternates 60-s send and 60-s no-send states; 11,510/212.6 ≈ 54.1 frames/s, so the reported whole-runtime average is expected. This is owner-reported status pending raw-log reprocessing; it is a deliberate transport-disconnect test, not continuous 100-Hz validation or sensor/ADC-quality evidence.
+Owner reports a GPIO UART diagnostic run: Mega configured at 115200 baud, 16 channels × 100-Hz frame target, ADC prescaler 64, 11,511 sent frames and no reported Mega errors. Orange Pi reports 11,510 received frames, zero CRC failures/gaps, one disconnect/reconnect, CPU 47.153 C, and 54.13 fps across 212.6 s. Owner explains firmware deliberately alternates 60-s send and 60-s no-send states; 11,510/212.6 ≈ 54.1 frames/s, so the reported whole-runtime average is expected. This is trưởng nhóm-reported status pending raw-log reprocessing; it is a deliberate transport-disconnect test, not continuous 100-Hz validation or sensor/ADC-quality evidence.

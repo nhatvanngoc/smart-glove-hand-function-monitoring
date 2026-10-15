@@ -104,7 +104,7 @@ The defensible contribution remains the specific combination — **perturbation-
 
 **No PRIOR ART FOUND (kill), and no GAP CONFIRMED (proof of absence).** All 20 read-scope rows and all 9 C21–C29 candidates plus the C30 map were verified; none carries the full six-criterion combination. Three direct adversarial searches on the exact mechanism found the *general* integrity→alert-suppression pattern in other domains but not in a plantar insole with perturbation injection and a coverage endpoint.
 
-This is a **bounded screen, not a systematic review**: it establishes that no kill paper was found in the declared scope, not that none exists. Per `AGENTS.md`, "not found" ≠ "does not exist".
+This is a **bounded screen, not a systematic review**: it establishes that no kill paper was found in the declared scope, not that none exists. Per `tài liệu nội bộ`, "not found" ≠ "does not exist".
 
 A near-neighbour kills this candidate if it has all of: controlled sensor/system perturbations; explicit integrity/state estimate or quality gate; longitudinal/held-out-session evaluation; false biological-change or equivalent decision endpoint; abstention/coverage (or an equivalent selective-decision evaluation); and a comparable plantar-sensing setting. None verified so far does.
 

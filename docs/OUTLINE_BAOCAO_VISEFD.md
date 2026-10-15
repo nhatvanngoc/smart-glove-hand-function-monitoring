@@ -5,7 +5,7 @@
 > **Học sinh:** Văn Ngọc Nhật Anh (11A2) + Nguyễn Duy Quân (12A1) — THPT Quảng Trị · GVHD: Lê Công Long
 > **Phiên bản:** v3.0 — 2026-09-29 (đồng bộ cấu hình đã nộp ADS1115+INA333; áp dụng checklist M-01..M-27; chốt đồ nghề + trần E2E; AI chuyển thành thực nghiệm đối chứng; bỏ mục tiêu 3D/clinical)
 > **"Viên đạn":** Theo dõi định lượng chức năng bàn tay tại nhà, liên tục giữa các lần tái khám lâm sàng.
-> **Lưu ý:** Mọi ô `[X]` chỉ được điền **sau** khi đo. Không bịa số. Xem `AGENTS.md`. Mọi claim vượt dữ liệu bị cấm — xem B.9.
+> **Lưu ý:** Mọi ô `[X]` chỉ được điền **sau** khi đo. Tuyệt đối không đưa số liệu giả định vào báo cáo. Mọi công bố vượt dữ liệu thực nghiệm đều bị loại bỏ — xem B.9.
 
 ---
 
@@ -19,7 +19,7 @@ Cấu trúc đoạn:
 - Gánh nặng đột quỵ + di chứng liệt/yếu tay; vì sao đây là vấn đề con người, không phải vấn đề kỹ thuật. Số "1,5 triệu di chứng" ghi rõ là **ước tính của nhóm từ [1]**, không phải số in trong [1] (M-22).
 - Phục hồi bàn tay = luyện tập tại nhà; kỹ thuật viên chỉ gặp bệnh nhân mỗi 1–3 tháng → quãng giữa là **"hộp đen"**.
 - Công cụ hiện tại (FMA, ARAT, Box and Block, lực kế Jamar, E-Link) là **ảnh chụp tại thời điểm đo**, chi phí cao, chủ yếu ở cơ sở y tế. Tự ghi chép thủ công sai số lớn (Manumeter 2022).
-- Xác nhận độc lập: hội đồng chuyên gia quốc tế 2024 (DOI 10.1109/OJEMB.2024.3523442) + nghiên cứu OTHER 2026 🔵 verify + **tham khảo ẩn danh** KTV VLTL-PHCN (DEC-ROLE-001: không tên, không năm kinh nghiệm, không quan hệ).
+- Xác nhận độc lập: hội đồng chuyên gia quốc tế 2024 (DOI 10.1109/OJEMB.2024.3523442) + nghiên cứu OTHER 2026 (cần đối chiếu nguồn) + **tham khảo ẩn danh** KTV VLTL-PHCN (DEC-ROLE-001: không tên, không năm kinh nghiệm, không quan hệ).
 - Câu chốt tên đề tài + một câu mô tả giải pháp (vi sai hai vách + EI/GAP/RAL + trạm biên).
 
 ### 2. Mục tiêu nghiên cứu
@@ -107,7 +107,7 @@ ngón tì vào vách khung → nén phần tử trên vách đó → cặp vi sa
 | Găng tay IMU/flex thương mại | Đắt theo số trục, trôi, cồng kềnh | Vách khung + vật liệu piezoresistive, mã hóa cả hướng và lực |
 | Găng tay phục hồi chức năng chủ động (robot găng) | Gây phụ thuộc máy, rủi ro an toàn, cần người có chuyên môn | **Không can thiệp vào vận động** — chỉ đánh giá/theo dõi |
 | Đeo cảm biến ở cổ tay | Không ghi được chuyển động ngón; không phân biệt vận động có mục đích | Đo tại từng khớp ngón |
-| Phần mềm mô phỏng (RehabReach và tương tự) | Mô phỏng, thiếu vi cử động và không tương tác thực | Đo trực tiếp; 🔵 cần xác minh thông tin RehabReach trước khi đưa vào báo cáo |
+| Phần mềm mô phỏng (RehabReach và tương tự) | Mô phỏng, thiếu vi cử động và không tương tác thực | Đo trực tiếp; [Thông tin] cần xác minh thông tin RehabReach trước khi đưa vào báo cáo |
 
 > **Khoảng trống thật:** chưa có hệ thống nào **vừa rẻ, vừa tại nhà, vừa tạo ra dữ liệu định lượng chức năng bàn tay theo tuần**, dùng được bởi người không chuyên môn và theo dõi được bởi kỹ thuật viên từ xa — **và tự biết khi nào dữ liệu của mình không còn đáng tin**.
 
@@ -220,17 +220,17 @@ ngón tì vào vách khung → nén phần tử trên vách đó → cặp vi sa
 
 - [ ] Tran M.C. et al., dịch tễ đột quỵ VN, *Global Epidemiology* 2025;9:100199 — đọc toàn văn (số 1,5M = nhóm tự nhân — M-22)
 - [ ] Pollock A. et al., Cochrane 2014 — 80%/50% qua Background (← Langhorne 2009…); **không trích Hendricks 2002 cho 80%**
-- [ ] Manumeter, *Sensors* 2022 — sai số tự ghi chép 🔵 đối chiếu mức đọc
+- [ ] Manumeter, *Sensors* 2022 — sai số tự ghi chép [Thông tin] đối chiếu mức đọc
 - [ ] Amin K.R. et al., IEEE OJEMB 2024, DOI 10.1109/OJEMB.2024.3523442
 - [ ] Găng từ tính, *Device* 2024 — **không ghi là Gloreha** (M-24)
 - [ ] Lin B.-S. et al., *Sensors* 2022 — hệ đa cảm biến co cứng (n = 14, có IRB)
 - [ ] ART-Glove, arXiv:2606.16370
 - [ ] Liu et al., *A Reconfigurable Data Glove…*, *Engineering* 2024 — **không ghi IROS 2017** (M-24)
 - [ ] ironHand 2016 + 2018
-- [ ] *Custom Data Gloves* review, arXiv:2405.15417 🔵 xác minh bản IEEE Access nếu trích
-- [ ] OTHER 2026, DOI 10.1080/09638288.2026.2643929 🔵 verify
-- [ ] Velostat: MIT Media Lab 2012 (đã đọc) + Hopkins, IEEE Sensors J 2020 🔵 verify + bài Sensors & Actuators A 2018 🔵 verify ([18] cũ)
-- [ ] Jamar + E-Link (giá/giới hạn) 🔵 bắt buộc đối chiếu lại
+- [ ] *Custom Data Gloves* review, arXiv:2405.15417 (cần xác minh) bản IEEE Access nếu trích
+- [ ] OTHER 2026, DOI 10.1080/09638288.2026.2643929 (cần đối chiếu nguồn)
+- [ ] Velostat: MIT Media Lab 2012 (đã đọc) + Hopkins, IEEE Sensors J 2020 (cần đối chiếu nguồn) + bài Sensors & Actuators A 2018 (cần đối chiếu nguồn) ([18] cũ)
+- [ ] Jamar + E-Link (giá/giới hạn) [Thông tin] bắt buộc đối chiếu lại
 - [ ] Tham khảo KTV VLTL-PHCN (ẩn danh, phiếu + ghi chép) — ý kiến chuyên môn, **không** phải nghiên cứu định lượng
 - [ ] Đồ nghề: FNIRSI 2C23T (spec theo datasheet/manual + Elektor 2024) — nêu tên máy + spec dùng trong báo cáo, chi tiết ở sổ tay
 
@@ -239,17 +239,17 @@ ngón tì vào vách khung → nén phần tử trên vách đó → cặp vi sa
 ## GHI CHÚ CHO PHIÊN SAU
 
 **Đã thay đổi trong v3.0 (2026-09-29):**
-- ✅ Đồng bộ cấu hình đã nộp: cầu vi sai → INA333 → MUX → ADS1115 → ESP32-S3 → BLE → Pi (DEC-HW-005).
-- ✅ Áp dụng checklist M-01..M-27: 20 Hz danh định, định nghĩa kênh, INA333 duy nhất, Vex TODO, tách ngân sách, cấm 7 nhóm câu (B.9).
-- ✅ AI từ "đầu tàu" → 1 thực nghiệm đối chứng rules-vs-ML (P1); bỏ mục tiêu 3D/MAS/cloud khỏi giai đoạn này.
-- ✅ Đồ nghề chốt (DEC-INST-001): 2C23T + DMM phụ + load cell 5 kg (HX711 P0); trần E2E <10M sổ tay-only (DEC-BUDGET-002).
-- ✅ Ẩn danh KTV toàn bộ (DEC-ROLE-001); sửa cite epi/Cochrane/IROS/Gloreha (M-22..M-24).
-- ✅ Viết lại A1/A2/A3/A4/A6 cho khớp.
+- [Đã hoàn thành] Đồng bộ cấu hình đã nộp: cầu vi sai → INA333 → MUX → ADS1115 → ESP32-S3 → BLE → Pi (DEC-HW-005).
+- [Đã hoàn thành] Áp dụng checklist M-01..M-27: 20 Hz danh định, định nghĩa kênh, INA333 duy nhất, Vex TODO, tách ngân sách, cấm 7 nhóm câu (B.9).
+- [Đã hoàn thành] AI từ "đầu tàu" → 1 thực nghiệm đối chứng rules-vs-ML (P1); bỏ mục tiêu 3D/MAS/cloud khỏi giai đoạn này.
+- [Đã hoàn thành] Đồ nghề chốt (DEC-INST-001): 2C23T + DMM phụ + load cell 5 kg (HX711 P0); trần E2E <10M sổ tay-only (DEC-BUDGET-002).
+- [Đã hoàn thành] Ẩn danh KTV toàn bộ (DEC-ROLE-001); sửa cite epi/Cochrane/IROS/Gloreha (M-22..M-24).
+- [Đã hoàn thành] Viết lại A1/A2/A3/A4/A6 cho khớp.
 
-**Còn chờ (không đo cho tới khi xong các mục 🔴):**
-- [ ] 🔴 Viết công thức EI tường minh (M-25) + chốt 9 ngưỡng `protocols/08` §7.
-- [ ] 🔴 Đo R(F) thật → trả lời M-01/M-17 (Vex, G, S, SNR).
-- [ ] Ghi rõ người đeo + an toàn (M-26); lấy 5 số INT8 của owner (M-08).
+**Còn chờ (không đo cho tới khi xong các mục [Cảnh báo]):**
+- [ ] [Cảnh báo] Viết công thức EI tường minh (M-25) + chốt 9 ngưỡng `protocols/08` §7.
+- [ ] [Cảnh báo] Đo R(F) thật → trả lời M-01/M-17 (Vex, G, S, SNR).
+- [ ] Ghi rõ người đeo + an toàn (M-26); lấy 5 số INT8 của trưởng nhóm (M-08).
 - [ ] Shopping P0: HX711, ADS1115/INA333 chính hãng, SHT30, cân/quả cân, thước đo góc, ẩm-nhiệt kế.
-- [ ] Xác minh nốt các cite 🔵 (OTHER, Hopkins, [18], RehabReach, Jamar/E-Link).
+- [ ] Xác minh nốt các cite [Thông tin] (OTHER, Hopkins, [18], RehabReach, Jamar/E-Link).
 - [ ] Viết lại A7/GLOSSARY nếu còn dùng.

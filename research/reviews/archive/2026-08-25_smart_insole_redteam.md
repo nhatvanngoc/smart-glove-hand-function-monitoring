@@ -1,7 +1,7 @@
 # Red-team review — Smart Insole Edge-AI (first pass)
 
-> **Ngày:** 2026-08-25 (bổ sung sau khi chủ dự án tinh chỉnh đề tài lần 2)
-> **Phạm vi đọc:** `docs/01_Topic_Definition.md`, `docs/02_Theoretical_Foundation.md`, quyết định DEC-TOPIC-001/002/003 + DEC-INSOLE-*, chỉ thị chủ dự án (nguyên văn phần 1 + 2).
+> **Ngày:** 2026-08-25 (bổ sung sau khi nhóm nghiên cứu tinh chỉnh đề tài lần 2)
+> **Phạm vi đọc:** `docs/01_Topic_Definition.md`, `docs/02_Theoretical_Foundation.md`, quyết định DEC-TOPIC-001/002/003 + DEC-INSOLE-*, chỉ thị nhóm nghiên cứu (nguyên văn phần 1 + 2).
 > **Cách thức:** **sequential role review** — các ghế chạy tuần tự trong cùng context. **Không** phải independent multi-agent verification.
 > **Mục đích:** nêu blocker ngay từ đầu để tránh đầu tư sai hướng. Không phải phán quyết "đạt/trượt".
 
@@ -42,7 +42,7 @@
 
 ## Addendum — sau tinh chỉnh lần 2 (novelty = longitudinal drift-robust)
 
-Chủ dự án đã tinh chỉnh đề tài đúng hướng phản biện ở trên: novelty không còn là "đo GRF" mà là **tách Δ_biology khỏi Δ_sensor** + **phát hiện thay đổi dọc**. Hệ quả với các finding ban đầu:
+Nhóm nghiên cứu đã tinh chỉnh đề tài đúng hướng phản biện ở trên: novelty không còn là "đo GRF" mà là **tách Δ_biology khỏi Δ_sensor** + **phát hiện thay đổi dọc**. Hệ quả với các finding ban đầu:
 
 - **F1 (chuẩn vàng)** càng quan trọng hơn — force plate là nền tảng cho cả RQ1 (cross-session) lẫn RQ2 (theo dõi dọc).
 - **F2 (drift)** trở thành **contribution chính** chứ không phải điểm trừ: giờ đây phải chứng minh **định lượng** mức giảm drift (killer experiment), không chỉ tránh dùng từ "triệt tiêu".

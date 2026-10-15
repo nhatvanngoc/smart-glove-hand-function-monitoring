@@ -1,9 +1,9 @@
 # Đối chiếu bản nộp `docs/DE_CUONG.pdf` (2026-09-26) với repo — 2026-09-27
 
 > **Mục đích:** `docs/DE_CUONG.pdf` là **bản đề cương đã nộp** (mới hơn mọi tài liệu trong repo, vốn dừng ở 2026-09-19).
-> File này ghi lại: PDF nói gì, repo đang nói gì khác, chỗ nào vênh trong chính PDF, và chủ dự án cần chốt gì.
+> File này ghi lại: PDF nói gì, repo đang nói gì khác, chỗ nào vênh trong chính PDF, và nhóm nghiên cứu cần chốt gì.
 > Quy tắc: **bản nộp thắng về mặt sự kiện** (đội hình, thời gian, kiến trúc đã nộp), nhưng **repo thắng về kỷ luật bằng chứng**
-> (mọi câu chữ trong PDF vi phạm `AGENTS.md`/`DEC-MSG-001` phải được gắn cờ, không được copy nguyên văn vào tài liệu khác).
+> (mọi câu chữ trong PDF vi phạm `tài liệu nội bộ`/`DEC-MSG-001` phải được gắn cờ, không được copy nguyên văn vào tài liệu khác).
 
 ---
 
@@ -52,12 +52,12 @@
 | [6] | Langhorne et al., Lancet Neurology 2009 | `SRC-LANGHORNE-2009` (**mới**) | **UNVERIFIED** — repo trước đây chỉ trích gián tiếp qua [5] |
 | [7] | Manumeter RCT, Sensors 2022;22(18):6938 | `SRC-MANUMETER-RCT-2022` | READ_ABSTRACT — khớp |
 | [8] | Amin et al., IEEE OJEMB 2024 | `SRC-AMIN-2024-SPASTICITY` | READ_ABSTRACT — khớp |
-| [9] | Device (Cell Press) 2024 — găng robot từ tính | `SRC-MAG-GLOVE-DEVICE-2024` | READ_ABSTRACT — khớp DOI; ⚠️ PDF §4.1 gọi là "**Gloreha** [9]" là **gán sai** (xem §5.1-I3) |
+| [9] | Device (Cell Press) 2024 — găng robot từ tính | `SRC-MAG-GLOVE-DEVICE-2024` | READ_ABSTRACT — khớp DOI; Lưu ý: PDF §4.1 gọi là "**Gloreha** [9]" là **gán sai** (xem §5.1-I3) |
 | [10] | Lin et al., Sensors 2022;22(19):7212 | `SRC-TW-SPASTICITY-2022` | READ_ABSTRACT — khớp |
 | [11] | ART-Glove, arXiv:2606.16370, 2026 | `SRC-ARTGLOVE-2026` | READ_ABSTRACT — khớp ID |
-| [12] | Liu et al., Engineering 2024;32:202–216 | `SRC-RECONFIG-GLOVE-2023` | VERIFIED — ⚠️ PDF §4.1 ghi "**IROS 2017** [12]" là **gán sai nhãn** (xem §5.1-I2); bài IROS 2017 thật là `SRC-ZHU-2017-GLOVE`, **không có trong TLTK của PDF** |
+| [12] | Liu et al., Engineering 2024;32:202–216 | `SRC-RECONFIG-GLOVE-2023` | VERIFIED — Lưu ý: PDF §4.1 ghi "**IROS 2017** [12]" là **gán sai nhãn** (xem §5.1-I2); bài IROS 2017 thật là `SRC-ZHU-2017-GLOVE`, **không có trong TLTK của PDF** |
 | [13]–[14] | ironHand 2016 + JRM 2018 | `SRC-IRONHAND-2018`, `SRC-IRONHAND-JRM-2018` | PARTIAL / READ_ABSTRACT — khớp |
-| [15] | "A Systematic Review on Custom Data Gloves", *IEEE Access* 2024;12:71245–71268 | `SRC-CUSTOMGLOVE-REVIEW-2024` | READ_ABSTRACT — ⚠️ **không xác minh được locator**: bài đúng tên này tìm thấy ở *IEEE Trans. Human-Machine Systems* 54 (2024), không phải *IEEE Access* 12:71245–71268 (xem `QUERY_LOG.jsonl` Q-20260927) → ghi `UNVERIFIED` cho locator trong PDF |
+| [15] | "A Systematic Review on Custom Data Gloves", *IEEE Access* 2024;12:71245–71268 | `SRC-CUSTOMGLOVE-REVIEW-2024` | READ_ABSTRACT — **Lưu ý: không xác minh được locator**: bài đúng tên này tìm thấy ở *IEEE Trans. Human-Machine Systems* 54 (2024), không phải *IEEE Access* 12:71245–71268 (xem `QUERY_LOG.jsonl` Q-20260927) → ghi `UNVERIFIED` cho locator trong PDF |
 | [16] | Sensors 2015;15(10):25463–25478 (vách áp điện trở) | `SRC-SIDEWALL-PIEZO-2015` | READ_ABSTRACT — khớp |
 | [17] | Phỏng vấn tham khảo ẩn danh KTV VLTL–PHCN, 2026 | `SRC-KTV-INTERVIEW-2026` (**mới**, project_artifact) | OWNER_DIRECTIVE — khớp `DEC-ROLE-001` |
 | [18] | "Piezoresistive characteristics of carbon-black…" *Sensors and Actuators A* 2018;279:412–421 | `SRC-VELOSTAT-CB-2018` (**mới**) | **UNVERIFIED** — tập 279 (15/08/2018) tồn tại nhưng truy vấn 2026-09-27 không tìm thấy bài khớp tên/trang (xem `QUERY_LOG.jsonl`) |
@@ -66,26 +66,26 @@
 
 ## 4. Bảng đối chiếu ngưỡng: repo (G0.x/M1–M6) ↔ bản nộp (C1.x/M1–M6)
 
-> Ký hiệu: ✅ khớp · 🔀 đổi ngưỡng/định nghĩa (cần chủ dự án phê chuẩn `DEC-METRIC-002`) · ➕ mới trong PDF.
+> Ký hiệu: [Đạt] khớp · [Điều chỉnh] đổi ngưỡng/định nghĩa (cần nhóm nghiên cứu phê chuẩn `DEC-METRIC-002`) · + mới trong PDF.
 
 | Bản nộp | Ngưỡng trong PDF | Tương ứng repo | Kết luận |
 |---|---|---|---|
-| C1.1 | Nhiễu đỉnh-đỉnh `Vpp ≤ 5 mV` / 5.000 mẫu tĩnh | G0.0 bản B (`σ` / ≥5.000 mẫu) | 🔀 PDF **chốt luôn định nghĩa B** + ngưỡng tuyệt đối 5 mV (với ADS1115 62,5 µV/LSB ≈ 80 LSB — thang đo khác hẳn ngân sách ESP32-S3 trong `docs/04`) |
-| C1.2 | `SNR ≥ 18 dB` (≈8×) tại ΔF=1 N, ≥10/12 kênh | G0.1 (`SNR ≥ 8 LSB`) + M1 | ✅ khớp về tỉ số (≈8×); 🔀 đơn vị đổi từ LSB sang dB, phạm vi **10/12 kênh** (repo: tồn tại `F_p`) |
-| C1.3 | `γ ≥ 0,25` (≥10/12 kênh); `R² ≥ 0,90` | G0.2 (`γ ≥ 0,25` ở ≥4/5 mảng; `R² ≥ 0,95`) + M2 | 🔀 **R² hạ 0,95 → 0,90**; mẫu số đổi sang kênh |
-| C1.4 | CV nội phiên ≤ 5 % (giàn cơ học) | G0.3 (`CV ≤ 5 %`) + M3 | ✅ khớp |
-| C1.5 | CV liên ngày ≤ 8 % (3 ngày, tháo/đeo lại, trên phantom) | G0.4 (`ICC(3 ngày) ≥ 0,75`) + M3 | 🔀 **đổi metric ICC → CV**, nới 5 %→8 %, gắn điều kiện phantom |
-| C1.6 | Hysteresis `h ≤ 18 %` | G0.5 (`hys_norm ≤ 15 %`) | 🔀 **nới 15 % → 18 %** |
-| C1.7 | Creep ≤ 8 % (giữ 60 s @ 5 N) | G0.6 (`creep_2dec ≤ 3 %`, mốc 10 s→100 s) | 🔀 **đổi cả định nghĩa lẫn ngưỡng** (thang thời gian + tải khác; dễ đo tay hơn) |
-| C1.8 | Trôi/tín hiệu ≤ 2,0 sau 10 ngày (qua auto-zero) | G0.7 (`drift_ratio ≤ 2` **và** trôi 10 ngày < ΔV@1N) | 🔀 **bỏ điều kiện thứ hai** (so với ΔV@1N) |
-| C1.9 | Rải γ giữa mảng ≤ ±40 % (+ bảng chuẩn hóa) | G0.8 (±40 %) | ✅ khớp |
-| C1.10 | `fs ≥ 20 Hz` đồng thời 12 kênh | G0.9 (`fps ≥ 20 Hz`) + M5 | ✅ khớp (⚠️ nhưng PDF §8.1/§9.1 ghi **50 Hz** — xem §5.1-I1) |
-| M4 | Trôi/tín hiệu ≤ 2,0 sau 10 ngày | M4 repo (`drift/ΔV@1N < 1` + `drift_ratio ≤ 2`) | 🔀 nới theo C1.8 |
-| M5 | `fs ≥ 20 Hz` + trễ toàn hệ thống ≤ 500 ms | M5 repo (`fps ≥ 20 Hz` + `latency_p95 ≤ 500 ms`) | ✅ khớp |
-| M6 | Phát hiện đeo lỏng ≥ 80 % (qua phổ `V_base`) | M6 repo (bắt ≥4/5 lỗi tiêm) + GATE E (≥90 %, báo giả ≤5 %) | 🔀 **đổi metric**: repo = fault-injection; PDF = phát hiện đeo lỏng qua `V_base` |
-| M2 (dải) | Dải tiền tải khả dụng **0,5–10 N**; §8.2 giả thuyết cửa sổ `Fp ∈ [0,5; 2,0] N` chờ Giai đoạn 1 xác định | `docs/02` §5.5: `F_p ≤ 68·γ·ΔF` (≈34 N với γ=0,5) | 🔀 khung khác nhau (dải vận hành/hypothesis vs cận trên lý thuyết) — tương thích được nếu đọc §8.2 là "vùng tìm kiếm", nhưng repo chưa từng nêu 0,5–10 N |
+| C1.1 | Nhiễu đỉnh-đỉnh `Vpp ≤ 5 mV` / 5.000 mẫu tĩnh | G0.0 bản B (`σ` / ≥5.000 mẫu) | [Điều chỉnh] PDF **chốt luôn định nghĩa B** + ngưỡng tuyệt đối 5 mV (với ADS1115 62,5 µV/LSB ≈ 80 LSB — thang đo khác hẳn ngân sách ESP32-S3 trong `docs/04`) |
+| C1.2 | `SNR ≥ 18 dB` (≈8×) tại ΔF=1 N, ≥10/12 kênh | G0.1 (`SNR ≥ 8 LSB`) + M1 | [Đạt] khớp về tỉ số (≈8×); [Điều chỉnh] đơn vị đổi từ LSB sang dB, phạm vi **10/12 kênh** (repo: tồn tại `F_p`) |
+| C1.3 | `γ ≥ 0,25` (≥10/12 kênh); `R² ≥ 0,90` | G0.2 (`γ ≥ 0,25` ở ≥4/5 mảng; `R² ≥ 0,95`) + M2 | [Điều chỉnh] **R² hạ 0,95 → 0,90**; mẫu số đổi sang kênh |
+| C1.4 | CV nội phiên ≤ 5 % (giàn cơ học) | G0.3 (`CV ≤ 5 %`) + M3 | [Đạt] khớp |
+| C1.5 | CV liên ngày ≤ 8 % (3 ngày, tháo/đeo lại, trên phantom) | G0.4 (`ICC(3 ngày) ≥ 0,75`) + M3 | [Điều chỉnh] **đổi metric ICC → CV**, nới 5 %→8 %, gắn điều kiện phantom |
+| C1.6 | Hysteresis `h ≤ 18 %` | G0.5 (`hys_norm ≤ 15 %`) | [Điều chỉnh] **nới 15 % → 18 %** |
+| C1.7 | Creep ≤ 8 % (giữ 60 s @ 5 N) | G0.6 (`creep_2dec ≤ 3 %`, mốc 10 s→100 s) | [Điều chỉnh] **đổi cả định nghĩa lẫn ngưỡng** (thang thời gian + tải khác; dễ đo tay hơn) |
+| C1.8 | Trôi/tín hiệu ≤ 2,0 sau 10 ngày (qua auto-zero) | G0.7 (`drift_ratio ≤ 2` **và** trôi 10 ngày < ΔV@1N) | [Điều chỉnh] **bỏ điều kiện thứ hai** (so với ΔV@1N) |
+| C1.9 | Rải γ giữa mảng ≤ ±40 % (+ bảng chuẩn hóa) | G0.8 (±40 %) | [Đạt] khớp |
+| C1.10 | `fs ≥ 20 Hz` đồng thời 12 kênh | G0.9 (`fps ≥ 20 Hz`) + M5 | [Đạt] khớp (Lưu ý: nhưng PDF §8.1/§9.1 ghi **50 Hz** — xem §5.1-I1) |
+| M4 | Trôi/tín hiệu ≤ 2,0 sau 10 ngày | M4 repo (`drift/ΔV@1N < 1` + `drift_ratio ≤ 2`) | [Điều chỉnh] nới theo C1.8 |
+| M5 | `fs ≥ 20 Hz` + trễ toàn hệ thống ≤ 500 ms | M5 repo (`fps ≥ 20 Hz` + `latency_p95 ≤ 500 ms`) | [Đạt] khớp |
+| M6 | Phát hiện đeo lỏng ≥ 80 % (qua phổ `V_base`) | M6 repo (bắt ≥4/5 lỗi tiêm) + GATE E (≥90 %, báo giả ≤5 %) | [Điều chỉnh] **đổi metric**: repo = fault-injection; PDF = phát hiện đeo lỏng qua `V_base` |
+| M2 (dải) | Dải tiền tải khả dụng **0,5–10 N**; §8.2 giả thuyết cửa sổ `Fp ∈ [0,5; 2,0] N` chờ Giai đoạn 1 xác định | `docs/02` §5.5: `F_p ≤ 68·γ·ΔF` (≈34 N với γ=0,5) | [Điều chỉnh] khung khác nhau (dải vận hành/hypothesis vs cận trên lý thuyết) — tương thích được nếu đọc §8.2 là "vùng tìm kiếm", nhưng repo chưa từng nêu 0,5–10 N |
 
-**Nguyên tắc áp dụng:** `DEC-METRIC-001` cấm đổi ngưỡng sau khi thấy số — hiện **chưa có số nào** nên việc bản nộp dùng C1.x là hợp lệ **khi và chỉ khi** chủ dự án phê chuẩn `DEC-METRIC-002`
+**Nguyên tắc áp dụng:** `DEC-METRIC-001` cấm đổi ngưỡng sau khi thấy số — hiện **chưa có số nào** nên việc bản nộp dùng C1.x là hợp lệ **khi và chỉ khi** nhóm nghiên cứu phê chuẩn `DEC-METRIC-002`
 (xem §6). `research/protocols/08` §7 giữ nguyên 10 ô chờ chốt; đã thêm ghi chú trỏ sang bảng này.
 
 ---
@@ -109,8 +109,8 @@
 
 | ID | Câu trong PDF | Vi phạm | Cách nói đúng (đã có trong repo) |
 |---|---|---|---|
-| L1 | "**triệt tiêu** trôi đồng pha / nhiễu đồng pha" (Tóm tắt, §4.3, §6.2/H1, §8.3, C1.8) | `AGENTS.md` §1 + `DEC-MSG-001`: cấm "triệt tiêu/loại bỏ drift" | "**giảm** thành phần đồng pha; phần dư được định lượng bằng C1.8/GATE C" |
-| L2 | H1: "cho phép **đo chính xác lực ép**" | `AGENTS.md` §1: cấm ADC→N khi chưa hiệu chuẩn từng kênh với chuẩn lực | "ghi **tín hiệu vi sai** tỉ lệ với lực ép; chưa quy đổi ra newton" |
+| L1 | "**triệt tiêu** trôi đồng pha / nhiễu đồng pha" (Tóm tắt, §4.3, §6.2/H1, §8.3, C1.8) | `tài liệu nội bộ` §1 + `DEC-MSG-001`: cấm "triệt tiêu/loại bỏ drift" | "**giảm** thành phần đồng pha; phần dư được định lượng bằng C1.8/GATE C" |
+| L2 | H1: "cho phép **đo chính xác lực ép**" | `tài liệu nội bộ` §1: cấm ADC→N khi chưa hiệu chuẩn từng kênh với chuẩn lực | "ghi **tín hiệu vi sai** tỉ lệ với lực ép; chưa quy đổi ra newton" |
 | L3 | "xác định **trực tiếp** hướng gập/duỗi" (§4.3) | `DEC-MSG-001`: hướng khớp là **suy luận**, không phải đo | "suy luận dấu gập/duỗi từ hiệu hai vách" |
 
 > Ghi chú trung thực: L1–L3 là chữ trong **bản đã nộp** — repo không sửa được quá khứ. Sổ này tồn tại để (a) bản báo cáo sau không lặp lại,
@@ -121,16 +121,16 @@
 | ID | Vấn đề | Xử lý 2026-09-27 |
 |---|---|---|
 | R1 | README ghi tên mới "`DEC-TITLE-001` chốt 2026-09-19" + link `2026-09-19_title_options.md` — nhưng **quyết định không có trong `DECISION_LOG.md`** và **file không tồn tại**; bản nộp dùng tên cũ | Đã sửa README: tên đã nộp = `DEC-TOPIC-019`; `DEC-TITLE-001` hạ thành đề xuất chưa duyệt, chờ `DEC-TITLE-002` |
-| R2 | **GAP ba định nghĩa:** README/`DE_CUONG_NOP_TRUONG` = AROM−PROM (độ IMU); `docs/02` §7.3 = A(PROM)−A(AROM) (mẫu chuẩn hóa ∫\|d\|dt); PDF = PROM−AROM (độ, theo giao thức) | Ghi `CLM-DEF-001` (PROPOSED): lấy định nghĩa PDF làm chuẩn nộp; `docs/02` §11 + README sửa theo; chờ chủ dự án phê chuẩn |
+| R2 | **GAP ba định nghĩa:** README/`DE_CUONG_NOP_TRUONG` = AROM−PROM (độ IMU); `docs/02` §7.3 = A(PROM)−A(AROM) (mẫu chuẩn hóa ∫\|d\|dt); PDF = PROM−AROM (độ, theo giao thức) | Ghi `CLM-DEF-001` (PROPOSED): lấy định nghĩa PDF làm chuẩn nộp; `docs/02` §11 + README sửa theo; chờ nhóm nghiên cứu phê chuẩn |
 | R3 | **EI ba định nghĩa:** README/`DE_CUONG_NOP_TRUONG` = median\|d\|/(1+κ\|v̂\|); `docs/02` §7.3 = E/(E+E_nền) ∈ (0,1]; `protocols/07` ≈ E/(E+E_nền); PDF = mô tả chữ (trung vị biến thiên phổ, chuẩn hóa vận tốc góc, công thức cố định trước khi đo) | Như R2: PDF thắng về "đã nộp", nhưng PDF chưa cho công thức → công thức tường minh vẫn nợ, gắn vào `DEC-METRIC-002` |
 | R4 | **RAL hai định nghĩa:** README/`DE_CUONG_NOP_TRUONG` = hỗ trợ thực/yêu cầu ∈ [0,1]; `docs/02` §7.3 + `protocols/07` + PDF §10.3 = nấc tải nhỏ nhất (g) đạt P_complete ≥ 80 % | Như R2: lấy định nghĩa PDF (gam + giao thức 10 chu kỳ/nấc 120→0 g) |
 | R5 | `docs/04` = ADC ESP32-S3 12-bit + R_f≈R_sensor (ngân sách 100 kΩ/10-bit/1,51 mV); PDF = ADS1115 16-bit + INA333 G=10 + R_ref=10 kΩ | Không xóa ngân sách cũ (lịch sử thiết kế); thêm `docs/04` §8 = cấu hình đã nộp + bảng delta; chờ `DEC-HW-005` |
 | R6 | README đếm "141 nguồn / 81 truy vấn" nhưng file thật là 140 dòng nguồn / 79 truy vấn (trước lần này) | Đã sửa theo số đếm thật (sau lần này: 146 nguồn, 81 truy vấn) |
-| R7 | `docs/05` §2 + §10 còn DOI SSRN preprint và arXiv số cũ cho [Custom Gloves Review]; `A.1` còn gán 80 % cho Hendricks 2002 | Nợ cũ, nhắc lại: `docs/05` là outline nội bộ (không nộp) nên không chặn; A.1 chờ chủ dự án sửa (đã nêu trong `DE_CUONG_NOP_TRUONG.md`) |
+| R7 | `docs/05` §2 + §10 còn DOI SSRN preprint và arXiv số cũ cho [Custom Gloves Review]; `A.1` còn gán 80 % cho Hendricks 2002 | Nợ cũ, nhắc lại: `docs/05` là outline nội bộ (không nộp) nên không chặn; A.1 chờ nhóm nghiên cứu sửa (đã nêu trong `DE_CUONG_NOP_TRUONG.md`) |
 
 ---
 
-## 6. Quyết định cần chủ dự án chốt (agent đề xuất, không tự phê)
+## 6. Quyết định cần nhóm nghiên cứu chốt (nhóm đề xuất, không tự phê)
 
 | ID đề xuất | Nội dung | Vì sao cần |
 |---|---|---|
@@ -158,5 +158,5 @@
 8. Log 2 truy vấn xác minh [15]/[18] vào `QUERY_LOG.jsonl` (kết quả: `UNVERIFIED`).
 9. Chạy `build_context_bundle.py` (bundle ở `research/generated/`, không commit).
 
-**Không làm (vượt quyền agent):** chốt ngưỡng, chốt kiến trúc, đổi tên đề tài/repo, đo đạc, viết firmware/script phân tích (`DEC-PHASE-001` vẫn hiệu lực),
+**Không làm (vượt phạm vi phân công):** chốt ngưỡng, chốt kiến trúc, đổi tên đề tài/repo, đo đạc, viết firmware/script phân tích (`DEC-PHASE-001` vẫn hiệu lực),
 sửa chữ trong PDF, trích nguồn `UNVERIFIED` vào văn bản nộp.

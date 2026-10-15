@@ -2,7 +2,7 @@
 (ESP32-S3 + ADS1115 + INA333 + CD74HC4067)
 
 ## 1. Mục tiêu thử nghiệm
-Xác thực toàn bộ chuỗi phần cứng thu thập và tiền xử lý tín hiệu cho mảng cảm biến áp lực bàn tay trong dự án găng tay robot phục hồi chức năng:
+Xác thực toàn bộ chuỗi phần cứng thu thập và tiền xử lý tín hiệu cho mảng cảm biến áp lực bàn tay trong đề tài găng tay thông minh theo dõi chức năng vận động bàn tay:
 `Tín hiệu đầu vào -> MUX 16 kênh CD74HC4067 -> Tầng khuếch đại đo lường INA333 (CJMCU-333) -> Bộ biến đổi tương tự - số ADC 16-bit ADS1115 -> Vi điều khiển ESP32-S3 (qua I2C & Serial Plotter)`.
 
 ## 2. Các mốc giải quyết bài toán phần cứng (Milestones)

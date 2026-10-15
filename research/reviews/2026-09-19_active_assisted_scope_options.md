@@ -1,15 +1,15 @@
 # SCOPE PROPOSAL — "Tập chủ động có trợ lực (AAT)": phân tích trước khi chấp nhận
 
-> **Ngày:** 2026-09-19 · **Người đề xuất:** chủ dự án (văn bản gửi trong phiên Arena) · **Người phân tích:** agent phiên `01a0b8f4`
-> **Trạng thái:** **PROPOSED — chưa được chấp thuận.** Liên kết `DEC-SCOPE-002` (PROPOSED) trong `research/context/DECISION_LOG.md`.
-> **Quy tắc của phiên này:** agent chỉ phân tích + đề xuất; không tự đổi phạm vi đề tài, không tự sửa tên đề tài, không sửa ngưỡng GATE, **không commit/push**.
+> **Ngày:** 2026-09-19 · **Người đề xuất:** nhóm nghiên cứu · **Nội dung:** Đề xuất mở rộng kỹ thuật nội bộ
+> **Trạng thái:** **DỰ THẢO — thảo luận nội bộ.** Liên kết `DEC-SCOPE-002` (PROPOSED) trong `research/context/DECISION_LOG.md`.
+> **Quy tắc:** chỉ phân tích và đề xuất phương án; giữ nguyên phạm vi và ngưỡng đo đã đăng ký.
 > **Bằng chứng:** mọi dòng `SRC-AAT-*` / `SRC-RAT-*` mới thêm vào `research/evidence/SOURCE_LEDGER.csv` đều ở mức `READ_ABSTRACT` hoặc `UNVERIFIED` → **không** được trích nguyên văn số liệu vào báo cáo cho tới khi đọc toàn văn.
 
 ---
 
 ## 0. Kết luận ngắn (đọc 2 phút)
 
-**NỖI LO ĐÚNG — HIỆU LỆNH BAN ĐẦU CỦA EM SAI CHUẨN.** Chủ dự án phản hồi (2026-09-19): ở ViSEF/ISEF, thắng bằng **cách đặt vấn đề khác + tái tổ hợp đồ có sẵn + bằng chứng tự làm**, không bằng nguyên lý mới; phân tích kiểu IEEE journal là tự loại mình khỏi sân chơi này. **Em chấp nhận phản hồi đó** và viết lại khuyến nghị ở **§9–§10** (E4/E5). Những gì ở §1–§4 vẫn giữ giá trị nhưng **đổi vai trò**: chúng không còn là "lý do bác", mà là **ranh giới an toàn + danh sách câu hỏi hội đồng sẽ hỏi** — và E4/E5 được thiết kế đúng để né hết ranh giới đó.
+**NỖI LO ĐÚNG — HIỆU LỆNH BAN ĐẦU CỦA EM SAI CHUẨN.** Nhóm nghiên cứu phản hồi (2026-09-19): ở ViSEF/ISEF, thắng bằng **cách đặt vấn đề khác + tái tổ hợp đồ có sẵn + bằng chứng tự làm**, không bằng nguyên lý mới; phân tích kiểu IEEE journal là tự loại mình khỏi sân chơi này. **Em chấp nhận phản hồi đó** và viết lại khuyến nghị ở **§9–§10** (E4/E5). Những gì ở §1–§4 vẫn giữ giá trị nhưng **đổi vai trò**: chúng không còn là "lý do bác", mà là **ranh giới an toàn + danh sách câu hỏi hội đồng sẽ hỏi** — và E4/E5 được thiết kế đúng để né hết ranh giới đó.
 
 (Bản gốc §0 dưới đây giữ nguyên, không xoá, để hồ sơ trung thực về cả hai lần hiệu chỉnh.)
 
@@ -30,7 +30,7 @@ Ba lý do không nhận phần "thiết bị chấp hành" nguyên trạng:
 
 1. **Không tăng novelty — ngược lại.** Chuỗi "cảm biến phát hiện nỗ lực → động cơ bù phần lực còn thiếu → dừng khi đạt" (chính là mục 3.2 của bản đề xuất) là một **lĩnh vực điều khiển đã trưởng thành**, có bài báo dùng **đúng công thức** mà bản đề xuất viết như ý tưởng của mình: `F_Assistive = F_Ref − F_EMG` (`SRC-AAN-EMG-2024`). Và người ta đã phải viết bài mới (2026) để **sửa** AAN vì AAN cổ điển *không* triệt tiêu được slacking (`SRC-MPC-AAN-2026`).
 2. **Chạm ngay 2 dự án Việt Nam đã công bố**, cả hai đều là "găng có trợ lực kéo gập/duỗi": ĐH Bách khoa Đà Nẵng (PneuNet, ~4,5–5 triệu, đã cho bệnh nhân BV Đa khoa Đà Nẵng dùng thử) và **ĐH Thủy lợi (18/09/2026)** — mô tả trên báo đúng là *"bộ khung trợ lực … điều khiển bộ phận trợ lực để kéo mở hoặc gập các ngón tay theo biên độ phù hợp"* + theo dõi từ xa. Nếu đề tài mình đi hướng này, em trở thành **bản sao ý tưởng của người lớn hơn**, thay vì khác biệt.
-3. **Đổi loại rủi ro, trong khi nền móng chưa xong.** Hiện repo **chưa có một dòng firmware ESP32-S3 nào**, `GATE 0` chưa chạy được, số liệu thực nghiệm = 0. Thêm chấp hành lực lên bàn tay co cứng sau đột quỵ kéo theo: an toàn mô-men, dừng khẩn, nguồn áp/driver, vòng điều khiển, hiệu chuẩn — và **mọi thử nghiệm trên người (kể cả người lành) đều phải chờ IRB/SRC** (`AGENTS.md` §4, `DEC-ETHICS-001` = PENDING).
+3. **Đổi loại rủi ro, trong khi nền móng chưa xong.** Hiện repo **chưa có một dòng firmware ESP32-S3 nào**, `GATE 0` chưa chạy được, số liệu thực nghiệm = 0. Thêm chấp hành lực lên bàn tay co cứng sau đột quỵ kéo theo: an toàn mô-men, dừng khẩn, nguồn áp/driver, vòng điều khiển, hiệu chuẩn — và **mọi thử nghiệm trên người (kể cả người lành) đều phải chờ IRB/SRC** (`tài liệu nội bộ` §4, `DEC-ETHICS-001` = PENDING).
 
 **Phần đáng giá nhất của bản đề xuất lại không cần động cơ:** biến AAT thành **chỉ số đo được** — *gap AROM−PROM* và *mức trợ giúp cần thiết* (RAL). Đó là phương án **E2-lite** (§5) và là ứng viên novelty **mạnh hơn** cả ứng viên A đã bị hạ ở `research/reviews/2026-09-19_prior_art_novelty_gate1.md`.
 
@@ -40,9 +40,9 @@ Ba lý do không nhận phần "thiết bị chấp hành" nguyên trạng:
 
 | Ràng buộc | Nguồn trong repo | Va chạm với đề xuất |
 |---|---|---|
-| Tên đề tài **đã chốt**: "…hỗ trợ **đánh giá và theo dõi** chức năng vận động bàn tay…" | `DEC-TOPIC-019` (2026-09-13), `docs/01` §1 | "Tập chủ động có trợ lực" = thiết bị **can thiệp**. Đổi hướng = **đổi đề tài**, chỉ chủ dự án quyết; hồ sơ đã viết theo trục đánh giá |
+| Tên đề tài **đã chốt**: "…hỗ trợ **đánh giá và theo dõi** chức năng vận động bàn tay…" | `DEC-TOPIC-019` (2026-09-13), `docs/01` §1 | "Tập chủ động có trợ lực" = thiết bị **can thiệp**. Đổi hướng = **đổi đề tài**, chỉ nhóm nghiên cứu quyết; hồ sơ đã viết theo trục đánh giá |
 | Báo cáo đã ghi **giới hạn phạm vi**: "Hệ thống … **không phải thiết bị tập phục hồi chức năng** … chỉ theo dõi" | `docs/bao_cao/A4_doi_tuong_pham_vi.md` | Nhận đề xuất = phải viết lại A.4 **và** A.1 **và** A.2, nếu không hồ sơ tự mâu thuẫn trước hội đồng |
-| Cấm thu dữ liệu trên người trước khi có phê duyệt IRB/SRC; ưu tiên staged (phantom → người lành mô phỏng → pilot bệnh nhân **chỉ khi** có ethics + bệnh viện + IRB) | `AGENTS.md` §4 (dòng 60–65), `DEC-ETHICS-001` = OPEN/PENDING | AAT chỉ có ý nghĩa khi chứng minh được nó **đang bù đúng lúc**; không có bệnh nhân thì không chứng minh được → phần "ưu việt lâm sàng" sẽ phải trình bày dạng **giả thuyết**, không phải kết quả |
+| Cấm thu dữ liệu trên người trước khi có phê duyệt IRB/SRC; ưu tiên staged (phantom → người lành mô phỏng → pilot bệnh nhân **chỉ khi** có ethics + bệnh viện + IRB) | `tài liệu nội bộ` §4 (dòng 60–65), `DEC-ETHICS-001` = OPEN/PENDING | AAT chỉ có ý nghĩa khi chứng minh được nó **đang bù đúng lúc**; không có bệnh nhân thì không chứng minh được → phần "ưu việt lâm sàng" sẽ phải trình bày dạng **giả thuyết**, không phải kết quả |
 
 Hệ quả thực tế: nếu nhận E3 (có động cơ), **bắt buộc** lùi hoặc chia nhỏ hạn nộp; nếu không lùi được, E3 biến thành "robot chưa có số liệu" — câu hỏi đầu tiên của giám khảo sẽ là *"anh có đo được gì không?"*, và lúc đó phần thưởng kỳ vọng thấp hơn cả hiện tại.
 
@@ -67,7 +67,7 @@ Không có dòng nào dưới đây được thêm vào báo cáo nếu còn ở
 | 11 | "Giai đoạn vàng 3–6 tháng đầu" | Cần nguồn; con số phổ biến nhưng em chưa có trích dẫn trong repo | chưa xác minh | Dùng "pha hồi phục sớm (thường được nhắc là vài tháng đầu)" và đặt footnote `*(verify)*` như cách A.1 đang làm |
 | 12 | "Digital twin / mô hình 3D thời gian thực" để phản hồi thị giác | **Nguy cơ over-claim của chính đề tài** | `docs/01` §77 + `CLAIM_LEDGER`: hệ thống **không** đo góc khớp tuyệt đối | Chỉ được hiện **chỉ số/suy luận hướng** đã được gắn nhãn độ tin cậy; nếu avatar khớp ngón thì **phải** qua GATE B trước, và ghi rõ "minh họa" |
 
-> Ghi chú quy trình: 12/12 dòng trên đều chạm `AGENTS.md` — "không nâng mức bằng chứng", "một lần không tìm thấy = `UNVERIFIED`". Vì vậy ở §2 tôi **không** kết luận "sai", tôi kết luận "chưa đủ căn cứ để in vào báo cáo", kèm đường thoát (bỏ / làm mềm / test ở GATE).
+> Ghi chú quy trình: 12/12 dòng trên đều chạm `tài liệu nội bộ` — "không nâng mức bằng chứng", "một lần không tìm thấy = `UNVERIFIED`". Vì vậy ở §2 tôi **không** kết luận "sai", tôi kết luận "chưa đủ căn cứ để in vào báo cáo", kèm đường thoát (bỏ / làm mềm / test ở GATE).
 
 ---
 
@@ -129,15 +129,15 @@ Chép mục 1–4 (sau khi sửa §2) vào `docs/02` + `A.1`; mục 5 ghi là *F
 Nguyên tắc: lấy đúng *phần đo được* của AAN, bỏ phần *tác động lực*.
 
 1. **Chỉ số nỗ lực (Effort Index).** Ghi tín hiệu vách trong cửa sổ "cố phát lực nhưng ngón **chưa** di chuyển" (isometric attempt). Đây là phép kiểm duy nhất biến "ý định vận động" thành số — và là giả thuyết **chưa được kiểm chứng** → phải qua **GATE A′**.
-2. **Gap AROM − PROM.** Hai protocol trong **cùng một phiên**, cùng mảng cảm biến: (a) người bệnh tự gập/duỗi; (b) KTV (hoặc chính tay lành) đưa thụ động qua tầm. Đơn vị: **mẫu ADC đã chuẩn hóa / chỉ số suy luận hướng** — **không** quy đổi ra độ (cấm theo `AGENTS.md`). `Gap = ROM_thụ_động − ROM_chủ_động`.
+2. **Gap AROM − PROM.** Hai protocol trong **cùng một phiên**, cùng mảng cảm biến: (a) người bệnh tự gập/duỗi; (b) KTV (hoặc chính tay lành) đưa thụ động qua tầm. Đơn vị: **mẫu ADC đã chuẩn hóa / chỉ số suy luận hướng** — **không** quy đổi ra độ (cấm theo `tài liệu nội bộ`). `Gap = ROM_thụ_động − ROM_chủ_động`.
 3. **RAL — Required Assistance Level, không cần mô-tơ.** Dùng **lò xo kéo / ròng rọc có tải biết trước** (thụ động, không nguồn, không nguy hiểm) làm "mức trợ giúp" rời rạc (0 g, m₁ g, m₂ g, m₃ g). Với mỗi mức, ghi **tỷ lệ hoàn thành động tác**. Đường cong *mức trợ giúp – tỷ lệ hoàn thành* xấp xỉ chính đường cong lực–khớp mà AAN cần để điều khiển, nhưng **không** đưa động cơ vào tay bệnh nhân. Đây là điểm có thể thành **ứng viên novelty C′**: *lượng hóa mức trợ giúp cần thiết + tự gắn cờ độ tin cậy, để theo dõi dọc tại nhà.*
 4. **Phản hồi thị giác (không phải digital twin).** Cho người bệnh thấy **thanh nỗ lực** và **số lần hoàn thành** ngay trong phiên → đóng vòng closed-loop bằng mắt, thứ mà `SRC-NEOFECT-SMARTGLOVE` đã thương mại hóa (nên phải trích, không được claim).
-5. **GATE mới cần chủ dự án chốt số** (tôi để `TBD-chủ-dự-án`, không tự đặt ngưỡng):
+5. **GATE mới cần nhóm nghiên cứu chốt số** (tôi để `TBD-chủ-dự-án`, không tự đặt ngưỡng):
    - `GATE A′`: phân biệt "attempt isometric" vs "nghỉ" trên ≥ 8 mẫu × ≥ 3 tư thế; metric AUC + tỷ lệ báo nhầm; **nếu không tách được → bỏ mục 1** (và bỏ luôn lập luận "phát hiện ý định" trong `A.7`).
    - `GATE RAL`: đường cong trợ giúp đơn điệu + ICC giữa 2 phiên; ngưỡng trùng khung MDC/ICC đã dùng ở GATE C để nhất quán thống kê.
 6. **Việc bắt buộc trước khi viết khác biệt:** đọc toàn văn `SRC-IRONHAND-2018`, `SRC-AAN-EMG-2024`, `SRC-THUMB-AAN-2026`, `SRC-KAPS-2017`; tra IPC `A61H1/02`, `A61H3/01`, `A47G21/04` cho găng trợ lực.
 
-### E3 — Full active-assisted (động cơ + vòng kín AAN): **chỉ khi** chủ dự án chấp nhận cả bốn
+### E3 — Full active-assisted (động cơ + vòng kín AAN): **chỉ khi** nhóm nghiên cứu chấp nhận cả bốn
 (i) đổi `DEC-TOPIC-019` + viết lại `A.1`/`A.2`/`A.4`; (ii) lùi hoặc chia nhỏ hạn nộp theo §4; (iii) demo **chỉ trên phantom + người tình nguyện khỏe mạnh sau khi có phê duyệt**, tuyệt đối không trên bệnh nhân khi `DEC-ETHICS-001` còn PENDING; (iv) giới hạn mô-men cứng do KTV chốt + dừng khẩn cơ khí, hồ sơ rủi ro.
 Nếu thiếu một trong bốn → tôi khuyến nghị **không** chọn.
 
@@ -161,7 +161,7 @@ Nếu thiếu một trong bốn → tôi khuyến nghị **không** chọn.
 
 ---
 
-## 8. Bốn câu hỏi cần chủ dự án trả lời
+## 8. Bốn câu hỏi cần nhóm nghiên cứu trả lời
 
 1. Chọn **E1**, **E2-lite** (khuyến nghị), hay **E3**? Nếu E3: chấp nhận lùi hạn nộp bao lâu?
 2. E2-lite cần **KTV chốt bộ đôi protocol** "tự gập/duỗi" vs "thụ động qua tầm" + bảng tải lò xo cho RAL — anh có đường lấy ý kiến KTV trong 2 tuần tới không?
@@ -170,9 +170,9 @@ Nếu thiếu một trong bốn → tôi khuyến nghị **không** chọn.
 
 ---
 
-## 9. Hiệu chuẩn lại theo chuẩn thật của cuộc thi (phản hồi của chủ dự án)
+## 9. Hiệu chuẩn lại theo chuẩn thật của cuộc thi (phản hồi của nhóm nghiên cứu)
 
-Chủ dự án đúng ở 4 điểm, và em ghi thành nguyên tắc làm việc:
+Nhóm nghiên cứu đúng ở 4 điểm, và em ghi thành nguyên tắc làm việc:
 
 1. **Novelty ở ViSEF/ISEF là novelty ở tầng *bài toán + cách tổ hợp*, không phải tầng *nguyên lý*.** Yêu cầu "chưa ai từng làm cơ chế này" là tiêu chuẩn bài báo; nó **loại** các dự án học sinh và cũng không phải thứ giám khảo chấm.
 2. **Giám khảo chấm cái họ nhìn thấy trong 7 phút:** câu chuyện sắc, thiết bị chạy thật, số liệu tự đo, và một demo tái lập được. Một nguyên lý mới mà thiết bị không chạy = điểm thấp hơn một tái tổ hợp chạy tốt.
@@ -188,7 +188,7 @@ Chủ dự án đúng ở 4 điểm, và em ghi thành nguyên tắc làm việc
 ### E4 — Rig "bàn tay có co cứng chỉnh được" + chỉ số RAL (nền tảng, ~2–3 tuần)
 - **Cấu tạo:** 1 lóng ngón in 3D trên trục có lò xo kéo về + **puli có tải treo** (quả cân 20/40/80/120 g) để đặt **mức cản chủ động** = mô phỏng mức co cứng/ yếu cơ theo nấc, **đo được bằng lực kế lò xo** (không cần cảm biến lực chuẩn y tế).
 - **Việc đo được trên rig:** (i) găng có phân biệt được *nỗ lực* với *không nỗ lực* khi ngón **chưa** di chuyển hay không (**GATE A′**); (ii) tải nhỏ nhất để động tác hoàn thành (RAL) có đơn điệu và lặp lại giữa 2 phiên không (**GATE RAL**); (iii) bộ lọc co cứng hoạt động theo **quan hệ tốc độ–lực cản** (học từ `SRC-KAPS-2017`) có tách được "tải cao" khỏi "co cứng" không — đây là câu hỏi khoa học thật, và rig trả lời được.
-- **Vì sao đây là "cách đi khác":** cả lĩnh vực AAN đo nỗ lực bằng **EMG**; em đo bằng **áp trở trên vách + tải cơ đã biết** → cùng một thông tin (mức tham gia) nhưng không cần điện cơ, không cần dán điện cực, dùng được tại nhà. Đó là *different angle, same problem* đúng như chủ dự án mô tả.
+- **Vì sao đây là "cách đi khác":** cả lĩnh vực AAN đo nỗ lực bằng **EMG**; em đo bằng **áp trở trên vách + tải cơ đã biết** → cùng một thông tin (mức tham gia) nhưng không cần điện cơ, không cần dán điện cực, dùng được tại nhà. Đó là *different angle, same problem* đúng như nhóm nghiên cứu mô tả.
 - **Không cần IRB:** mọi phép đo ở bước này là trên rig (`research/protocols/06` §"GATE 0–F chạy trên bench/phantom, không cần người tham gia").
 
 ### E5 — Một servo, kéo **phantom**, khép vòng AAT cho demo (~1 tuần, cộng thêm)
@@ -198,13 +198,13 @@ Chủ dự án đúng ở 4 điểm, và em ghi thành nguyên tắc làm việc
 - Chi phí thêm: 1 servo (MG996S/DS3218) + driver + nguồn + puli/lò xo — **không** cần 5 ngón, **không** cần Bowden trên người, **không** cần cân bằng mô-men ngón.
 
 ### E6 (tuỳ chọn, 0 rủi ro, ~2–4 ngày code) — Tầng "kê đơn" phần mềm
-Găng đo → sinh **liều tập trong tuần** theo quy tắc minh bạch (số lần/nỗ lực đạt/RAL hiện tại) + **báo cáo cho KTV** + tự gắn cờ phiên `UNRELIABLE`. Đây chính là "kết nối nhiều thứ có sẵn" mà chủ dự án muốn — và nó nằm gọn trong phần cứng đã chốt (ESP32-S3 + app).
+Găng đo → sinh **liều tập trong tuần** theo quy tắc minh bạch (số lần/nỗ lực đạt/RAL hiện tại) + **báo cáo cho KTV** + tự gắn cờ phiên `UNRELIABLE`. Đây chính là "kết nối nhiều thứ có sẵn" mà nhóm nghiên cứu muốn — và nó nằm gọn trong phần cứng đã chốt (ESP32-S3 + app).
 
 ### Thứ tự đề xuất
 `E4 → GATE A′/RAL (chốt ngưỡng) → E5 cho demo → E6 nếu còn thời gian → A.7 vào báo cáo`.
 **E3 (kéo trên người)** chỉ khi: có phê duyệt đạo đức + bệnh viện đồng hành + lùi hạn nộp ≥ 8 tuần. Không có ba thứ đó thì E3 = rủi ro bị loại hồ sơ, không phải điểm cộng.
 
-### Việc cần chủ dự án duyệt (agent không tự đặt số)
+### Việc cần nhóm nghiên cứu duyệt (agent không tự đặt số)
 1. `GATE A′` — ngưỡng attempt-vs-rest: đề xuất AUC ≥ 0,85 và tỷ lệ báo nhầm ≤ 10% trên ≥ 8 mẫu × 3 mức tải. **Chốt trước khi đo.**
 2. `GATE RAL` — đề xuất: đường cong *tải–tỷ lệ hoàn thành* đơn điệu 100% + ICC ≥ 0,75 giữa 2 phiên trên cùng tải. **Chốt trước khi đo.**
 3. Có chế tạo rig E4 không (in 3D + lò xo + puli + tải + 1 servo)? Ước lượng vật tư thấp; rủi ro kỹ thuật chính là độ rơ của puli.
@@ -214,7 +214,7 @@ Găng đo → sinh **liều tập trong tuần** theo quy tắc minh bạch (s�
 
 ## 11. Chuẩn tham chiếu đã xác minh: **ISEF 2025 ROBO065T** (Quảng Trị) — và bài toán của mình phải giống *hình dạng* này
 
-Nguồn: trang chính thức của hội thi `isef.net/project/robo065t-autonomous-wheelchair-for-als-patients` (mã **VNM001 / ROBO065T**, mục *Robotics and Intelligent Machines*) + báo chí Việt Nam. Chủ dự án cùng trường cấp tỉnh với nhóm này (THPT thị xã Quảng Trị) → **đây là chuẩn tham chiếu tại chỗ, không phải ví dụ xa**.
+Nguồn: trang chính thức của hội thi `isef.net/project/robo065t-autonomous-wheelchair-for-als-patients` (mã **VNM001 / ROBO065T**, mục *Robotics and Intelligent Machines*) + báo chí Việt Nam. Nhóm nghiên cứu cùng trường cấp tỉnh với nhóm này (THPT thị xã Quảng Trị) → **đây là chuẩn tham chiếu tại chỗ, không phải ví dụ xa**.
 
 | Thứ họ làm | Chi tiết | Suy ra cho đề tài |
 |---|---|---|
@@ -228,12 +228,12 @@ Nguồn: trang chính thức của hội thi `isef.net/project/robo065t-autonomo
 
 | # | Con số | Đo trên gì | Nguồn ngưỡng |
 |---|---|---|---|
-| 1 | AUC phân biệt *cố phát lực* vs *nghỉ* | Rig E4 (tải treo 0→120 g) | `GATE A′` — chủ dự án chốt |
+| 1 | AUC phân biệt *cố phát lực* vs *nghỉ* | Rig E4 (tải treo 0→120 g) | `GATE A′` — nhóm nghiên cứu chốt |
 | 2 | Bậc tải nhỏ nhất phân biệt được (độ phân giải RAL) + tỷ lệ hoàn thành theo bậc | Rig E4 | `GATE RAL` |
 | 3 | Lặp lại giữa 2 phiên (ICC) của Effort Index & Gap | Rig E4, cùng cấu hình | khớp khung ICC đã dùng ở GATE C |
 | 4 | Tỷ lệ phiên bị gắn cờ `UNRELIABLE` **đúng** khi em cố tình làm hỏng (gắn lệch/đứt dây/tải trôi) | Rig E4 + fault injection | GATE E (đã có) |
 | 5 | Độ trễ từ nỗ lực → phản hồi hiển thị (ms) | Toàn mạch: ESP32-S3 → app | GATE F (đã có) |
-| 6 | (Nếu E5) Sai số bám theo mốc đích của servo trên rig (mm/góc chuẩn hóa) + tỷ lệ chu kỳ hoàn thành | Rig E5 | ngưỡng mới, do chủ dự án chốt |
+| 6 | (Nếu E5) Sai số bám theo mốc đích của servo trên rig (mm/góc chuẩn hóa) + tỷ lệ chu kỳ hoàn thành | Rig E5 | ngưỡng mới, do nhóm nghiên cứu chốt |
 
 Điểm mấu chốt: **6 số này không cần bệnh nhân, không cần IRB, và không cần cảm biến y tế chuẩn.** rig + load cell/lực kế lò xo + đồng hồ bấm là đo được hết.
 

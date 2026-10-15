@@ -10,7 +10,7 @@
 
 | Artifact | SHA-256 |
 |---|---|
-| `AGENTS.md` | `125c0531fd655f8c1f5d38623562c2c0553a4d2dbaf6345ec9d76468d98978fa` |
+| `tài liệu nội bộ` | `125c0531fd655f8c1f5d38623562c2c0553a4d2dbaf6345ec9d76468d98978fa` |
 | `docs/01_Topic_Definition.md` | `8814ce83976e2bc7495e6e5eab5419abb95b50ef548416bc6cc7037315d6a78a` |
 | `docs/03_Literature_Gap_Analysis_Plan.md` | `ebbb08a012226f53a6e10cf2d9e822873ec0ae05b9bcb692173f0f4ee246f074` |
 | `research/claims/CLAIM_LEDGER.csv` | `a12cfd4b672c17adb95f6fbc4fd1133935052f652ce3f815f02f1bfb019c04d5` |
@@ -80,7 +80,7 @@ confidence: high for current blockers; medium for literature-completeness conclu
 |---|---|---|---|---|---|---|
 | DA-01 | **BLOCKER** | `CLM-GT-001`; `DEC-INSOLE-006` | Without a force plate or a traceable multi-axis reference, Fx/Fy/Fz and COP cannot be validated. A pressure map does not make Fx/Fy ground truth appear. | Owner decision `SRC-OWNER-2026-08-25B`; close 3D-GRF prior art uses synchronized force plates (`SRC-ZHANG-2025-3DGRF`). | Secure access and synchronization plan for force plate/multi-axis reference; otherwise formally narrow project to quantities that can be supported. | G0/G2 |
 | DA-02 | **BLOCKER** | `CLM-NOV-002`; topic novelty wording | The preferred E+D novelty is not demonstrated merely by observing a changed insole signal. Biology, fit, footwear, temperature, electrode wear, and sensor hysteresis are confounded; the current scan has **not** verified an identifying method. | `SRC-DEFAZIO-2021-VELOSTAT`; `SRC-JUNG-2026-PIEZO-SHEAR`; Group 5 disposition above. | Pre-specify perturbation/control design: fixed reference load before/after each session; repeated unchanged-condition sessions; deliberate sensor/environment perturbations; a biological-change proxy only after approvals; causal/measurement model and decision rule. | G1/G2 |
-| DA-03 | **MAJOR** | Killer experiment in `docs/01`; `CLM-DRIFT-001` | “Corrected error stays constant” can be an artifact of recalibration, leakage, selective sessions, or changing task conditions. dP/dt can suppress slow offset yet amplify high-frequency noise and cannot by itself remove gain drift/hysteresis/creep. | `AGENTS.md`; `SRC-DEFAZIO-2021-VELOSTAT` records hysteresis/time correction. | Compare raw, dP/dt-only, calibration-only, and proposed full method using the same held-out **session**; report residual drift, uncertainty and false positives in a no-biological-change control. | G1/G2 |
+| DA-03 | **MAJOR** | Killer experiment in `docs/01`; `CLM-DRIFT-001` | “Corrected error stays constant” can be an artifact of recalibration, leakage, selective sessions, or changing task conditions. dP/dt can suppress slow offset yet amplify high-frequency noise and cannot by itself remove gain drift/hysteresis/creep. | `tài liệu nội bộ`; `SRC-DEFAZIO-2021-VELOSTAT` records hysteresis/time correction. | Compare raw, dP/dt-only, calibration-only, and proposed full method using the same held-out **session**; report residual drift, uncertainty and false positives in a no-biological-change control. | G1/G2 |
 | DA-04 | **MAJOR** | Generic 3D-GRF novelty in `CLM-NOV-001` | A 2025 low-cost insole + IMU + attention model with force-plate validation is a direct neighbor. Changing the sensor material or calling the model GNN is likely integration, not a scientific contribution. | `SRC-ZHANG-2025-3DGRF`. | Remove generic 3D-GRF novelty language; compare against simple linear/CNN/LSTM baselines and articulate a quantitatively distinct longitudinal endpoint. | G1/G2 |
 | DA-05 | **MAJOR** | RQ 2 and knee-OA framing in `docs/01` | Longitudinal wearables in other conditions support feasibility, not OA inference. A pressure/GRF change is not an OA diagnosis or validated rehabilitation-response measure. | `SRC-NPJPD-2026-LONGITUDINAL` has PD/wrist scope; `CLM-BIO-002`; `CLM-ETH-001`. | Keep clinical language as “research measurement prototype/supports monitoring”; do not recruit/test people before IRB/SRC; make OA work conditional and out of current validation claim. | G3 |
 | DA-06 | **MAJOR** | `DEC-INSOLE-001`; `CLM-HW-001` | The architecture is not locked: 16 ADC inputs versus desired cells/layout/multiplexing, sampling synchronization, NPU latency/power, and durability remain unmeasured. 6 TOPS is a vendor specification, not project evidence. | `DECISION_LOG.md`; `CLM-HW-001`. | Owner lock for layout/acquisition; bench timing/noise and power measurements; INT8 latency measurement on actual board; permit a smaller baseline model to win. | G0/G4 |
@@ -92,7 +92,7 @@ confidence: high for current blockers; medium for literature-completeness conclu
 2. What single *identification experiment* distinguishes biological change from sensor/environment change rather than merely detecting a difference?
 3. What change magnitude and false-positive definition constitute success, and how will the no-biological-change control be constructed?
 4. Is a multi-session force-plate study feasible before the competition deadline? If not, what exact claim is removed?
-5. What is the owner-approved cell layout and ADC/multiplexing strategy?
+5. What is the trưởng nhóm-approved cell layout and ADC/multiplexing strategy?
 
 ### Dissent / alternative frame
 
@@ -103,12 +103,12 @@ confidence: high for current blockers; medium for literature-completeness conclu
 
 | Finding | Disposition | Rationale | Owner | Due gate | Residual risk |
 |---|---|---|---|---|---|
-| DA-01 | ACCEPT | Project itself designates this a hard validation blocker. | Project owner | G0 | No equipment commitment yet. |
-| DA-02 | ACCEPT | Current evidence supports confounding risk; exact gap remains unresolved. | Research team + owner | G1/G2 | Requires experimental, not prose, resolution. |
+| DA-01 | ACCEPT | Project itself designates this a hard validation blocker. | Project trưởng nhóm | G0 | No equipment commitment yet. |
+| DA-02 | ACCEPT | Current evidence supports confounding risk; exact gap remains unresolved. | Research team + trưởng nhóm | G1/G2 | Requires experimental, not prose, resolution. |
 | DA-03 | ACCEPT | Consistent with repository evidence rule and Velostat history dependence. | Research team | G2 | No residual-drift data yet. |
-| DA-04 | ACCEPT | Close 2025 prior art defeats broad novelty framing. | Project owner | G1 | Exact model/sensor differentiation still needs full comparison table. |
-| DA-05 | ACCEPT | Mandatory scope/safety guard. | Project owner + qualified IRB/SRC | G3 | OA work remains conditional. |
-| DA-06 | ACCEPT | Unmeasured architecture facts cannot be assumed. | Project owner + engineering team | G0/G4 | Hardware design open. |
+| DA-04 | ACCEPT | Close 2025 prior art defeats broad novelty framing. | Project trưởng nhóm | G1 | Exact model/sensor differentiation still needs full comparison table. |
+| DA-05 | ACCEPT | Mandatory scope/safety guard. | Project trưởng nhóm + qualified IRB/SRC | G3 | OA work remains conditional. |
+| DA-06 | ACCEPT | Unmeasured architecture facts cannot be assumed. | Project trưởng nhóm + engineering team | G0/G4 | Hardware design open. |
 | DA-07 | ACCEPT | Prevents an absence-of-evidence claim. | Research team | G1 | Search remains incomplete. |
 
 ## 5. Immediate roadmap after this review

@@ -1,9 +1,9 @@
 # Benchmark: báo cáo toàn văn "Xe lăn tự hành hỗ trợ bệnh ALS trong di chuyển và giao tiếp" (Cuộc thi KHKT cấp quốc gia 2024–2025, lĩnh vực HỆ THỐNG NHÚNG)
 
-> **Nguồn:** `BCTT - QG.pdf` do chủ dự án cung cấp qua liên kết Google Drive (`drive.google.com/file/d/1H4TLHMIEwgDnas9XEzxrrRzbiZ7b4nM2`), **đã đọc 5/5 chunk = toàn văn 15 trang**, ngày 2026-09-19.
+> **Nguồn:** `BCTT - QG.pdf` do nhóm nghiên cứu cung cấp qua liên kết Google Drive (`drive.google.com/file/d/1H4TLHMIEwgDnas9XEzxrrRzbiZ7b4nM2`), **đã đọc 5/5 chunk = toàn văn 15 trang**, ngày 2026-09-19.
 > **Dòng ledger:** `SRC-XELAN-ALS-QG2025-REPORT` (`READ_FULL`).
-> **⛔ QUY tắc sử dụng (chỉ thị chủ dự án 2026-09-19):** tài liệu này là **benchmark nội bộ**. **Không** trích, **không** nêu tên, **không** dẫn số liệu của nó trong bất kỳ file nào của hồ sơ nộp (`docs/05`, `docs/bao_cao/*`, báo cáo toàn văn, poster, slide).
-> **Chuẩn đánh giá ở đây = ⚑ chuẩn hội thi học sinh** (không phải chuẩn tạp chí). Mọi nhận định là **phán đoán**, không phải số đo.
+> **QUY tắc sử dụng (chỉ thị nhóm nghiên cứu 2026-09-19):** tài liệu này là **benchmark nội bộ**. **Không** trích, **không** nêu tên, **không** dẫn số liệu của nó trong bất kỳ file nào của hồ sơ nộp (`docs/05`, `docs/bao_cao/*`, báo cáo toàn văn, poster, slide).
+> **Chuẩn đánh giá ở đây = [Mốc 1] chuẩn hội thi học sinh** (không phải chuẩn tạp chí). Mọi nhận định là **phán đoán**, không phải số đo.
 
 ---
 
@@ -41,17 +41,17 @@ Bảng prior art · mức-đã-đọc của nguồn · kiểm định thống k�
 
 | Đại lượng | Bản QG (15 tr.) | Bản ISEF (abstract) | Bài học cho ta |
 |---|---|---|---|
-| Độ chính xác gaze | "99,2 %" = **992/1000 ảnh** đúng *hình dạng + tâm đồng tử* | "97,11 %" accuracy of **gaze point** | cùng một chữ "accuracy" cho hai construct khác nhau. Ta đã có quy tắc cấm loại lẫn lộn này (`AGENTS.md`: không ADC→N/độ) → **giữ và nêu thẳng trong báo cáo** |
+| Độ chính xác gaze | "99,2 %" = **992/1000 ảnh** đúng *hình dạng + tâm đồng tử* | "97,11 %" accuracy of **gaze point** | cùng một chữ "accuracy" cho hai construct khác nhau. Ta đã có quy tắc cấm loại lẫn lộn này (`tài liệu nội bộ`: không ADC→N/độ) → **giữ và nêu thẳng trong báo cáo** |
 | Chất lượng điều hướng | **không có số** (chỉ ảnh bản đồ + ảnh app) | **0,12 m** sai lệch bám quỹ đạo, **93,33 %** phiên tự hành đến đích | vòng sau **đòi số ở cấp hệ thống**, không chấp nhận "chạy được". → chính là GATE B + GATE D của ta |
 | Giao tiếp | "3 câu văn, 2 ngôn ngữ, Telegram" (định tính) | "**< 5,33 s**/câu" | độ trễ là con số rẻ nhất để thêm → `fps_meas` + độ trễ đầu–cuối đã nằm trong `protocols/08` G0.9 |
 
-**Suy luận (phán đoán, ⚑):** họ phải *chèn thêm* 4 chỉ số định lượng để đi thi quốc tế. Nghĩa là ban tổ chức/quốc tế chấm bằng **số đo hệ thống**, không bằng sơ đồ. Đề tài ta nên **làm luôn từ vòng quốc gia** phần mà họ phải làm ở vòng quốc tế — đó là chỗ rẻ nhất để vượt.
+**Suy luận (phán đoán, [Mốc 1]):** họ phải *chèn thêm* 4 chỉ số định lượng để đi thi quốc tế. Nghĩa là ban tổ chức/quốc tế chấm bằng **số đo hệ thống**, không bằng sơ đồ. Đề tài ta nên **làm luôn từ vòng quốc gia** phần mà họ phải làm ở vòng quốc tế — đó là chỗ rẻ nhất để vượt.
 
 ---
 
 ## 3. Đối chiếu trực tiếp: cùng một "ô" trong báo cáo, ai hơn ai
 
-| Ô trong báo cáo (form quốc gia) | Họ (QG 2025) | Ta **hôm nay** | Ta **sau GATE 0 + GATE C** | Phán đoán ⚑ |
+| Ô trong báo cáo (form quốc gia) | Họ (QG 2025) | Ta **hôm nay** | Ta **sau GATE 0 + GATE C** | Phán đoán [Mốc 1] |
 |---|---|---|---|---|
 | Vật thật | Xe lăn + 6 module, chạy được, có ảnh | **0** — jig chưa chế tạo | phần tử áp trở + 1 ngón trên jig + ảnh log | **họ hơn hẳn** cho tới khi ta có ảnh thứ nhất |
 | Con số cho từng mục tiêu | 5 số | **0** | 6 con số tự đo (review `…_scope_options.md` §12) | ngang, rồi hơn |
@@ -67,10 +67,10 @@ Bảng prior art · mức-đã-đọc của nguồn · kiểm định thống k�
 
 ## 4. Đánh giá lại đề tài của bạn sau khi đọc benchmark (thay đổi so với `2026-09-19_project_ceiling.md`)
 
-### 4.1 Trần ⚑: **nâng một bậc có điều kiện** — và có một quyết định chiến thuật mới
+### 4.1 Trần [Mốc 1]: **nâng một bậc có điều kiện** — và có một quyết định chiến thuật mới
 - **Cao hơn:** chuẩn thực tế của hội đồng **không phải** "độ chặt khoa học" (họ cho một báo cáo 15 trang, **0 kiểm định thống kê, 0 prior art table, 0 IRB, 0 số đo điều hướng** đạt giải Nhất quốc gia + giải Tư ISEF). Mọi thứ ta đã làm (134 nguồn có mức đọc, 7 cổng, ngưỡng chốt trước, anti-claims) **nằm trên** mặt bằng đó, không phải "quá mức cần thiết". ⇒ **giữ toàn bộ**, nhưng **đừng để nó phình thành 40 trang**.
 - **Điều kiện:** toàn bộ lợi thế trên là **hứa hẹn**. Lợi thế của họ là **đã có**. Ở vòng chấm, 1 ảnh chụp thiết bị đang chạy + 1 bảng số thắng 5 trang phương pháp luận.
-- **Quyết định chiến thuật mới — chọn lĩnh vực:** họ thắng ở **HỆ THỐNG NHÚNG** với một thiết bị y tế-trợ năng, và **ISEF lại xếp** cùng dự án đó vào Robotics. ⇒ đề xuất cho ta (chủ dự án quyết): **chính = Hệ thống nhúng (Embedded Systems)**, **phụ = Y sinh – Khoa học sức khỏe**. Lý do: bằng chứng của ta là *độ lặp, nhiễu, độ trễ, cổng pass/fail* — đúng ngôn ngữ của giám khảo kỹ thuật; đưa vào ô Y sinh sẽ mời câu hỏi "bệnh nhân đâu?" mà ta **không có quyền** trả lời trước IRB.
+- **Quyết định chiến thuật mới — chọn lĩnh vực:** họ thắng ở **HỆ THỐNG NHÚNG** với một thiết bị y tế-trợ năng, và **ISEF lại xếp** cùng dự án đó vào Robotics. ⇒ đề xuất cho ta (nhóm nghiên cứu quyết): **chính = Hệ thống nhúng (Embedded Systems)**, **phụ = Y sinh – Khoa học sức khỏe**. Lý do: bằng chứng của ta là *độ lặp, nhiễu, độ trễ, cổng pass/fail* — đúng ngôn ngữ của giám khảo kỹ thuật; đưa vào ô Y sinh sẽ mời câu hỏi "bệnh nhân đâu?" mà ta **không có quyền** trả lời trước IRB.
 
 ### 4.2 Ngân sách hình thức phải bắt chước (đây là chuẩn thắng, không phải chuẩn ta tự đặt)
 | Chỉ tiêu hình thức | Ngưỡng nên tự đặt cho ta |
@@ -97,4 +97,4 @@ Bảng prior art · mức-đã-đọc của nguồn · kiểm định thống k�
 
 ## 5. Kết luận một câu
 
-**Đọc xong benchmark, vị thế của đề tài bạn tốt hơn tôi đoán: về phương pháp, bạn đang ở trên mức của một báo cáo đã đoạt giải Nhất quốc gia + giải Tư ISEF; về vật thật và con số, bạn đang ở 0.** Toàn bộ khoảng cách còn lại nằm ở đúng một chỗ — `GATE 0` chưa chạy vì chưa có 9 ngưỡng được chốt — và đó là việc của chủ dự án, không phải việc của tôi.
+**Đọc xong benchmark, vị thế của đề tài bạn tốt hơn tôi đoán: về phương pháp, bạn đang ở trên mức của một báo cáo đã đoạt giải Nhất quốc gia + giải Tư ISEF; về vật thật và con số, bạn đang ở 0.** Toàn bộ khoảng cách còn lại nằm ở đúng một chỗ — `GATE 0` chưa chạy vì chưa có 9 ngưỡng được chốt — và đó là việc của nhóm nghiên cứu, không phải việc của tôi.

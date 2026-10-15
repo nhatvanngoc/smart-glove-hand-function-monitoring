@@ -106,7 +106,7 @@ Các mục 1–3 ở trên giải quyết bài toán **bản lề liên-đốt**
 **khác, độc lập**, là: với mỗi đốt riêng lẻ, dùng cơ cấu nào để **đóng/mở vỏ nẹp quanh ngón tay**
 sao cho bệnh nhân (có thể yếu/run tay) tự đeo và tháo được bằng một tay?
 
-Chủ dự án đã tự thiết kế và in thử thực tế **9 phương án cơ cấu khác nhau** cho bài toán này
+Nhóm nghiên cứu đã tự thiết kế và in thử thực tế **9 phương án cơ cấu khác nhau** cho bài toán này
 (Mech 1 → Mech 9), loại dần 8 phương án đầu vì các lý do thực tế quan sát trên vật in (lực kẹp yếu,
 khó thao tác một tay, chi tiết rời dễ rơi, mỏi/nứt vật liệu khi phải bẻ cong nhựa để mở...). Phương
 án hiện tại triển vọng nhất (Mech 9 — bản lề kép + quai gông chữ U, đóng/mở hoàn toàn bằng khớp

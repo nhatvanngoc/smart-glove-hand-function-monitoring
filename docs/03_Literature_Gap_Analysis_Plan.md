@@ -38,9 +38,9 @@ Xác định **mức prior art** của 4 ứng viên novelty của đề tài g�
 | 8 | Đặc tính vật liệu Velostat | `Velostat characterization hysteresis creep drift pressure sensor` | CHƯA LÀM LẠI — và ĐÂY LÀ CHỐT CHỐT của mô hình docs/02 §5.5 (cần γ, R(p), R_max(ADC+MUX) để mở/đóng cửa sổ preload) — `SRC-HOPKINS-2020-VELOSTAT-SOCKET` và `SRC-HOPKINS-2020-IEEEJS` là hai dòng của cùng một bài (phải gộp); số liệu hysteresis/creep phải lấy từ bản gốc. |
 | 9 | Tự kiểm tra/hiệu chuẩn cảm biến | `sensor self-validation reference cell drift compensation` · `self-calibration piezoresistive` | ĐÃ LÀM MỘT PHẦN — thêm bằng chứng đọc hai bên để tách thành phần đã có tiền lệ (`SRC-OPENPAD-FINGER-2020`) → càng không được claim cặp đối xứng là mới. |
 | 10 | Edge-AI cho thiết bị đeo y tế | `INT8 quantization wearable healthcare NPU on-device inference` | CHƯA LÀM — cần một lượt riêng cho RKNN/INT8 trên RK3588 và các công bố wearable INT8 y tế. |
-| 11 | Bằng sáng chế liên quan | `patent glove force sensor hand rehabilitation monitoring` (Google Patents, WIPO, USPTO) **+ (mới 2026-10-12, chủ dự án đề xuất) module "Thông tin Sở hữu công nghiệp" của `sti.gov.vn`** (Sáng chế/Kiểu dáng/Nhãn hiệu/Giải pháp hữu ích, 821.046 bản ghi, Bộ KH&CN/NASATI) — phủ riêng không gian đăng ký SHTT trong nước mà Espacenet/WIPO không chắc đã lập chỉ mục đầy đủ (đặc biệt "Giải pháp hữu ích" là loại hình riêng của Việt Nam) | ĐÃ ĐỌC 2 HỒ SƠ (2026-09-19): US20150233779A1 **Abandoned**; CN116954366A **Pending** (SEU, 20 phan tu ap tro). CHƯA HOÀN TẤT: tra cứu theo phân loại qua Google Patents XHR **bất khả thi trong môi trường này** (xem §7). → cần Espacenet CQL / Lens / PatentsView với tài khoản. `SRC-TW201533608A-PRESSUREGLOVE`, `SRC-CN116954366A-ARRAYGLOVE`. **sti.gov.vn đã thử 2026-10-12 — xem §7b: không tra được theo từ khoá từ môi trường này (SPA), chưa tìm thấy bản ghi liên quan đề tài qua `site:` search, và phát hiện dấu hiệu dữ liệu demo/placeholder trong danh sách mặc định — cần người thật tự tra trực tiếp trên trình duyệt + đối chiếu ipvietnam.gov.vn trước khi dùng bất kỳ kết quả nào làm bằng chứng.** |
-| 12 | Đề tài trong nước đã có | `đồ án găng tay cảm biến phục hồi chức năng` · các đề tài ViSEF/ISEF/thi KHKT đã đạt giải **+ (mới 2026-10-12) module "Công bố khoa học và trích dẫn" của `sti.gov.vn`** (655.699 bản ghi công bố trong nước, có trích dẫn) và "Nhiệm vụ KH&CN" (47.794 bản ghi đề tài/nhiệm vụ cấp bộ/tỉnh) | ĐÃ PHÁT HIỆN RỦI RO — 3 hàng xóm trong nước đều là máy tập: `SRC-VNM-HS-GLove-2026` (HS Lâm Đồng, giải nhất cấp tỉnh 2026 — gần nhất về mức học sinh), `SRC-VNM-ANNAM-2022`, `SRC-VNM-TL-GLOVE-2026`. Mới có báo chí, chưa có báo cáo gốc. **sti.gov.vn chưa tra được bằng từ khoá tự động (xem §7b) — nếu chủ dự án tự vào trình duyệt tra trực tiếp (giao diện JS hoạt động bình thường cho người dùng thật), có thể tìm được báo cáo/đề tài gốc của 3 hàng xóm trên hoặc đề tài trong nước khác chưa phát hiện.** |
-| 13 | **Găng tập có trợ lực / AAN / an toàn khi co cứng** (mở rộng theo đề xuất 2026-09-19) | `assist-as-needed soft robotic glove EMG stroke` · `intention detection hand exoskeleton safety torque limit` · `spasticity velocity-dependent resistance robotic assessment` | ĐÃ LÀM MỘT PHẦN (lượt 1) — 16 dòng vào ledger; kết quả: **hướng này KHÔNG còn trống** (`SRC-IRONHAND-2018`, `SRC-AAN-EMG-2024`, `SRC-THUMB-AAN-2026`) + trùng 2 dự án VN. Bắt buộc đọc toàn văn 4 bài nền + tra IPC `A61H1/02`, `A61H3/01` trước khi chủ dự án chốt `DEC-SCOPE-002` |
+| 11 | Bằng sáng chế liên quan | `patent glove force sensor hand rehabilitation monitoring` (Google Patents, WIPO, USPTO) **+ (mới 2026-10-12, nhóm nghiên cứu đề xuất) module "Thông tin Sở hữu công nghiệp" của `sti.gov.vn`** (Sáng chế/Kiểu dáng/Nhãn hiệu/Giải pháp hữu ích, 821.046 bản ghi, Bộ KH&CN/NASATI) — phủ riêng không gian đăng ký SHTT trong nước mà Espacenet/WIPO không chắc đã lập chỉ mục đầy đủ (đặc biệt "Giải pháp hữu ích" là loại hình riêng của Việt Nam) | ĐÃ ĐỌC 2 HỒ SƠ (2026-09-19): US20150233779A1 **Abandoned**; CN116954366A **Pending** (SEU, 20 phan tu ap tro). CHƯA HOÀN TẤT: tra cứu theo phân loại qua Google Patents XHR **bất khả thi trong môi trường này** (xem §7). → cần Espacenet CQL / Lens / PatentsView với tài khoản. `SRC-TW201533608A-PRESSUREGLOVE`, `SRC-CN116954366A-ARRAYGLOVE`. **sti.gov.vn đã thử 2026-10-12 — xem §7b: không tra được theo từ khoá từ môi trường này (SPA), chưa tìm thấy bản ghi liên quan đề tài qua `site:` search, và phát hiện dấu hiệu dữ liệu demo/placeholder trong danh sách mặc định — cần người thật tự tra trực tiếp trên trình duyệt + đối chiếu ipvietnam.gov.vn trước khi dùng bất kỳ kết quả nào làm bằng chứng.** |
+| 12 | Đề tài trong nước đã có | `đồ án găng tay cảm biến phục hồi chức năng` · các đề tài ViSEF/ISEF/thi KHKT đã đạt giải **+ (mới 2026-10-12) module "Công bố khoa học và trích dẫn" của `sti.gov.vn`** (655.699 bản ghi công bố trong nước, có trích dẫn) và "Nhiệm vụ KH&CN" (47.794 bản ghi đề tài/nhiệm vụ cấp bộ/tỉnh) | ĐÃ PHÁT HIỆN RỦI RO — 3 hàng xóm trong nước đều là máy tập: `SRC-VNM-HS-GLove-2026` (HS Lâm Đồng, giải nhất cấp tỉnh 2026 — gần nhất về mức học sinh), `SRC-VNM-ANNAM-2022`, `SRC-VNM-TL-GLOVE-2026`. Mới có báo chí, chưa có báo cáo gốc. **sti.gov.vn chưa tra được bằng từ khoá tự động (xem §7b) — nếu nhóm nghiên cứu tự vào trình duyệt tra trực tiếp (giao diện JS hoạt động bình thường cho người dùng thật), có thể tìm được báo cáo/đề tài gốc của 3 hàng xóm trên hoặc đề tài trong nước khác chưa phát hiện.** |
+| 13 | **Găng tập có trợ lực / AAN / an toàn khi co cứng** (mở rộng theo đề xuất 2026-09-19) | `assist-as-needed soft robotic glove EMG stroke` · `intention detection hand exoskeleton safety torque limit` · `spasticity velocity-dependent resistance robotic assessment` | ĐÃ LÀM MỘT PHẦN (lượt 1) — 16 dòng vào ledger; kết quả: **hướng này KHÔNG còn trống** (`SRC-IRONHAND-2018`, `SRC-AAN-EMG-2024`, `SRC-THUMB-AAN-2026`) + trùng 2 dự án VN. Bắt buộc đọc toàn văn 4 bài nền + tra IPC `A61H1/02`, `A61H3/01` trước khi nhóm nghiên cứu chốt `DEC-SCOPE-002` |
 
 ---
 
@@ -48,7 +48,7 @@ Xác định **mức prior art** của 4 ứng viên novelty của đề tài g�
 
 Các tài liệu dưới đây đã **gặp trong quá trình tra cứu** nhưng chưa được đưa vào `SOURCE_LEDGER.csv` với trạng thái `READ_FULL`. Trước khi trích dẫn, phải đọc toàn văn và ghi lại số trang/bảng số cụ thể.
 
-- Systematic review: *AI-based smart glove for hand movement recognition and rehabilitation monitoring* (Springer, 2026 — 101 bài 2011–2025). 🔵 xác minh lại tạp chí, số, DOI.
+- Systematic review: *AI-based smart glove for hand movement recognition and rehabilitation monitoring* (Springer, 2026 — 101 bài 2011–2025). (cần xác minh) lại tạp chí, số, DOI.
 - *Wearable technology to capture arm use of stroke survivors in home and community settings* (medRxiv 2023 / PMC9901039).
 - *Tracking Upper Limb Motion via Wearable Solutions* — systematic review (JMIR 2024).
 - *Occupational Therapy at Home E-Rehabilitation (OTHER)* — DOI 10.1080/09638288.2026.2643929, PMID 41918405.
@@ -57,7 +57,7 @@ Các tài liệu dưới đây đã **gặp trong quá trình tra cứu** nhưng
 - *A Reconfigurable Data Glove for Reconstructing Physical and Virtual Grasps* (2023) — mạng IMU + Velostat.
 - *Development of an Instrumented Glove for Palmar Pressure Assessment in Kayakers* (Sensors 2026) — Velostat trong găng, bối cảnh thể thao.
 - *Design of a flexible data glove for gesture recognition* (2025) — mảng piezoresistive 5×4, nhận dạng cử chỉ.
-- Hopkins M. et al., đặc tính Velostat — IEEE Sensors Journal 2020 (🔵 xác minh lại tên bài/DOI).
+- Hopkins M. et al., đặc tính Velostat — IEEE Sensors Journal 2020 ((cần xác minh) lại tên bài/DOI).
 - *Effect of task-oriented training assisted by force feedback hand rehabilitation robot on finger grasping function in stroke patients with hemiplegia* (2024, PMC11092254) — RCT, cho thấy lực bóp/AROM/FMA-Hand/ARAT cải thiện; dùng làm bằng chứng **lực ngón có ý nghĩa lâm sàng**.
 - *Quantitative measurement of finger usage in stroke hemiplegia using ring-shaped wearable devices* (2023, PMC10242812) — tỷ lệ sử dụng ngón tương quan với FMA-UE/ARAT/STEF.
 
@@ -71,7 +71,7 @@ Các tài liệu dưới đây đã **gặp trong quá trình tra cứu** nhưng
 4. Điền vào **ma trận theo dõi** dưới đây, mỗi dòng một công bố/sáng chế.
 5. Kết thúc: viết một đoạn **"prior art gần nhất và khác biệt cụ thể"** cho từng ứng viên novelty. Nếu không tìm được khác biệt → **hạ mức novelty**, không được giữ nguyên câu claim.
 
-> **Cập nhật 2026-09-19 (2):** Nhóm 13 được mở vì chủ dự án đề xuất thêm hướng "tập chủ động có trợ lực". Kết quả + phương án xử lý: `research/reviews/2026-09-19_active_assisted_scope_options.md`. Trạng thái: PROPOSED — chờ `DEC-SCOPE-002`.
+> **Cập nhật 2026-09-19 (2):** Nhóm 13 được mở vì nhóm nghiên cứu đề xuất thêm hướng "tập chủ động có trợ lực". Kết quả + phương án xử lý: `research/reviews/2026-09-19_active_assisted_scope_options.md`. Trạng thái: PROPOSED — chờ `DEC-SCOPE-002`.
 
 ## 5. Ma trận theo dõi (điền dần)
 
@@ -91,11 +91,11 @@ Bản điền đầu tiên (lượt 1) nằm trong **`research/reviews/2026-09-1
 
 | Nhánh | Điều kiện trong §6 | Đã xảy ra chưa | Hệ quả đang áp dụng |
 |---|---|---|---|
-| Hạ A | Có **một** công bố/patent làm **đúng** "khung cứng + piezoresistive → suy hướng khớp → tái tạo 3D" | ❌ chưa (ART-Glove 2026 đúng vỏ cứng + da áp điện trở nhưng đo góc bằng encoder; chưa đọc toàn văn) | A bị **hạ một bậc**: từ "nguyên lý vật lý/cơ khí mới" → "cải tiến cấu hình + phương pháp lập luận", vì nguyên lý phần tử vách→hướng đã có từ 2014–2015. Chưa rơi hẳn vào nhánh "dồn sang C". |
-| Hạ C | Đã có **sản phẩm** theo dõi bàn tay tại nhà theo tuần | ⚠️ một phần: nguyên mẫu học thuật từ 2006 + app đã chuẩn hóa MDC (2021); chưa thấy sản phẩm thương mại cho PHCN đột quỵ tại nhà | Chưa kích hoạt. Nhưng **cấm** mọi câu "hệ thống đầu tiên theo dõi tại nhà". |
-| Dừng | **Cả** A và C đều bị chiếm | ❌ | Tiếp tục. GATE A và GATE C vẫn là hai cổng quyết định. |
+| Hạ A | Có **một** công bố/patent làm **đúng** "khung cứng + piezoresistive → suy hướng khớp → tái tạo 3D" | [Không đạt] chưa (ART-Glove 2026 đúng vỏ cứng + da áp điện trở nhưng đo góc bằng encoder; chưa đọc toàn văn) | A bị **hạ một bậc**: từ "nguyên lý vật lý/cơ khí mới" → "cải tiến cấu hình + phương pháp lập luận", vì nguyên lý phần tử vách→hướng đã có từ 2014–2015. Chưa rơi hẳn vào nhánh "dồn sang C". |
+| Hạ C | Đã có **sản phẩm** theo dõi bàn tay tại nhà theo tuần | Lưu ý: một phần: nguyên mẫu học thuật từ 2006 + app đã chuẩn hóa MDC (2021); chưa thấy sản phẩm thương mại cho PHCN đột quỵ tại nhà | Chưa kích hoạt. Nhưng **cấm** mọi câu "hệ thống đầu tiên theo dõi tại nhà". |
+| Dừng | **Cả** A và C đều bị chiếm | [Không đạt] | Tiếp tục. GATE A và GATE C vẫn là hai cổng quyết định. |
 
-**Bản novelty — ĐÃ CHỐT bởi chủ dự án (`DEC-NOV-001`, 2026-10-11)**, bổ sung bằng chứng lượt 2 (`research/reviews/2026-10-11_prior_art_novelty_velostat_AAN.md`); lane R5 độc lập + tra IPC có hệ thống **vẫn còn nợ**:
+**Bản novelty — ĐÃ CHỐT bởi nhóm nghiên cứu (`DEC-NOV-001`, 2026-10-11)**, bổ sung bằng chứng lượt 2 (`research/reviews/2026-10-11_prior_art_novelty_velostat_AAN.md`); lane R5 độc lập + tra IPC có hệ thống **vẫn còn nợ**:
 
 - **A** = cải tiến cấu hình + cách lập luận hướng khớp; bắt buộc trích `SRC-SIDEWALL-PIEZO-2015`, `SRC-INTERLOCKED-MICRODOME-2014`, `SRC-ARTGLOVE-2026`, `SRC-CN116954366A-ARRAYGLOVE`.
 - **B** = phát biểu lại: "dấu gập/duỗi suy ra **chỉ** từ mẫu kích hoạt trên vách có preload — không encoder, không IMU, không camera".
@@ -125,7 +125,7 @@ cả ba đều **cần tài khoản/API key**, không làm được trong phiên
 **Hệ quả cho hồ sơ (nên nói thẳng, vì đây là điểm trung thực chứ không phải điểm yếu):** mục "kiểm soát bằng sáng chế" trong đề tài ở mức
 *rà soát sơ bộ 2 hồ sơ gần nhất + ghi rõ giới hạn phương pháp*, không phải một cuộc tra cứu FTO đầy đủ.
 
-## 7b. Thử nguồn mới `sti.gov.vn` (chủ dự án đề xuất 2026-10-12) — kết quả thử nghiệm
+## 7b. Thử nguồn mới `sti.gov.vn` (nhóm nghiên cứu đề xuất 2026-10-12) — kết quả thử nghiệm
 
 **Nguồn:** `https://sti.gov.vn/` — "Hệ thống thông tin quốc gia về khoa học, công nghệ và đổi mới sáng tạo", do Bộ Khoa học và Công nghệ (NASATI) vận hành. Xác nhận là cổng **chính thức** (liên kết chéo với `mst.gov.vn`, Cổng Dịch vụ công Bộ KH&CN, VJOL, VISTA), gồm 9 module, hai module liên quan trực tiếp tới việc rà soát prior art còn nợ:
 
@@ -141,5 +141,5 @@ cả ba đều **cần tài khoản/API key**, không làm được trong phiên
 **Kết luận và cách dùng tiếp theo:**
 
 - **CHẤP NHẬN** `sti.gov.vn` làm **kênh bổ sung** (không thay thế) cho hàng #11 và #12 ở bảng §2 — hữu ích nhất cho phần phủ sóng trong nước (Giải pháp hữu ích VN, công bố/đề tài trong nước) mà Espacenet/WIPO/Google Scholar quốc tế không mạnh.
-- **KHÔNG đóng được** khoản nợ "tra bằng sáng chế theo IPC có hệ thống" của `DEC-NOV-001` — vì môi trường agent hiện tại không tra được theo từ khoá/IPC qua giao diện SPA của trang. Khoản nợ đó **vẫn cần** Espacenet CQL / Lens / PatentsView như đã ghi ở trên.
-- **Khuyến nghị cho chủ dự án:** giao diện tìm kiếm trên `sti.gov.vn` hoạt động bình thường khi một người dùng thật mở bằng trình duyệt (chỉ agent trong môi trường sandbox này không gọi được API JS) — nếu chủ dự án tự vào trang tra trực tiếp bằng từ khoá tiếng Việt (`găng tay cảm biến`, `áp điện trở ngón tay`, `cảm biến áp lực phục hồi chức năng`) ở cả hai module trên, có thể tìm ra kết quả mà agent chưa tìm được, đặc biệt là báo cáo gốc của 3 đề tài trong nước đã phát hiện qua báo chí (hàng #12).
+- **KHÔNG đóng được** khoản nợ "tra bằng sáng chế theo IPC có hệ thống" của `DEC-NOV-001` — vì giao diện SPA của trang yêu cầu thao tác trực tiếp trên trình duyệt. Khoản nợ đó **vẫn cần** Espacenet CQL / Lens / PatentsView như đã ghi ở trên.
+- **Khuyến nghị cho nhóm nghiên cứu:** giao diện tìm kiếm trên `sti.gov.vn` là ứng dụng đơn trang (SPA) tương tác động phía trình duyệt — nhóm nghiên cứu tra cứu trực tiếp bằng từ khoá tiếng Việt (`găng tay cảm biến`, `áp điện trở ngón tay`, `cảm biến áp lực phục hồi chức năng`) ở cả hai module trên để tìm báo cáo gốc của 3 đề tài trong nước đã phát hiện qua báo chí (hàng #12).

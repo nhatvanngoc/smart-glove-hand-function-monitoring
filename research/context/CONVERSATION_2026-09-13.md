@@ -1,11 +1,11 @@
 # Bản nén hội thoại — 2026-08-28 → 2026-09-13 (pivot sang găng tay)
 
-> Chỉ ghi **chỉ thị của chủ dự án**, **dữ kiện mới** và **kết luận bền vững**. Không ghi diễn biến trao đổi.
+> Chỉ ghi **chỉ thị của nhóm nghiên cứu**, **dữ kiện mới** và **kết luận bền vững**. Không ghi diễn biến trao đổi.
 > Bản nén giai đoạn trước: `CONVERSATION_2026-08-25.md` (đề tài cũ — chỉ còn giá trị lịch sử).
 
 ---
 
-## 1. Chỉ thị của chủ dự án
+## 1. Chỉ thị của nhóm nghiên cứu
 
 | # | Ngày | Chỉ thị | Ghi nhận |
 |---|---|---|---|
@@ -28,7 +28,7 @@
 - Phân biệt hai mức khó:
   - **Mức thấp (thụ động: co–duỗi):** găng tay hiện có hỗ trợ được, nhưng gây phụ thuộc.
   - **Mức cao (cầm nắm, bấm bàn phím, bóp, xoay cổ tay):** găng tay hiện có **không làm được**, vì không đảm bảo an toàn và trách nhiệm pháp lý — **bắt buộc phải có người có chuyên môn**.
-- Phần mềm mô phỏng kiểu "RehabReach" thiếu độ chính xác của **vi cử động** và không tương tác với thực tế. 🔵 *(thông tin do chủ dự án cung cấp — cần xác minh trước khi đưa vào báo cáo)*
+- Phần mềm mô phỏng kiểu "RehabReach" thiếu độ chính xác của **vi cử động** và không tương tác với thực tế. [Thông tin] *(thông tin do nhóm nghiên cứu cung cấp — cần xác minh trước khi đưa vào báo cáo)*
 
 **Kết luận rút ra (quan trọng):**
 > Xây dựng một găng tay phục hồi chức năng **hoàn chỉnh, không phụ thuộc con người** là hướng **không phù hợp** về an toàn và chuyên môn.
@@ -36,10 +36,10 @@
 
 ## 3. Xác nhận độc lập về nhu cầu
 
-- Chủ dự án tham khảo ý kiến **thầy tại phcn-online.com** và **chị là KTV PHCN**; cả hai đều nói đề tài **đáng làm**. → DEC-CLINICAL-002.
-- Trang phcn-online có nêu: quá trình luyện tập kéo dài, lặp lại, đòi hỏi người bệnh tham gia tích cực, trong khi **nhiều cơ sở PHCN còn hạn chế về trang thiết bị và nguồn lực**. 🔵 *(phải lấy đúng URL bài và câu nguyên văn trước khi trích dẫn)*
+- Nhóm nghiên cứu tham khảo ý kiến **thầy tại phcn-online.com** và **chị là KTV PHCN**; cả hai đều nói đề tài **đáng làm**. → DEC-CLINICAL-002.
+- Trang phcn-online có nêu: quá trình luyện tập kéo dài, lặp lại, đòi hỏi người bệnh tham gia tích cực, trong khi **nhiều cơ sở PHCN còn hạn chế về trang thiết bị và nguồn lực**. [Thông tin] *(phải lấy đúng URL bài và câu nguyên văn trước khi trích dẫn)*
 
-## 4. Nguyên lý cơ học do chủ dự án đặt ra (nguyên văn, nén)
+## 4. Nguyên lý cơ học do nhóm nghiên cứu đặt ra (nguyên văn, nén)
 
 > "Găng tay có một bộ khung cơ khí cứng (exoskeleton) ép sát vào ngón tay. Khi ngón tay muốn nhúc nhích sang phải → nó đụng vào vách bên phải của khung → tạo áp lực lên dải Velostat bên phải. Máy tính đọc lực này và dịch thành vector hướng sang phải. Tôi hoàn toàn có thể dùng dữ liệu này để vẽ lại một bàn tay 3D đang mô phỏng lực bóp gập/duỗi (flexion/extension) của các lóng tay."
 
@@ -57,7 +57,7 @@
 | Tốc độ khung? | 12 kênh ≈ 415 Hz, 24 kênh ≈ 208 Hz khi `t_ch` = 200 µs → **mục tiêu 45–100 Hz** là rộng rãi cho động tác 0,5–2 Hz |
 | Vì sao không cần mạng? | Bệnh nhân lớn tuổi; dữ liệu sức khỏe; phản hồi tức thời → xử lý tại biên, mô hình INT8 trên NPU RK3588 |
 
-## 6. Bảy câu hỏi chủ dự án đặt ra và câu trả lời đã chốt
+## 6. Bảy câu hỏi nhóm nghiên cứu đặt ra và câu trả lời đã chốt
 
 | # | Câu hỏi | Câu trả lời chốt |
 |---|---|---|
@@ -67,15 +67,15 @@
 | ④ | "Vector 3D" đại diện cho cái gì? | Hướng và độ lớn **phản lực của lóng ngón lên vách khung**. Là proxy cho hướng gập/duỗi, biên độ vận động, độ mượt, lực cầm nắm — **không** phải góc khớp tuyệt đối, **không** phải hoạt động cơ |
 | ⑤ | Làm sao chứng minh đúng? | GATE 0 (lặp lại) → A (hướng) → B (tái tạo 3D so với góc biết trước) → **C (độ nhạy, sống còn)** → D (không báo giả) → E (tự phát hiện lỗi) → F (INT8). Ngưỡng chốt trước |
 | ⑥ | Nếu thành công thì xã hội được gì? | Rút ngắn điểm mù theo dõi từ ~90 ngày xuống ~1 tuần; phát hiện chững lại/suy giảm sớm; giảm số lần phải đến cơ sở; KTV theo dõi được nhiều bệnh nhân hơn |
-| ⑦ | Nếu đánh giá được lực thì sao? | Lực ngón/cầm nắm là đại lượng **có tiền lệ lâm sàng** (tương quan với FMA-UE/ARAT/BBT trong y văn — 🔵 phải verify số). Cho phép phân biệt mẫu **yếu** với mẫu **co cứng**, và dựng **đường cong hồi phục** theo tuần |
+| ⑦ | Nếu đánh giá được lực thì sao? | Lực ngón/cầm nắm là đại lượng **có tiền lệ lâm sàng** (tương quan với FMA-UE/ARAT/BBT trong y văn — [Thông tin] phải verify số). Cho phép phân biệt mẫu **yếu** với mẫu **co cứng**, và dựng **đường cong hồi phục** theo tuần |
 
-## 7. Kiến thức ngoài dự án đã thu thập (chưa đọc toàn văn — 🔵)
+## 7. Kiến thức ngoài dự án đã thu thập (chưa đọc toàn văn — [Thông tin])
 
 - Systematic review *AI-based smart glove…* (2026, 101 bài): phần lớn nguyên mẫu chưa được kiểm chứng lâm sàng; tồn tại drift, suy giảm tín hiệu, cần tự hiệu chỉnh và mô hình nhẹ lượng tử hóa.
 - *Wearable technology to capture arm use of stroke survivors* (2023): 87,6% ngày đo hợp lệ; **hạn chế:** cảm biến cổ tay không ghi được chuyển động ngón, không phân biệt vận động có mục đích.
 - *Quantitative measurement of finger usage using ring-shaped wearables* (2023): tỷ lệ sử dụng ngón tương quan với FMA-UE/ARAT/STEF.
 - RCT *force feedback hand rehabilitation robot* (2024, PMC11092254): lực bóp, AROM, FMA-Hand, ARAT cải thiện → lực ngón có ý nghĩa lâm sàng.
-- Ngưỡng MDC của ARAT (~4 điểm) 🔵 cần đối chiếu bảng gốc.
+- Ngưỡng MDC của ARAT (~4 điểm) [Thông tin] cần đối chiếu bảng gốc.
 - Đề tài exoskeleton Quảng Trị (giải nhì quốc gia) làm **chi dưới** + có phát hiện co cứng → không trùng, nhưng **phải tránh** mọi phần liên quan đến chi dưới/spasticity.
 
 ## 8. Việc chưa giải quyết

@@ -1,9 +1,9 @@
 # NGHIÊN CỨU VÀ PHÁT TRIỂN GĂNG TAY HỖ TRỢ ĐÁNH GIÁ, THEO DÕI VÀ HỖ TRỢ VẬN ĐỘNG BÀN TAY TRONG PHỤC HỒI CHỨC NĂNG SAU ĐỘT QUỴ
 
 > **Học sinh:** Văn Ngọc Nhật Anh (11A2) + Nguyễn Duy Quân (12A1) · **GVHD:** Lê Công Long · **Trường:** THPT Quảng Trị, Quảng Trị
-> **Trạng thái hồ sơ (cập nhật 2026-10-11, `DEC-PHASE-002`):** cơ sở lý thuyết & thiết kế **đã hoàn tất**; chủ dự án **đã tự thực hiện** thử nghiệm bring-up phần cứng thật trên breadboard (ESP32-S3+ADS1115+INA333+CD74HC4067, log ở [`research/notebooklm_sync/experiments/`](research/notebooklm_sync/experiments/)) — **chưa đạt chuẩn GATE 0 chính thức** (thiếu schema `protocols/08a`), nên **vẫn chưa có số liệu GATE 0 đưa vào `research/bench/logs/`**.
+> **Trạng thái hồ sơ (cập nhật 2026-10-11, `DEC-PHASE-002`):** cơ sở lý thuyết & thiết kế **đã hoàn tất**; nhóm nghiên cứu **đã tự thực hiện** thử nghiệm bring-up phần cứng thật trên breadboard (ESP32-S3+ADS1115+INA333+CD74HC4067, log ở [`research/notebooklm_sync/experiments/`](research/notebooklm_sync/experiments/)) — **chưa đạt chuẩn GATE 0 chính thức** (thiếu schema `protocols/08a`), nên **vẫn chưa có số liệu GATE 0 đưa vào `research/bench/logs/`**.
 > **Bản đã nộp trường:** [`docs/DE_CUONG.pdf`](docs/DE_CUONG.pdf) (15 trang, 2026-09-26) · **Bản đề cương mới nhất (chưa rõ đã nộp lại hay chưa — `DEC-SYNC-002`, chờ xác nhận):** [`de_cuong/DE_CUONG_NGHIEN_CUU.pdf`](de_cuong/DE_CUONG_NGHIEN_CUU.pdf) (16 trang, 2026-10-03) — bổ sung Mục 10 (cơ cấu **AAN** trên giàn đo + mô hình tay giả, nay là trụ cột thứ 4, `DEC-SCOPE-006`).
-> **Tên hiển thị ở trên = `DEC-TITLE-003` (ADOPTED 2026-10-11, chủ dự án chốt "Hướng A": giữ nguyên nội dung đề xuất, không thêm chữ).** **Tên đã nộp trường (`DEC-TOPIC-019`, 2026-09-13) vẫn là:** *"Nghiên cứu và phát triển găng tay **thông minh** hỗ trợ đánh giá **và** theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ"* — dùng trong `docs/DE_CUONG.pdf` (26/09) và `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (03/10); **2 tên khác nhau ở chỗ: bỏ "thông minh", và đổi "...đánh giá và theo dõi chức năng vận động..." → "...đánh giá, theo dõi và hỗ trợ vận động..." để phản ánh AAN là trụ cột thứ 4 (`DEC-SCOPE-006`).** Tên mới **chỉ áp dụng cho các tài liệu repo từ nay**; hồ sơ đã nộp **không** bị sửa hồi tố — khi nộp lại/nộp bản mới mới dùng tên `DEC-TITLE-003`. (Tên đề xuất 2026-09-19 `DEC-TITLE-001` **chưa từng được duyệt**, đã hạ thành `DEC-TITLE-002` chờ hủy — không liên quan tới `DEC-TITLE-003`.)
+> **Tên hiển thị ở trên = `DEC-TITLE-003` (ADOPTED 2026-10-11, nhóm nghiên cứu chốt "Hướng A": giữ nguyên nội dung đề xuất, không thêm chữ).** **Tên đã nộp trường (`DEC-TOPIC-019`, 2026-09-13) vẫn là:** *"Nghiên cứu và phát triển găng tay **thông minh** hỗ trợ đánh giá **và** theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ"* — dùng trong `docs/DE_CUONG.pdf` (26/09) và `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (03/10); **2 tên khác nhau ở chỗ: bỏ "thông minh", và đổi "...đánh giá và theo dõi chức năng vận động..." → "...đánh giá, theo dõi và hỗ trợ vận động..." để phản ánh AAN là trụ cột thứ 4 (`DEC-SCOPE-006`).** Tên mới **chỉ áp dụng cho các tài liệu repo từ nay**; hồ sơ đã nộp **không** bị sửa hồi tố — khi nộp lại/nộp bản mới mới dùng tên `DEC-TITLE-003`. (Tên đề xuất 2026-09-19 `DEC-TITLE-001` **chưa từng được duyệt**, đã hạ thành `DEC-TITLE-002` chờ hủy — không liên quan tới `DEC-TITLE-003`.)
 
 **Tên tiếng Anh (hồ sơ ISEF/ViSEF bản dịch, cập nhật theo `DEC-TITLE-003`):**
 
@@ -51,7 +51,7 @@
 
 > **Câu chốt cho hội đồng:** phần (1) đã có tiền lệ ở tầng phần tử cảm biến, phần (2) là lựa chọn phương pháp luận, **phần (3) là phần đề tài này mạnh hơn cả một số công trình đã công bố** — và cũng là phần rẻ nhất để làm đúng; **phần (4) không làm thiết bị thành "robot tập phục hồi"**, vì nó không bao giờ chạm vào người dùng cuối — nó là bằng chứng năng lực kỹ thuật + nguồn tạo chỉ số `RAL`.
 
-> **📌 Tên đề tài (`DEC-TITLE-003` — ĐÃ CHỐT 2026-10-11, Hướng A):** chủ dự án chọn giữ nguyên nội dung đề xuất gốc, không thêm chữ an toàn bổ sung: *"Nghiên cứu và phát triển găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ"* (xem đầu README). Vì cụm "hỗ trợ vận động" trong tên không tự nêu rõ "chỉ trên giàn đo + mô hình tay giả", **mọi nơi dùng tên này phải đi kèm hoặc đặt ngay sau câu giới hạn phạm vi** (ví dụ §6.1 bên dưới, hoặc dòng đầu phần tóm tắt báo cáo) để tránh hiểu nhầm là thiết bị tác động lực lên người bệnh thật.
+> **Tên đề tài (`DEC-TITLE-003` — ĐÃ CHỐT 2026-10-11, Hướng A):** nhóm nghiên cứu chọn giữ nguyên nội dung đề xuất gốc, không thêm chữ an toàn bổ sung: *"Nghiên cứu và phát triển găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ"* (xem đầu README). Vì cụm "hỗ trợ vận động" trong tên không tự nêu rõ "chỉ trên giàn đo + mô hình tay giả", **mọi nơi dùng tên này phải đi kèm hoặc đặt ngay sau câu giới hạn phạm vi** (ví dụ §6.1 bên dưới, hoặc dòng đầu phần tóm tắt báo cáo) để tránh hiểu nhầm là thiết bị tác động lực lên người bệnh thật.
 
 ## 2. Vấn đề, có số
 
@@ -135,15 +135,15 @@ Phân cấp thuật ngữ (bắt buộc dùng đúng): [`docs/bao_cao/GLOSSARY.m
 | ID (nộp) | Câu hỏi | Ngưỡng đã nộp | Đổi so với G0.x |
 |---|---|---|---|
 | **C1.1** | Sàn nhiễu mạch đo là bao nhiêu? | `Vpp ≤ 5 mV` / 5.000 mẫu tĩnh | chốt luôn định nghĩa B + ngưỡng tuyệt đối |
-| **C1.2** 🎯 | Có tồn tại `F_p` vừa đủ nhạy vừa đủ ổn định? | `SNR ≥ 18 dB` (≈8×) tại `ΔF = 1 N`, ≥10/12 kênh | đơn vị LSB → dB, phạm vi 10/12 kênh |
+| **C1.2** [Trọng tâm] | Có tồn tại `F_p` vừa đủ nhạy vừa đủ ổn định? | `SNR ≥ 18 dB` (≈8×) tại `ΔF = 1 N`, ≥10/12 kênh | đơn vị LSB → dB, phạm vi 10/12 kênh |
 | C1.3 | Mảng có thật sự là áp kế? | `γ ≥ 0,25` (≥10/12 kênh), `R² ≥ 0,90` | **R² 0,95 → 0,90** |
 | C1.4 / C1.5 | Lặp lại giữa chu kỳ / giữa **ngày**? | `CV ≤ 5 %` · `CV ≤ 8 %` (3 ngày, tháo/đeo lại, trên phantom) | **ICC → CV**, nới 5 %→8 % |
 | C1.6 / C1.7 | Đường lên có trùng đường xuống? Có bị lún khi giữ tải? | `h ≤ 18 %` · `creep ≤ 8 %` (giữ 60 s @ 5 N) | **15 %→18 %** · **đổi định nghĩa creep** |
-| **C1.8** 🎯 | Tín hiệu có trôi chậm hơn biên độ cần đo? | trôi/tín hiệu ≤ 2,0 sau 10 ngày (qua auto-zero) | **bỏ** điều kiện so ΔV@1N |
+| **C1.8** [Trọng tâm] | Tín hiệu có trôi chậm hơn biên độ cần đo? | trôi/tín hiệu ≤ 2,0 sau 10 ngày (qua auto-zero) | **bỏ** điều kiện so ΔV@1N |
 | C1.9 | Các mảng có đủ giống nhau để so sánh giữa ngón? | độ rải `γ ≤ ±40 %` (+ bảng chuẩn hóa) | khớp |
-| C1.10 | Cấu hình kênh đọc kịp không? | `fs ≥ 20 Hz` đồng thời 12 kênh | khớp (⚠️ PDF §8.1/§9.1 ghi 50 Hz — I1) |
+| C1.10 | Cấu hình kênh đọc kịp không? | `fs ≥ 20 Hz` đồng thời 12 kênh | khớp (Lưu ý: PDF §8.1/§9.1 ghi 50 Hz — I1) |
 
-🎯 = ô giết đề tài. **Cách chạy GATE 0 mà không cần một dòng code:** `research/protocols/08a` — phiếu in được, chuẩn lực là **khối lượng đã cân** (`F = m·g`, không trễ, không cần hiệu chuẩn điện tử), mọi phép tính chỉ là trừ số nguyên. Kế hoạch đầy đủ + cây fail: `research/protocols/08` (giữ 10 ô chờ chốt; bảng đối chiếu G0↔C1: sync review §4).
+[Trọng tâm] = ô chỉ tiêu quyết định loại bỏ đề tài. **Cách chạy GATE 0 mà không cần một dòng code:** `research/protocols/08a` — phiếu in được, chuẩn lực là **khối lượng đã cân** (`F = m·g`, không trễ, không cần hiệu chuẩn điện tử), mọi phép tính chỉ là trừ số nguyên. Kế hoạch đầy đủ + cây fail: `research/protocols/08` (giữ 10 ô chờ chốt; bảng đối chiếu G0↔C1: sync review §4).
 
 ## 6.1. Cơ cấu hỗ trợ theo nhu cầu (AAN) — trụ cột thứ 4 (`DEC-SCOPE-006`, nguồn: `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` §10)
 
@@ -190,7 +190,7 @@ Quy tắc: mỗi lớp **chỉ mở khi lớp trước pass**; vật tư đượ
 
 ## 8. Tính mới — và bộ tiêu chí đang dùng để tự chấm
 
-> **Bộ tiêu chí: ViSEF/ISEF**, không phải tạp chí kỹ thuật. Đề tài **không** có nguyên lý mới và không tự đo mình bằng chuẩn cần nguyên lý mới + dataset + đối chứng lâm sàng. Mọi nhận định "mới/không mới" phải kèm tên bộ tiêu chí (`DEC-NOV-001` chờ chủ dự án chốt mức).
+> **Bộ tiêu chí: ViSEF/ISEF**, không phải tạp chí kỹ thuật. Đề tài **không** có nguyên lý mới và không tự đo mình bằng chuẩn cần nguyên lý mới + dataset + đối chứng lâm sàng. Mọi nhận định "mới/không mới" phải kèm tên bộ tiêu chí (`DEC-NOV-001` chờ nhóm nghiên cứu chốt mức).
 
 | Hướng được coi là mới | Kiểm chứng ngược đã làm | Kết luận hiện hành |
 |---|---|---|
@@ -225,7 +225,7 @@ Bằng sáng chế đã tra: **US20150233779A1** (Waltop) — **đã abandoned**
 | Phiếu đo/thực nghiệm đã thiết kế, chưa chạy | **10 ngưỡng · 7 gate · 8 buổi bench** | `research/protocols/06`–`08a` |
 | Số liệu đo của đề tài (đã chính thức hoá theo schema GATE 0) | **0** | `research/bench/logs/` — đang trống theo đúng schema; **ghi chú kỹ thuật bring-up thật nhưng chưa chính thức hoá** nằm ở `research/notebooklm_sync/experiments/` (`DEC-PHASE-002`) |
 
-Quy tắc chống tự nâng cấp: **không** nâng mức bằng chứng; **một lần tìm không thấy = `UNVERIFIED`**, không phải "không tồn tại"; số liệu giả lập phải dán nhãn giả lập; agent đề xuất, **chủ dự án phê duyệt**. Toàn bộ ở [`AGENTS.md`](AGENTS.md).
+Quy tắc chống tự nâng cấp: **không** nâng mức bằng chứng; **một lần tìm không thấy = `UNVERIFIED`**, không phải "không tồn tại"; số liệu giả lập phải dán nhãn giả lập; mọi đề xuất kỹ thuật đều do **nhóm nghiên cứu phê duyệt**. Toàn bộ quy chuẩn lưu trữ tại tài liệu nội bộ của nhóm.
 
 ## 11. Bản đồ repo
 
@@ -233,20 +233,20 @@ Quy tắc chống tự nâng cấp: **không** nâng mức bằng chứng; **m�
 |---|---|---|
 | **Nộp trường** | [`docs/DE_CUONG_NOP_TRUONG.md`](docs/DE_CUONG_NOP_TRUONG.md) | Đề cương hoàn chỉnh: 4 trụ + M1–M6 + ngân sách + hạn chế tự khai + Phụ lục A chống-claim |
 | **Đề cương mới nhất** | [`de_cuong/DE_CUONG_NGHIEN_CUU.pdf`](de_cuong/DE_CUONG_NGHIEN_CUU.pdf) (2026-10-03, 16tr) | Bản PDF/docx mới hơn bản đã nộp trường (`docs/DE_CUONG.pdf`, 2026-09-26, 15tr); bổ sung Mục 10 (AAN + RAL trên giàn + phantom); `DEC-SYNC-002` — chưa rõ đã dùng để nộp lại hay chỉ là bản song song |
-| Ghi chú kỹ thuật/NotebookLM | [`research/notebooklm_sync/`](research/notebooklm_sync/) | Đồng bộ từ notebook Google NotebookLM; `experiments/01-05` = log bring-up phần cứng thật do chủ dự án thực hiện (`DEC-PHASE-002`, chưa chính thức hoá); `chat_transcripts/`, `studio/` = **prose AI tạo sinh, cấp bằng chứng thấp nhất** — không trích trực tiếp vào hồ sơ nộp |
+| Ghi chú kỹ thuật/NotebookLM | [`research/notebooklm_sync/`](research/notebooklm_sync/) | Đồng bộ từ notebook Google NotebookLM; `experiments/01-05` = log bring-up phần cứng thật do nhóm nghiên cứu thực hiện (`DEC-PHASE-002`, chưa chính thức hoá); `chat_transcripts/`, `studio/` = bản ghi chú nháp ban đầu, chỉ dùng để tham khảo nội bộ — không trích trực tiếp vào hồ sơ nộp |
 | Đề tài | [`docs/01_Topic_Definition.md`](docs/01_Topic_Definition.md) | Tên đã chốt, vấn đề, khoảng trống, RQ1–R3, phạm vi (`A.4`: **không** phải thiết bị điều trị) |
 | Lý thuyết | [`docs/02_Theoretical_Foundation.md`](docs/02_Theoretical_Foundation.md) | Sinh lý hồi phục, thang đo, cơ sinh học, vật liệu áp trở, mô hình §5.5, `EI`/`GAP`/`RAL`, INT8 |
 | Prior art & sáng chế | [`docs/03_Literature_Gap_Analysis_Plan.md`](docs/03_Literature_Gap_Analysis_Plan.md) | Kế hoạch rà soát 2011–2026; §7 phương pháp tra cứu sáng chế + hồ sơ thất bại |
 | Phần cứng | [`docs/04_Hardware_Architecture.md`](docs/04_Hardware_Architecture.md) | Kênh, MUX, ngân sách nhiễu/độ phân giải (**ngân sách thiết kế**, không phải kết quả) |
 | Cơ cấu nẹp ngón | [`docs/06_Co_Cau_Co_Khi_Exoskeleton.md`](docs/06_Co_Cau_Co_Khi_Exoskeleton.md) · [`3d_model/`](3d_model/custom_exo/full_finger_modular/) | Thiết kế 3 đốt Print-in-Place, khớp rãnh trượt bù 13.5mm cho ngón dài, khoang preload Velostat, file in STL/STEP/FCStd |
-| Soạn thảo | [`docs/05_De_Cuong_Dang_Ky_DRAFT.md`](docs/05_De_Cuong_Dang_Ky_DRAFT.md) | **Outline nội bộ** (không nộp) + §8b các chỗ chủ dự án cần sửa |
+| Soạn thảo | [`docs/05_De_Cuong_Dang_Ky_DRAFT.md`](docs/05_De_Cuong_Dang_Ky_DRAFT.md) | **Outline nội bộ** (không nộp) + §8b các chỗ nhóm nghiên cứu cần sửa |
 | Mẫu báo cáo | [`docs/OUTLINE_BAOCAO_VISEFD.md`](docs/OUTLINE_BAOCAO_VISEFD.md) · [`docs/bao_cao/`](docs/bao_cao/) | Khung A/B/C + A.1–A.7 + GLOSSARY |
 | Kiểm chứng | [`research/protocols/06`](research/protocols/06_glove_hand_GATE_experiment.md) · [`07`](research/protocols/07_ral_phantom_and_ktv_interview.md) · [`08`](research/protocols/08_gate0_execution_plan.md) · [`08a`](research/protocols/08a_gate0_bench_sheets.md) | Master 7 gate · RAL/phantom + phiếu tham khảo chuyên gia · kế hoạch GATE 0 · **phiếu đo in được, không code** |
 | Vật tư & tiếp cận | [`research/context/EQUIPMENT_AND_ACCESS.md`](research/context/EQUIPMENT_AND_ACCESS.md) | Đã có / chưa chắc / cần mua + 4 bước chạy GATE 0 |
 | Đánh giá chiến lược | [`research/reviews/2026-09-19_project_ceiling.md`](research/reviews/2026-09-19_project_ceiling.md) | Trần theo từng trục + **nguyên tắc giải ngân theo lớp** + quy tắc dừng |
 | Benchmark | [`research/reviews/2026-09-19_benchmark_xe_lan_ALS_QG2025.md`](research/reviews/2026-09-19_benchmark_xe_lan_ALS_QG2025.md) | **Nội bộ.** Kiểm đếm một báo cáo từng giải Nhất quốc gia → định cỡ hình thức 15–20 trang, ≥1,3 ảnh/bảng mỗi trang. **Cấm trích trong hồ sơ nộp** (`DEC-SCOPE-003`) |
 | Nhật ký đo | [`research/bench/logs/`](research/bench/logs/) | Một file mỗi buổi; **bản gốc không bao giờ bị sửa**; header nhắc lại ngưỡng đã chốt |
-| Chỉ mục | [`INDEX.md`](INDEX.md) · [`research/README.md`](research/README.md) · [`AGENTS.md`](AGENTS.md) | Sơ đồ file, quy ước workspace, luật của repo |
+| Chỉ mục | [`INDEX.md`](INDEX.md) · [`research/README.md`](research/README.md) | Sơ đồ file, quy ước workspace, quy chuẩn nghiên cứu |
 
 ## 12. Thiết lập & quy trình
 
@@ -262,14 +262,14 @@ python scripts/build_context_bundle.py --budget-chars 40000     # -> research/ge
 
 **Bốn việc còn lại, đúng thứ tự (cập nhật 2026-10-11):**
 
-1. ☐ **Chủ dự án chốt các quyết định đồng bộ còn mở**: 6 cũ (`DEC-SYNC-001`/`TEAM`/`TITLE-002`/`HW-005`/`METRIC-002`/`SCOPE-005`, sync review §6) + 4 mới (`DEC-TITLE-003` chọn tên, xác nhận `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` có phải bản nộp lại không, chính thức hoá log bring-up thành GATE 0, xác nhận SHT30↔AHT20) **rồi chốt 10 ô** `Chốt?` trong `research/protocols/08` §7 (việc này **không** ai làm thay được).
-2. ☐ **Chính thức hoá log bring-up đã có** (`research/notebooklm_sync/experiments/01-05`, `DEC-PHASE-002`) thành log GATE 0 hợp lệ theo schema `research/protocols/08a` (session_manifest + ngưỡng chốt trước đo), hoặc chạy GATE 0 mới bằng `research/protocols/08a` nếu log cũ không đủ trường dữ liệu → mỗi buổi = 1 file log + 8 ảnh; **kể cả buổi fail cũng phải lưu**.
-3. ☐ Thay dự toán bằng **báo giá/hoá đơn thật** → `DEC-BUDGET-001` (id dự kiến trong `2026-09-19_project_ceiling.md`, chưa tạo); chỉ khi đó mới xét giải ngân Lớp 1.
-4. ☐ Nếu AAN đi tới giai đoạn chế tạo giàn đo thật (§6.1): kiểm chứng trên phantom trước, log vào `research/bench/logs/`, và **không bao giờ** thử trên người thật dù chỉ một lần "thử nhẹ".
+1. [ ] **Nhóm nghiên cứu chốt các quyết định đồng bộ còn mở**: 6 cũ (`DEC-SYNC-001`/`TEAM`/`TITLE-002`/`HW-005`/`METRIC-002`/`SCOPE-005`, sync review §6) + 4 mới (`DEC-TITLE-003` chọn tên, xác nhận `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` có phải bản nộp lại không, chính thức hoá log bring-up thành GATE 0, xác nhận SHT30↔AHT20) **rồi chốt 10 ô** `Chốt?` trong `research/protocols/08` §7 (việc này **không** ai làm thay được).
+2. [ ] **Chính thức hoá log bring-up đã có** (`research/notebooklm_sync/experiments/01-05`, `DEC-PHASE-002`) thành log GATE 0 hợp lệ theo schema `research/protocols/08a` (session_manifest + ngưỡng chốt trước đo), hoặc chạy GATE 0 mới bằng `research/protocols/08a` nếu log cũ không đủ trường dữ liệu → mỗi buổi = 1 file log + 8 ảnh; **kể cả buổi fail cũng phải lưu**.
+3. [ ] Thay dự toán bằng **báo giá/hoá đơn thật** → `DEC-BUDGET-001` (id dự kiến trong `2026-09-19_project_ceiling.md`, chưa tạo); chỉ khi đó mới xét giải ngân Lớp 1.
+4. [ ] Nếu AAN đi tới giai đoạn chế tạo giàn đo thật (§6.1): kiểm chứng trên phantom trước, log vào `research/bench/logs/`, và **không bao giờ** thử trên người thật dù chỉ một lần "thử nhẹ".
 
 Luồng chuẩn cho mỗi thay đổi lớn: đọc `research/context/PROJECT_SNAPSHOT.md` → log truy vấn (`scripts/research_log.py`) → cập nhật `SOURCE_LEDGER`/`CLAIM_LEDGER` → chạy review protocol → cập nhật snapshot + `INDEX.md` → dựng lại bundle.
 
-## 13. Đổi tên repo + metadata GitHub (chủ dự án chạy — agent không có quyền Administration)
+## 13. Đổi tên repo và đồng bộ metadata trên GitHub
 
 Repo hiện tên `smart-glove-hand-function-monitoring` với **description vẫn là mô tả đề tài cũ**. Bốn lệnh dưới đây chạy theo thứ tự, copy nguyên khối được:
 
@@ -300,7 +300,7 @@ gh repo view --json name,description,repositoryTopics -q '"\(.name)\n\(.descript
 
 | Ngày | Việc |
 |---|---|
-| 2026-10-11 | **Đọc toàn bộ repo + setup môi trường** (10/11 check, chỉ `pdflatex` fail do mạng sandbox); đọc toàn văn `research/notebooklm_sync/` (10 file) và phát hiện bản đề cương mới chưa đồng bộ `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (2026-10-03, 16tr, có Mục 10 AAN). Theo yêu cầu minh thị của chủ dự án ("AAN là một trong những trụ cột hạt nhân"): chốt `DEC-SYNC-002` (bản đề cương mới) + `DEC-SCOPE-006` (nâng AAN thành trụ cột thứ 4, **ranh giới an toàn phantom-only không đổi**) + `DEC-PHASE-002` (ghi nhận chủ dự án đã tự thực hiện bring-up phần cứng thật, chưa đạt chuẩn GATE 0); đề xuất `DEC-TITLE-003` (4 phương án tên, chưa chốt); +6 nguồn/+3 claim/+5 quyết định vào ledger. |
+| 2026-10-11 | **Đọc toàn bộ repo + setup môi trường** (10/11 check, chỉ `pdflatex` chưa cài đặt trên máy trạm); đọc toàn văn `research/notebooklm_sync/` (10 file) và phát hiện bản đề cương mới chưa đồng bộ `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (2026-10-03, 16tr, có Mục 10 AAN). Theo yêu cầu minh thị của nhóm nghiên cứu ("AAN là một trong những trụ cột hạt nhân"): chốt `DEC-SYNC-002` (bản đề cương mới) + `DEC-SCOPE-006` (nâng AAN thành trụ cột thứ 4, **ranh giới an toàn phantom-only không đổi**) + `DEC-PHASE-002` (ghi nhận nhóm nghiên cứu đã tự thực hiện bring-up phần cứng thật, chưa đạt chuẩn GATE 0); đề xuất `DEC-TITLE-003` (4 phương án tên, chưa chốt); +6 nguồn/+3 claim/+5 quyết định vào ledger. |
 | 2026-09-27 | **Đồng bộ bản nộp `docs/DE_CUONG.pdf` (2026-09-26):** đội hình 2 người + GVHD + timeline + lĩnh vực Nhúng; tên quay về `DEC-TOPIC-019` (`DEC-TITLE-001` chờ hủy); `GAP = PROM − AROM`; ngưỡng C1.x; kiến trúc ADS1115+INA333; +7 nguồn/+3 claim; 6 quyết định chờ chốt (`DEC-SYNC-001`…`DEC-SCOPE-005`) |
 | 2026-09-19 (lượt 4) | README dựng lại theo cấu trúc hồ sơ khoa học (luận điểm · RQ + điều kiện giết · nguyên lý · 10 ngưỡng · tự khai); đề xuất tên mới (ghi nhầm là "chốt" — đã sửa 2026-09-27, chờ `DEC-TITLE-002`) |
 | 2026-09-19 (lượt 3) | Đề cương nộp `docs/DE_CUONG_NOP_TRUONG.md`; sửa 2 lỗi trích dẫn trong `A.1`; thi hành `DEC-ROLE-001` (không nêu danh tính người được tham khảo) |

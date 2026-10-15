@@ -25,7 +25,7 @@ Every existing Velostat project **hides** the material's weakness. The literatur
 
 ### #3 — Relative-change monitor (safer fallback)
 - **One-liner:** because Velostat cannot give absolute force, use it only for what it is good at — **within-user relative change and asymmetry** (left/right, over-time) — and never claim absolute values.
-- **Fit:** bench-feasible, honest about the material. But this drifts back toward the longitudinal-monitoring framing the owner found less legible, so it is the weakest hook.
+- **Fit:** bench-feasible, honest about the material. But this drifts back toward the longitudinal-monitoring framing the trưởng nhóm found less legible, so it is the weakest hook.
 - **Est. ISEF:** ≈ 82/100.
 
 ## Recommendation

@@ -1,6 +1,6 @@
 # 04 — Orange Pi 5 Pro ↔ Arduino Mega 2560 bring-up tests (before Velostat arrives)
 
-> ⚠️ **DI SẢN — KHÔNG ÁP DỤNG CHO ĐỀ TÀI HIỆN TẠI (2026-09-13).**
+> **Lưu ý: DI SẢN — KHÔNG ÁP DỤNG CHO ĐỀ TÀI HIỆN TẠI (2026-09-13).**
 > File này được viết cho đề tài **smart insole** với **Arduino Mega 2560** — đề tài đã bị bỏ.
 > Đề tài hiện tại là **găng tay theo dõi chức năng bàn tay sau đột quỵ**, dùng **ESP32-S3 + CD74HC4067** (DEC-HW-003), mức logic 3.3 V nên **không cần level shifter**.
 > Giữ lại để tham khảo cách kiểm tra đường truyền/CRC/timestamp. **Không** trích như phương pháp hiện hành.
@@ -12,9 +12,9 @@
 
 ## 0. Electrical rule — do this before any code
 
-### Current owner setup: direct GPIO serial
+### Current trưởng nhóm setup: direct GPIO serial
 
-The owner reports that direct serial GPIO communication between the Orange Pi and Arduino has already been established. This protocol therefore treats direct UART as the current transport path, not a task still to be solved.
+The trưởng nhóm reports that direct serial GPIO communication between the Orange Pi and Arduino has already been established. This protocol therefore treats direct UART as the current transport path, not a task still to be solved.
 
 Before collecting research data, record the **actual** interface in the session manifest:
 
@@ -27,7 +27,7 @@ common-ground arrangement:
 logic levels measured at Mega TX and Orange Pi RX:
 ```
 
-- Mega UART TX is commonly **5 V logic**; Orange Pi GPIO RX is commonly **3.3 V logic**. The log must establish how the owner protects the Pi RX path; do not infer safety from successful basic communication alone.
+- Mega UART TX is commonly **5 V logic**; Orange Pi GPIO RX is commonly **3.3 V logic**. The log must establish how the trưởng nhóm protects the Pi RX path; do not infer safety from successful basic communication alone.
 - Orange Pi TX (3.3 V) → Mega RX behavior also depends on the actual board/interface and must be retained in the wiring record.
 - Never power motors, sensor excitation, or unknown external loads from Orange Pi GPIO. Keep grounds intentional and inspect voltage before reconnection.
 

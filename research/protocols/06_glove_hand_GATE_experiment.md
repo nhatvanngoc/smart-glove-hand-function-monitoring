@@ -1,34 +1,34 @@
 # 06 — GATE experiment: Găng tay đánh giá, theo dõi & hỗ trợ (AAN) chức năng bàn tay sau đột quỵ
 
-> **Ngày soạn:** 2026-09-13 · **Cập nhật cấu trúc lớn: 2026-10-13** (owner, qua `ask_user`, xem `DEC-GATE-002` ở `DECISION_LOG.md`).
+> **Ngày soạn:** 2026-09-13 · **Cập nhật cấu trúc lớn: 2026-10-13** (thống nhất trong nhóm nghiên cứu, xem `DEC-GATE-002` ở `DECISION_LOG.md`).
 > **Trạng thái:** CHỜ vật liệu + phần cứng (Velostat, khung in 3D, ESP32-S3, CD74HC4067, load cell).
 > **Đây là thí nghiệm quyết định đề tài sống hay chết.** Không có GATE pass ⇒ không viết kết luận.
 >
-> **Lý do tái cấu trúc (2026-10-13):** `DEC-SCOPE-006` (2026-10-11) đã chốt AAN là **trụ cột kỹ thuật thứ 4**, ngang hàng với mảng cảm biến/bộ ba chỉ số/lớp tự kiểm chuẩn — nhưng bảng GATE ở bản cũ của file này **chỉ kiểm chứng nhánh ĐO** (0/A/B/C), còn phần AAN chỉ nằm rải rác dưới tên phụ "GATE A′"/"GATE RAL" trong `07_ral_phantom_and_ktv_interview.md`, không có vị thế ngang hàng. Từ bản này: **hai nhánh song song**, mỗi nhánh có cổng sống còn (⭐) riêng. Đồng thời, **GATE F (INT8/NPU) bị tạm hoãn** — xem §4 — cho tới khi chốt được nhiệm vụ phù hợp nhất cho Orange Pi 5 Pro.
+> **Lý do tái cấu trúc (2026-10-13):** `DEC-SCOPE-006` (2026-10-11) đã chốt AAN là **trụ cột kỹ thuật thứ 4**, ngang hàng với mảng cảm biến/bộ ba chỉ số/lớp tự kiểm chuẩn — nhưng bảng GATE ở bản cũ của file này **chỉ kiểm chứng nhánh ĐO** (0/A/B/C), còn phần AAN chỉ nằm rải rác dưới tên phụ "GATE A′"/"GATE RAL" trong `07_ral_phantom_and_ktv_interview.md`, không có vị thế ngang hàng. Từ bản này: **hai nhánh song song**, mỗi nhánh có cổng sống còn (trọng tâm) riêng. Đồng thời, **GATE F (INT8/NPU) bị tạm hoãn** — xem §4 — cho tới khi chốt được nhiệm vụ phù hợp nhất cho Orange Pi 5 Pro.
 >
 > **Nguyên tắc bắt buộc (không đổi):**
 > - Toàn bộ GATE ở cả hai nhánh chạy trên **bench/phantom**, **không cần người tham gia** ⇒ không cần IRB cho các cổng này (`DEC-SCOPE-003`/`DEC-SCOPE-006` — ranh giới an toàn phantom-only không có ngoại lệ).
 > - Mọi log phải lưu thô, có timestamp, có mã phiên, vào `research/bench/` (và bản gốc không bị sửa).
-> - Ngưỡng PASS/FAIL phải **chốt trước khi đo** và ghi vào file này; cấm chỉnh ngưỡng sau khi thấy kết quả. Các ngưỡng đánh dấu **ĐỀ XUẤT — CHƯA CHỐT** là kế thừa nguyên trạng từ `07_ral_phantom_and_ktv_interview.md` (chủ dự án hoãn chốt từ 2026-09-19), không phải số liệu agent tự bịa ra ở bản cập nhật này.
+> - Ngưỡng PASS/FAIL phải **chốt trước khi đo** và ghi vào file này; cấm chỉnh ngưỡng sau khi thấy kết quả. Các ngưỡng đánh dấu **ĐỀ XUẤT — CHƯA CHỐT** là kế thừa nguyên trạng từ `07_ral_phantom_and_ktv_interview.md` (nhóm nghiên cứu hoãn chốt từ 2026-09-19), không phải số liệu agent tự bịa ra ở bản cập nhật này.
 
 ---
 
 ## 0. Bảng tổng hợp — hai nhánh song song
 
-### Nhánh ĐO (assessment) — GATE 0 → A → C⭐
+### Nhánh ĐO (assessment) — GATE 0 → A → C
 
 | Cổng | Câu hỏi | Nếu FAIL |
 |---|---|---|
 | **GATE 0** | Sensing element tự chế có lặp lại được không? | Dừng — chưa làm được cảm biến thì không có gì để nghiên cứu |
 | **GATE A** | Mảng áp trở vi sai có phân biệt được **chiều gập/duỗi** VÀ lượng hóa **mức kích hoạt nỗ lực** (Bản đồ động học) không? | Bỏ tính năng "hướng lực & kích hoạt"; lùi về đo lực một chiều đơn thuần |
-| **GATE C** ⭐ | Thay đổi chức năng thật có **lớn hơn** drift/nhiễu không? | **DỪNG ĐỀ TÀI** hoặc đổi trục nghiên cứu |
+| **GATE C**  | Thay đổi chức năng thật có **lớn hơn** drift/nhiễu không? | **DỪNG ĐỀ TÀI** hoặc đổi trục nghiên cứu |
 
-### Nhánh TRỢ LỰC — AAN (trụ cột thứ 4, `DEC-SCOPE-006`) — GATE AAN-1 → AAN-2⭐
+### Nhánh TRỢ LỰC — AAN (trụ cột thứ 4, `DEC-SCOPE-006`) — GATE AAN-1 → AAN-2
 
 | Cổng | Câu hỏi | Nếu FAIL |
 |---|---|---|
 | **GATE AAN-1** | Có phát hiện được **nỗ lực** khi ngón **chưa** di chuyển không? (Effort Index) | Bỏ Effort Index khỏi đề tài; AAN chỉ còn là lò xo trợ lực cố định, không "theo nhu cầu" |
-| **GATE AAN-2** ⭐ | Đường cong tải–hoàn thành (RAL) có đơn điệu + ổn định không, **và** mức tham gia chủ động (participation ratio) có được giữ/tăng qua các lần thử, không bị xói mòn về 0 (chống ỷ lại)? | RAL chỉ là thông số bench, **không** được gọi là "trợ lực thích ứng"; AAN bị hạ xuống "trợ lực cố định phân bậc" |
+| **GATE AAN-2**  | Đường cong tải–hoàn thành (RAL) có đơn điệu + ổn định không, **và** mức tham gia chủ động (participation ratio) có được giữ/tăng qua các lần thử, không bị xói mòn về 0 (chống ỷ lại)? | RAL chỉ là thông số bench, **không** được gọi là "trợ lực thích ứng"; AAN bị hạ xuống "trợ lực cố định phân bậc" |
 
 ### Cổng Trạm Y Sinh Biên (Edge Intelligence Station) — GATE EDGE (`DEC-ARCH-001`)
 
@@ -41,7 +41,7 @@
 > 2. Đã hủy bỏ GATE B cũ (Tái tạo góc 3D bàn tay) và hợp nhất toàn bộ đánh giá hướng và lực vào **GATE A mới** (Nhận diện Hướng vận động & Bản đồ kích hoạt nỗ lực động).
 > 3. Tuyệt đối **không sử dụng camera ngoài hay marker ArUco** (`DEC-GATE-005`). Hệ thống hoạt động 100% bằng mảng cảm biến áp trở nội tại tích hợp trên vách cứng khung nẹp, bảo toàn tính gọn nhẹ và độc lập tại chỗ.
 
-**Vì sao đặt ⭐ ở cả hai nhánh:** GATE C trả lời "nhánh Đo có còn lý do tồn tại không" (nếu không nhạy hơn nhiễu thì đo để làm gì); GATE AAN-2 trả lời đúng câu hỏi tương đương cho nhánh Trợ lực — "AAN có thực sự khác gì một lò xo trợ lực cố định không, hay chỉ là trợ lực cố định được gọi tên hoa mỹ". Nếu AAN-2 fail, đề tài **không bị dừng** (khác GATE C) nhưng **bắt buộc đổi nhãn**, không được gọi là "theo nhu cầu"/"thích ứng".
+**Vì sao đặt  ở cả hai nhánh:** GATE C trả lời "nhánh Đo có còn lý do tồn tại không" (nếu không nhạy hơn nhiễu thì đo để làm gì); GATE AAN-2 trả lời đúng câu hỏi tương đương cho nhánh Trợ lực — "AAN có thực sự khác gì một lò xo trợ lực cố định không, hay chỉ là trợ lực cố định được gọi tên hoa mỹ". Nếu AAN-2 fail, đề tài **không bị dừng** (khác GATE C) nhưng **bắt buộc đổi nhãn**, không được gọi là "theo nhu cầu"/"thích ứng".
 
 ---
 
@@ -67,7 +67,7 @@
 
 **Nếu FAIL:** quay lại thiết kế cơ khí/electric cực trước, không chạy tiếp.
 
-> **Bản chạy chi tiết (2026-09-19):** [`08_gate0_execution_plan.md`](08_gate0_execution_plan.md) — tách GATE 0 thành **Q1** (độ nhạy: `γ`, `ΔV/σ`) và **Q2** (mạch đọc thật có nghe thấy không: `R₀(F_p) ≤ R_max`), thêm **thí nghiệm quét trở nguồn** để đo `R_max` thay vì đi mượn 100 kΩ, thêm log trôi ≥10 ngày, và **cây quyết định khi fail**. Ngưỡng ở đó là **ĐỀ XUẤT — chủ dự án chốt trước khi đo** (`DEC-SCOPE-003` vẫn hiệu lực).
+> **Bản chạy chi tiết (2026-09-19):** [`08_gate0_execution_plan.md`](08_gate0_execution_plan.md) — tách GATE 0 thành **Q1** (độ nhạy: `γ`, `ΔV/σ`) và **Q2** (mạch đọc thật có nghe thấy không: `R₀(F_p) ≤ R_max`), thêm **thí nghiệm quét trở nguồn** để đo `R_max` thay vì đi mượn 100 kΩ, thêm log trôi ≥10 ngày, và **cây quyết định khi fail**. Ngưỡng ở đó là **ĐỀ XUẤT — nhóm nghiên cứu chốt trước khi đo** (`DEC-SCOPE-003` vẫn hiệu lực).
 
 ---
 
@@ -99,7 +99,7 @@
 
 ---
 
-## GATE C ⭐ — Độ nhạy phát hiện thay đổi (TIÊU CHÍ SỐNG CÒN)
+## GATE C  — Độ nhạy phát hiện thay đổi (TIÊU CHÍ SỐNG CÒN)
 
 **Câu hỏi:** Thay đổi chức năng **thật** (mô phỏng) có tạo ra tín hiệu **lớn hơn** biến thiên drift/nhiễu của hệ đo trong cùng khung thời gian không?
 
@@ -114,7 +114,7 @@
    - `σ_noise` = độ lệch chuẩn **trong cùng một mức** qua các phiên (bao gồm cả drift).
 4. Tính **MDC** của chỉ số: `MDC ≈ 1,96·√2·SEM`.
 
-> 📚 **Mốc so sánh bắt buộc nêu trong báo cáo** (thêm 2026-09-19; ngưỡng PASS/FAIL **giữ nguyên**): `SRC-STEF-MDC-2026` — công cụ chuẩn STEF có ICC 0,98 và **MDC95 = 12,7 điểm** trên n=53 bán cấp; `SRC-MANUMETER-RCT-2022` — hệ đeo đã kiểm định có **MDC ≈ 31%** mức dùng tay trung bình ngày và 100–200 counting sai/giờ. Hai mốc này trả lời câu hỏi *"'MDC nhỏ' là nhỏ so với cái gì?"*: nếu MDC của chỉ số găng tay không cạnh tranh được với 31% (hoặc không giải thích được vì sao khác), GATE C được tính là FAIL về mặt *utility* dù đạt ngưỡng 2σ.
+>  **Mốc so sánh bắt buộc nêu trong báo cáo** (thêm 2026-09-19; ngưỡng PASS/FAIL **giữ nguyên**): `SRC-STEF-MDC-2026` — công cụ chuẩn STEF có ICC 0,98 và **MDC95 = 12,7 điểm** trên n=53 bán cấp; `SRC-MANUMETER-RCT-2022` — hệ đeo đã kiểm định có **MDC ≈ 31%** mức dùng tay trung bình ngày và 100–200 counting sai/giờ. Hai mốc này trả lời câu hỏi *"'MDC nhỏ' là nhỏ so với cái gì?"*: nếu MDC của chỉ số găng tay không cạnh tranh được với 31% (hoặc không giải thích được vì sao khác), GATE C được tính là FAIL về mặt *utility* dù đạt ngưỡng 2σ.
 
 **Tiêu chí PASS (chốt trước):**
 - `Δ_signal` giữa Mức 1 và Mức 3 ≥ **2 × σ_noise** (tức là tách được rõ ràng).
@@ -149,7 +149,7 @@
 
 ---
 
-## GATE AAN-2 ⭐ — Tính đơn điệu RAL & Chống ỷ lại vận động (TIÊU CHÍ SỐNG CÒN NHÁNH TRỢ LỰC)
+## GATE AAN-2  — Tính đơn điệu RAL & Chống ỷ lại vận động (TIÊU CHÍ SỐNG CÒN NHÁNH TRỢ LỰC)
 
 **Câu hỏi khoa học:** Đường cong tải–hoàn thành (RAL) có đơn điệu, lặp lại ổn định giữa các phiên ($ICC \ge 0,75$) **và** mức độ tham gia lực chủ động của người dùng (Participation Ratio) có được duy trì/tăng lên qua các chu kỳ thử, không bị sụt giảm về 0 (triệt tiêu hiện tượng ỷ lại vận động - Motor Slacking) không?
 

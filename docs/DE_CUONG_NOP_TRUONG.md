@@ -70,7 +70,7 @@ Hàng cuối không phải cách nói giảm để chữa việc thiếu số li
 
 ### 1.5 Tính cấp thiết đã được đối chiếu với người làm nghề, không chỉ với bài báo
 
-Giao thức đo, cách chọn ngón, và định nghĩa "thế nào là một phiên đo đáng tin" đã được **tham khảo ý kiến một kỹ thuật viên Vật lý trị liệu – Phục hồi chức năng** [14]. Theo quyết định của chủ dự án, hồ sơ **không nêu danh tính** người được tham khảo; giá trị của bước này chỉ dừng ở mức **"nhu cầu và tính khả thi lâm sàng của phép đo được người làm nghề xác nhận"** — nó **không** là bằng chứng về hiệu quả, và **không** thay thế việc tuyển người bệnh qua hội đồng đạo đức.
+Giao thức đo, cách chọn ngón, và định nghĩa "thế nào là một phiên đo đáng tin" đã được **tham khảo ý kiến một kỹ thuật viên Vật lý trị liệu – Phục hồi chức năng** [14]. Theo quyết định của nhóm nghiên cứu, hồ sơ **không nêu danh tính** người được tham khảo; giá trị của bước này chỉ dừng ở mức **"nhu cầu và tính khả thi lâm sàng của phép đo được người làm nghề xác nhận"** — nó **không** là bằng chứng về hiệu quả, và **không** thay thế việc tuyển người bệnh qua hội đồng đạo đức.
 
 ---
 
@@ -271,9 +271,9 @@ Một **rig cơ khí** gồm: trục trượt + vít me dẫn động 1 khớp, 
 | Đề cương được coi là hoàn thành mục tiêu khi | Trạng thái hiện tại |
 |---|---|
 | Có ≥ 6 con số **tự đo** trong báo cáo cuối kỳ | chưa — là cam kết, không phải thành tích |
-| Toàn bộ ngưỡng được chốt **trước** khi bật nguồn đo | ☐ **cần chủ dự án tích 10 ô** (`research/protocols/08` §7) — đây là việc còn lại duy nhất |
-| Không có tuyên bố hiệu quả lâm sàng, không có dữ liệu người trước IRB | ✔ đang đúng và sẽ giữ đúng |
-| Mọi con số trong hồ sơ có hoặc DOI hoặc `research/bench/logs/` | ✔ cơ chế đã dựng xong (137 dòng ledger) |
+| Toàn bộ ngưỡng được chốt **trước** khi bật nguồn đo | [ ] **cần nhóm nghiên cứu tích 10 ô** (`research/protocols/08` §7) — đây là việc còn lại duy nhất |
+| Không có tuyên bố hiệu quả lâm sàng, không có dữ liệu người trước IRB | [x] đang đúng và sẽ giữ đúng |
+| Mọi con số trong hồ sơ có hoặc DOI hoặc `research/bench/logs/` | [x] cơ chế đã dựng xong (137 dòng ledger) |
 
 ---
 

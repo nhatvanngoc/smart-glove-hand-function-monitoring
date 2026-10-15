@@ -1,8 +1,8 @@
 # 08 — KẾ HOẠCH CHẠY GATE 0 (đặc trưng sensing element + cửa sổ làm việc)
 
 > **Mục đích file:** `research/protocols/06…` định nghĩa GATE 0 ở mức *tiêu chí*. File này định nghĩa **cách chạy**, để một người bất kỳ
-> (kể cả chủ dự án lúc 22h, không có AI) làm đúng một lần và không phải tự quyết định giữa chừng.
-> **Trạng thái:** bản đề xuất của agent, **chờ chủ dự án duyệt** (`DEC-GATE0-001`, chưa tồn tại → tạo khi duyệt).
+> (kể cả nhóm nghiên cứu lúc 22h, không có AI) làm đúng một lần và không phải tự quyết định giữa chừng.
+> **Trạng thái:** bản đề xuất của agent, **chờ nhóm nghiên cứu duyệt** (`DEC-GATE0-001`, chưa tồn tại → tạo khi duyệt).
 > **Công cụ đo:** phiếu in được từng bảng ở [`08a_gate0_bench_sheets.md`](08a_gate0_bench_sheets.md) — thiết kế cho **DMM + khối lượng đã cân**, phép tính chỉ gồm trừ số nguyên.
 > **Ràng buộc:** giai đoạn này **không viết script phân tích, không viết firmware** (`DEC-PHASE-001`); không đo trên người; ngưỡng **chốt trước khi đo**, cấm chỉnh sau khi thấy số.
 > **Không có số nào trong file này là kết quả đo của đề tài.**
@@ -46,12 +46,12 @@ nhãn lô vật liệu, ngày giờ chế tạo. Hai phần tử **không đư�
 1. `R_series ∈ {100 Ω, 1 k, 10 k, 100 k, 500 k, 1 M, 2 M, 5 M, 10 M}` — mỗi giá trị ghi `adc_raw` và `V_DMM`; tính `e = |V_adc − V_DMM|`.
 2. Với **mỗi** `R_series`, quét `adc_atten ∈ {0 dB, 2,5 dB, 6 dB, 11 dB}` × `adc_clock ∈ {1 RC_FAST, 1 RC_SLOW, 2 RC_FAST, 8 RC_SLOW}` × `bit_width ∈ {12, 9}` — chính 3 tham số này (không phải "12-bit") quyết định tốc độ lấy mẫu và trở nguồn cho phép.
 3. `R_ref` đặt ở 3 mức: `0,1·R_series`, `1·R_series`, `10·R_series` → tìm cấu hình divider tốt nhất.
-4. **ENOB thật:** ngắn `R_sensor = 0 Ω`, lấy ≥ 5.000 mẫu liên tiếp ở mỗi cấu hình, ghi σ (theo LSB và theo mV) → `ENOB = log₂(V_FS/σ·k)` với `k` do chủ dự án chốt (§7). Không có ENOB thật thì **cấm** dùng "12-bit" như một con số độ phân giải.
+4. **ENOB thật:** ngắn `R_sensor = 0 Ω`, lấy ≥ 5.000 mẫu liên tiếp ở mỗi cấu hình, ghi σ (theo LSB và theo mV) → `ENOB = log₂(V_FS/σ·k)` với `k` do nhóm nghiên cứu chốt (§7). Không có ENOB thật thì **cấm** dùng "12-bit" như một con số độ phân giải.
 
 **Biến thể chạy được ngay nếu chưa có CD74HC4067** (kiểm kê 2026-09-19: board có thể là món duy nhất còn thiếu): tách §3 thành **§3.1 — chỉ ESP32-S3 trực tiếp** (ngõ vào nối thẳng qua R_series, đo `e` và σ → cho **ENOB** và `R_max(ADC)` riêng), rồi **§3.2 — thêm MUX** khi linh kiện về để có `R_max(ADC+MUX)`; chỉ số `R_max` dùng ở `G0.1` là giá trị **nhỏ hơn** của hai phép (an toàn hơn). §4 (đặc trưng phần tử) **không** bị chặn bởi §3.2.
 
 **Định nghĩa để dùng (không đổi sau khi đo):** `R_max` = giá trị `R_series` lớn nhất mà tại đó
-`e ≤ 1 LSB` **và** σ không vượt quá 2× σ ở `R_series = 100 Ω` **và** tỉ lệ khung `fps ≥` mức chủ dự án chốt ở §7.
+`e ≤ 1 LSB` **và** σ không vượt quá 2× σ ở `R_series = 100 Ω` **và** tỉ lệ khung `fps ≥` mức nhóm nghiên cứu chốt ở §7.
 → Đây chính là `R_max(ADC+MUX)` trong `docs/02` §5.5, biến một **hằng số đi mượn** (100 kΩ) thành **số đo của đề tài**.
 
 ---
@@ -124,25 +124,25 @@ thước cặp, nhiệt–ẩm kế, kẹp cố định. Tốc độ nén **quas
 
 ## 7. Ngưỡng PASS/FAIL — **ĐỀ XUẤT, CHỦ DỰ ÁN CHỐT TRƯỚC KHI ĐO**
 
-> Agent **không** chốt ngưỡng (`DEC-SCOPE-003`). Ô "Chốt?" để trống cho chủ dự án; khi điền xong thì in/dán ảnh trang này **trước** khi bật nguồn.
+> Agent **không** chốt ngưỡng (`DEC-SCOPE-003`). Ô "Chốt?" để trống cho nhóm nghiên cứu; khi điền xong thì in/dán ảnh trang này **trước** khi bật nguồn.
 >
-> ⚠️ **2026-09-27 — bản nộp đã chứa bộ ngưỡng M1–M6 + C1.1–C1.10** (`CLM-MET-005`, chờ `DEC-METRIC-002` phê chuẩn).
+> **Lưu ý: 2026-09-27 — bản nộp đã chứa bộ ngưỡng M1–M6 + C1.1–C1.10** (`CLM-MET-005`, chờ `DEC-METRIC-002` phê chuẩn).
 > Bảng dưới (G0.x) là đề xuất cũ của agent; bảng đối chiếu G0↔C1 ở `research/reviews/2026-09-27_decuong_pdf_sync.md` §4.
-> Khi chốt, chủ dự án **chọn một bộ duy nhất** (khuyến nghị: bộ C1.x đã nộp) rồi mới tích ô — không chốt nửa G0 nửa C1.
+> Khi chốt, nhóm nghiên cứu **chọn một bộ duy nhất** (khuyến nghị: bộ C1.x đã nộp) rồi mới tích ô — không chốt nửa G0 nửa C1.
 > Lưu ý thêm: §3 đo `R_max` của chuỗi ESP32-S3+MUX, trong khi bản nộp dùng ADS1115+INA333 (`DEC-HW-005`) — §3 phải cập nhật theo chuỗi được chốt.
 
 | # | Tiêu chí (đề xuất) | Ngưỡng đề xuất | Chốt? |
 |---|---|---|---|
-| G0.1 | **Cửa sổ Q2 tồn tại** | ∃ ít nhất 1 mức `F_p` sao cho `R₀(F_p) ≤ R_max` **và** `SNR ≥ 8 LSB` tại `ΔF = 1 N` | ☐ |
-| G0.2 | Vật liệu đủ nhạy | `γ_i ≥ 0,25` ở **≥ 4/5** phần tử họ A **và** R² hồi quy ≥ 0,95 | ☐ |
-| G0.3 | Lặp trong phiên | `cv_cycle ≤ 5%` ở tải làm việc | ☐ |
-| G0.4 | Lặp giữa ngày | ICC(3 ngày) ≥ 0,75 | ☐ |
-| G0.5 | Hysteresis **biết được** (không cần nhỏ) | `hys_norm` đo được và `≤ 15%` **để vẫn dùng được cho chỉ số thứ hạng** | ☐ |
-| G0.6 | Creep | `creep_2dec ≤ 3%` | ☐ |
-| G0.7 | Trôi so với tín hiệu | `drift_ratio ≤ 2` **và** trôi 10 ngày < `ΔV(ΔF = 1 N)` | ☐ |
-| G0.8 | Nhất quán chế tạo | trải `γ` giữa 5 phần tử ≤ ±40% | ☐ |
-| G0.9 | Tốc độ đọc đủ cho GATE A/B | `fps_meas ≥ 20 Hz` với 12 kênh đã cấu hình | ☐ |
-| **G0.0** (mới) | **Chọn định nghĩa nhiễu trước khi đo** | **Bản A** (đo tay được): `noise_pp = max−min` trên 20 mẫu liên tiếp, ngưỡng `Δadc ≥ 8` và `e ≤ 1 LSB` **hoặc** **Bản B** (cần script): `σ` trên ≥ 5.000 mẫu — *chủ dự án tích vào một ô; chọn B đồng nghĩa phải mở khoá script* | **A ☐ / B ☐** |
+| G0.1 | **Cửa sổ Q2 tồn tại** | ∃ ít nhất 1 mức `F_p` sao cho `R₀(F_p) ≤ R_max` **và** `SNR ≥ 8 LSB` tại `ΔF = 1 N` | [ ] |
+| G0.2 | Vật liệu đủ nhạy | `γ_i ≥ 0,25` ở **≥ 4/5** phần tử họ A **và** R² hồi quy ≥ 0,95 | [ ] |
+| G0.3 | Lặp trong phiên | `cv_cycle ≤ 5%` ở tải làm việc | [ ] |
+| G0.4 | Lặp giữa ngày | ICC(3 ngày) ≥ 0,75 | [ ] |
+| G0.5 | Hysteresis **biết được** (không cần nhỏ) | `hys_norm` đo được và `≤ 15%` **để vẫn dùng được cho chỉ số thứ hạng** | [ ] |
+| G0.6 | Creep | `creep_2dec ≤ 3%` | [ ] |
+| G0.7 | Trôi so với tín hiệu | `drift_ratio ≤ 2` **và** trôi 10 ngày < `ΔV(ΔF = 1 N)` | [ ] |
+| G0.8 | Nhất quán chế tạo | trải `γ` giữa 5 phần tử ≤ ±40% | [ ] |
+| G0.9 | Tốc độ đọc đủ cho GATE A/B | `fps_meas ≥ 20 Hz` với 12 kênh đã cấu hình | [ ] |
+| **G0.0** (mới) | **Chọn định nghĩa nhiễu trước khi đo** | **Bản A** (đo tay được): `noise_pp = max−min` trên 20 mẫu liên tiếp, ngưỡng `Δadc ≥ 8` và `e ≤ 1 LSB` **hoặc** **Bản B** (cần script): `σ` trên ≥ 5.000 mẫu — *nhóm nghiên cứu tích vào một ô; chọn B đồng nghĩa phải mở khoá script* | **A [ ] / B [ ]** |
 
 **Đọc bảng:** G0.1 **và** G0.7 là hai ô quyết định sự sống còn; G0.2–G0.6, G0.8 là ô *giải thích được* nếu G0.1 fail; G0.9 chỉ chặn đường đi tiếp sang GATE A.
 
@@ -177,9 +177,9 @@ adc_raw,adc_avg5,volt_mv_DMM,R_dmm_ohm,fps_actual,T_c,RH_pct,operator,note
 ```
 - Một file **một phiên**, tên `research/bench/logs/YYYY-MM-DD_G0_<element>_<loại>.csv`; file gốc **không bao giờ bị sửa** (bản dẫn xuất để phân tích đặt tên `…_derived.csv`).
 - Đầu mỗi file có **header comment** (`#`) chép lại: ngưỡng đã chốt ở §7 (bản in/ảnh chụp), số serial DMM, và dãy thứ tự tải ngẫu nhiên.
-- Dãy tải ngẫu nhiên: **chủ dự án tự viết tay** 1 dãy hoán vị của §4.1 rồi chụp ảnh, dán vào log trước khi đo (không để AI sinh dãy — dãy sinh sau khi thấy số là hành vi bị cấm).
+- Dãy tải ngẫu nhiên: **nhóm nghiên cứu tự viết tay** 1 dãy hoán vị của §4.1 rồi chụp ảnh, dán vào log trước khi đo (không để AI sinh dãy — dãy sinh sau khi thấy số là hành vi bị cấm).
 
-## 10. Cấm trong GATE 0 (lặp lại cho chắc, theo `AGENTS.md`)
+## 10. Cấm trong GATE 0 (lặp lại cho chắc, theo `tài liệu nội bộ`)
 1. Nói "ADC 12-bit ⇒ độ phân giải 0,x mV ⇒ 0,y N" — không có phép đổi đơn vị nào được phép trước khi có `γ` + `ENOB` + mặt nạ lực.
 2. Gọi "cảm biến Velostat" — phải là "sensing element dùng vật liệu áp trở".
 3. Đưa tay người vào jig "cho nhanh". Không có ngoại lệ.

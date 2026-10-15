@@ -1,6 +1,6 @@
 # Đề tài đề xuất (ViSEF-style) — Velostat ổ cối chân giả tự hiệu chuẩn
 
-**Ngày:** 2026-08-26 · **Trạng thái:** PROPOSED — cần owner duyệt + 1 vòng kill-test cơ chế trước khi chốt.
+**Ngày:** 2026-08-26 · **Trạng thái:** PROPOSED — cần nhóm duyệt + 1 vòng kill-test cơ chế trước khi chốt.
 
 ## Tên đề tài (đóng gói kiểu ViSEF, không kiểu IEEE)
 

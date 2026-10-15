@@ -13,8 +13,8 @@ research/
 ├── context/CONVERSATION_2026-09-13.md      # bản nén hội thoại (pivot sang găng tay)
 ├── evidence/SOURCE_LEDGER.csv               # nguồn thật/candidate và trạng thái verification
 ├── protocols/ISEF_REVIEW_ORCHESTRATION.md  # vai trò phản biện 6-lane + quality gates
-├── protocols/06_glove_hand_GATE_experiment.md # ⭐ GATE experiment CHO ĐỀ TÀI HIỆN TẠI
-├── protocols/04_* 05_*                      # ⚠️ DI SẢN đề tài đã bị loại — không dùng
+├── protocols/06_glove_hand_GATE_experiment.md # [Trọng tâm] GATE experiment CHO ĐỀ TÀI HIỆN TẠI
+├── protocols/04_* 05_*                      # Lưu ý: DI SẢN đề tài đã bị loại — không dùng
 ├── prompts/REVIEWER_DISPATCH_TEMPLATE.md    # prompt dispatch role độc lập/adjudicator
 ├── queries/QUERY_LOG.jsonl                  # log truy vấn audit được
 ├── reviews/00_EXPLORATION_SUMMARY.md        # tổng kết hành trình săn đề tài

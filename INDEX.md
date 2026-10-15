@@ -1,39 +1,38 @@
-# 📑 INDEX — Sơ đồ file của dự án
+#  INDEX — Sơ đồ file của dự án
 
 > **Đề tài (`DEC-TITLE-003`, 2026-10-11):** Nghiên cứu và phát triển **găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ** (hồ sơ đã nộp vẫn dùng tên cũ `DEC-TOPIC-019`, xem README header)
 > **Học sinh:** Văn Ngọc Nhật Anh — THPT Quảng Trị
 > **Cập nhật:** 2026-10-11 (đồng bộ bản đề cương mới `de_cuong/` + đọc `research/notebooklm_sync/`; AAN nâng thành trụ cột thứ 4 — `DEC-SCOPE-006`)
-> **Trạng thái:** cơ sở lý thuyết & thiết kế hoàn tất; chủ dự án đã tự thực hiện bring-up phần cứng thật (`DEC-PHASE-002`), **chưa đạt chuẩn GATE 0 chính thức** (`research/bench/logs/` vẫn trống theo schema).
+> **Trạng thái:** cơ sở lý thuyết & thiết kế hoàn tất; nhóm nghiên cứu đã tự thực hiện bring-up phần cứng thật (`DEC-PHASE-002`), **chưa đạt chuẩn GATE 0 chính thức** (`research/bench/logs/` vẫn trống theo schema).
 
 ---
 
-## 🗂️ Cấu trúc hiện tại
+##  Cấu trúc hiện tại
 
 ```
 .
 ├── README.md                      ← Giới thiệu, vấn đề, novelty, kiến trúc, setup
-├── AGENTS.md                      ← Quy tắc vận hành cho mọi AI/agent (bằng chứng, an toàn, IRB)
 ├── INDEX.md                       ← File này
 ├── LICENSE
 ├── requirements.txt               ← numpy, matplotlib, scikit-learn
-├── 3d_model/                          ← ⭐ Thiết kế cơ cấu cơ khí nẹp ngón tay (CAD & 3D Print)
+├── 3d_model/                          ← [Trọng tâm] Thiết kế cơ cấu cơ khí nẹp ngón tay (CAD & 3D Print)
 │   ├── custom_exo/full_finger_modular/ ← Bộ 3 đốt module hóa Print-in-Place + Khớp rãnh trượt 13.5mm (STL/STEP/FCStd)
 │   ├── custom_exo/fixation_mechanisms_benchmark/ ← 9 phương án cơ cấu đóng/mở nẹp 1 đốt (Mech 1-9), đã in thử thực tế; Mech 9 (hiện tại) CHƯA có file CAD — xem README trong thư mục
 │   ├── generate_full_finger_modular.py ← Script FreeCAD Python sinh tham số toàn bộ ngón tay
 │   └── render_full_finger.py          ← Script kết xuất đồ họa trực quan 4 góc nhìn
 ├── de_cuong/
-│   ├── DE_CUONG_NGHIEN_CUU.pdf / .docx (= _BAN_MOI, MD5 trùng) ← ⭐ BẢN ĐỀ CƯƠNG MỚI NHẤT (16 tr., tạo 2026-10-03) — có Mục 10 (AAN+RAL trên giàn+phantom); chưa rõ đã nộp lại hay chỉ là bản song song (`DEC-SYNC-002`)
+│   ├── DE_CUONG_NGHIEN_CUU.pdf / .docx (= _BAN_MOI, MD5 trùng) ← [Trọng tâm] BẢN ĐỀ CƯƠNG MỚI NHẤT (16 tr., tạo 2026-10-03) — có Mục 10 (AAN+RAL trên giàn+phantom); chưa rõ đã nộp lại hay chỉ là bản song song (`DEC-SYNC-002`)
 │   ├── DE_CUONG_NGHIEN_CUU_COBROWSE.docx ← bản rút gọn/khác (40 KB, chưa đọc chi tiết)
 │   └── build_docx.py / make_figures.py / make_plots.py / write_section1.py / figures/ / tikz/ ← script dựng bản PDF/docx ở trên
 ├── docs/
-│   ├── DE_CUONG.pdf / DE_CUONG.txt    ← ⭐ BẢN ĐÃ NỘP TRƯỜNG (15 tr., 2026-09-26) + trích text tra cứu
+│   ├── DE_CUONG.pdf / DE_CUONG.txt    ← [Trọng tâm] BẢN ĐÃ NỘP TRƯỜNG (15 tr., 2026-09-26) + trích text tra cứu
 │   ├── DE_CUONG_NOP_TRUONG.md         ← Đề cương nộp trường (bản md; danh tính đã điền từ PDF)
 │   ├── 01_Topic_Definition.md         ← Đề tài, RQ 2 tầng, novelty, pipeline, killer experiment
 │   ├── 02_Theoretical_Foundation.md   ← CƠ SỞ LÝ THUYẾT (…+ §11 ghi chú định nghĩa theo bản nộp)
 │   ├── 03_Literature_Gap_Analysis_Plan.md ← Kế hoạch rà soát khoảng trống 2011–2026
 │   ├── 04_Hardware_Architecture.md    ← Bố trí kênh, MUX, ngân sách nhiễu (…+ §8 cấu hình đã nộp ADS1115+INA333)
 │   ├── 05_De_Cuong_Dang_Ky_DRAFT.md   ← Outline nội bộ (không nộp)
-│   ├── 06_Co_Cau_Co_Khi_Exoskeleton.md ← ⭐ THIẾT KẾ CƠ CẤU CƠ KHÍ KHUNG NGOÀI (Khớp rãnh trượt bù 13.5mm, Preload Velostat)
+│   ├── 06_Co_Cau_Co_Khi_Exoskeleton.md ← [Trọng tâm] THIẾT KẾ CƠ CẤU CƠ KHÍ KHUNG NGOÀI (Khớp rãnh trượt bù 13.5mm, Preload Velostat)
 │   ├── OUTLINE_BAOCAO_VISEFD.md       ← Khung báo cáo toàn văn A/B/C theo mẫu ViSEF
 │   └── bao_cao/
 │       ├── A1_ly_do_chon_de_tai.md    ← Tiêu chí A của ViSEF
@@ -44,7 +43,7 @@
 │       ├── A6_phuong_phap.md
 │       └── GLOSSARY.md                ← Phân cấp thuật ngữ cảm biến + tuyên bố bị cấm
 ├── firmware/
-│   └── mega_link_diagnostics/     ← ⚠️ DI SẢN đề tài cũ (Mega ↔ Orange Pi bring-up). Xem ghi chú trong file
+│   └── mega_link_diagnostics/     ← Lưu ý: DI SẢN đề tài cũ (Mega ↔ Orange Pi bring-up). Xem ghi chú trong file
 ├── research/
 │   ├── README.md                  ← Quy trình làm việc trong research/
 │   ├── claims/CLAIM_LEDGER.csv    ← Claim + cấp bằng chứng + trạng thái
@@ -55,18 +54,18 @@
 │   │   ├── CONVERSATION_2026-08-25.md     ← Bản nén hội thoại (đề tài cũ, lịch sử)
 │   │   └── CONVERSATION_2026-09-13.md     ← Bản nén hội thoại (pivot sang găng tay)
 │   ├── protocols/
-│   │   ├── 06_glove_hand_GATE_experiment.md   ← ⭐ GATE experiment CHO ĐỀ TÀI HIỆN TẠI
+│   │   ├── 06_glove_hand_GATE_experiment.md   ← [Trọng tâm] GATE experiment CHO ĐỀ TÀI HIỆN TẠI
 │   │   ├── ISEF_REVIEW_ORCHESTRATION.md       ← Phản biện 6-lane + adjudication
-│   │   ├── 04_orangepi5pro_mega2560_bringup_tests.md ← ⚠️ DI SẢN (Mega), giữ làm tham khảo
-│   │   └── 05_velostat_stiffness_GATE_experiment.md  ← ⚠️ SUPERSEDED (DFU) — không dùng
+│   │   ├── 04_orangepi5pro_mega2560_bringup_tests.md ← Lưu ý: DI SẢN (Mega), giữ làm tham khảo
+│   │   └── 05_velostat_stiffness_GATE_experiment.md  ← Lưu ý: SUPERSEDED (DFU) — không dùng
 │   ├── prompts/REVIEWER_DISPATCH_TEMPLATE.md ← Template dispatch reviewer
 │   ├── queries/QUERY_LOG.jsonl    ← Log truy vấn (auditable)
 │   ├── bench/templates/           ← Template log đo bench
 │   ├── reviews/00_EXPLORATION_SUMMARY.md ← Tổng kết hành trình săn đề tài
-│   ├── reviews/2026-09-27_decuong_pdf_sync.md ← ⭐ ĐỐI CHIẾU BẢN NỘP với repo (F1–F14, G0↔C1, sổ I/L/R, 6 QĐ chờ chốt)
-│   ├── reviews/2026-09-19_prior_art_novelty_gate1.md ← ⭐ KẾT QUẢ RÀ SOÁT PRIOR ART lượt 1 (ma trận + quyết định hạ/nâng novelty)
+│   ├── reviews/2026-09-27_decuong_pdf_sync.md ← [Trọng tâm] ĐỐI CHIẾU BẢN NỘP với repo (F1–F14, G0↔C1, sổ I/L/R, 6 QĐ chờ chốt)
+│   ├── reviews/2026-09-19_prior_art_novelty_gate1.md ← [Trọng tâm] KẾT QUẢ RÀ SOÁT PRIOR ART lượt 1 (ma trận + quyết định hạ/nâng novelty)
 │   ├── reviews/archive/           ← ~20 báo cáo kill-test (đề tài cũ, lưu lịch sử)
-│   ├── notebooklm_sync/           ← ⚠️ Đồng bộ từ Google NotebookLM. `experiments/01-05` = log bring-up phần cứng thật (`DEC-PHASE-002`, chưa chính thức hoá GATE 0); `chat_transcripts/`, `studio/` = prose AI tạo sinh, cấp bằng chứng THẤP NHẤT — không trích trực tiếp vào hồ sơ nộp
+│   ├── notebooklm_sync/           ← Lưu ý: Đồng bộ từ Google NotebookLM. `experiments/01-05` = log bring-up phần cứng thật (`DEC-PHASE-002`, chưa chính thức hoá GATE 0); `chat_transcripts/`, `studio/` = bản ghi chú nháp ban đầu, chỉ dùng để tham khảo nội bộ — không trích trực tiếp vào hồ sơ nộp
 │   └── tooling/SETUP_STATUS.md    ← Trạng thái runtime/tooling
 ├── scripts/
 │   ├── bootstrap_research_tooling.sh
@@ -78,17 +77,17 @@
 └── tools/research_sources.lock.json
 ```
 
-*(`.tools/sources/`, `.claude/skills/`, `.venv/`, `research/{cache,downloads,generated,queries/private}/` là thư mục cục bộ, bị Git ignore.)*
+*(`.tools/sources/`, `.venv/`, `research/{cache,downloads,generated,queries/private}/` là thư mục cục bộ, bị Git ignore.)*
 
 ---
 
-## 📁 Nội dung chính từng nhóm
+## Nội dung chính từng nhóm
 
 ### `docs/` — Tài liệu đề tài
-- **01_Topic_Definition** ⭐⭐⭐: tên đề tài, vấn đề, khoảng trống, novelty trung thực, RQ 2 tầng, pipeline, killer experiment, phần cứng.
-- **02_Theoretical_Foundation** ⭐⭐⭐: phục hồi vận động sau đột quỵ, thang đo lâm sàng (FMA/ARAT/BBT), cơ sinh học bàn tay & lực ngón, vật lý piezoresistive của Velostat, hysteresis/creep/drift, phép đo vi sai, lượng tử hóa INT8, tuyên bố an toàn. Nhãn 🟢 chuẩn / 🟡 giả thuyết / 🔵 cần kiểm chứng.
-- **03_Literature_Gap_Analysis_Plan** ⭐⭐: 10 nhóm chủ đề cần rà soát + ma trận theo dõi.
-- **04_Hardware_Architecture** ⭐⭐⭐: bố trí 12–24 kênh, MUX, ngân sách độ phân giải ADC, tốc độ khung hình, đường ống dữ liệu.
+- **01_Topic_Definition** [Trọng tâm cao]: tên đề tài, vấn đề, khoảng trống, novelty trung thực, RQ 2 tầng, pipeline, killer experiment, phần cứng.
+- **02_Theoretical_Foundation** [Trọng tâm cao]: phục hồi vận động sau đột quỵ, thang đo lâm sàng (FMA/ARAT/BBT), cơ sinh học bàn tay & lực ngón, vật lý piezoresistive của Velostat, hysteresis/creep/drift, phép đo vi sai, lượng tử hóa INT8, tuyên bố an toàn. Nhãn [Khả thi] chuẩn / [Chờ xử lý] giả thuyết / [Thông tin] cần kiểm chứng.
+- **03_Literature_Gap_Analysis_Plan** [Trọng tâm vừa]: 10 nhóm chủ đề cần rà soát + ma trận theo dõi.
+- **04_Hardware_Architecture** [Trọng tâm cao]: bố trí 12–24 kênh, MUX, ngân sách độ phân giải ADC, tốc độ khung hình, đường ống dữ liệu.
 
 ### `docs/bao_cao/` — Báo cáo theo mẫu ViSEF
 - **A.1–A.6**: lý do chọn đề tài, mục tiêu, tiêu chí, đối tượng & phạm vi, địa điểm, phương pháp.
@@ -101,24 +100,24 @@
 
 ---
 
-## ⚠️ Lịch sử quan trọng (đã xử lý)
+## Lưu ý: Lịch sử quan trọng (đã xử lý)
 
-- **2026-10-11:** Đọc toàn bộ repo + setup môi trường (10/11 check); đọc toàn văn `research/notebooklm_sync/` (10 file) → phát hiện bản đề cương mới chưa đồng bộ `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (2026-10-03, 16tr, Mục 10 = cơ cấu AAN trên giàn đo + phantom). Theo chỉ đạo minh thị của chủ dự án ("AAN là một trong những trụ cột hạt nhân"): `DEC-SYNC-002` (công nhận bản đề cương mới) + `DEC-SCOPE-006` (nâng AAN thành trụ cột kỹ thuật thứ 4, **ranh giới an toàn phantom-only không đổi, không có ngoại lệ**) + `DEC-PHASE-002` (ghi nhận chủ dự án đã tự thực hiện bring-up phần cứng thật ngoài phạm vi agent — chưa đạt chuẩn GATE 0 chính thức) + `DEC-TITLE-003` (đề xuất 4 phương án tên, PROPOSED, chưa chọn). Cập nhật README (§1, §6.1 mới, §8, §10, §11, lịch sử), AGENTS.md (§2 ranh giới AAN + cảnh báo tier bằng chứng của notebooklm_sync), DECISION_LOG (+5), CLAIM_LEDGER (+3), SOURCE_LEDGER (+6).
+- **2026-10-11:** Đọc toàn bộ repo + setup môi trường (10/11 check); đọc toàn văn `research/notebooklm_sync/` (10 file) → phát hiện bản đề cương mới chưa đồng bộ `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (2026-10-03, 16tr, Mục 10 = cơ cấu AAN trên giàn đo + phantom). Theo chỉ đạo của nhóm ("AAN là một trong những trụ cột hạt nhân"): `DEC-SYNC-002` (công nhận bản đề cương mới) + `DEC-SCOPE-006` (nâng AAN thành trụ cột kỹ thuật thứ 4, **ranh giới an toàn phantom-only không đổi, không có ngoại lệ**) + `DEC-PHASE-002` (ghi nhận nhóm đã tự thực hiện đo kiểm phần cứng thực tế — chưa đạt chuẩn GATE 0 chính thức) + `DEC-TITLE-003` (đề xuất các phương án tên). Cập nhật README (§1, §6.1 mới, §8, §10, §11, lịch sử), quy định an toàn (§2 ranh giới AAN + cảnh báo cấp bằng chứng của notebooklm_sync), DECISION_LOG (+5), CLAIM_LEDGER (+3), SOURCE_LEDGER (+6).
 - **2026-08-25:** đề tài "đệm khí thích ứng + AAC" bị **xóa toàn bộ** theo DEC-TOPIC-003 (lịch sử còn trong git).
 - **2026-08-26:** chốt Hướng C — lót giày Velostat theo dõi độ cứng mô gan chân (sàng lọc DFU).
 - **2026-08-28:** **PIVOT** — bỏ DFU vì GATE 3 (Usefulness) yếu; chuyển sang **găng tay theo dõi chức năng bàn tay sau đột quỵ** (DEC-TOPIC-018).
 - **2026-09-13:** chốt **tên đề tài chính thức** (DEC-TOPIC-019), chuyển phần cứng từ Arduino Mega 2560 sang **ESP32-S3 + CD74HC4067** (DEC-HW-003), chốt **bố trí kênh** (DEC-HW-004), cập nhật đồng bộ toàn repo + push GitHub.
-- **2026-09-27:** đồng bộ **bản đã nộp `docs/DE_CUONG.pdf`** (15 tr., tạo 2026-09-26) → `research/reviews/2026-09-27_decuong_pdf_sync.md`: đội hình 2 người + GVHD Lê Công Long, lĩnh vực Nhúng, timeline 09/2026–01/2027; tên quay về `DEC-TOPIC-019` (README cũ ghi `DEC-TITLE-001` "chốt" là quá thẩm quyền — chưa từng vào log); `GAP = PROM − AROM`; ngưỡng C1.x; kiến trúc ADS1115+INA333; môi trường cài lại (10/11 check). 6 quyết định + 7 nguồn + 3 claim chờ owner duyệt.
+- **2026-09-27:** đồng bộ **bản đã nộp `docs/DE_CUONG.pdf`** (15 tr., tạo 2026-09-26) → `research/reviews/2026-09-27_decuong_pdf_sync.md`: đội hình 2 người + GVHD Lê Công Long, lĩnh vực Nhúng, timeline 09/2026–01/2027; tên quay về `DEC-TOPIC-019` (README cũ ghi `DEC-TITLE-001` "chốt" là quá thẩm quyền — chưa từng vào log); `GAP = PROM − AROM`; ngưỡng C1.x; kiến trúc ADS1115+INA333; môi trường cài lại (10/11 check). 6 quyết định + 7 nguồn + 3 claim chờ nhóm thống nhất.
 - **2026-09-19 (11):** `docs/DE_CUONG_NOP_TRUONG.md` = **bản đề cương nộp nhà trường** (13 mục + Phụ lục A): tính mới theo tiêu chí ViSEF/ISEF với bảng đối chiếu 8 công trình/sản phẩm, ảnh hưởng chia 3 loại, cơ sở lý thuyết + nguyên lý hoạt động, 10 ngưỡng đăng ký trước khi đo, ngân sách dự toán theo 4 lớp. `docs/05` thành outline nội bộ. Thêm `SRC-VN-STROKE-EPI-2025`, `SRC-COCHRANE-UE-2014`, `SRC-HENDRICKS-2002-MOTORRECOVER` (UNVERIFIED — ghi lại một chỗ **trích sai nguồn** trong A.1) và `CLM-BIO-003/-004`. *(2026-09-27: đã điền 4 ô danh tính từ bản PDF đã nộp.)*
-- **2026-09-19 (10):** chủ dự án chốt 2 việc — **`DEC-ROLE-001`: không nêu danh tính KTV trong hồ sơ nộp** (đã sửa `docs/05` §9.6, `protocols/07` §7; `A.5` còn nợ 1 chỗ) và **`DEC-PHASE-001`: vẫn pha lý thuyết** (không firmware, không script). Để GATE 0 vẫn chạy được: **`research/protocols/08a_gate0_bench_sheets.md`** — phiếu đo in được dùng toàn số nguyên + checklist 8 ảnh, và `protocols/08` thêm **G0.0** (chọn định nghĩa nhiễu A/B trước khi đo).
-- **2026-09-19 (9):** chủ dự án khai báo **đã có** Velostat + ESP32-S3 + Orange Pi 5 Pro + băng đồng và có **chị là KTV VLTL-PHCN 10 năm** → `DEC-RESOURCE-001` + `SRC-OWNER-2026-09-19-RESOURCES/-KTV10Y` + kiểm kê `research/context/EQUIPMENT_AND_ACCESS.md` + ranh giới sử dụng KTV ở `research/protocols/07` §7. Verdict đầu tư: **giải ngân được Lớp 0–1 về tiền**, nhưng **ngưỡng vẫn phải chốt trước khi đo** và **không đo trên người nhà**.
-- **2026-09-19 (8):** đọc **toàn văn** báo cáo dự thi "Xe lăn tự hành ALS" (QG 2024–2025, lĩnh vực **Hệ thống nhúng**, 15 trang) do chủ dự án cung cấp → `research/reviews/2026-09-19_benchmark_xe_lan_ALS_QG2025.md` + `SRC-XELAN-ALS-QG2025-REPORT` (READ_FULL) + `CLM-MET-004` (ngân sách hình thức). Kết luận: phương pháp của ta **trên** chuẩn thắng cuộc; vật thật + con số **dưới** (bằng 0). Khuyến nghị đổi lĩnh vực dự thi sang **Hệ thống nhúng**.
-- **2026-09-19 (7):** chủ dự án: thời gian **đủ** → lên kế hoạch cho cả 7 cổng (`DEC-PLAN-001`). Viết **`research/protocols/08_gate0_execution_plan.md`**: GATE 0 tách thành Q1 (độ nhạy `γ`) + Q2 (cửa sổ đọc được `R₀ ≤ R_max`), thêm thí nghiệm quét trở nguồn đo `R_max` + ENOB thật, log trôi ≥10 ngày, 9 ngưỡng **ĐỀ XUẤT — chờ chủ dự án chốt**, cây quyết định khi fail, schema log. **Không viết script** theo chỉ thị.
+- **2026-09-19 (10):** nhóm nghiên cứu chốt 2 việc — **`DEC-ROLE-001`: không nêu danh tính KTV trong hồ sơ nộp** (đã sửa `docs/05` §9.6, `protocols/07` §7; `A.5` còn nợ 1 chỗ) và **`DEC-PHASE-001`: vẫn pha lý thuyết** (không firmware, không script). Để GATE 0 vẫn chạy được: **`research/protocols/08a_gate0_bench_sheets.md`** — phiếu đo in được dùng toàn số nguyên + checklist 8 ảnh, và `protocols/08` thêm **G0.0** (chọn định nghĩa nhiễu A/B trước khi đo).
+- **2026-09-19 (9):** nhóm nghiên cứu khai báo **đã có** Velostat + ESP32-S3 + Orange Pi 5 Pro + băng đồng và có **chị là KTV VLTL-PHCN 10 năm** → `DEC-RESOURCE-001` + `SRC-OWNER-2026-09-19-RESOURCES/-KTV10Y` + kiểm kê `research/context/EQUIPMENT_AND_ACCESS.md` + ranh giới sử dụng KTV ở `research/protocols/07` §7. Verdict đầu tư: **giải ngân được Lớp 0–1 về tiền**, nhưng **ngưỡng vẫn phải chốt trước khi đo** và **không đo trên người nhà**.
+- **2026-09-19 (8):** đọc **toàn văn** báo cáo dự thi "Xe lăn tự hành ALS" (QG 2024–2025, lĩnh vực **Hệ thống nhúng**, 15 trang) do nhóm nghiên cứu cung cấp → `research/reviews/2026-09-19_benchmark_xe_lan_ALS_QG2025.md` + `SRC-XELAN-ALS-QG2025-REPORT` (READ_FULL) + `CLM-MET-004` (ngân sách hình thức). Kết luận: phương pháp của ta **trên** chuẩn thắng cuộc; vật thật + con số **dưới** (bằng 0). Khuyến nghị đổi lĩnh vực dự thi sang **Hệ thống nhúng**.
+- **2026-09-19 (7):** nhóm nghiên cứu: thời gian **đủ** → lên kế hoạch cho cả 7 cổng (`DEC-PLAN-001`). Viết **`research/protocols/08_gate0_execution_plan.md`**: GATE 0 tách thành Q1 (độ nhạy `γ`) + Q2 (cửa sổ đọc được `R₀ ≤ R_max`), thêm thí nghiệm quét trở nguồn đo `R_max` + ENOB thật, log trôi ≥10 ngày, 9 ngưỡng **ĐỀ XUẤT — chờ nhóm nghiên cứu chốt**, cây quyết định khi fail, schema log. **Không viết script** theo chỉ thị.
 - **2026-09-19 (6):** trả lời câu "đi xa được tới đâu" → **`research/reviews/2026-09-19_project_ceiling.md`** (trần theo 3 trục: hội thi / xuất bản / sản phẩm, 5 đòn bẩy, 5 rủi ro; 3 mục đã đưa vào `docs/05` §8c). Toàn bộ phán đoán ở đó là **judgment, không phải số đo**.
-- **2026-09-19 (5):** làm mục (1)+(4) chủ dự án yêu cầu → `docs/02` §5.5 (mô hình chuỗi đo + cửa sổ preload) và `GAP1 review §6` (sửa 3 lỗi danh tính nguồn, thêm `SRC-TW-SPASTICITY-2022` là đối thủ trực tiếp); tra bằng sáng chế theo phân loại = **bất khả thi** (ghi `docs/03` §7). Soạn **`docs/05_De_Cuong_Dang_Ky_DRAFT.md`** để nộp trường (chờ `DEC-SCOPE-004`).
-- **2026-09-19 (4):** chủ dự án chốt phạm vi **E4+E5+E6** (`DEC-SCOPE-003`) nhưng chỉ đạo *giai đoạn này tập trung vào cơ sở lý thuyết*: đã viết `docs/02` §1.4–§1.6/§3.4/§5.4/§7.3/§8.3; **hoãn** chốt ngưỡng GATE A′/RAL và **hoãn** viết script; không trích dự án tham chiếu ISEF 2025 vào hồ sơ nộp.
+- **2026-09-19 (5):** làm mục (1)+(4) nhóm nghiên cứu yêu cầu → `docs/02` §5.5 (mô hình chuỗi đo + cửa sổ preload) và `GAP1 review §6` (sửa 3 lỗi danh tính nguồn, thêm `SRC-TW-SPASTICITY-2022` là đối thủ trực tiếp); tra bằng sáng chế theo phân loại = **bất khả thi** (ghi `docs/03` §7). Soạn **`docs/05_De_Cuong_Dang_Ky_DRAFT.md`** để nộp trường (chờ `DEC-SCOPE-004`).
+- **2026-09-19 (4):** nhóm nghiên cứu chốt phạm vi **E4+E5+E6** (`DEC-SCOPE-003`) nhưng chỉ đạo *giai đoạn này tập trung vào cơ sở lý thuyết*: đã viết `docs/02` §1.4–§1.6/§3.4/§5.4/§7.3/§8.3; **hoãn** chốt ngưỡng GATE A′/RAL và **hoãn** viết script; không trích dự án tham chiếu ISEF 2025 vào hồ sơ nộp.
 - **2026-09-19 (3):** xác minh chuẩn tham chiếu hội thi: `SRC-ISEF-2025-ROBO065T` (ISEF 2025, giải Tư, THPT thị xã Quảng Trị, thuần tích hợp YOLO11+Nav2+Gemma2+Telegram, 4 con số tự đo) → hiệu chỉnh khuyến nghị: **E5 nâng lên nên làm**, E3 bỏ vì đạo đức/thời gian chứ không phải vì novelty (`review §11–§13`, `DEC-SCOPE-002c`).
-- **2026-09-19 (2):** chủ dự án đề xuất hướng "tập chủ động có trợ lực (AAT)". Phân tích phạm vi + kiểm toán 12 tuyên bố + ma trận va chạm prior art (16 dòng nguồn mới, chưa đọc toàn văn) → `research/reviews/2026-09-19_active_assisted_scope_options.md`; bản nháp lý thuyết đã viết lại an toàn cho báo cáo → `docs/bao_cao/A7_AAT_rationale_DRAFT.md`. **Chờ `DEC-SCOPE-002`** (E1/E2-lite/E3).
+- **2026-09-19 (2):** nhóm nghiên cứu đề xuất hướng "tập chủ động có trợ lực (AAT)". Phân tích phạm vi + kiểm toán 12 tuyên bố + ma trận va chạm prior art (16 dòng nguồn mới, chưa đọc toàn văn) → `research/reviews/2026-09-19_active_assisted_scope_options.md`; bản nháp lý thuyết đã viết lại an toàn cho báo cáo → `docs/bao_cao/A7_AAT_rationale_DRAFT.md`. **Chờ `DEC-SCOPE-002`** (E1/E2-lite/E3).
 - **2026-09-19:** **lượt rà soát prior art 1 (Gap 1)** — 3 nguồn `UNVERIFIED` đã xác minh danh tính; 24 nguồn mới vào ledger; kết quả: **hạ bậc novelty A** (nguyên lý vách→hướng đã có 2015; ART-Glove 2026 làm vỏ cứng + da áp điện trở), **nâng C lên trọng tâm**; thêm mốc y văn (STEF MDC 12,7; Manumeter MDC ~31%) vào GATE B/C **không đổi ngưỡng**. Chờ `DEC-NOV-001`. Chi tiết: `research/reviews/2026-09-19_prior_art_novelty_gate1.md`.
 
 Các file trong `research/reviews/archive/`, `research/protocols/04-05`, `firmware/mega_link_diagnostics/` là **di sản** của các đề tài đã bị loại. **Không dùng làm cơ sở cho đề tài hiện tại.**

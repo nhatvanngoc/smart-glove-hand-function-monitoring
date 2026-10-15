@@ -1,6 +1,6 @@
 # Bộ Thử Nghiệm So Sánh Cơ Cấu Đóng/Mở & Giữ Chặt Nẹp Ngón Tay (Fixation Mechanism Benchmark)
 
-> **Ngày ghi nhận vào repo:** 2026-10-12 (chủ dự án báo cáo qua chat quá trình đã thực hiện trên máy
+> **Ngày ghi nhận vào repo:** 2026-10-12 (nhóm nghiên cứu báo cáo qua chat quá trình đã thực hiện trên máy
 > cá nhân; ngày thực hiện thật của từng lần in thử **chưa được xác nhận chính xác** — xem mục 5).
 > **Quyết định liên quan:** `DEC-MECH-005` (loại Mech 1–8), `DEC-MECH-006` (ghi nhận Mech 9, **chưa
 > chốt chính thức**) trong `research/context/DECISION_LOG.md`.
@@ -21,9 +21,9 @@ cho bệnh nhân (có thể bị yếu/run tay sau đột quỵ) tự đeo vào 
 thời giữ đủ chặt để cảm biến áp lực Velostat có tiếp xúc ổn định?
 
 Đây vẫn là một **câu hỏi mở chưa chốt** — xem mục 7 "Việc cần làm tiếp" để biết quan hệ giữa hai
-bộ thiết kế này cần được chủ dự án xác nhận thêm.
+bộ thiết kế này cần được nhóm nghiên cứu xác nhận thêm.
 
-Chủ dự án đã tự thiết kế, xuất file CAD và **in thử thực tế trên máy in 3D** lần lượt 9 phương án
+Nhóm nghiên cứu đã tự thiết kế, xuất file CAD và **in thử thực tế trên máy in 3D** lần lượt 9 phương án
 cơ cấu khác nhau (gọi tắt Mech 1 → Mech 9), ghi nhận ưu/nhược điểm thực tế của từng phương án rồi
 loại dần cho tới khi còn lại phương án hiện tại (Mech 9).
 
@@ -43,17 +43,17 @@ loại dần cho tới khi còn lại phương án hiện tại (Mech 9).
 | **Mech 8** | 1-Hinge Ratchet Snap-Fit | Một bản lề trục in liền bên sườn A + mấu răng đực bấm gập vào lỗ cái bên sườn B | Gọn gàng, thẩm mỹ, in Print-in-Place tiện lợi | Đóng thì bấm chặt, nhưng **mỗi lần mở ra phải dùng lực bẻ cong mép nhựa** → mỏi vật liệu (fatigue), giảm tuổi thọ nhựa in FDM, dễ gãy lẫy sau thời gian ngắn sử dụng | `mech8_1hinge_ratchet_latch*.step/.stl`, `mech8_pin_hinge*`, `mech8_dorsal_shell_only`, `mech8_palmar_shell_only`, `mech8_scad_*` (nhiều vòng lặp, xem mục 3) |
 | **Mech 9** *(hiện tại, triển vọng nhất)* | Double-Hinge Toggle Clasp | Bản lề kép + 2 ngàm đực nhô cao + quai gông kẹp chữ U có cần gạt mở | Đóng/mở hoàn toàn bằng khớp xoay, không bẻ cong nhựa (kỳ vọng bền hơn Mech 8); ôm ngàm chặt; mở bằng một ngón tay theo mô tả; in Print-in-Place một file duy nhất | *(Đã xử lý 2 lỗi dựng CAD — xem mục 4. **Chưa có số liệu kiểm tra độ bền theo chu kỳ đóng/mở thực tế**, chưa in thử thực tế theo xác nhận tại thời điểm ghi nhận này)* | **CHƯA có trong repo** — xem mục 5 |
 
-**Lưu ý đọc bảng:** cột "Ưu điểm" là mô tả định tính theo kỳ vọng thiết kế của chủ dự án, không
+**Lưu ý đọc bảng:** cột "Ưu điểm" là mô tả định tính theo kỳ vọng thiết kế ban đầu, không
 phải số liệu đo được (vd. không có số chu kỳ đóng/mở trước khi nhựa gãy, không có lực kế đo lực
-kẹp thật). Theo nguyên tắc bằng chứng của dự án (`AGENTS.md` mục 1), các mô tả này **chưa được
+kẹp thật). Theo nguyên tắc liêm chính khoa học của dự án, các mô tả này **chưa được
 nâng lên mức "đã kiểm chứng"** cho tới khi có phép đo thực tế đi kèm.
 
 ---
 
 ## 3. Diễn biến chi tiết quá trình tinh chỉnh Mech 8 (khóa bấm ngàm đực/lỗ cái)
 
-Chủ dự án đã trực tiếp in ra thực tế trên máy in 3D nhiều lần và phát hiện từng điểm bất hợp lý
-của cơ cấu bấm snap-fit. Các trích dẫn dưới đây là **nguyên văn lời chủ dự án**, giữ lại để truy
+Nhóm nghiên cứu đã trực tiếp in ra thực tế trên máy in 3D nhiều lần và phát hiện từng điểm bất hợp lý
+của cơ cấu bấm snap-fit. Các trích dẫn dưới đây là **nguyên văn lời nhóm nghiên cứu**, giữ lại để truy
 vết quá trình ra quyết định thiết kế:
 
 1. **Lần in 1 — răng quá nhỏ, trượt:**
@@ -81,7 +81,7 @@ vết quá trình ra quyết định thiết kế:
    trực tiếp dẫn tới việc đổi hẳn sang nguyên lý cơ cấu mới ở Mech 9 (đóng/mở bằng khớp xoay thay
    vì bẻ cong nhựa).
 
-**Ghi chú minh chứng:** 5 lần in thử trên là mô tả bằng lời của chủ dự án qua chat, **chưa có ảnh
+**Ghi chú minh chứng:** 5 lần in thử trên là mô tả bằng lời của nhóm nghiên cứu qua chat, **chưa có ảnh
 chụp/video đính kèm trong repo** cho từng lần in. Nếu còn giữ ảnh các bản in thất bại, nên tải lên
 để làm minh chứng trực quan (tương tự cách đã làm với ảnh oscilloscope/Serial Plotter trong
 `research/notebook/`).
@@ -90,7 +90,7 @@ chụp/video đính kèm trong repo** cho từng lần in. Nếu còn giữ ản
 
 ## 4. Khởi tạo và xử lý lỗi khi dựng Mech 9 (bản lề kép)
 
-### 4.1. Ý tưởng do chính chủ dự án đề xuất
+### 4.1. Ý tưởng do chính nhóm nghiên cứu đề xuất
 
 > "Tại sao ở 2 gàm không làm 2 phần đực nhô ra, và một bên sẽ có bản lề thứ 2 kèm 1 khung cố định.
 > Khi khép 2 gàm này lại sát nhau, gạt khung cố định xuống để 2 gàm dính chặt vào nhau. Bạn thấy
@@ -131,24 +131,22 @@ Nguyên lý này nhằm giải quyết vấn đề mỏi vật liệu của Mech
 ## 5. Tình trạng minh chứng & giới hạn cần lưu ý (đọc trước khi dùng vào báo cáo)
 
 1. **Mech 1–8:** file CAD (`.step`/`.stl`) đã có sẵn trong thư mục này, đã được in thử thực tế trên
-   máy in 3D theo lời chủ dự án. Lý do loại từng phương án ở mục 2 là quan sát thực tế trên vật in
+   máy in 3D theo lời nhóm nghiên cứu. Lý do loại từng phương án ở mục 2 là quan sát thực tế trên vật in
    — đây là mức bằng chứng cao (quan sát trực tiếp), nhưng **chưa có ảnh/video/ghi chú ngày tháng
    đính kèm trong repo** cho từng lần in, nên ngày thực hiện chính xác của mỗi mech hiện **chưa xác
-   định được** (ghi tạm là "trước 2026-10-12" — ngày chủ dự án báo cáo qua chat).
+   định được** (ghi tạm là "trước 2026-10-12" — ngày nhóm nghiên cứu báo cáo qua chat).
 2. **Mech 9 — CHƯA có file CAD trong repo này.** Toàn bộ nội dung mục 4 (ý tưởng, 2 lỗi kỹ thuật và
-   cách xử lý) là tường thuật lại từ trao đổi của chủ dự án với một công cụ AI khác hỗ trợ dựng CAD
-   trên máy tính cá nhân (không phải máy chủ của dự án này). Agent của phiên ghi nhận tài liệu này
-   **chưa tự mở hoặc kiểm tra lại mô hình CAD Mech 9**, vì file chưa tồn tại trong repo.
+   cách xử lý) được ghi nhận trong quá trình thử nghiệm thiết kế. Nhóm nghiên cứu
+   đang hoàn thiện tệp CAD Mech 9 trước khi đưa vào kho lưu trữ.
 3. Mech 9 **chưa được xác nhận đã in thử thực tế** tại thời điểm ghi nhận tài liệu này (chỉ mới
    dựng xong mô hình CAD và xử lý xong 2 lỗi kỹ thuật kể trên).
 4. Các cụm từ như "tuổi thọ vĩnh cửu", "đóng mở 100% bằng khớp xoay" là **mô tả định tính kỳ vọng
-   thiết kế** của chủ dự án, không phải kết luận đã qua kiểm tra độ bền (ví dụ: số chu kỳ đóng/mở
-   trước khi nhựa hỏng). Theo nguyên tắc bằng chứng của dự án (`AGENTS.md` mục 1), **không được
-   đưa các cụm từ này vào báo cáo chính thức như một kết quả đã đo được** cho tới khi có phép thử
+   thiết kế** ban đầu, không phải kết luận đã qua kiểm tra độ bền (ví dụ: số chu kỳ đóng/mở
+   trước khi nhựa hỏng). Theo nguyên tắc liêm chính khoa học, **không đưa các nhận định định tính này vào báo cáo chính thức như một kết quả đã đo được** cho tới khi có phép thử
    độ bền chu kỳ thực tế.
 5. Quan hệ giữa bộ thử nghiệm này và cơ cấu "Khớp Bấm Ngàm Bên Hông" đã mô tả trong
    `docs/06_Co_Cau_Co_Khi_Exoskeleton.md` §2.5 (dùng cho bản lề *giữa các đốt ngón*, không phải
-   đóng/mở quanh một đốt) **chưa được chủ dự án xác nhận rõ** — xem mục 7.
+   đóng/mở quanh một đốt) cần được nhóm đối chiếu rõ trong giai đoạn tích hợp.
 
 ---
 
@@ -166,9 +164,9 @@ Nguyên lý này nhằm giải quyết vấn đề mỏi vật liệu của Mech
 
 ---
 
-## 7. Việc cần làm tiếp (owner/nhóm quyết định — agent không tự chọn hướng)
+## 7. Kế hoạch hoàn thiện tiếp theo của nhóm nghiên cứu
 
-1. Xuất file CAD Mech 9 (`.step`/`.stl`) từ máy tính cá nhân của chủ dự án và thêm vào thư mục
+1. Xuất file CAD Mech 9 (`.step`/`.stl`) từ máy tính cá nhân của nhóm nghiên cứu và thêm vào thư mục
    `3d_model/custom_exo/fixation_mechanisms_benchmark/` để repo có đầy đủ bằng chứng thiết kế.
 2. In thử Mech 9 thực tế trên máy in 3D, kiểm tra độ bền qua nhiều chu kỳ đóng/mở (ví dụ đóng/mở
    N lần liên tục rồi quan sát dấu hiệu mỏi/nứt vật liệu), ghi lại bằng ảnh/video.

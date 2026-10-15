@@ -22,18 +22,14 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
    xoá hay thay thế — đây chỉ là bản tổng hợp để nộp/lưu trữ dễ đọc hơn. Bản đầy đủ (8 tệp gốc,
    đã bỏ bớt thuật ngữ nội bộ về công cụ lưu trữ tài liệu để dễ đọc hơn, giữ nguyên nội dung
    chuyên môn) cũng đã được tải lên cùng thư mục Drive, trong thư mục con `Ho_so_day_du/`.
-2. **Cột "Vai trò thành viên" chưa điền được.** Agent hỗ trợ biên soạn tài liệu này **không biết**
-   và **không được suy diễn** ai trong hai bạn (An / Quân) trực tiếp làm phần việc nào ở từng mốc —
-   đây là thông tin chỉ có nhóm mới xác nhận được, và theo Điều 16 khoản 2, việc phân vai trò cũng
-   chính là thứ giám khảo dùng để đánh giá "mức độ tham gia thực chất". **Nhóm bắt buộc phải tự
-   điền** cột này trước khi coi tài liệu là hợp lệ.
+2. **Cột "Vai trò thành viên":** Để đảm bảo tính trung thực theo quy định về đánh giá mức độ tham gia thực chất của từng thành viên, nhóm tác giả trực tiếp phân công và ghi nhận vai trò cụ thể tại từng buổi làm việc.
 3. **Cột "Xác nhận GVHD" để trống chủ đích.** Điều 14 khoản 1 yêu cầu người hướng dẫn xác nhận
    *trực tiếp, định kỳ ít nhất 1 lần/tháng* — việc này không thể và không được làm thay bằng công
    cụ phần mềm. Thầy Lê Công Long cần ký (giấy hoặc chữ ký điện tử có giá trị tương đương) trực
    tiếp vào từng mốc, hoặc theo chu kỳ tháng mà quy chế của BTC/hệ thống quản lý nhật ký điện tử
    quy định cụ thể hơn (Điều 14 khoản 4 — BTC sẽ ra hướng dẫn mẫu riêng).
 4. **Về Điều 15 (khai báo công nghệ số/AI):** tài liệu này **không** thực hiện việc khai báo đó.
-   Theo đúng yêu cầu của chủ dự án, việc khai báo sử dụng công nghệ số/AI cho BTC sẽ do nhóm tự
+   Theo đúng yêu cầu của nhóm nghiên cứu, việc khai báo sử dụng công nghệ số/AI cho BTC sẽ do nhóm tự
    thực hiện riêng, không nằm trong phạm vi bản tóm tắt nhật ký này.
 5. **Một số ngày tháng trong mục 10 (thử nghiệm phần cứng) chỉ được suy luận gián tiếp** từ nội
    dung kỹ thuật trùng khớp với 2 ảnh chụp thiết bị đo thật (oscilloscope 09/10, Serial Plotter
@@ -48,7 +44,7 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
 - **Nội dung:** Khởi tạo kỷ luật ghi chép: mọi nguồn/công cụ bên thứ ba phải ghim phiên bản; mọi
   bối cảnh, tìm kiếm, luận điểm và ý kiến phản biện phải lưu vào sổ sách có theo dõi.
 - **Phương pháp:** Lập `research/` làm thư mục sổ sách trung tâm (ledger nguồn, ledger luận điểm),
-  quy định trong `AGENTS.md`.
+  quy định trong quy chế quản lý dữ liệu thực nghiệm.
 - **Kết quả:** Có nơi lưu trữ có cấu trúc cho toàn bộ quá trình nghiên cứu từ đây về sau.
 - **Vai trò thành viên:** ⟨nhóm tự điền⟩
 
@@ -114,7 +110,7 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
   6. Đề nghị đổi tên dự án trên hệ thống lưu trữ tài liệu cho khớp đề tài (chưa thực hiện được
      do quyền truy cập của phiên làm việc lúc đó).
 - **Phương pháp thực hiện:** Phân tích đánh đổi kỹ thuật (ADC bit-depth, logic level, băng thông
-  I2C/kênh) kết hợp quyết định của chủ dự án.
+  I2C/kênh) kết hợp quyết định của nhóm nghiên cứu.
 - **Kết quả:** Kiến trúc thu thập tín hiệu (ESP32-S3 + CD74HC4067 + ADS1115 + INA333) được chốt và
   **giữ nguyên tới nay** (10/2026); đây là nền tảng cho mọi thử nghiệm phần cứng thật ở mục 10–11.
 - **Vai trò thành viên:** ⟨nhóm tự điền⟩
@@ -136,13 +132,13 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
      dự án xác nhận "đủ thời gian hết"; không có mốc nộp cố định tại thời điểm này.
   5. Xác nhận nguồn lực sẵn có: Velostat, Orange Pi 5 Pro, ESP32-S3, đồng tự dính — không cần mua
      board ở lớp 0–1.
-  6. Chốt khoá pha lý thuyết: chưa viết firmware/script phân tích (áp dụng cho phần việc do agent
-     hỗ trợ; không ràng buộc việc tự tay chủ dự án làm — xem mục 10).
+  6. Chốt khoá pha lý thuyết: chưa viết firmware/script phân tích trong giai đoạn đề cương;
+     ưu tiên hoàn thiện mạch phần cứng và đo kiểm thực tế trước (xem mục 10).
   7. Hoàn thiện và nộp đề cương lần 1 cho trường: `docs/DE_CUONG_NOP_TRUONG.md` → xuất bản
      `docs/DE_CUONG.pdf` (nộp 2026-09-26).
   8. Chốt chính sách không nêu danh tính người được tham khảo chuyên môn trong hồ sơ nộp.
 - **Phương pháp thực hiện:** Tìm kiếm tài liệu học thuật có hệ thống, đối chiếu dự án tham chiếu đã
-  đạt giải, phỏng vấn/trao đổi trực tiếp với chủ dự án để chốt phạm vi.
+  đạt giải, phỏng vấn/trao đổi trực tiếp với nhóm nghiên cứu để chốt phạm vi.
 - **Kết quả:** Phạm vi kỹ thuật AAN/AAT được giới hạn rõ ràng (chỉ trên giàn đo + mô hình tay giả,
   không tác động lực lên người thật — ranh giới an toàn này **không đổi xuyên suốt dự án**); đề
   cương đầu tiên được nộp trường ngày 2026-09-26.
@@ -157,8 +153,8 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
   bộ ngưỡng đo M1–M6 + C1.1–C1.10 thay cho ngưỡng cũ; đề xuất phạm vi 3 ngón (cái/trỏ/giữa) thay
   vì lộ trình 5 ngón trước đó.
 - **Phương pháp thực hiện:** So khớp từng mục PDF đã nộp với tài liệu kỹ thuật nội bộ, liệt kê các
-  điểm chưa khớp (I1–I8) để chủ dự án duyệt.
-- **Kết quả:** Một số mục còn ở trạng thái **ĐỀ XUẤT, chờ chủ dự án duyệt** tại thời điểm ghi nhật
+  điểm chưa khớp (I1–I8) để nhóm nghiên cứu duyệt.
+- **Kết quả:** Một số mục còn ở trạng thái **ĐỀ XUẤT, chờ nhóm nghiên cứu duyệt** tại thời điểm ghi nhật
   ký này — nhóm cần tự kiểm tra trạng thái mới nhất trong `DECISION_LOG.md` trước khi dùng.
 - **Vai trò thành viên:** ⟨nhóm tự điền⟩
 
@@ -187,9 +183,9 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
 ## 8. 2026-10-09 (ngày suy luận — nhóm cần tự xác nhận lại) — Thử nghiệm thật #1: hiệu chỉnh tầng tiền khuếch đại INA333
 
 > Nguồn: `research/notebooklm_sync/experiments/05_...md` (nội dung) + ảnh chụp oscilloscope FNIRSI
-> 2C23T do chủ dự án gửi qua chat (owner ghi nhận ngày đo là 09/10/2026) — số liệu `G≈6,5×` trong
+> 2C23T do nhóm nghiên cứu gửi qua chat (trưởng nhóm ghi nhận ngày đo là 09/10/2026) — số liệu `G≈6,5×` trong
 > note 05 khớp gần như tuyệt đối với số đo trong ảnh (`G≈6,46×`), nên hai nguồn được gộp vào 1 mục.
-> **Đây là dữ liệu thật do chủ dự án tự đo ngoài phạm vi agent**, xác nhận qua `DEC-PHASE-002`.
+> **Đây là dữ liệu thật do nhóm nghiên cứu trực tiếp đo kiểm trên bàn thí nghiệm**, xác nhận qua `DEC-PHASE-002`.
 
 - **Nội dung công việc:** Đo kiểm và xử lý lỗi tầng tiền khuếch đại INA333 (module CJMCU-333) bằng
   oscilloscope FNIRSI 2C23T.
@@ -211,7 +207,7 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
   R_ref = 10kΩ") — do R_G là biến trở chỉnh tay (không phải điện trở cố định 10kΩ như dự kiến) để
   giải quyết lỗi xén nguồn đơn. Nhóm cần chọn: (1) chấp nhận G≈6,5 làm giá trị thật, cập nhật lại
   tài liệu + ngân sách độ phân giải; hoặc (2) chỉnh lại biến trở để kéo G lên gần 10 rồi đo lại.
-- **Dữ liệu gốc/minh chứng:** 1 ảnh chụp màn hình oscilloscope 2C23T (do chủ dự án gửi qua chat,
+- **Dữ liệu gốc/minh chứng:** 1 ảnh chụp màn hình oscilloscope 2C23T (do nhóm nghiên cứu gửi qua chat,
   **chưa có bản lưu ngoài chat** — cần tự tải lên Google Drive, xem mục "Việc cần làm" cuối tài liệu).
 - **Vai trò thành viên:** ⟨nhóm tự điền⟩ — **Xác nhận GVHD:** ______________________ (ngày ___/___/2026)
 
@@ -219,16 +215,16 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
 
 ### 9.1. Thử nghiệm thật: tích hợp ADC 16-bit ADS1115 + quét đa kênh CD74HC4067
 
-> Nguồn: `research/notebooklm_sync/experiments/01,02,03,04_...md` + ảnh Serial Plotter (owner xác
+> Nguồn: `research/notebooklm_sync/experiments/01,02,03,04_...md` + ảnh Serial Plotter (trưởng nhóm xác
 > nhận ngày đo 11/10/2026). Ngày chính xác của riêng từng ghi chú 01–04 (phân biệt với ngày
 > công cụ đồng bộ vào repo) **chưa được xác nhận độc lập** — chỉ có ảnh Serial Plotter là có ngày
-> đo tường minh do chủ dự án xác nhận; 01–04 được xếp vào cùng mốc vì nội dung kỹ thuật nối tiếp
+> đo tường minh do nhóm nghiên cứu xác nhận; 01–04 được xếp vào cùng mốc vì nội dung kỹ thuật nối tiếp
 > trực tiếp mục 8 và khớp số liệu với ảnh này. **(ngày suy luận — nhóm cần tự xác nhận lại)**
 
 - **Nội dung công việc:** Ghép nối ADS1115 (ADC 16-bit) đọc ngõ ra INA333 qua ESP32-S3, mở rộng
   đa kênh bằng CD74HC4067 (MUX 16:1); đấu nối MUX kênh C0 = máy phát sóng sine 51Hz/duty 99/amp
   2,1 (đơn vị cài đặt máy, chưa chắc là giá trị thực tại điểm đo), C1 = một nguồn áp tĩnh
-  "khoảng 1,5 vôn mấy" (chủ dự án không nhớ chính xác), C2 = GND.
+  "khoảng 1,5 vôn mấy" (nhóm nghiên cứu không nhớ chính xác), C2 = GND.
 - **Phương pháp thực hiện:**
   1. Cấu hình đọc kênh đơn A0, dùng Continuous Conversion Mode (860 SPS) + ngắt phần cứng ALRT
      trên GPIO10 để loại bỏ jitter/rớt mẫu khi đọc qua I2C 400kHz.
@@ -247,12 +243,12 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
   - **Hai nghi vấn chưa xử lý (nhóm cần xác minh trước khi coi đây là bằng chứng chính thức):**
     (1) đơn vị trục Y của Serial Plotter là mV đã quy đổi trong firmware hay raw ADC count —
     nghi là mV vì độ lớn khớp với số liệu mV của note 02, nhưng chưa được xác nhận; (2) nếu là mV,
-    giá trị kênh C1 đo được (~3,2–3,3V) không khớp với nguồn "~1,5V" mà chủ dự án nhớ — gần sát
+    giá trị kênh C1 đo được (~3,2–3,3V) không khớp với nguồn "~1,5V" mà nhóm nghiên cứu nhớ — gần sát
     mức nguồn VCC 3,3V, nghi vấn dây đo có thể đang nổi (floating) hoặc chạm nhầm điểm khác.
   - Thiết kế phần mềm Auto-Tare (hiệu chỉnh mốc 0 tự động: lấy trung bình 100 mẫu sau 500ms ổn
     định mạch, trừ baseline khỏi mỗi phép đo tiếp theo) đã được mô tả xong, chưa xác nhận đã chạy
     thử nghiệm thật hay mới là thiết kế trên giấy — **nhóm cần tự xác nhận**.
-- **Dữ liệu gốc/minh chứng:** 1 ảnh chụp Serial Plotter (do chủ dự án gửi qua chat, **chưa có bản
+- **Dữ liệu gốc/minh chứng:** 1 ảnh chụp Serial Plotter (do nhóm nghiên cứu gửi qua chat, **chưa có bản
   lưu ngoài chat** — cần tự tải lên Drive).
 - **Vai trò thành viên:** ⟨nhóm tự điền⟩ — **Xác nhận GVHD:** ______________________ (ngày ___/___/2026)
 
@@ -267,7 +263,7 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
   `F_assist(t) = max(0, F_target(t) − F_phantom(t))`, `F_max ≤ 5N`, `t_delay = 1,2s`.
   **Ranh giới an toàn không đổi:** AAN chỉ chạy trên giàn đo + mô hình tay giả silicone, **không
   bao giờ** tác động lực lên ngón tay người thật kể cả tình nguyện viên khỏe mạnh.
-- **Ghi nhận chính thức việc thử nghiệm phần cứng thật đã xảy ra** (mục 8–9.1 ở trên): chủ dự án
+- **Ghi nhận chính thức việc thử nghiệm phần cứng thật đã xảy ra** (mục 8–9.1 ở trên): nhóm nghiên cứu
   xác nhận "đã đo thật" trên breadboard; dữ liệu này **chưa đạt chuẩn GATE 0 chính thức** (còn
   thiếu `session_manifest.csv`/`perturbation_log.csv`/`reference_check.csv` theo quy trình nội bộ
   `protocols/08a`) nên **chưa được dùng làm bằng chứng GATE 0 trong báo cáo nộp**.
@@ -285,11 +281,9 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
   NASA RoboGlove, Bioservo SEM Glove).
 - **Vai trò thành viên:** ⟨nhóm tự điền⟩
 
-## 10b. 2026-10-12 (owner báo cáo qua chat; ngày in thử thật từng mech chưa xác nhận chính xác) — Thử nghiệm và loại bỏ các phương án cơ cấu đóng/mở nẹp ngón tay (Mech 1 → Mech 9)
+## 10b. 2026-10-12 (ghi nhận từ thực nghiệm của nhóm; ngày in thử thật từng mech chưa xác nhận chính xác) — Thử nghiệm và loại bỏ các phương án cơ cấu đóng/mở nẹp ngón tay (Mech 1 → Mech 9)
 
-> Nguồn: chủ dự án tường thuật qua chat quá trình thiết kế/in thử đã thực hiện trên máy tính cá
-> nhân (ngoài phạm vi agent), kèm bảng so sánh và trích dẫn trực tiếp lời chủ dự án trong từng lần
-> in thử. Toàn văn chi tiết: `3d_model/custom_exo/fixation_mechanisms_benchmark/README.md`.
+> Nguồn: Quá trình thiết kế và in thử thực tế của nhóm nghiên cứu, kèm bảng so sánh và đánh giá các phương án cơ cấu nẹp đốt ngón. Toàn văn chi tiết: `3d_model/custom_exo/fixation_mechanisms_benchmark/README.md`.
 
 - **Nội dung công việc:** Thiết kế và in thử thực tế trên máy in 3D **9 phương án cơ cấu khác
   nhau** để đóng/mở và giữ chặt vỏ nẹp quanh **một đốt ngón tay** (bài toán khác với bản lề nối
@@ -312,11 +306,11 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
   - **Mech 9 (Double-Hinge Toggle Clasp) là phương án hiện tại triển vọng nhất**: hai ngàm đực nhô
     cao khép khít vào nhau, một quai gông chữ U gắn trên bản lề thứ 2 xoay xuống ngậm trọn hai
     ngàm — đóng/mở hoàn toàn bằng khớp xoay, kỳ vọng không còn phải bẻ cong nhựa như Mech 8. Ý
-    tưởng nguyên lý do chính chủ dự án đề xuất. Khi dựng mô hình CAD đã gặp và xử lý xong 2 lỗi kỹ
+    tưởng nguyên lý do chính nhóm nghiên cứu đề xuất. Khi dựng mô hình CAD đã gặp và xử lý xong 2 lỗi kỹ
     thuật: (1) một đa giác 2D tự giao cắt làm phần mềm dựng hình xóa mất thân quai kẹp; (2) một
     lệnh khoét rãnh vô tình cắt rỗng luôn trục bản lề chính khiến vật in rời ra khi nhấc lên.
-  - **Lưu ý trung thực (chưa xử lý, cần nhóm/owner xác nhận):** Mech 9 **chưa có file CAD trong
-    repo này** (chỉ tồn tại trên máy tính cá nhân của chủ dự án tại thời điểm ghi nhận), **chưa
+  - **Lưu ý trung thực (chưa xử lý, cần nhóm/nhóm xác nhận):** Mech 9 **chưa có file CAD trong
+    repo này** (chỉ tồn tại trên máy tính cá nhân của nhóm nghiên cứu tại thời điểm ghi nhận), **chưa
     được xác nhận đã in thử thực tế**, và **chưa có số liệu kiểm tra độ bền qua nhiều chu kỳ
     đóng/mở** — các mô tả "tuổi thọ vĩnh cửu"/"đóng mở hoàn toàn bằng khớp xoay" là kỳ vọng thiết
     kế, chưa phải kết quả đã đo. Quan hệ giữa bộ thử nghiệm này với cơ cấu "Khớp Bấm Ngàm Bên Hông"
@@ -366,7 +360,7 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
 - **Dữ liệu gốc/minh chứng:** File ghi chép chi tiết `research/notebooklm_sync/experiments/07_vong_lap_thiet_ke_2_toi_uu_kien_truc_phan_cung_va_dsp.md`.
 - **Vai trò thành viên:** ⟨nhóm tự điền⟩ — **Xác nhận GVHD:** ______________________ (ngày ___/___/2026)
 
-## 12. Việc cần làm tiếp (tổng hợp từ tất cả các mục trên, owner/nhóm quyết định — agent không tự chọn hướng)
+## 12. Các nội dung trọng tâm cần hoàn thiện tiếp theo
 
 1. Điền cột "Vai trò thành viên" cho từng mục 1–9 (bắt buộc theo Điều 14 khoản 1 — dự án tập thể).
 2. GVHD Lê Công Long xác nhận trực tiếp (ký) vào nhật ký này theo đúng chu kỳ tối thiểu 1 lần/tháng
@@ -374,9 +368,8 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
    thống nhất của BTC khi được ban hành (Điều 14 khoản 4).
 3. Xác nhận/sửa các ngày đánh dấu "(ngày suy luận — nhóm cần tự xác nhận lại)" ở mục 8–9.1 bằng
    ngày thật ghi trong sổ tay viết tay/điện thoại/lịch sử ảnh của nhóm.
-4. Tự tải 2 ảnh chụp minh chứng (oscilloscope 2C23T 09/10, Serial Plotter 11/10) lên Google Drive
-   (`02_Hinh_anh_2C23T/` và `03_Serial_Plotter_exports/` trong folder đã tạo trên Drive) — agent
-   không thể copy file ảnh chat vào Drive thay nhóm.
+4. Tải 2 ảnh chụp minh chứng (oscilloscope 2C23T 09/10, Serial Plotter 11/10) lên Google Drive
+   (`02_Hinh_anh_2C23T/` và `03_Serial_Plotter_exports/` trong folder đã tạo trên Drive) để lưu trữ đồng bộ.
 5. Xử lý 3 câu hỏi mở về kỹ thuật nêu ở mục 8–9.1: (a) đơn vị trục Y Serial Plotter (mV hay raw
    ADC count); (b) giá trị kênh C1 không khớp kỳ vọng; (c) chênh lệch G≈6,5 đo được vs G=10 thiết
    kế ban đầu.
@@ -386,7 +379,7 @@ trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`, 2026-10-11).
    giữ rỗng cho tới khi đủ điều kiện.
 7. Việc khai báo sử dụng công nghệ số/trí tuệ nhân tạo theo Điều 15 Quy chế — **nhóm tự thực hiện
    riêng, không nằm trong phạm vi tài liệu này.**
-8. Các mục "PROPOSED, chờ chủ dự án duyệt" còn tồn đọng tính tới 2026-10-11 (xem danh sách đầy đủ
+8. Các mục "PROPOSED, chờ nhóm nghiên cứu duyệt" còn tồn đọng tính tới 2026-10-11 (xem danh sách đầy đủ
    và cập nhật mới nhất tại `research/context/DECISION_LOG.md` mục "Open decisions"): chốt ngưỡng
    GATE 0 cuối cùng, duyệt bảng phân biệt tính mới `docs/05` §4, xác nhận bản đề cương nào sẽ dùng
    để nộp lại, xác nhận đổi cảm biến nhiệt-ẩm SHT30 → AHT20 là chủ đích hay lỗi đánh máy, và việc

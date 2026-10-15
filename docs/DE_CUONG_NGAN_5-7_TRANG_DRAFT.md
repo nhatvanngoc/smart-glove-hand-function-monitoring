@@ -7,11 +7,11 @@
 > này vẫn giữ lại làm tài liệu nội bộ/kho nội dung tham khảo vì nhiều đoạn văn được tái dùng sang
 > file kia.
 
-> **Trạng thái: DỰ THẢO, đề xuất 2026-10-12 - chưa chốt, chờ chủ dự án duyệt.** Mục đích file này là
+> **Trạng thái: DỰ THẢO, đề xuất 2026-10-12 - chưa chốt, chờ nhóm nghiên cứu duyệt.** Mục đích file này là
 > một bản đề cương thật ngắn (5–7 trang) đúng khuôn khổ phiếu đăng ký đề tài cấp trường, khác với
 > báo cáo khoa học toàn văn (15–16 trang, `de_cuong/DE_CUONG_NGHIEN_CUU.pdf`) và bản nộp trước đó
 > (`docs/DE_CUONG_NOP_TRUONG.md`, đã nộp 2026-09-26, cũng dài ở mức báo cáo). Cấu trúc và văn phong mô
-> phỏng theo đề cương găng tay nông nghiệp lớp 10 của chính chủ dự án (`LV1-10-10A2.pdf`): bốn phần
+> phỏng theo đề cương găng tay nông nghiệp lớp 10 của chính nhóm nghiên cứu (`LV1-10-10A2.pdf`): bốn phần
 > A–D ngắn gọn, nhiều gạch đầu dòng, ít công thức, số liệu luôn kèm nguồn.
 > **Quy ước:** không có con số nào dưới đây là kết quả đo của đề tài, trừ khi ghi rõ "đã làm thật".
 > Mọi ngưỡng GATE là mục tiêu cam kết trước khi đo, không phải kết quả.
@@ -82,7 +82,7 @@ Chính vì khoảng trống đó, tôi lựa chọn nghiên cứu đề tài **"
   không thứ nguyên hoặc ở đơn vị riêng của nó (xem bảng B.IV).
 
 *(Bộ ngưỡng đầy đủ - 10 mục GATE 0 - xem `research/protocols/06_glove_hand_GATE_experiment.md` và
-`research/protocols/08_gate0_execution_plan.md`; một số ô "chốt?" của GATE 0 vẫn đang chờ chủ dự án
+`research/protocols/08_gate0_execution_plan.md`; một số ô "chốt?" của GATE 0 vẫn đang chờ nhóm nghiên cứu
 xác nhận cuối cùng trước khi bật nguồn đo chính thức.)*
 
 ### 5. Đối tượng và phạm vi nghiên cứu

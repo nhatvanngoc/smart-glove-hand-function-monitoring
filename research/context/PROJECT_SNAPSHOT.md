@@ -3,14 +3,14 @@
 > Bản nén ngữ cảnh để phiên sau khôi phục trạng thái **bằng artifact**, không dựa vào trí nhớ hội thoại.
 > Chỉ chứa **sự kiện bền vững**. Quyết định đầy đủ: `DECISION_LOG.md`. Đề tài: `docs/01_Topic_Definition.md`.
 
-> **2026-10-13 (`DEC-ARCH-001`, `DEC-GATE-003`, `DEC-GATE-004`, `DEC-GATE-005`):** Xác lập kiến trúc tích hợp sâu & tinh gọn hệ thống GATE: (1) AAN + Velostat là trụ cột cốt lõi không thể tách rời theo nguyên lý Hebbian đóng kín vòng phản hồi cảm giác-vận động. (2) Reinforcement Learning (RL) giải quyết 2 bài toán chuyên sâu: Bù trừ phi tuyến động (Hysteresis/Creep/Drift) cho Velostat dạng MDP (RL Inversion), và học chính sách trợ lực AAN thích ứng chống ỷ lại (Anti-Slacking Actor-Critic). (3) Orange Pi 5 Pro (RK3588, NPU 6 TOPS) làm Trạm Y Sinh Biên (Edge Medical Intelligence Station), chạy mô hình `.rknn` INT8 thời gian thực (trễ $\le 20\text{ ms}$) và bảo mật dữ liệu y tế độc lập. (4) **Zero-Camera Policy (`DEC-GATE-005`):** Loại bỏ hoàn toàn camera và ArUco, 100% xử lý bằng cảm biến nội tại. (5) Loại bỏ GATE D, E, AAN-3 (`DEC-GATE-003`), hủy GATE B và gộp vào GATE A (`DEC-GATE-004`). Hệ GATE chuẩn chốt đúng 6 cổng: `GATE 0 → GATE A → GATE C⭐` (Nhánh Đo); `GATE AAN-1 → GATE AAN-2⭐` (Nhánh AAN); `GATE EDGE` (Trạm biên AI). Chi tiết: `research/protocols/06_glove_hand_GATE_experiment.md`.
+> **2026-10-13 (`DEC-ARCH-001`, `DEC-GATE-003`, `DEC-GATE-004`, `DEC-GATE-005`):** Xác lập kiến trúc tích hợp sâu & tinh gọn hệ thống GATE: (1) AAN + Velostat là trụ cột cốt lõi không thể tách rời theo nguyên lý Hebbian đóng kín vòng phản hồi cảm giác-vận động. (2) Reinforcement Learning (RL) giải quyết 2 bài toán chuyên sâu: Bù trừ phi tuyến động (Hysteresis/Creep/Drift) cho Velostat dạng MDP (RL Inversion), và học chính sách trợ lực AAN thích ứng chống ỷ lại (Anti-Slacking Actor-Critic). (3) Orange Pi 5 Pro (RK3588, NPU 6 TOPS) làm Trạm Y Sinh Biên (Edge Medical Intelligence Station), chạy mô hình `.rknn` INT8 thời gian thực (trễ $\le 20\text{ ms}$) và bảo mật dữ liệu y tế độc lập. (4) **Zero-Camera Policy (`DEC-GATE-005`):** Loại bỏ hoàn toàn camera và ArUco, 100% xử lý bằng cảm biến nội tại. (5) Loại bỏ GATE D, E, AAN-3 (`DEC-GATE-003`), hủy GATE B và gộp vào GATE A (`DEC-GATE-004`). Hệ GATE chuẩn chốt đúng 6 cổng: `GATE 0 → GATE A → GATE C (trọng tâm)` (Nhánh Đo); `GATE AAN-1 → GATE AAN-2` (Nhánh AAN); `GATE EDGE` (Trạm biên AI). Chi tiết: `research/protocols/06_glove_hand_GATE_experiment.md`.
 
 ---
 
 
 ## 1. Đề tài (CHỐT nội dung — DEC-TOPIC-019; CHỐT tên hiển thị — DEC-TITLE-003, 2026-10-11)
 
-> ⚠️ **2026-09-27:** README ngày 2026-09-19 ghi "tên chốt `DEC-TITLE-001`" nhưng quyết định này **không có trong `DECISION_LOG.md`**
+> **Lưu ý: 2026-09-27:** README ngày 2026-09-19 ghi "tên chốt `DEC-TITLE-001`" nhưng quyết định này **không có trong `DECISION_LOG.md`**
 > và file `2026-09-19_title_options.md` không tồn tại. **Bản đã nộp `docs/DE_CUONG.pdf` (§1.1) dùng tên cũ** → repo quay về tên cũ,
 > chờ `DEC-TITLE-002` (hủy `DEC-TITLE-001`).
 >
@@ -37,7 +37,7 @@
 
 **Loại sản phẩm:** thiết bị **đánh giá & theo dõi**. **KHÔNG** phải robot/găng tập phục hồi chức năng. **KHÔNG** chẩn đoán, **KHÔNG** thay thế đánh giá lâm sàng.
 
-> **CẬP NHẬT 2026-10-11 (`DEC-SCOPE-006`, `DEC-SYNC-002`):** phát hiện bản đề cương mới hơn chưa đồng bộ — `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (16tr, tạo 2026-10-03) vs bản đã nộp trường `docs/DE_CUONG.pdf` (15tr, 2026-09-26). Bản mới bổ sung Mục 10: cơ cấu **AAN (Assist-as-Needed)** nay là **trụ cột kỹ thuật chính thức thứ 4** của đề tài (chủ dự án nêu minh thị). AAN chỉ chạy trên **giàn đo + mô hình tay giả phantom**, tuyệt đối không tác động lực lên người thật — ranh giới `DEC-SCOPE-003` không đổi. Đồng thời ghi nhận (`DEC-PHASE-002`): chủ dự án đã **tự thực hiện** bring-up phần cứng thật (ESP32-S3+ADS1115+INA333+CD74HC4067, log `research/notebooklm_sync/experiments/`), nhưng **chưa chính thức hoá** thành log GATE 0 hợp lệ. Tên đề tài **chưa đổi** (`DEC-TITLE-003` đề xuất 4 phương án, chờ chọn).
+> **CẬP NHẬT 2026-10-11 (`DEC-SCOPE-006`, `DEC-SYNC-002`):** phát hiện bản đề cương mới hơn chưa đồng bộ — `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (16tr, tạo 2026-10-03) vs bản đã nộp trường `docs/DE_CUONG.pdf` (15tr, 2026-09-26). Bản mới bổ sung Mục 10: cơ cấu **AAN (Assist-as-Needed)** nay là **trụ cột kỹ thuật chính thức thứ 4** của đề tài (nhóm nghiên cứu nêu minh thị). AAN chỉ chạy trên **giàn đo + mô hình tay giả phantom**, tuyệt đối không tác động lực lên người thật — ranh giới `DEC-SCOPE-003` không đổi. Đồng thời ghi nhận (`DEC-PHASE-002`): nhóm nghiên cứu đã **tự thực hiện** bring-up phần cứng thật (ESP32-S3+ADS1115+INA333+CD74HC4067, log `research/notebooklm_sync/experiments/`), nhưng **chưa chính thức hoá** thành log GATE 0 hợp lệ. Tên đề tài **chưa đổi** (`DEC-TITLE-003` đề xuất 4 phương án, chờ chọn).
 
 ---
 
@@ -60,7 +60,7 @@
 
 ## 4. Novelty (trung thực — mức ViSEF)
 
-> ⚠️ **CẬP NHẬT 2026-09-19 — lượt rà soát prior art 1** (`research/reviews/2026-09-19_prior_art_novelty_gate1.md`). Mức novelty bên dưới đã **dịch chuyển**: A bị hạ một bậc, C được nâng lên trọng tâm. **Chưa chốt** — chờ `DEC-NOV-001` + lane R5.
+> **Lưu ý: CẬP NHẬT 2026-09-19 — lượt rà soát prior art 1** (`research/reviews/2026-09-19_prior_art_novelty_gate1.md`). Mức novelty bên dưới đã **dịch chuyển**: A bị hạ một bậc, C được nâng lên trọng tâm. **Chưa chốt** — chờ `DEC-NOV-001` + lane R5.
 
 - **KHÔNG** claim "găng tay + AI/TinyML" là mới; **KHÔNG** claim "đo lực bóp" là mới; **KHÔNG** claim "không dùng IMU" là mới (đã có găng grating/optic 2021, stretch 2024).
 - ~~Ứng viên chính: cảm biến hướng qua vách khung cứng~~ → **sau lượt rà soát 1: chỉ còn là "cải tiến cấu hình + phương pháp lập luận"**, vì:
@@ -71,7 +71,7 @@
 - **KHÔNG mới (phải trích dẫn prior art):** đọc vi sai/ô tham chiếu để bù drift (thêm bằng chứng `SRC-OPENPAD-FINGER-2020`: 2 phần tử hai bên đốt ngón để tách thành phần lực, từ 2020); INT8 quantization.
 - **Prior art đã xác minh danh tính 2026-09-19:** `SRC-ZHU-2017-GLOVE` = Liu H. et al., IROS 2017, tr. 6617–6624, DOI 10.1109/IROS.2017.8206575 (đúng như mô tả cũ; bổ sung: hướng vector lực **gán theo pose từ IMU**, không suy từ vách). `SRC-RECONFIG-GLOVE-2023` = Liu H. et al., **Engineering** 2024;32(1):217-232, DOI 10.1016/j.eng.2023.01.009 — **sửa**: không phải "Science China". `SRC-SMARTGLOVE-REVIEW-2026` = Mohammed A., Ali A.M., *J. Eng. Appl. Sci.* 73:246 (2026), DOI 10.1186/s44147-026-01084-6 (101 bài 2011–2025; 72% fusion flex+IMU).
 - **Rủi ro trùng trong nước (mức học sinh):** `SRC-VNM-HS-GLove-2026` — học sinh Lâm Đồng làm "găng tay thông minh tích hợp AI" có **cảm biến lực + áp suất khí**, theo dõi tiến độ phục hồi, **giải nhất cấp tỉnh 2026**; `SRC-VNM-ANNAM-2022` (găng mềm PneuNet, giải Nhất EPICS 2022); `SRC-VNM-TL-GLOVE-2026` (găng robot + theo dõi từ xa). **Toàn bộ đều là máy tập/hỗ trợ chủ động**, không phải thiết bị đánh giá có kiểm chứng độ tin cậy → phải nêu trong mục "bất cập của giải pháp hiện tại".
-- **Gap 1 chưa hoàn tất.** Còn: (i) đọc **toàn văn** 5 nguồn (`SRC-ARTGLOVE-2026`, `SRC-SIDEWALL-PIEZO-2015`, `SRC-GRATING-GLOVE-2021`, `SRC-LOWCOST-GLOVE-2006`, `SRC-MANUMETER-RCT-2022`); (ii) tra bằng sáng chế theo IPC A61B5/11 · A61B5/22 · A61B5/10 · G01L1/14 · A61H1/02 (lượt vừa rồi mới 1 truy vấn web, **không đủ** để kết luận); (iii) lane R5 adjudicate; (iv) `DEC-NOV-001` do owner chốt.
+- **Gap 1 chưa hoàn tất.** Còn: (i) đọc **toàn văn** 5 nguồn (`SRC-ARTGLOVE-2026`, `SRC-SIDEWALL-PIEZO-2015`, `SRC-GRATING-GLOVE-2021`, `SRC-LOWCOST-GLOVE-2006`, `SRC-MANUMETER-RCT-2022`); (ii) tra bằng sáng chế theo IPC A61B5/11 · A61B5/22 · A61B5/10 · G01L1/14 · A61H1/02 (lượt vừa rồi mới 1 truy vấn web, **không đủ** để kết luận); (iii) lane R5 adjudicate; (iv) `DEC-NOV-001` do trưởng nhóm chốt.
 
 ## 5. Phần cứng (CHỐT — DEC-HW-002/003/004/005/006)
 
@@ -96,24 +96,24 @@ Chi tiết tại `research/protocols/06_glove_hand_GATE_experiment.md`:
 **Nhánh Đo (Assessment):**
 - **GATE 0** (M1): Đặc tính cơ lý thô gốc & cửa sổ làm việc Velostat ($CV \le 5\%$, $ICC \ge 0,75$, đường cong trôi/trễ).
 - **GATE A** (M2): Nhận diện hướng gập/duỗi vi sai ($\ge 90\%$) & Bản đồ kích hoạt nỗ lực động ($\ge 85\%$).
-- **GATE C ⭐ SỐNG CÒN** (M3): $\Delta_{signal} \ge 2\sigma_{noise}$; Cohen's $d \ge 0,8$; $MDC < \Delta_{step}$ — **fail ⇒ dừng cả đề tài**.
+- **GATE C (CỔNG SỐNG CÒN)** (M3): $\Delta_{signal} \ge 2\sigma_{noise}$; Cohen's $d \ge 0,8$; $MDC < \Delta_{step}$ — **fail ⇒ dừng cả đề tài**.
 
 **Nhánh Trợ lực - AAN (Movement Support):**
 - **GATE AAN-1** (M4): Nhận diện nỗ lực tĩnh sớm trước khi ngón di chuyển ($EI$, $AUC \ge 0,85$, $t_{detect} \le 300\text{ ms}$).
-- **GATE AAN-2 ⭐ SỐNG CÒN NHÁNH AAN** (M5): Đường cong tải $RAL$ ổn định ($ICC \ge 0,75$) & Triệt tiêu hiện tượng ỷ lại ($PR \ge 50\%$) — **fail ⇒ không dừng đề tài, chỉ hạ nhãn AAN xuống "trợ lực cố định phân bậc"**.
+- **GATE AAN-2 (CỔNG SỐNG CÒN NHÁNH AAN)** (M5): Đường cong tải $RAL$ ổn định ($ICC \ge 0,75$) & Triệt tiêu hiện tượng ỷ lại ($PR \ge 50\%$) — **fail ⇒ không dừng đề tài, chỉ hạ nhãn AAN xuống "trợ lực cố định phân bậc"**.
 
 **Trạm Y Sinh Biên (Edge Medical Intelligence Station - Orange Pi 5 Pro):**
 - **GATE EDGE** (M6): Chạy mô hình RL bù động trôi/trễ Velostat (MDP Inversion) và suy luận chính sách AAN thời gian thực ($\le 20\text{ ms}$ INT8 `.rknn`) — 100% cảm biến nội tại, không dùng camera.
 
 > **Đã loại bỏ:** GATE D, GATE E, GATE AAN-3 (thuộc thẩm quyền kiểm định y tế lâm sàng độc lập — `DEC-GATE-003`); hủy GATE B cũ gộp vào GATE A (`DEC-GATE-004`).
 
-> ⚠️ **2026-09-27 — ngưỡng ĐÃ NỘP là M1–M6 + C1.1–C1.10** (PDF §5.2/§11.1, `CLM-MET-005`, chờ `DEC-METRIC-002` phê chuẩn):
+> **Lưu ý: 2026-09-27 — ngưỡng ĐÃ NỘP là M1–M6 + C1.1–C1.10** (PDF §5.2/§11.1, `CLM-MET-005`, chờ `DEC-METRIC-002` phê chuẩn):
 > R² ≥ 0,90 (thay 0,95) · liên ngày CV ≤ 8 % trên phantom (thay ICC ≥ 0,75) · hys ≤ 18 % (thay 15 %) ·
 > creep ≤ 8 % giữ 60 s@5 N (thay creep_2dec ≤ 3 %) · trôi/tín hiệu ≤ 2,0/10 ngày qua auto-zero (bỏ điều kiện ΔV@1N) ·
 > M6 = phát hiện đeo lỏng ≥ 80 % qua V_base (thay fault-injection ≥ 4/5).
 > Định nghĩa đã nộp (`CLM-DEF-001`): **GAP = PROM − AROM** (độ, theo giao thức) · **RAL** = nấc tải (g) nhỏ nhất đạt P_complete ≥ 80 % ·
 > **EI** = trung vị biến thiên phổ vi sai chuẩn hóa vận tốc góc (công thức tường minh còn nợ).
-> Bảng đối chiếu: sync review §4. `protocols/08` §7 giữ 10 ô chờ chốt — agent không tự chốt.
+> Bảng đối chiếu: sync review §4. `protocols/08` §7 giữ 10 ô chờ chốt — chờ nhóm họp chốt.
 
 ## 7. Ngôn ngữ bắt buộc (DEC-MSG-001)
 
@@ -127,19 +127,19 @@ Chi tiết tại `research/protocols/06_glove_hand_GATE_experiment.md`:
 
 ## 8. Tuyên bố bị cấm
 
-- ❌ Chẩn đoán đột quỵ / mức độ liệt / tiên lượng
-- ❌ Thay thế FMA / ARAT / Box and Block / đánh giá của chuyên gia
-- ❌ "Đo chính xác lực tuyệt đối" / "đo góc khớp"
-- ❌ "Đã kiểm chứng lâm sàng" / "chứng minh hiệu quả"
-- ❌ Thử trên người tham gia (kể cả người khỏe) trước khi có IRB/SRC (`DEC-ETHICS-001` vẫn OPEN; bản nộp §7.2/§12 giới hạn ở **tự thử trên chính người thực hiện, chế độ đo, không tác động lực, tự nguyện + quy tắc dừng** — không mở rộng sang người khác/bệnh nhân)
-- ❌ Điền số `[X]` vào A.3 hoặc mục C khi chưa có log đo thật
+- [Không làm/Ngoài phạm vi] Chẩn đoán đột quỵ / mức độ liệt / tiên lượng
+- [Không làm/Ngoài phạm vi] Thay thế FMA / ARAT / Box and Block / đánh giá của chuyên gia
+- [Không làm/Ngoài phạm vi] "Đo chính xác lực tuyệt đối" / "đo góc khớp"
+- [Không làm/Ngoài phạm vi] "Đã kiểm chứng lâm sàng" / "chứng minh hiệu quả"
+- [Không làm/Ngoài phạm vi] Thử trên người tham gia (kể cả người khỏe) trước khi có IRB/SRC (`DEC-ETHICS-001` vẫn OPEN; bản nộp §7.2/§12 giới hạn ở **tự thử trên chính người thực hiện, chế độ đo, không tác động lực, tự nguyện + quy tắc dừng** — không mở rộng sang người khác/bệnh nhân)
+- [Không làm/Ngoài phạm vi] Điền số `[X]` vào A.3 hoặc mục C khi chưa có log đo thật
 
 ## 9. Việc tiếp theo (theo thứ tự)
 
--2. ✅ **ĐÃ LÀM 2026-10-13 (phiên này, `DEC-GATE-003`, `DEC-GATE-004`, `DEC-GATE-005`):** 
+-2. [Đạt] **ĐÃ LÀM 2026-10-13 (phiên này, `DEC-GATE-003`, `DEC-GATE-004`, `DEC-GATE-005`):** 
    - Tinh gọn dứt khoát hệ thống cổng kiểm chứng thành đúng **6 GATE**:
-     * Nhánh Đo: `GATE 0 (M1) → GATE A (M2) → GATE C⭐ (M3)`
-     * Nhánh Trợ lực: `GATE AAN-1 (M4) → GATE AAN-2⭐ (M5)`
+     * Nhánh Đo: `GATE 0 (M1) → GATE A (M2) → GATE C (trọng tâm) (M3)`
+     * Nhánh Trợ lực: `GATE AAN-1 (M4) → GATE AAN-2 (M5)`
      * Trạm Y Sinh Biên: `GATE EDGE (M6)`
    - Loại bỏ GATE D, GATE E, GATE AAN-3 vì thẩm quyền kiểm định y tế lâm sàng thuộc phòng kiểm chuẩn độc lập, học sinh không tự cấp chứng nhận (`DEC-GATE-003`).
    - Hủy bỏ GATE B (tái tạo góc 3D do phi thực tế), gộp toàn bộ vào GATE A mới (nhận diện hướng gập/duỗi vi sai $\ge 90\%$ & bản đồ kích hoạt nỗ lực động $\ge 85\%$) (`DEC-GATE-004`).
@@ -149,7 +149,7 @@ Chi tiết tại `research/protocols/06_glove_hand_GATE_experiment.md`:
    5. **Nợ đồng bộ xuyên repo (phát hiện khi rà soát, chưa sửa):** nhiều file khác vẫn còn nhắc tên
       GATE cũ, không phải lỗi số liệu — chỉ là tên gọi/cấu trúc GATE chưa theo kịp `DEC-GATE-002`:
       - còn nhắc **"GATE F"** kiểu cũ (coi là cổng cam kết cứng, không phải "GATE EDGE — đang chọn"):
-        `AGENTS.md`, `README.md`, `docs/01_Topic_Definition.md`.
+        `tài liệu nội bộ`, `README.md`, `docs/01_Topic_Definition.md`.
       - còn nhắc tên cũ **"GATE A′"/"GATE RAL"** (chưa đổi thành AAN-1/AAN-2): `INDEX.md`,
         `docs/02_Theoretical_Foundation.md`, `docs/bao_cao/A7_AAT_rationale_DRAFT.md`.
       - `docs/05_De_Cuong_Dang_Ky_DRAFT.md` cũng còn "GATE F" kiểu cũ.
@@ -163,32 +163,32 @@ Chi tiết tại `research/protocols/06_glove_hand_GATE_experiment.md`:
       toàn bộ còn ở giai đoạn giao thức/lý thuyết; nhánh Đo (GATE 0/A/B) là mảng duy nhất có khả
       năng ra số liệu thật trước cuối 11/2026 (xem §9 phần `-1.` bên dưới về GATE C cần ≥28 ngày).
 
--1. ✅ **ĐÃ LÀM 2026-10-13 (`DEC-PROP-003`):** Ban KHKT ra thông báo chính thức khuôn đề cương nộp
+-1. [Đạt] **ĐÃ LÀM 2026-10-13 (`DEC-PROP-003`):** Ban KHKT ra thông báo chính thức khuôn đề cương nộp
    vòng trường (6 mục: Tên dự án/Lý do/Mục tiêu/Ý tưởng-nội dung/Sản phẩm dự kiến/Tính khả thi),
    **hạn nộp 17h 18/10/2026**, nộp Word/PDF qua link sẽ có ở nhóm Zalo CLB KHKT. Đã soạn
    `docs/DE_CUONG_NOP_BAN_KHKT_2026-10-18.md` theo đúng khuôn này (tái dùng nội dung từ
    `docs/DE_CUONG_NGAN_5-7_TRANG_DRAFT.md`/`docs/DE_CUONG_NOP_TRUONG.md`). Phát hiện khi soạn mục
    Tính khả thi: theo `protocols/08` thì GATE 0 (~3 tuần) + GATE C (≥28 ngày trôi) khiến đề tài
    **không thể xong toàn bộ GATE 0→F trước cuối tháng 11/2026** — đã viết trung thực hướng này
-   thay vì hứa hẹn, nhưng **chưa qua owner duyệt cách đóng khung**.
-   ☐ **CHỜ OWNER (gấp, hạn 18/10):** duyệt nội dung + cách đóng khung "Tính khả thi";
+   thay vì hứa hẹn, nhưng **chưa qua nhóm thống nhất cách đóng khung**.
+   [ ] **CẦN NHÓM CHỐT (gấp, hạn 18/10):** duyệt nội dung + cách đóng khung "Tính khả thi";
    điền 3 ô danh tính; xác nhận link nộp khi Ban KHKT công bố; xuất file sang .docx/.pdf để nộp.
-0. ✅ **ĐÃ LÀM 2026-10-11:** đọc toàn bộ repo + xác nhận setup môi trường (venv/pip/bootstrap/check --strict 10/11/context bundle); đọc toàn văn `research/notebooklm_sync/` (10 file: README, 5 experiment log, 1 chat transcript 402 dòng, 3 file studio) và phát hiện bản đề cương chưa đồng bộ `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (2026-10-03, 16tr). Theo chỉ đạo minh thị của chủ dự án: `DEC-SYNC-002` (công nhận bản mới) + `DEC-SCOPE-006` (AAN = trụ cột thứ 4, ranh giới an toàn không đổi) + `DEC-PHASE-002` (ghi nhận bring-up phần cứng thật do chủ dự án tự làm, chưa chính thức hoá GATE 0) + `DEC-TITLE-003` (4 phương án tên, PROPOSED). Cập nhật README §1/§6.1/§8/§10/§11, AGENTS.md §2, +6 nguồn/+3 claim/+5 quyết định.
-   ☐ **CHỜ OWNER:** chọn phương án tên (`DEC-TITLE-003`); xác nhận `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` có phải bản sẽ nộp lại; chính thức hoá log bring-up thành GATE 0 hợp lệ; xác nhận đổi tên cảm biến SHT30→AHT20.
-0. ✅ **ĐÃ LÀM 2026-09-27:** đồng bộ bản nộp `docs/DE_CUONG.pdf` (2026-09-26) → `research/reviews/2026-09-27_decuong_pdf_sync.md`;
+0. [Đạt] **ĐÃ LÀM 2026-10-11:** đọc toàn bộ repo + xác nhận setup môi trường (venv/pip/bootstrap/check --strict 10/11/context bundle); đọc toàn văn `research/notebooklm_sync/` (10 file: README, 5 experiment log, 1 chat transcript 402 dòng, 3 file studio) và phát hiện bản đề cương chưa đồng bộ `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (2026-10-03, 16tr). Theo chỉ đạo minh thị của nhóm nghiên cứu: `DEC-SYNC-002` (công nhận bản mới) + `DEC-SCOPE-006` (AAN = trụ cột thứ 4, ranh giới an toàn không đổi) + `DEC-PHASE-002` (ghi nhận bring-up phần cứng thật do nhóm nghiên cứu tự làm, chưa chính thức hoá GATE 0) + `DEC-TITLE-003` (4 phương án tên, PROPOSED). Cập nhật README §1/§6.1/§8/§10/§11, +6 nguồn/+3 claim/+5 quyết định.
+   [ ] **Kế hoạch cần chốt của nhóm:** chọn phương án tên (`DEC-TITLE-003`); xác nhận `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` có phải bản sẽ nộp lại; chính thức hoá log bring-up thành GATE 0 hợp lệ; xác nhận đổi tên cảm biến SHT30→AHT20.
+0. [Đạt] **ĐÃ LÀM 2026-09-27:** đồng bộ bản nộp `docs/DE_CUONG.pdf` (2026-09-26) → `research/reviews/2026-09-27_decuong_pdf_sync.md`;
    môi trường cài lại (venv + skills OK, 10/11 check); +7 nguồn ledger (147), +3 claim (27), +2 truy vấn xác minh [15]/[18] (81, đều `UNVERIFIED`);
    sửa README (tên/đội hình/ngưỡng), `docs/04` §8 + `docs/02` §11 mới, điền danh tính `DE_CUONG_NOP_TRUONG.md`.
-   ☐ **CHỜ OWNER:** 6 quyết định `DEC-SYNC-001`/`DEC-TEAM-001`/`DEC-TITLE-002`/`DEC-HW-005`/`DEC-METRIC-002`/`DEC-SCOPE-005` + duyệt 7 nguồn/3 claim mới.
-0. ✅ **ĐÃ LÀM 2026-09-19:** lượt rà soát prior art 1 → `research/reviews/2026-09-19_prior_art_novelty_gate1.md`; 24 nguồn vào ledger (20 `READ_ABSTRACT`, 4 `UNVERIFIED` — chưa đọc toàn văn); 3 claim cập nhật + 2 claim mới; GATE A/C có thêm mốc so sánh y văn. ☐ **CÒN NỢ:** đọc toàn văn 5 nguồn, tra IPC bằng sáng chế, `DEC-NOV-001`.
-0.5 ☐ **NGANG HÀNG QUAN TRỌNG (mới 2026-09-19):** chủ dự án chốt `DEC-SCOPE-002` cho đề xuất "tập chủ động có trợ lực" — E1 (chỉ lý thuyết) / E2-lite (chỉ số Effort+gap AROM−PROM+RAL, không động cơ, **khuyến nghị**) / E3 (động cơ + Bowden, 8–15 tuần, đổi trục + rủi ro an toàn + IRB). **CẬP NHẬT: sau phản hồi của chủ dự án về chuẩn ViSEF, khuyến nghị mới là E4+E5+E6 (rig phantom + RAL + 1 servo kéo phantom + tầng kê đơn), **đã xác minh chuẩn tham chiếu ISEF 2025 ROBO065T (THPT thị xã Quảng Trị, giải Tư, thuần tích hợp + 4 số tự đo)** -> xem `DEC-SCOPE-002b/c` và `research/protocols/07_ral_phantom_and_ktv_interview.md`. **Chưa chốt → không bắt tay vào cơ khí chấp hành, không đổi docs/01 §1, không đổi A.4.**
-1. ☐ **GIAI ĐOẠN HIỆN TẠI (chỉ thị 2026-09-19): CƠ SỞ LÝ THUYẾT.** Đã xong 2 việc chủ dự án yêu cầu: (1) **mô hình chuỗi đo** → `docs/02` §5.5 (dự toán đơn bậc độ lớn: `F_p ≤ 68·γ·ΔF`, cửa sổ làm việc 2 đầu, yêu cầu rig có ≥2 tốc độ kéo); (4) **đối chiếu toàn văn/danh tính** → sửa 3 lỗi nguồn (Engineering 32:202–216; ironHand = J Rehabil Assist Technol Eng **2016**; US20150233779A1 = Abandoned + CPC) và **phát hiện đối thủ mới** `SRC-TW-SPASTICITY-2022`. Tra cứu bằng sáng chế theo phân loại: **bất khả thi trong môi trường này** — phương pháp + lối thoát ghi ở `docs/03` §7. Hồ sơ nộp: đã soạn `docs/05_De_Cuong_Dang_Ky_DRAFT.md` + đánh giá trần đề tài `research/reviews/2026-09-19_project_ceiling.md` (chủ dự án điền tên/GVHD/timeline, duyệt DEC-SCOPE-004).  Đã viết vào `docs/02` §1.4–§1.6 (ba chế độ tập, Hebbian có điều kiện, learned non-use + bẫy slacking), §3.4 (co cứng theo quan hệ tốc độ–lực cản), §5.4 (điều kiện đo nỗ lực khi chưa cử động), §7.3 (định nghĩa Effort Index / Gap AROM−PROM / RAL + bảng cấm quy đổi đơn vị), §8.3 (tầng đo được vs tầng suy ra lâm sàng). **Chưa làm:** chốt ngưỡng GATE A′/RAL + 9 ngưỡng GATE 0 (`protocols/08` §7), viết script thống kê, chế tạo jig/phantom. Chủ dự án cho biết **thời gian đủ** (`DEC-PLAN-001`). Chủ dự án khai báo đã có thiết bị + KTV 10 năm phản biện (`DEC-RESOURCE-001`) ⇒ **Lớp 0–1 giải ngân được về tiền**; blocker duy nhất còn lại là 9 ngưỡng `protocols/08` §7. **2026-09-19 (11):** bản **nộp được** đã ra đời: `docs/DE_CUONG_NOP_TRUONG.md` (`DEC-PROP-001`); `docs/05` → outline nội bộ. Số liệu dịch tễ đã kiểm (`CLM-BIO-003/-004`); phát hiện A.1 gán con số 80% cho Hendricks 2002 trong khi nguồn đã kiểm là Cochrane 2014 — **chủ dự án sửa A.1** (nay là **10** ô: thêm `G0.0` chọn định nghĩa nhiễu). Chủ dự án chốt: **giữ pha lý thuyết** — không firmware/không script (`DEC-PHASE-001`) → đã phát hành phiếu đo in được `protocols/08a`; và **không nêu danh tính người tham khảo** trong hồ sơ (`DEC-ROLE-001`). Kiểm kê + việc tuần này: `research/context/EQUIPMENT_AND_ACCESS.md`. Benchmark hình thức từ báo cáo QG 2024–2025 (15 tr., 17 hình/3 bảng, 0 thống kê) → `2026-09-19_benchmark_xe_lan_ALS_QG2025.md` → kế hoạch giữ đủ 7 cổng; `protocols/08` đã sẵn sàng chạy ngay khi §7 được chốt.
-1. ☐ Chốt cấu hình kênh 1 → 2 (hay làm thẳng cấu hình 2).
-2. ☐ Chốt giao thức bài tập chuẩn cùng KTVVLTL-PHCN.
-3. ☐ Rà soát prior art **nửa còn lại** theo `docs/03` → chốt mức novelty qua `DEC-NOV-001`.
-4. ☐ Chế tạo sensing element → đo `R_sensor`/tải → chọn `R_f`.
-5. ☐ Chạy GATE 0 → GATE A/B → **GATE C** → GATE D/E/F.
-6. ☐ Điền số thật vào A.3 + mục C của outline.
-7. ☐ Chủ dự án đổi tên repo (DEC-REPO-001) và (nếu cần) đổi tên thư mục cục bộ.
+   [ ] **Kế hoạch cần chốt của nhóm:** 6 quyết định `DEC-SYNC-001`/`DEC-TEAM-001`/`DEC-TITLE-002`/`DEC-HW-005`/`DEC-METRIC-002`/`DEC-SCOPE-005` + duyệt 7 nguồn/3 claim mới.
+0. [Đạt] **ĐÃ LÀM 2026-09-19:** lượt rà soát prior art 1 → `research/reviews/2026-09-19_prior_art_novelty_gate1.md`; 24 nguồn vào ledger (20 `READ_ABSTRACT`, 4 `UNVERIFIED` — chưa đọc toàn văn); 3 claim cập nhật + 2 claim mới; GATE A/C có thêm mốc so sánh y văn. [ ] **CÒN NỢ:** đọc toàn văn 5 nguồn, tra IPC bằng sáng chế, `DEC-NOV-001`.
+0.5 [ ] **NGANG HÀNG QUAN TRỌNG (mới 2026-09-19):** nhóm nghiên cứu chốt `DEC-SCOPE-002` cho đề xuất "tập chủ động có trợ lực" — E1 (chỉ lý thuyết) / E2-lite (chỉ số Effort+gap AROM−PROM+RAL, không động cơ, **khuyến nghị**) / E3 (động cơ + Bowden, 8–15 tuần, đổi trục + rủi ro an toàn + IRB). **CẬP NHẬT: sau phản hồi của nhóm nghiên cứu về chuẩn ViSEF, khuyến nghị mới là E4+E5+E6 (rig phantom + RAL + 1 servo kéo phantom + tầng kê đơn), **đã xác minh chuẩn tham chiếu ISEF 2025 ROBO065T (THPT thị xã Quảng Trị, giải Tư, thuần tích hợp + 4 số tự đo)** -> xem `DEC-SCOPE-002b/c` và `research/protocols/07_ral_phantom_and_ktv_interview.md`. **Chưa chốt → không bắt tay vào cơ khí chấp hành, không đổi docs/01 §1, không đổi A.4.**
+1. [ ] **GIAI ĐOẠN HIỆN TẠI (chỉ thị 2026-09-19): CƠ SỞ LÝ THUYẾT.** Đã xong 2 việc nhóm nghiên cứu yêu cầu: (1) **mô hình chuỗi đo** → `docs/02` §5.5 (dự toán đơn bậc độ lớn: `F_p ≤ 68·γ·ΔF`, cửa sổ làm việc 2 đầu, yêu cầu rig có ≥2 tốc độ kéo); (4) **đối chiếu toàn văn/danh tính** → sửa 3 lỗi nguồn (Engineering 32:202–216; ironHand = J Rehabil Assist Technol Eng **2016**; US20150233779A1 = Abandoned + CPC) và **phát hiện đối thủ mới** `SRC-TW-SPASTICITY-2022`. Tra cứu bằng sáng chế theo phân loại: **bất khả thi trong môi trường này** — phương pháp + lối thoát ghi ở `docs/03` §7. Hồ sơ nộp: đã soạn `docs/05_De_Cuong_Dang_Ky_DRAFT.md` + đánh giá trần đề tài `research/reviews/2026-09-19_project_ceiling.md` (nhóm nghiên cứu điền tên/GVHD/timeline, duyệt DEC-SCOPE-004).  Đã viết vào `docs/02` §1.4–§1.6 (ba chế độ tập, Hebbian có điều kiện, learned non-use + bẫy slacking), §3.4 (co cứng theo quan hệ tốc độ–lực cản), §5.4 (điều kiện đo nỗ lực khi chưa cử động), §7.3 (định nghĩa Effort Index / Gap AROM−PROM / RAL + bảng cấm quy đổi đơn vị), §8.3 (tầng đo được vs tầng suy ra lâm sàng). **Chưa làm:** chốt ngưỡng GATE A′/RAL + 9 ngưỡng GATE 0 (`protocols/08` §7), viết script thống kê, chế tạo jig/phantom. Nhóm nghiên cứu cho biết **thời gian đủ** (`DEC-PLAN-001`). Nhóm nghiên cứu khai báo đã có thiết bị + KTV 10 năm phản biện (`DEC-RESOURCE-001`) ⇒ **Lớp 0–1 giải ngân được về tiền**; blocker duy nhất còn lại là 9 ngưỡng `protocols/08` §7. **2026-09-19 (11):** bản **nộp được** đã ra đời: `docs/DE_CUONG_NOP_TRUONG.md` (`DEC-PROP-001`); `docs/05` → outline nội bộ. Số liệu dịch tễ đã kiểm (`CLM-BIO-003/-004`); phát hiện A.1 gán con số 80% cho Hendricks 2002 trong khi nguồn đã kiểm là Cochrane 2014 — **nhóm nghiên cứu sửa A.1** (nay là **10** ô: thêm `G0.0` chọn định nghĩa nhiễu). Nhóm nghiên cứu chốt: **giữ pha lý thuyết** — không firmware/không script (`DEC-PHASE-001`) → đã phát hành phiếu đo in được `protocols/08a`; và **không nêu danh tính người tham khảo** trong hồ sơ (`DEC-ROLE-001`). Kiểm kê + việc tuần này: `research/context/EQUIPMENT_AND_ACCESS.md`. Benchmark hình thức từ báo cáo QG 2024–2025 (15 tr., 17 hình/3 bảng, 0 thống kê) → `2026-09-19_benchmark_xe_lan_ALS_QG2025.md` → kế hoạch giữ đủ 7 cổng; `protocols/08` đã sẵn sàng chạy ngay khi §7 được chốt.
+1. [ ] Chốt cấu hình kênh 1 → 2 (hay làm thẳng cấu hình 2).
+2. [ ] Chốt giao thức bài tập chuẩn cùng KTVVLTL-PHCN.
+3. [ ] Rà soát prior art **nửa còn lại** theo `docs/03` → chốt mức novelty qua `DEC-NOV-001`.
+4. [ ] Chế tạo sensing element → đo `R_sensor`/tải → chọn `R_f`.
+5. [ ] Chạy GATE 0 → GATE A/B → **GATE C** → GATE D/E/F.
+6. [ ] Điền số thật vào A.3 + mục C của outline.
+7. [ ] Nhóm nghiên cứu đổi tên repo (DEC-REPO-001) và (nếu cần) đổi tên thư mục cục bộ.
 
 ## 10. Lịch sử pivot (giữ để không lặp lại sai lầm)
 

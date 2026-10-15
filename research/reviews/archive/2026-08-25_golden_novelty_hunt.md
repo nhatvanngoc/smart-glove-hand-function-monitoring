@@ -82,7 +82,7 @@ where `G_t` is gait/loading state, `S_t` is sensor/fit/history state, and `E_t` 
 - Populate **20–30 papers** in four passes: (A) sensor/metrology + calibration, (B) GRF/COP estimation, (C) domain/cross-session/personal adaptation, (D) longitudinal and clinical endpoint validity.
 - Read **Limitations/Discussion/Future Work/Methods/Dataset** before ranking a card; abstracts only mark a candidate as `PARTIAL`.
 - For each paper, record one direct quote or faithful anchored observation, its failure mechanism, who addresses it next, and what exact experiment remains.
-- Rank only cards with traceable sources using the owner’s eight axes: importance, novelty, depth, measurability, ground truth, feasibility, ISEF impact, ceiling. A score is a decision aid, not evidence.
+- Rank only cards with traceable sources using the trưởng nhóm’s eight axes: importance, novelty, depth, measurability, ground truth, feasibility, ISEF impact, ceiling. A score is a decision aid, not evidence.
 
 ## 7. First 20-paper gap matrix checkpoint
 

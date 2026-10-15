@@ -1,7 +1,7 @@
 # Final golden-novelty hunt — terminal result (2026-08-26)
 
-- **Mandate (owner):** FINAL bounded hunt, not infinite brainstorm. Problem-first (a human problem with a specific failure mode no embedded system solves), then check the platform. Keep Edge-AI + hardware (Velostat + Mega + RK3588). Swap the topic. Novelty must be a NEW MECHANISM stated in one sentence ("No system X can do Y under condition Z"), not "combine A+B+C". Target ViSEF → ISEF: novelty must be obvious in 1–2 minutes.
-- **Rubric (owner):** 5 questions × 20 (1-sentence novelty / new mechanism / direct experiment / clear baseline / judge-understands-in-1-2-min). **< 80/100 → drop.**
+- **Mandate (trưởng nhóm):** FINAL bounded hunt, not infinite brainstorm. Problem-first (a human problem with a specific failure mode no embedded system solves), then check the platform. Keep Edge-AI + hardware (Velostat + Mega + RK3588). Swap the topic. Novelty must be a NEW MECHANISM stated in one sentence ("No system X can do Y under condition Z"), not "combine A+B+C". Target ViSEF → ISEF: novelty must be obvious in 1–2 minutes.
+- **Rubric (trưởng nhóm):** 5 questions × 20 (1-sentence novelty / new mechanism / direct experiment / clear baseline / judge-understands-in-1-2-min). **< 80/100 → drop.**
 - **Anti-hallucination:** every prior-art claim below is from a search-read source in `research/evidence/SOURCE_LEDGER.csv`; none are full-text verified yet, so "occupied" means "strong prior art found in bounded search", not "proven closed".
 
 ## Method
@@ -23,7 +23,7 @@ Problem-first scan of human-urgent failure modes reachable by a pressure-sensing
 Independent sources converge on **two** real unmet needs. Neither is reachable as a clean swap under the current constraints:
 
 1. **Surface pressure cannot see deep-tissue / internal state.** `SRC-GAO-2015-IMPEDANCE-PU` (surface pressure is an insufficient proxy; early damage needs impedance), `SRC-DTI-STRAIN-2026` (surface pressure misses deep-tissue strain; needs deformation-based assessment), `SRC-BONEFORCE-2020` (wearables do not estimate internal bone/tissue load). — A **Velostat pressure array cannot measure impedance, SpO2, or internal strain**, and the internal-load route needs force-plate/instrumented-treadmill ground truth. Not reachable with the current hardware and no-reference constraint.
-2. **False alarms from measurement artifacts.** Documented across continuous wearable monitoring (vital-sign and gait reviews note artifact/contact-driven false alarms). — This is exactly the **measurement-integrity** candidate the owner judged not legible enough for ISEF.
+2. **False alarms from measurement artifacts.** Documented across continuous wearable monitoring (vital-sign and gait reviews note artifact/contact-driven false alarms). — This is exactly the **measurement-integrity** candidate the trưởng nhóm judged not legible enough for ISEF.
 
 ## Rubric scoring (honest)
 
@@ -47,4 +47,4 @@ Under the constraints **{human-urgent problem + reachable by pressure sensing + 
 - **(B) Relax the hardware platform:** allow non-pressure sensing (e.g., impedance/PPG). Opens the deep-tissue / cuffless-vitals unmet needs, but abandons the Velostat platform.
 - **(C) Keep platform + accept the strongest surviving novelty (measurement-integrity) and engineer its legibility** into an obvious, demo-able mechanism (e.g., a self-test/"phantom" that injects a known failure and shows the device catching itself before it reports a false change). This is the only mechanism that survived every kill-test; the work is making a judge see it in 1 minute.
 
-No topic was swapped in this turn; the decision is left to the owner.
+No topic was swapped in this turn; the decision is left to the trưởng nhóm.

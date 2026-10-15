@@ -1,6 +1,6 @@
 # Golden-filter hunt — round 2 (Velostat + thứ khác) — 2026-08-26
 
-Ràng buộc mới của owner: **không** đụng đề tài xe lăn (file PDF), và candidate phải là **Velostat + một thứ khác**. Vẫn problem-first, system-novelty, prototype-first, kill-test sớm.
+Ràng buộc mới của trưởng nhóm: **không** đụng đề tài xe lăn (file PDF), và candidate phải là **Velostat + một thứ khác**. Vẫn problem-first, system-novelty, prototype-first, kill-test sớm.
 
 ## Kill-test 3 hướng
 
@@ -19,11 +19,11 @@ Ràng buộc mới của owner: **không** đụng đề tài xe lăn (file PDF)
 - **Prototype-first:** bench hoàn toàn (phantom ngực + nền cứng/mềm + cảm biến lực chuẩn) — **không cần người/IRB**.
 - **Điểm mạnh ViSEF:** cứu người (tác động rõ), demo trực quan, "làm được trên giường" là điểm khác biệt dễ hiểu.
 
-## Nói thẳng với owner (trung thực)
+## Nói thẳng với trưởng nhóm (trung thực)
 - Cả 3 hướng round 2 **đều có prior art**. Infant posture **đã bị công bố đúng ý Velostat** → loại. Sports grip đã chiếm + ít nhân văn → loại.
 - **CPR sống được** vì có **gap kỹ thuật thật** (accelerometer sai trên nền mềm + không đo được leaning; TrueCPR đắt) và **rất nhân văn + bench được**. Nhưng mảng "manikin phản hồi CPR" **rất đông**, nên novelty chỉ nằm ở **cơ chế đo áp lực trên nền mềm**, không phải ở ý tưởng "CPR feedback".
 - Đây vẫn là đóng góp kiểu **cơ chế/đo-lường** — mạnh về Execution + Human impact cho ViSEF, nhưng **không phải "cơ chế mới đập vào mắt"** cho bar quốc tế khắt khe.
 
-## Nếu owner muốn tiếp
+## Nếu trưởng nhóm muốn tiếp
 - **Phương án 1:** đào sâu F (CPR) — kill-test vòng 3 (đã có ai làm pressure-based CPR depth trên nền mềm chưa) rồi khóa.
 - **Phương án 2:** cào beneficiary khác (người chăm sóc / công nhân / bệnh nhân cụ thể) để tìm pain point có gap "sạch" hơn — vì áp lực-sensing ở đâu prior art cũng dày.

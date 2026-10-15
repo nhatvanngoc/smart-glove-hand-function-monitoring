@@ -19,13 +19,13 @@
 - Hướng 2 = **measurement-integrity candidate** + ứng dụng gait-variability-aging. Novelty thật nằm ở drift-robust separation (như cũ). Biomarker + monitoring **không mới** → đừng claim.
 - Giữ làm **dự phòng**, KHÔNG phải hướng mới.
 
-## Hội tụ quan trọng (nói thật với owner)
+## Hội tụ quan trọng (nói thật với trưởng nhóm)
 Cả 2 hướng sống sót (C và 2) đều quy về **MỘT lõi novelty duy nhất**:
 > **"Biến đặc tính trôi/trễ VỐN là điểm yếu của cảm biến giá rẻ thành TÍN HIỆU hữu ích"** — C dùng nó để đo độ cứng mô; Hướng 2 dùng nó để tách drift khỏi biến thiên sinh học.
 
 Đây chính là measurement-integrity angle mình đã tìm ra từ đầu. Các ứng dụng (tissue stiffness / gait variability / gait monitoring) đều đã có người làm; **cái lõi "repurpose sensor flaw" mới là phần chưa bị chiếm trọn**, và nó cần **1 thí nghiệm gate** để chứng minh khả thi.
 
-## Hai lựa chọn còn lại (owner quyết)
+## Hai lựa chọn còn lại (trưởng nhóm quyết)
 1. **Hướng C** — máy sàng lọc **độ cứng mô gan chân** giá rẻ (ứng dụng loét chân tiểu đường). Gate: Velostat có phân giải được độ cứng mô trên nền drift của nó không?
 2. **Hướng 2** — theo dõi **gait variability** drift-robust ở người già. Gate: tách được biological variability khỏi sensor drift không?
 

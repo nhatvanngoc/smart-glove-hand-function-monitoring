@@ -68,7 +68,7 @@ hoặc GVHD cần xác nhận lại trước khi coi là chính thức.
 | 2026-10-11 | Bổ sung một phần cơ sở lý thuyết thần kinh học, giải thích vì sao đề tài chọn bàn tay làm đối tượng nghiên cứu (dựa trên bản đồ vùng não điều khiển vận động/cảm giác — một nghiên cứu kinh điển năm 1937 và một nghiên cứu hiện đại hơn năm 2023). **Lưu ý:** đề tài không đo hay chứng minh hoạt động não bộ, phần này chỉ là nền tảng lý thuyết giải thích, không phải phần thực nghiệm của đề tài. | Làm rõ nền tảng khoa học cho việc chọn "bàn tay" (so với các bộ phận khác của cơ thể) làm đối tượng theo dõi. | Đã chốt |
 | 2026-10-11 | Mở rộng phần so sánh giữa loại cảm biến đề tài đang dùng (Velostat) với một loại cảm biến khác thường thấy trong y học (cảm biến điện cơ – sEMG), thành 5 khía cạnh so sánh: chi phí, so với các loại cảm biến khác, hạn chế vật liệu đã biết, độ tin cậy ở nhóm bệnh nhân đột quỵ, và tiền lệ sử dụng loại cảm biến này trong các nghiên cứu khác. | Làm chặt chẽ và có cơ sở hơn lý do lựa chọn công nghệ cảm biến của đề tài. | Đã chốt |
 
-## Giai đoạn 6 (trước 12/10/2026, owner báo cáo ngày 12/10): Thử nghiệm cơ cấu đóng/mở nẹp ngón tay
+## Giai đoạn 6 (trước 12/10/2026, trưởng nhóm báo cáo ngày 12/10): Thử nghiệm cơ cấu đóng/mở nẹp ngón tay
 
 | Ngày | Thay đổi | Lý do | Trạng thái |
 |---|---|---|---|

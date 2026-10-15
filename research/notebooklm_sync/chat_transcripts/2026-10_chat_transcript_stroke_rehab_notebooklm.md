@@ -7,7 +7,7 @@
 
 Tôi đã tạo sơ đồ tư duy hệ thống hóa toàn bộ dự án **"Găng tay thông minh phục hồi chức năng sau đột quỵ"** trong bảng Studio. Sơ đồ sẽ bao gồm các nhánh chính về thiết kế phần cứng vi sai, cơ cấu dây gân, thuật toán AAN, bộ ba chỉ số định lượng (EI, GAP, RAL) và quy trình kiểm soát chất lượng dữ liệu.
 
-🧠 *Bạn có thể xem sơ đồ tư duy ở bảng Studio bên phải. Sau khi xem qua, bạn có muốn điều chỉnh hay nhấn mạnh thêm nhánh nội dung nào để phục vụ báo cáo ViSEF không?*
+[Kiến trúc] *Bạn có thể xem sơ đồ tư duy ở bảng Studio bên phải. Sau khi xem qua, bạn có muốn điều chỉnh hay nhấn mạnh thêm nhánh nội dung nào để phục vụ báo cáo ViSEF không?*
 
 ---
 
@@ -31,7 +31,7 @@ Bạn cần phân biệt rõ 2 bộ phận trong cơ cấu truyền động dây
 
 ---
 
-### 💡 Vật liệu tối ưu nhất cho LÕI DÂY GÂN:
+### [Ý tưởng] Vật liệu tối ưu nhất cho LÕI DÂY GÂN:
 
 Để thuật toán AAN vận hành chính xác từng millisecond, lõi dây gân bắt buộc phải có tính chất **chịu tải cao + KHÔNG DÃN (Zero-stretch) + chịu uốn dẻo tốt**:
 
@@ -44,7 +44,7 @@ Bạn cần phân biệt rõ 2 bộ phận trong cơ cấu truyền động dây
 
 ---
 
-💡 *Bạn có thể dễ dàng tìm mua dây PE Dyneema (loại tết 8-12 lõi) và ống PTFE lót máy in 3D (đường kính trong 1.9–2.0mm) với giá rất rẻ để lắp thử nghiệm cơ cấu này!*
+[Ý tưởng] *Bạn có thể dễ dàng tìm mua dây PE Dyneema (loại tết 8-12 lõi) và ống PTFE lót máy in 3D (đường kính trong 1.9–2.0mm) với giá rất rẻ để lắp thử nghiệm cơ cấu này!*
 
 ---
 
@@ -91,7 +91,7 @@ Tuy nhiên, **cách dự án của bạn sử dụng Velostat hoàn toàn khác 
 
 ---
 
-💡 *Bạn có muốn tôi hỗ trợ trích dẫn chi tiết các đoạn so sánh này để đưa vào phần "Tổng quan tình hình nghiên cứu" trong báo cáo ViSEF không?*
+[Ý tưởng] *Bạn có muốn tôi hỗ trợ trích dẫn chi tiết các đoạn so sánh này để đưa vào phần "Tổng quan tình hình nghiên cứu" trong báo cáo ViSEF không?*
 
 ---
 
@@ -101,7 +101,7 @@ Sơ đồ khối kết nối cảm biến **Velostat** với toàn bộ mạch t
 
 ---
 
-### 📐 Sơ đồ khối tổng thể mạch điện & Tín hiệu (Block Diagram)
+### [Cơ khí] Sơ đồ khối tổng thể mạch điện & Tín hiệu (Block Diagram)
 
 ```
  [ TẦNG 1: GĂNG TAY ĐEO ]                 [ TẦNG 2: MẠCH XỬ LÝ TẠI CỔ TAY ]
@@ -150,7 +150,7 @@ Sơ đồ khối kết nối cảm biến **Velostat** với toàn bộ mạch t
 
 ---
 
-### 🔌 Chi tiết vai trò và kết nối của từng khối mạch
+### [Phần cứng] Chi tiết vai trò và kết nối của từng khối mạch
 
 #### 1. Khối Cảm biến Velostat & Mạch Cầu Vi Sai (Tầng 1)
 * **Cấu hình cảm biến**: 12 phần tử cảm biến Velostat được phân bố tại 2 vách (mặt lòng và mặt mu) của 2 khớp trên 3 ngón tay chủ đạo (cái, trỏ, giữa), cộng thêm 1 ô cảm biến tham chiếu tĩnh không tải để đối chiếu trôi nhiệt (tổng cộng 13 kênh tương tự) [1, 4].
@@ -176,7 +176,7 @@ Sơ đồ khối kết nối cảm biến **Velostat** với toàn bộ mạch t
 
 ---
 
-💡 *Bạn có cần tôi hỗ trợ sơ đồ chân kết nối cụ thể (Pinout) giữa ESP32-S3, ADS1115, INA333 và CD74HC4067 để sẵn sàng cho việc làm mạch in PCB hay cắm breadboard thử nghiệm không?*
+[Ý tưởng] *Bạn có cần tôi hỗ trợ sơ đồ chân kết nối cụ thể (Pinout) giữa ESP32-S3, ADS1115, INA333 và CD74HC4067 để sẵn sàng cho việc làm mạch in PCB hay cắm breadboard thử nghiệm không?*
 
 ---
 
@@ -221,12 +221,12 @@ Thay vì dùng MCP6001, bạn chỉ cần thêm một **mạch lọc RC thụ đ
 
 * **Điện trở \\(1\text{ k}\Omega\\) + Tụ \\(100\text{ nF}\\)** tạo thành bộ lọc thông thấp (Cut-off frequency \\(f_c \approx 1,5\text{ kHz}\\)), giúp triệt tiêu sạch sẽ nhiễu tần số cao và ổn định dòng nạp cho chip ADS1115.
 
-### 📐 Sơ đồ chuỗi tín hiệu rút gọn:
+### [Cơ khí] Sơ đồ chuỗi tín hiệu rút gọn:
 `Cảm biến Velostat` \\(\rightarrow\\) `IC Dồn kênh CD74HC4067` \\(\rightarrow\\) **`Khuếch đại INA333`** \\(\rightarrow\\) `Lọc RC (1kΩ + 100nF)` \\(\rightarrow\\) `ADC 16-bit ADS1115` \\(\rightarrow\\) `ESP32-S3`.
 
 ---
 
-💡 *Bạn có muốn tôi cập nhật lại sơ đồ khối kết nối thu gọn này vào bản báo cáo kỹ thuật để chuẩn hóa hồ sơ dự án không?*
+[Ý tưởng] *Bạn có muốn tôi cập nhật lại sơ đồ khối kết nối thu gọn này vào bản báo cáo kỹ thuật để chuẩn hóa hồ sơ dự án không?*
 
 ---
 
@@ -294,7 +294,7 @@ Dù dùng module mua sẵn, trên PCB của bạn vẫn cần bố trí các lin
 
 Bộ bo mạch mẹ này khi làm xong sẽ vô cùng gọn gàng, giúp găng tay vận hành rất ổn định cho cả 3 ngón! 
 
-💡 *Bạn đang dùng phần mềm nào để vẽ sơ đồ nguyên lý & layout PCB (như EasyEDA, KiCad hay Altium)? Nếu cần, tôi có thể hỗ trợ kiểm tra danh sách chân (Netlist) trước khi bạn xuất file Gerber đi đặt mạch nhé!*
+[Ý tưởng] *Bạn đang dùng phần mềm nào để vẽ sơ đồ nguyên lý & layout PCB (như EasyEDA, KiCad hay Altium)? Nếu cần, tôi có thể hỗ trợ kiểm tra danh sách chân (Netlist) trước khi bạn xuất file Gerber đi đặt mạch nhé!*
 
 ---
 
@@ -309,7 +309,7 @@ Thực chất, trong chính tệp đề cương `DE_CUONG_NGHIEN_CUU_BAN_MOI.pdf
 
 ---
 
-### 🔍 So sánh đối chiếu chi tiết: ART-Glove (2026) vs. Dự án của bạn
+### [Rà soát] So sánh đối chiếu chi tiết: ART-Glove (2026) vs. Dự án của bạn
 
 | Tiêu chí | ART-Glove (Lin & Zhao, arXiv 06/2026) | Dự án Găng tay Phục hồi Chức năng của bạn | Lợi thế bứt phá của bạn tại ViSEF |
 | :--- | :--- | :--- | :--- |
@@ -321,7 +321,7 @@ Thực chất, trong chính tệp đề cương `DE_CUONG_NGHIEN_CUU_BAN_MOI.pdf
 
 ---
 
-### 💡 BÍ QUYẾT BIẾN ART-GLOVE THÀNH "VŨ KHÍ" PHẢN BIỆN TẠI ViSEF
+### [Ý tưởng] BÍ QUYẾT BIẾN ART-GLOVE THÀNH "VŨ KHÍ" PHẢN BIỆN TẠI ViSEF
 
 Khi bước vào vòng thi ViSEF, nếu Giám khảo hỏi về các công trình nghiên cứu găng tay cảm biến mới nhất trên thế giới (như ART-Glove 2026), bạn có thể **tự tin trả lời**:
 
@@ -333,7 +333,7 @@ Nói cách khác, bài báo ART-Glove **chính là đòn bẩy** giúp bạn kh�
 
 ---
 
-💡 *Bạn có muốn tôi giúp bổ sung thêm 1 đoạn phân tích đối sánh chi tiết với ART-Glove vào bản Báo cáo Kỹ thuật AAN trong bảng Studio để hồ sơ dự án của bạn hoàn thiện hơn không?*
+[Ý tưởng] *Bạn có muốn tôi giúp bổ sung thêm 1 đoạn phân tích đối sánh chi tiết với ART-Glove vào bản Báo cáo Kỹ thuật AAN trong bảng Studio để hồ sơ dự án của bạn hoàn thiện hơn không?*
 
 ---
 
@@ -382,7 +382,7 @@ Các thiết bị này đã có mặt trên thị trường hoặc trong viện 
 
 ---
 
-### 🛡️ TẠI SAO DỰ ÁN CỦA BẠN VẪN ĐÓNG ĐÀI ĐỘC TÔN TẠI ViSEF?
+### [Bảo vệ] TẠI SAO DỰ ÁN CỦA BẠN VẪN ĐÓNG ĐÀI ĐỘC TÔN TẠI ViSEF?
 
 Khi tổng hợp lại toàn bộ các đối thủ trên, dự án của bạn giải quyết trọn vẹn **khoảng trống kỹ thuật** mà chưa một thiết bị nào trên thị trường làm được đồng thời [1]:
 
@@ -393,7 +393,7 @@ Khi tổng hợp lại toàn bộ các đối thủ trên, dự án của bạn 
 
 ---
 
-💡 **Lời khuyên cho buổi thuyết trình ViSEF**:
+[Ý tưởng] **Lời khuyên cho buổi thuyết trình ViSEF**:
 Trong Poster và Slide báo cáo, bạn nên đưa **Bảng so sánh 3 Nhóm đối thủ** này vào ngay phần *Tổng quan tình hình nghiên cứu* (tương tự **Hình 2** trong đề cương của bạn) [1]. Điều này sẽ khiến Ban Giám khảo cực kỳ ấn tượng vì thể hiện tầm nhìn bao quát, sự hiểu biết sâu sắc về công nghệ toàn cầu và luận điểm thuyết phục về tính cấp thiết của đề tài [1]!
 
 Bạn có muốn tôi cùng bạn chuẩn bị sẵn câu thoại phản biện khi Giám khảo đặt câu hỏi: *"Thiết bị của em khác gì so với găng tay Gloreha hay Syrebo đang bán trên thị trường?"* không?

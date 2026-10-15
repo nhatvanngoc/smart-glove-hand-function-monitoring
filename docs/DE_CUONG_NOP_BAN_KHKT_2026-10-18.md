@@ -1,6 +1,6 @@
 # ĐỀ CƯƠNG DỰ ÁN DỰ THI KHKT CẤP TRƯỜNG
 
-> **Trạng thái: DỰ THẢO, soạn 2026-10-13 - chưa chốt, chờ chủ dự án duyệt trước khi nộp.**
+> **Trạng thái: DỰ THẢO, soạn 2026-10-13 - chưa chốt, chờ nhóm nghiên cứu duyệt trước khi nộp.**
 > File này bám sát đúng 6 mục của "THÔNG BÁO về việc nộp đề cương các dự án đã đăng ký tham gia
 > KHKT cấp trường" (ảnh chụp thông báo, nhận 2026-10-13): Tên dự án - Lý do chọn đề tài - Mục tiêu
 > nghiên cứu - Ý tưởng và nội dung nghiên cứu - Sản phẩm/kết quả dự kiến - Tính khả thi.
@@ -8,7 +8,7 @@
 > CLB KHKT.
 >
 > Đây là **bản dùng để nộp đúng khuôn thông báo**, khác với `docs/DE_CUONG_NGAN_5-7_TRANG_DRAFT.md`
-> (cấu trúc A-D phỏng theo mẫu lớp 10 của chính chủ dự án, không khớp tiêu đề thông báo này) và
+> (cấu trúc A-D phỏng theo mẫu lớp 10 của chính nhóm nghiên cứu, không khớp tiêu đề thông báo này) và
 > `docs/DE_CUONG_NOP_TRUONG.md` (bản báo cáo đầy đủ đã nộp 2026-09-26). Nội dung bên dưới tái dùng
 > gần như toàn bộ số liệu, định nghĩa và ranh giới an toàn đã có ở hai file đó, chỉ tổ chức lại theo
 > đúng 6 mục yêu cầu.
@@ -74,14 +74,14 @@ cột kỹ thuật chính thức của đề tài, không phải tính năng ph�
 |---|---|---|
 | M1 | Chế tạo sensing element áp trở (Velostat) trên vách khung ngón tay, xác định cửa sổ làm việc ($R_0 \le R_{max}$) và định lượng đặc tính cơ lý thô gốc (độ nhạy $\gamma$, trễ $h$, từ biến $creep$, trôi dạt) trên băng thử | GATE 0 |
 | M2 | Suy luận chiều gập/duỗi từ mẫu vi sai hai vách và lượng hóa mức độ kích hoạt nỗ lực (Bản đồ động học) | GATE A |
-| M3 ⭐ (cổng sống còn của nhánh Đo) | Chứng minh hệ thống phát hiện được thay đổi chức năng mô phỏng thật, lớn hơn nhiễu/trôi của chính nó | GATE C |
+| M3 (cổng sống còn của nhánh Đo) | Chứng minh hệ thống phát hiện được thay đổi chức năng mô phỏng thật, lớn hơn nhiễu/trôi của chính nó | GATE C |
 
 **Nhánh Trợ lực - AAN:**
 
 | # | Mục tiêu | Cổng kiểm chứng (GATE) |
 |---|---|---|
 | M4 | Phát hiện được nỗ lực chủ động của người dùng trước khi ngón thực sự di chuyển - nền tảng để trợ lực đúng lúc (Effort Index) | GATE AAN-1 |
-| M5 ⭐ (cổng sống còn của nhánh Trợ lực) | Chứng minh AAN không chỉ là một lò xo trợ lực cố định: đường cong tải-hoàn thành (RAL) ổn định VÀ mức tham gia chủ động không bị xói mòn về 0 qua các lần thử (triệt tiêu ỷ lại) | GATE AAN-2 |
+| M5 (cổng sống còn của nhánh Trợ lực) | Chứng minh AAN không chỉ là một lò xo trợ lực cố định: đường cong tải-hoàn thành (RAL) ổn định VÀ mức tham gia chủ động không bị xói mòn về 0 qua các lần thử (triệt tiêu ỷ lại) | GATE AAN-2 |
 
 **Cổng Trạm Y Sinh Biên (Orange Pi 5 Pro):**
 
@@ -89,13 +89,13 @@ cột kỹ thuật chính thức của đề tài, không phải tính năng ph�
 |---|---|---|
 | M6 | Trạm biên Orange Pi 5 Pro (RK3588, NPU 6 TOPS) thực thi mô hình RL bù động trôi/trễ Velostat (MDP Inversion) và suy luận chính sách trợ lực AAN thời gian thực ($\le 20\text{ ms}$) hoàn toàn bằng cảm biến nội tại (không dùng camera ngoài) | GATE EDGE |
 
-*(Lưu ý về phạm vi kiểm định: Các tiêu chuẩn an toàn thiết bị y sinh và độ tin cậy vận hành dài hạn sẽ do cơ quan thử nghiệm lâm sàng độc lập / phòng kiểm định chuyên môn thực hiện, học sinh không tự cấp chứng nhận kiểm định — theo quyết định DEC-GATE-003).*
+*(Lưu ý về phạm vi kiểm định: Các tiêu chuẩn an toàn thiết bị y sinh và độ tin cậy vận hành dài hạn sẽ do cơ quan thử nghiệm lâm sàng độc lập / phòng kiểm định chuyên môn thực hiện, học sinh không tự cấp chứng nhận kiểm định, theo quyết định DEC-GATE-003).*
 
 **Kết quả dự kiến:** đề tài không đặt mục tiêu "bệnh nhân phục hồi tốt hơn", vì đó là điều một đề
 tài học sinh không có cơ sở lâm sàng để khẳng định. Mục tiêu cụ thể và kiểm chứng được là: một thiết
 bị nguyên mẫu đo được ba chỉ số (Effort Index, GAP, RAL), một bộ ngưỡng GATE đăng ký trước khi đo cho
 cả hai nhánh, và một cơ cấu trợ lực AAN hoạt động trên giàn cơ khí và mô hình tay giả (phantom). Hai
-cổng sống còn (⭐) có hệ quả khác nhau khi không đạt: nếu **GATE C** (nhánh Đo) không đạt, **toàn bộ
+cổng sống còn (trọng tâm) có hệ quả khác nhau khi không đạt: nếu **GATE C** (nhánh Đo) không đạt, **toàn bộ
 đề tài dừng lại** vì không còn lý do để đo. Nếu **GATE AAN-2** (nhánh Trợ lực) không đạt, đề tài
 **không dừng**, nhưng cơ cấu trợ lực chỉ còn được gọi trung thực là "trợ lực cố định phân bậc", không
 được gọi là "theo nhu cầu/thích ứng". Cả hai trường hợp đều sẽ được báo cáo trung thực, kể cả khi là
@@ -186,7 +186,7 @@ sau khi thấy số) cũng là một điểm khác biệt so với các báo cá
 | Nguyên mẫu găng | Khung ngón có vách cứng, mảng cảm biến áp trở Velostat, mạch đo ESP32-S3/ADS1115/INA333/CD74HC4067 | Ảnh thiết bị đang chạy và tín hiệu thật trên màn hình |
 | Cơ cấu AAN | Lò xo trợ giúp chia nấc + servo, hoạt động trên giàn cơ khí và phantom | Lực bù đo được bằng lực kế, giới hạn an toàn xác nhận |
 | Ba chỉ số định lượng | Effort Index, GAP, RAL, định nghĩa tường minh kèm đơn vị | Có công thức, có dữ liệu minh họa trên rig |
-| Bộ giao thức và ngưỡng GATE | Hệ thống cổng tinh gọn: GATE 0, GATE A, GATE C⭐ (nhánh Đo); GATE AAN-1, GATE AAN-2⭐ (nhánh Trợ lực); GATE EDGE (Trạm biên AI) | Ngưỡng được chốt trước khi đo, có ngày ghi |
+| Bộ giao thức và ngưỡng GATE | Hệ thống cổng tinh gọn: GATE 0, GATE A, GATE C (trọng tâm) (nhánh Đo); GATE AAN-1, GATE AAN-2 (nhánh Trợ lực); GATE EDGE (Trạm biên AI) | Ngưỡng được chốt trước khi đo, có ngày ghi |
 | Cơ cấu đeo/tháo một tay | Khóa ngàm xoay hai bản lề (Mech 9), đã qua 8 phương án loại bỏ trước đó | Mẫu in 3D vận hành được bằng một tay |
 | Báo cáo/poster | Trình bày kết quả đạt và không đạt theo từng GATE | Mỗi GATE có một ô kết quả, kể cả khi fail |
 

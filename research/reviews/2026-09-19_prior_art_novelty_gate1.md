@@ -1,8 +1,8 @@
 # GAP 1 — Kết quả rà soát prior art cho 4 ứng viên novelty
 
-> **Ngày:** 2026-09-19 · **Người thực hiện:** agent phiên Arena (01a0b8f4)
+> **Ngày:** 2026-09-19 · **Người thực hiện:** nhóm nghiên cứu
 > **Phạm vi:** `docs/03_Literature_Gap_Analysis_Plan.md` mục 1 (ứng viên A, B, C, D) + mục 6 (ngưỡng ra quyết định).
-> **Trạng thái quy trình:** đây là **một lượt rà soát đơn-lever, sequential role review; KHÔNG phải independent multi-agent verification** (theo `AGENTS.md` §5). Chưa có lane R5 độc lập adjudicate.
+> **Trạng thái quy trình:** đây là **một lượt rà soát tài liệu ban đầu** (theo quy chuẩn tài liệu nội bộ). Chưa có đối chứng độc lập.
 > **Cảnh báo bằng chứng:** 24 nguồn mới thêm vào `SOURCE_LEDGER.csv`; chỉ 2 dòng được nâng lên `VERIFIED` (danh tính thư mục), còn lại ở mức `READ_ABSTRACT`/`UNVERIFIED` — **tức chưa đọc toàn văn**. Không một kết luận nào dưới đây được phép đưa vào báo cáo như "kết quả thực nghiệm" hay "chưa có ai làm".
 
 ---
@@ -12,7 +12,7 @@
 | Ứng viên | Trước (docs/01) | **Sau rà soát — đề xuất** | Lý do chính |
 |---|---|---|---|
 | **A** — cảm biến hướng qua vách khung cứng, không IMU | "ứng viên chính (vật lý/cơ khí)" | ⬇️ **HẠ xuống "cải tiến ở tầng cài đặt phần tử + cách lập luận hướng khớp"** | Nguyên lý "phần tử piezoresistive trên **vách** → phân biệt hướng" đã có từ **2014–2015**; "vỏ cứng khớp nối + bề mặt chức năng phủ da áp điện trở" đã có **2026** (ART-Glove, nhưng dùng encoder đo góc) |
-| **B** — suy luận hướng khớp / tái tạo 3D không cần IMU | "chưa thấy công bố" | ⚠️ **Giữ, nhưng phải phát biểu lại**: "suy luận **dấu** gập/duỗi **chỉ từ mẫu kích hoạt trên vách** (không IMU, không encoder, không camera)" | "Đo góc khớp không IMU" **tự nó không mới** (grating-strip 2021, stretch 2024, FBG, Hall) |
+| **B** — suy luận hướng khớp / tái tạo 3D không cần IMU | "chưa thấy công bố" | **Lưu ý: Giữ, nhưng phải phát biểu lại**: "suy luận **dấu** gập/duỗi **chỉ từ mẫu kích hoạt trên vách** (không IMU, không encoder, không camera)" | "Đo góc khớp không IMU" **tự nó không mới** (grating-strip 2021, stretch 2024, FBG, Hall) |
 | **C** — theo dõi dọc tại nhà + tự kiểm tra độ tin cậy | "ứng dụng — khoảng trống được xác nhận" | ⬆️ **NÂNG thành ứng viên novelty chính**, với điều kiện: đọc toàn văn Shadow Monitor 2006 và chỉ ra khác biệt | Không tìm thấy công bố nào **kết hợp** (i) longitudinal + (ii) MDC/độ tin cậy + (iii) cờ từ chối kết luận, cho chức năng bàn tay sau đột quỵ |
 | **D** — rẻ hơn dynamometer/E-Link | "kỹ thuật triển khai" | **Giữ nguyên** (so sánh bằng BOM + giá thiết bị thương mại có thật, không nói suông) | PPS TactileGlove II / VMG30 / CyberGlove là mốc so sánh thực |
 
@@ -40,12 +40,12 @@ Ký hiệu: **Dir.** = có suy hướng/dấu chuyển động không; **IMU?** 
 
 | Nguồn | Loại | Cơ chế | Dir. | IMU? | Long. | Self-chk | Khác biệt còn lại của đề tài |
 |---|---|---|---|---|---|---|---|
-| `SRC-SIDEWALL-PIEZO-2015` — *Piezoresistive Tactile Sensor Discriminating Multidirectional Forces*, Sensors 15(10), DOI 10.3390/s151025463 | bài báo | Lõi linh hoạt + **4 vách elastomer** chứa phần tử CNT/PDMS khóa liên động; kênh nào đổi điện trở ⇒ hướng shear | ✅ (4 hướng) | ❌ | ❌ | ❌ | Đây là **một phần tử xúc giác đơn lẻ cho da nhân tạo**, không gắn lên khung từng lóng ngón; không suy hướng khớp, không ứng dụng PHCN |
-| `SRC-INTERLOCKED-MICRODOME-2014` — ACS Nano, DOI 10.1021/nn505953t | bài báo | Mảng microdome piezoresistive khóa liên động → phân biệt normal/shear/bending/twisting | ✅ | ❌ | ❌ | ❌ | Cùng họ nguyên lý; chưa đọc toàn văn → chưa đánh giá hết mức trùng |
-| `SRC-ARTGLOVE-2026` — **ART-Glove**, arXiv:2606.16370 | bài báo (preprint) | **Găng vỏ cứng khớp nối: 16 "rigid functional surfaces"** phủ ngón/cái/lòng bàn + **da áp điện trở 2048 taxel @120 Hz**; 22 khớp có **encoder** | ✅ (qua encoder) | ❌ IMU, ✅ encoder | ❌ | ❌ | Họ **đo góc bằng encoder**, không suy từ mẫu vách; mục đích thu dữ liệu cho robot learning; độ phức tạp/giá cao hơn nhiều |
-| `SRC-CN116954366A-ARRAYGLOVE` (bằng sáng chế CN) | patent | 20 phần tử áp điện trở đặt tại 14 khớp ngón + lòng bàn, 2 lớp flex circuit, phân áp, MCU | ⚠️ chỉ "cảm nhận trạng thái vận động" | ❌ | ❌ | ❌ | Không có vách khung + preload; không suy hướng khớp có dấu; không vì PHCN |
-| `SRC-OPENPAD-FINGER-2020` — Sensors 20(1):4 | bài báo | 2 phần tử **hai bên** (radial/ulnar) đốt ngón để tách thành phần lực theo DoF | ✅ (tách thành phần) | ❌ | ❌ | ❌ |dùng điện dung (không phải piezoresistive); đọc 2 bên **đã có tiền lệ** → càng không được claim cặp đối xứng |
-| `SRC-TW201533608A-PRESSUREGLOVE` (patent, đã ABANDONED 2017) | patent | Áp kế ở mặt tiếp xúc ngón + accel + gyro | ❌ | ✅ | ❌ | ❌ | Không liên quan vách; note: abandoned |
+| `SRC-SIDEWALL-PIEZO-2015` — *Piezoresistive Tactile Sensor Discriminating Multidirectional Forces*, Sensors 15(10), DOI 10.3390/s151025463 | bài báo | Lõi linh hoạt + **4 vách elastomer** chứa phần tử CNT/PDMS khóa liên động; kênh nào đổi điện trở ⇒ hướng shear | [Đạt] (4 hướng) | [Không đạt] | [Không đạt] | [Không đạt] | Đây là **một phần tử xúc giác đơn lẻ cho da nhân tạo**, không gắn lên khung từng lóng ngón; không suy hướng khớp, không ứng dụng PHCN |
+| `SRC-INTERLOCKED-MICRODOME-2014` — ACS Nano, DOI 10.1021/nn505953t | bài báo | Mảng microdome piezoresistive khóa liên động → phân biệt normal/shear/bending/twisting | [Đạt] | [Không đạt] | [Không đạt] | [Không đạt] | Cùng họ nguyên lý; chưa đọc toàn văn → chưa đánh giá hết mức trùng |
+| `SRC-ARTGLOVE-2026` — **ART-Glove**, arXiv:2606.16370 | bài báo (preprint) | **Găng vỏ cứng khớp nối: 16 "rigid functional surfaces"** phủ ngón/cái/lòng bàn + **da áp điện trở 2048 taxel @120 Hz**; 22 khớp có **encoder** | [Đạt] (qua encoder) | [Không đạt] IMU, [Đạt] encoder | [Không đạt] | [Không đạt] | Họ **đo góc bằng encoder**, không suy từ mẫu vách; mục đích thu dữ liệu cho robot learning; độ phức tạp/giá cao hơn nhiều |
+| `SRC-CN116954366A-ARRAYGLOVE` (bằng sáng chế CN) | patent | 20 phần tử áp điện trở đặt tại 14 khớp ngón + lòng bàn, 2 lớp flex circuit, phân áp, MCU | Lưu ý: chỉ "cảm nhận trạng thái vận động" | [Không đạt] | [Không đạt] | [Không đạt] | Không có vách khung + preload; không suy hướng khớp có dấu; không vì PHCN |
+| `SRC-OPENPAD-FINGER-2020` — Sensors 20(1):4 | bài báo | 2 phần tử **hai bên** (radial/ulnar) đốt ngón để tách thành phần lực theo DoF | [Đạt] (tách thành phần) | [Không đạt] | [Không đạt] | [Không đạt] |dùng điện dung (không phải piezoresistive); đọc 2 bên **đã có tiền lệ** → càng không được claim cặp đối xứng |
+| `SRC-TW201533608A-PRESSUREGLOVE` (patent, đã ABANDONED 2017) | patent | Áp kế ở mặt tiếp xúc ngón + accel + gyro | [Không đạt] | [Đạt] | [Không đạt] | [Không đạt] | Không liên quan vách; note: abandoned |
 
 **Xét theo ngưỡng `docs/03` §6:** điều kiện "tìm thấy **một** công bố đã làm **đúng** khung cứng + piezoresistive → suy hướng khớp → tái tạo 3D" **chưa xảy ra**. Nhưng đã tìm thấy (a) **đúng nguyên lý phần tử** (2014–2015) và (b) **đúng kiến trúc vỏ cứng + da áp điện trở trên bề mặt chức năng** (2026). ⇒ **Phải hạ mức A** theo tinh thần §6: từ "nguyên lý vật lý/cơ khí mới" xuống "**cải tiến cấu hình + phương pháp lập luận**", và bắt buộc trích dẫn 4 nguồn trên.
 
@@ -80,13 +80,13 @@ Cần bảng so **giá có thật**, không nói "giá thấp". Mốc hiện có
 
 ## 3. Việc **bắt buộc** trước khi được phép coi Gap 1 (prior art) là "hoàn tất"
 
-1. ☐ Đọc **toàn văn** và ghi trang/bảng cho 5 nguồn hệ trọng: `SRC-ARTGLOVE-2026`, `SRC-SIDEWALL-PIEZO-2015`, `SRC-GRATING-GLOVE-2021`, `SRC-LOWCOST-GLOVE-2006`, `SRC-MANUMETER-RCT-2022`. (Hiện mới ở mức abstract → kết luận trên là **tạm thời**.)
-2. ☐ **Tra cứu bằng sáng chế tử tế** — lượt vừa rồi chỉ là 1 truy vấn qua web search, chưa đủ để kết luận. Phải tra Google Patents/Espacenet theo IPC **A61B5/11**, **A61B5/22**, **A61B5/10**, **G01L1/14**, **A61H1/02** với từ khóa `rigid shell / cage / wall / abutment` + `piezoresistive / flexible pressure` + `finger joint` + `kinematics`. Ghi mỗi truy vấn + tổ hợp từ khóa vào `QUERY_LOG`.
-3. ☐ Kiểm tra đề tài dự thi trong nước (ViSEF vòng quốc gia 2024–2026, Nafosted, luận văn VN) cho cả từ khóa "găng tay + đột quỵ" và "găng tay + phục hồi chức năng" — `SRC-VNM-*` mới là **bài báo chí**, chưa phải báo cáo khoa học.
-4. ☐ Chạy lane **R5 (Novelty challenger)** độc lập theo `research/protocols/ISEF_REVIEW_ORCHESTRATION.md`, đưa file này + `docs/03` §5 làm packet đóng băng; **chỉ khi R5 xác nhận** mới cập nhật `docs/01` §4 thành mức novelty chốt.
-5. ☐ Chủ dự án quyết định **DEC-NOV-001** (xem `DECISION_LOG.md`): chấp nhận hạ A / nâng C hay giữ nguyên và chịu rủi ro.
+1. [ ] Đọc **toàn văn** và ghi trang/bảng cho 5 nguồn hệ trọng: `SRC-ARTGLOVE-2026`, `SRC-SIDEWALL-PIEZO-2015`, `SRC-GRATING-GLOVE-2021`, `SRC-LOWCOST-GLOVE-2006`, `SRC-MANUMETER-RCT-2022`. (Hiện mới ở mức abstract → kết luận trên là **tạm thời**.)
+2. [ ] **Tra cứu bằng sáng chế tử tế** — lượt vừa rồi chỉ là 1 truy vấn qua web search, chưa đủ để kết luận. Phải tra Google Patents/Espacenet theo IPC **A61B5/11**, **A61B5/22**, **A61B5/10**, **G01L1/14**, **A61H1/02** với từ khóa `rigid shell / cage / wall / abutment` + `piezoresistive / flexible pressure` + `finger joint` + `kinematics`. Ghi mỗi truy vấn + tổ hợp từ khóa vào `QUERY_LOG`.
+3. [ ] Kiểm tra đề tài dự thi trong nước (ViSEF vòng quốc gia 2024–2026, Nafosted, luận văn VN) cho cả từ khóa "găng tay + đột quỵ" và "găng tay + phục hồi chức năng" — `SRC-VNM-*` mới là **bài báo chí**, chưa phải báo cáo khoa học.
+4. [ ] Chạy lane **R5 (Novelty challenger)** độc lập theo `research/protocols/ISEF_REVIEW_ORCHESTRATION.md`, đưa file này + `docs/03` §5 làm packet đóng băng; **chỉ khi R5 xác nhận** mới cập nhật `docs/01` §4 thành mức novelty chốt.
+5. [ ] Nhóm nghiên cứu quyết định **DEC-NOV-001** (xem `DECISION_LOG.md`): chấp nhận hạ A / nâng C hay giữ nguyên và chịu rủi ro.
 
-6. ☐ **Chưa có nguồn mới nào được đọc toàn văn.** 24 dòng mới vào ledger gồm 20 `READ_ABSTRACT` + 4 `UNVERIFIED` (`SRC-INTERLOCKED-MICRODOME-2014`, `SRC-SAFE-GLOVE-2015`, `SRC-TACTILEGLOVE-II`, `SRC-VNM-TL-GLOVE-2026` — mới thấy snippet tìm kiếm). Bốn dòng `UNVERIFIED` **không** được trích trong báo cáo cho tới khi xác minh; các dòng `READ_ABSTRACT` chỉ được dùng cho đúng những gì abstract nói.
+6. [ ] **Chưa có nguồn mới nào được đọc toàn văn.** 24 dòng mới vào ledger gồm 20 `READ_ABSTRACT` + 4 `UNVERIFIED` (`SRC-INTERLOCKED-MICRODOME-2014`, `SRC-SAFE-GLOVE-2015`, `SRC-TACTILEGLOVE-II`, `SRC-VNM-TL-GLOVE-2026` — mới thấy snippet tìm kiếm). Bốn dòng `UNVERIFIED` **không** được trích trong báo cáo cho tới khi xác minh; các dòng `READ_ABSTRACT` chỉ được dùng cho đúng những gì abstract nói.
 
 ## 4. Điều **không** thay đổi (đã được kiểm tra và vẫn đúng)
 
@@ -97,7 +97,7 @@ Cần bảng so **giá có thật**, không nói "giá thấp". Mốc hiện có
 
 ---
 
-## 5. Hai mức "an toàn" khác nhau — đừng nhầm (bổ sung 2026-09-19, sau phản hồi của chủ dự án)
+## 5. Hai mức "an toàn" khác nhau — đừng nhầm (bổ sung 2026-09-19, sau phản hồi của nhóm nghiên cứu)
 
 Lượt rà soát này áp **chuẩn trích dẫn của bài báo** cho toàn bộ 4 ứng viên. Điều đó đúng ở một chỗ và **không** đúng ở chỗ khác:
 

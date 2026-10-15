@@ -51,7 +51,7 @@
 
 ## 4. Điểm mới (nói trung thực — theo đúng mức ViSEF)
 
-> **`DEC-NOV-001` — ĐÃ CHỐT 2026-10-11 (chủ dự án):** bảng dưới đây là mức novelty **chính thức** của đề tài — tầng **tổ hợp + phương pháp lập luận**, KHÔNG phải tầng nguyên lý vật lý/cơ khí. Lý do chủ dự án nêu: *"nếu mới hoàn toàn thì học sinh THPT sao làm được"* — đây đúng là chuẩn novelty mà ISEF/ViSEF chấp nhận (xem `CLM-NOV-006`/`CLM-NOV-007`, ví dụ ROBO065T giải Tư ISEF 2025 dùng 100% công nghệ có sẵn). Được phép dùng câu *"first to integrate A+B cho [nhóm người dùng cụ thể]"* khi kèm số liệu tự đo. **Cảnh báo bắt buộc giữ:** quyết định này chốt ở mức **phán đoán/khung**, không phải ở mức "đã rà soát prior art đầy đủ" — 3 việc còn nợ (đọc toàn văn 5 nguồn hệ trọng, tra bằng sáng chế theo IPC có hệ thống qua Espacenet/WIPO, lane R5 độc lập) **vẫn phải làm xong trước khi nộp hồ sơ chính thức** (xem `docs/03` §7, `research/context/DECISION_LOG.md` DEC-NOV-001).
+> **`DEC-NOV-001` — ĐÃ CHỐT 2026-10-11 (nhóm nghiên cứu):** bảng dưới đây là mức novelty **chính thức** của đề tài — tầng **tổ hợp + phương pháp lập luận**, KHÔNG phải tầng nguyên lý vật lý/cơ khí. Lý do nhóm nghiên cứu nêu: *"nếu mới hoàn toàn thì học sinh THPT sao làm được"* — đây đúng là chuẩn novelty mà ISEF/ViSEF chấp nhận (xem `CLM-NOV-006`/`CLM-NOV-007`, ví dụ ROBO065T giải Tư ISEF 2025 dùng 100% công nghệ có sẵn). Được phép dùng câu *"first to integrate A+B cho [nhóm người dùng cụ thể]"* khi kèm số liệu tự đo. **Cảnh báo bắt buộc giữ:** quyết định này chốt ở mức **phán đoán/khung**, không phải ở mức "đã rà soát prior art đầy đủ" — 3 việc còn nợ (đọc toàn văn 5 nguồn hệ trọng, tra bằng sáng chế theo IPC có hệ thống qua Espacenet/WIPO, lane R5 độc lập) **vẫn phải làm xong trước khi nộp hồ sơ chính thức** (xem `docs/03` §7, `research/context/DECISION_LOG.md` DEC-NOV-001).
 
 | # | Thành phần | Mức mới | Ghi chú |
 |---|---|---|---|
@@ -152,4 +152,4 @@ Chi tiết đầy đủ 7 cổng (GATE 0 và GATE A → GATE F): [`research/prot
 3. Nói "đo chính xác lực/góc" khi chưa hiệu chuẩn → mất điểm trung thực.
 4. Nói "loại bỏ drift" → sai về kỹ thuật; chỉ được nói "giảm ảnh hưởng drift".
 5. Gọi "cảm biến Velostat" như thể Velostat là cái cảm biến → sai thuật ngữ (xem `GLOSSARY.md`).
-6. Đưa số liệu chưa đo vào báo cáo → vi phạm `AGENTS.md`.
+6. Đưa số liệu chưa đo vào báo cáo → vi phạm nguyên tắc liêm chính khoa học.

@@ -43,7 +43,7 @@ Controlled measurement perturbations can support a measurement-integrity decisio
 
 | Risk | Required check |
 |---|---|
-| Abstain-all solution | coverage–risk curve; report all eligible cases and an owner-approved minimum coverage before evaluation |
+| Abstain-all solution | coverage–risk curve; report all eligible cases and an trưởng nhóm-approved minimum coverage before evaluation |
 | Threshold fishing | freeze all decision thresholds using development sessions only |
 | Leakage | partition by session before feature normalization/tuning; audit IDs in every fold |
 | Reference contamination | reference targets never used as deployment inputs; MI reference score may label training/evaluation only |

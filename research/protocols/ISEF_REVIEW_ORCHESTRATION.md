@@ -80,7 +80,7 @@ For each finding, R7 records:
 | disposition | `ACCEPT`, `REJECT`, `MERGE`, or `DEFER` |
 | rationale | why, tied to evidence rather than reviewer authority |
 | resolving evidence | source/artifact ID and anchor |
-| owner | person responsible |
+| trưởng nhóm | person responsible |
 | due gate | gate before which it must close |
 | residual risk | what remains uncertain |
 
@@ -90,7 +90,7 @@ When reviewers disagree, prefer the more conservative safety/evidence status unt
 
 | Gate | Pass condition | Hard blockers |
 |---|---|---|
-| G0 Baseline lock | one dated architecture and scoped RQ approved by owner | unresolved matrix/SBC/arm/simulator conflict |
+| G0 Baseline lock | one dated architecture and scoped RQ approved by trưởng nhóm | unresolved matrix/SBC/arm/simulator conflict |
 | G1 Evidence integrity | consequential claims mapped to verified source or measured artifact | invented/mismatched citation; synthetic result framed as physical |
 | G2 Methods | protocol, controls, outcomes and analysis are aligned and preregisterable | leakage, absent comparator, impossible sample/analysis plan |
 | G3 Safety/ethics | required rule review and risk controls are completed before work begins | missing human IRB/SRC pre-approval; unsafe device procedure |

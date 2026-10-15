@@ -1,8 +1,8 @@
 # 07 — Rig RAL (phantom có tải chỉnh được) + phiếu hỏi KTVVLTL-PHCN
 
-> **Ngày soạn:** 2026-09-19 · **Trạng thái:** **CHỜ GIAI ĐOẠN RIG** — chủ dự án đã duyệt phạm vi E4+E5+E6 (`DEC-SCOPE-003`) nhưng **hoãn chốt ngưỡng** và **hoãn viết script**; giai đoạn hiện tại chỉ làm **cơ sở lý thuyết** (`docs/02` §1.4–§1.6, §3.4, §5.4, §7.3, §8.3). File này để nguyên bản nháp, **không** coi là ngưỡng đã chốt.
+> **Ngày soạn:** 2026-09-19 · **Trạng thái:** **CHỜ GIAI ĐOẠN RIG** — nhóm nghiên cứu đã duyệt phạm vi E4+E5+E6 (`DEC-SCOPE-003`) nhưng **hoãn chốt ngưỡng** và **hoãn viết script**; giai đoạn hiện tại chỉ làm **cơ sở lý thuyết** (`docs/02` §1.4–§1.6, §3.4, §5.4, §7.3, §8.3). File này để nguyên bản nháp, **không** coi là ngưỡng đã chốt.
 > **2026-09-27 — cấu hình rig/phantom ĐÃ NỘP** (PDF §10, chờ `DEC-METRIC-002`/`DEC-HW-005` nối vào file này): khung nhôm 2020 + trượt tuyến tính ổ bi + vít me bước đôi + phanh từ + lò xo tải chuẩn; phantom silicone y tế **Shore A 25–30** (cần đối chiếu tài liệu mô mềm trước khi chốt); load cell + **HX711 24-bit** kiểm định độc lập; AAN chỉ trên phantom: lò xo nấc 20–120 g + servo Bowden `F_assist = max(0, F_target − F_phantom)` + giới hạn lực cài trước + phản hồi thị giác EI; RAL = nấc tải nhỏ nhất đạt `P_complete ≥ 80 %` (10 chu kỳ/nấc, 120 g → 0 g). Chi tiết: sync review §2-F10/F11.
-> **Vì sao có file này:** đề xuất "tập chủ động có trợ lực (AAT)" của chủ dự án chỉ thành nội dung khoa học nếu **đo được** nỗ lực và mức trợ giúp cần thiết.
+> **Vì sao có file này:** đề xuất "tập chủ động có trợ lực (AAT)" của nhóm nghiên cứu chỉ thành nội dung khoa học nếu **đo được** nỗ lực và mức trợ giúp cần thiết.
 > **Nguyên tắc bắt buộc (giống `06`):** mọi số liệu trong file này là **trên rig/phantom** → **không cần IRB**; **cấm** tác động lực lên người cho tới khi có phê duyệt đạo đức.
 > **Ngưỡng PASS/FAIL chốt TRƯỚC khi đo; cấm chỉnh sau khi thấy số.**
 
@@ -25,17 +25,17 @@
 **Thiết kế (trên rig):** giữ ngón ở góc cố định bằng chốt; treo các tải 0/20/40/80/120 g; mỗi tải 20 nhịp "kéo cố ý" + 20 nhịp nghỉ, xen kẽ ngẫu nhiên.
 **Số phải ghi:** phổ biên độ nhóm cố ý vs nghỉ, `σ_noise` của giai đoạn nghỉ, AUC, tỷ lệ báo nhầm, độ trễ phát hiện (ms).
 
-**Ngưỡng ĐỀ XUẤT — CHƯA CHỐT (chủ dự án hoãn, 2026-09-19):** AUC ≥ **0,85**; báo nhầm ≤ **10%**; độ trễ ≤ **300 ms**; lặp lại được trên ≥ **8** mẫu cảm biến.
+**Ngưỡng ĐỀ XUẤT — CHƯA CHỐT (nhóm nghiên cứu hoãn, 2026-09-19):** AUC ≥ **0,85**; báo nhầm ≤ **10%**; độ trễ ≤ **300 ms**; lặp lại được trên ≥ **8** mẫu cảm biến.
 **Nếu FAIL:** bỏ Effort/EI khỏi đề tài; AAT chỉ còn là phần *động lực* trong `docs/02`; **không** được viết "phát hiện ý định vận động".
 
-## 3. GATE AAN-2 ⭐ (trước đây "GATE RAL") — cổng sống còn của nhánh AAN: "đường cong tải–hoàn thành có dùng làm chỉ số theo dõi được không, và AAN có thực sự chống ỷ lại không?"
+## 3. GATE AAN-2  (trước đây "GATE RAL") — cổng sống còn của nhánh AAN: "đường cong tải–hoàn thành có dùng làm chỉ số theo dõi được không, và AAN có thực sự chống ỷ lại không?"
 
-> **Đổi tên + nâng cấp 2026-10-13 (`DEC-GATE-002`):** cổng này được nâng thành **cổng sống còn (⭐) của nhánh AAN** — vai trò tương đương GATE C ở nhánh Đo. Lý do: nếu đường cong RAL không ổn định, HOẶC nếu mức tham gia chủ động cứ giảm dần về 0 qua các lần thử (ỷ lại), thì AAN không khác gì một lò xo trợ lực cố định được đặt tên hoa mỹ — mất lý do tồn tại của nhãn "theo nhu cầu". Tiêu chí RAL gốc (đơn điệu + ICC) **giữ nguyên, không đổi**; bổ sung thêm tiêu chí participation ratio (đã có sẵn định nghĩa ở bảng §1, lấy cảm hứng từ `SRC-MPC-AAN-2026`, nhưng **chưa từng được gắn vào một cổng PASS/FAIL nào** trước bản cập nhật này).
+> **Đổi tên + nâng cấp 2026-10-13 (`DEC-GATE-002`):** cổng này được nâng thành **cổng sống còn (trọng tâm) của nhánh AAN** — vai trò tương đương GATE C ở nhánh Đo. Lý do: nếu đường cong RAL không ổn định, HOẶC nếu mức tham gia chủ động cứ giảm dần về 0 qua các lần thử (ỷ lại), thì AAN không khác gì một lò xo trợ lực cố định được đặt tên hoa mỹ — mất lý do tồn tại của nhãn "theo nhu cầu". Tiêu chí RAL gốc (đơn điệu + ICC) **giữ nguyên, không đổi**; bổ sung thêm tiêu chí participation ratio (đã có sẵn định nghĩa ở bảng §1, lấy cảm hứng từ `SRC-MPC-AAN-2026`, nhưng **chưa từng được gắn vào một cổng PASS/FAIL nào** trước bản cập nhật này).
 
 **Thiết kế (phần RAL, giữ nguyên):** với mỗi mức "sức cơ" của rig (tắt/bật 1 servo trợ lực theo luật AAN), ghi tỷ lệ hoàn thành theo tải 0→120 g, 3 phiên cách nhau ≥ 24 h.
 **Ngưỡng ĐỀ XUẤT — CHƯA CHỐT:** đơn điệu 100% (không được có điểm nghịch hướng); **ICC ≥ 0,75** giữa phiên 1 và 3 trên cùng tải; biến thiên giữa-phiên nhỏ hơn khoảng cách 2 bậc tải.
 
-**Thiết kế bổ sung (phần chống ỷ lại, MỚI 2026-10-13 — ĐỀ XUẤT, CHƯA CHỐT NGƯỠNG):** mô phỏng trên phantom một chuỗi phiên "người bệnh cải thiện dần" (tăng dần tỉ lệ lực chủ động phantom tạo ra qua các phiên theo kịch bản đã biết trước); đo participation ratio ở mỗi phiên. **Ngưỡng cần owner chốt trước khi đo** (gợi ý sơ bộ, KHÔNG phải số đã duyệt): participation ratio không được giảm quá X% so với phiên trước trong ≥ Y% số phiên liên tiếp khi kịch bản mô phỏng đang ở pha "cải thiện"; X, Y để trống chờ chốt.
+**Thiết kế bổ sung (phần chống ỷ lại, MỚI 2026-10-13 — ĐỀ XUẤT, CHƯA CHỐT NGƯỠNG):** mô phỏng trên phantom một chuỗi phiên "người bệnh cải thiện dần" (tăng dần tỉ lệ lực chủ động phantom tạo ra qua các phiên theo kịch bản đã biết trước); đo participation ratio ở mỗi phiên. **Ngưỡng cần trưởng nhóm chốt trước khi đo** (gợi ý sơ bộ, KHÔNG phải số đã duyệt): participation ratio không được giảm quá X% so với phiên trước trong ≥ Y% số phiên liên tiếp khi kịch bản mô phỏng đang ở pha "cải thiện"; X, Y để trống chờ chốt.
 
 **Nếu FAIL (RAL):** RAL chỉ là thông số bench, **không** được quảng bá thành chỉ số lâm sàng.
 **Nếu FAIL (chống ỷ lại):** AAN hiện tại **không** được gọi là "trợ lực theo nhu cầu/thích ứng" — chỉ được gọi trung thực là "trợ lực cố định phân bậc"; vẫn giữ được làm sản phẩm (lò xo chia nấc vẫn hữu ích), chỉ phải đổi câu quảng bá.
@@ -88,22 +88,22 @@
 
 | Bên | Việc |
 |---|---|
-| **Chủ dự án** | Duyệt/chốt ngưỡng §2, §3; quyết định chế tạo rig E4/E5; duyệt `DEC-SCOPE-002` |
+| **Nhóm nghiên cứu** | Duyệt/chốt ngưỡng §2, §3; quyết định chế tạo rig E4/E5; duyệt `DEC-SCOPE-002` |
 | **Agent** | (sau khi duyệt) lập danh sách vật tư rig + file in 3D; viết script thống kê ICC/AUC (hiện repo **chưa có** script thống kê nào); cập nhật `docs/02` + `A.7`; **không** tự đổi tên đề tài, **không** tự đổi A.4 |
-| **KTV (chị chủ dự án, 10 năm VLTL-PHCN)** | Trả lời phiếu §5, chốt giao thức 2 pha + bảng tải; **phản biện trên giấy**, không tham gia đo |
+| **KTV (chị nhóm nghiên cứu, 10 năm VLTL-PHCN)** | Trả lời phiếu §5, chốt giao thức 2 pha + bảng tải; **phản biện trên giấy**, không tham gia đo |
 
 ---
 
-## 7. Ranh giới sử dụng nguồn KTV (bổ sung 2026-09-19 — vì chủ dự án đã xác nhận có người nhà làm nghề)
+## 7. Ranh giới sử dụng nguồn KTV (bổ sung 2026-09-19 — vì nhóm nghiên cứu đã xác nhận có người nhà làm nghề)
 
-**Bối cảnh mới:** chủ dự án có chị là KTV VLTL-PHCN 10 năm và đã xác nhận tính cấp thiết (`SRC-OWNER-2026-09-19-KTV10Y`).
-⚠️ **`DEC-ROLE-001` (chủ dự án chốt 2026-09-19): không nêu danh tính người thân trong hồ sơ nộp.** Các ranh giới dưới đây vẫn áp dụng đầy đủ, chỉ khác ở cách diễn đạt
+**Bối cảnh mới:** nhóm nghiên cứu có chị là KTV VLTL-PHCN 10 năm và đã xác nhận tính cấp thiết (`SRC-OWNER-2026-09-19-KTV10Y`).
+**Lưu ý: `DEC-ROLE-001` (nhóm nghiên cứu chốt 2026-09-19): không nêu danh tính người thân trong hồ sơ nộp.** Các ranh giới dưới đây vẫn áp dụng đầy đủ, chỉ khác ở cách diễn đạt
 
 Đây là tài sản **lớn nhất** của đề tài ở vòng chấm, và cũng là **rủi ro đạo đức gần nhất** — vì người có khả năng đo hợp lệ lại ngồi ngay trong nhà.
 
 | # | Điều được làm | Điều **không** được làm (và vì sao) |
 |---|---|---|
-| 7.1 | Gửi phiếu §5 + 1 trang quy trình, nhận phản biện bằng văn bản | Đo trên **tay chị** để "cho có số người thật" → vi phạm `AGENTS.md` + `A.4`: mọi đo trên người cần phê duyệt IRB/SRC, **không có ngoại lệ cho người nhà** |
+| 7.1 | Gửi phiếu §5 + 1 trang quy trình, nhận phản biện bằng văn bản | Đo trên **tay chị** để "cho có số người thật" → vi phạm `tài liệu nội bộ` + `A.4`: mọi đo trên người cần phê duyệt IRB/SRC, **không có ngoại lệ cho người nhà** |
 | 7.2 | Nhờ chị chỉ ra chỗ chỉ số **vô nghĩa lâm sàng** (EI/GAP/RAL) | Nhờ chị "thu giúp 2–3 bệnh nhân" → đó là tuyển mẫu, thuộc phạm vi `DEC-ETHICS-001` (đang OPEN) |
 | 7.3 | Ghi trong hồ sơ (theo `DEC-ROLE-001` — **không nêu danh tính**): "giao thức đo đã được **chuyên gia VLTL–PHCN phản biện**"; **không** viết "chị tác giả", **không** viết "10 năm" trong tài liệu nộp | Viết "được KTV chứng nhận hiệu quả" → **không tồn tại** bằng chứng hiệu quả; "xác nhận cấp thiết" ≠ "thiết bị hoạt động" |
 | 7.4 | Dùng hiểu biết nghề để **thiết kế rig E4** (mức tải, thứ tự động tác, nghỉ bao lâu) | Cho người bệnh **đeo/mặc** bất kỳ thứ gì có bộ chấp hành (E5) — `docs/02` §10 mục 6: chấp hành chỉ tác động rig/phantom |

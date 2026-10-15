@@ -107,9 +107,9 @@ Velostat (R_sensor thay đổi theo lực)
    → ADC1 của ESP32-S3
 ```
 
-**Chọn R_f:** độ nhạy `dV/dR` cực đại khi `R_f ≈ R_sensor`. Vì R_sensor của sensing element tự chế **chưa được đo** 🔵, quy trình bắt buộc là:
+**Chọn R_f:** độ nhạy `dV/dR` cực đại khi `R_f ≈ R_sensor`. Vì R_sensor của sensing element tự chế **chưa được đo** [Thông tin], quy trình bắt buộc là:
 1. Đo R_sensor ở các mức tải khác nhau (bench, có load cell tham chiếu).
-2. Chọn R_f nằm giữa dải làm việc (dự kiến hàng chục kΩ — 🔵 phải đo).
+2. Chọn R_f nằm giữa dải làm việc (dự kiến hàng chục kΩ — [Thông tin] phải đo).
 3. Ghi lại đường cong `ADC ↔ lực` cho từng sensing element (không dùng chung một đường cong cho mọi kênh).
 
 ### 4.2 Ngân sách nhiễu (dự kiến — phải đo lại)
@@ -133,7 +133,7 @@ Velostat (R_sensor thay đổi theo lực)
 
 ## 5. Ngân sách tốc độ khung
 
-Giả định mỗi kênh cần **thời gian ổn định (settling) + lấy mẫu**: `t_ch ≈ 100–300 µs` khi đã lấy trung bình nhiều mẫu (🔵 đo lại thực tế).
+Giả định mỗi kênh cần **thời gian ổn định (settling) + lấy mẫu**: `t_ch ≈ 100–300 µs` khi đã lấy trung bình nhiều mẫu ([Thông tin] đo lại thực tế).
 
 | Cấu hình | Số kênh | t_ch | Thời gian 1 vòng quét | Tốc độ khung (không nghỉ) |
 |---|---|---|---|---|
@@ -165,12 +165,12 @@ thời gian mang/tháo (don–doff) ở mức người nhà làm được trong 
 
 ## 7. Việc phải làm trước khi viết bất kỳ kết luận nào
 
-1. ☐ Chốt cấu hình 1 hay 2 (hoặc lộ trình 1 → 2) — và chốt `DEC-SCOPE-005` (3 ngón như bản nộp hay giữ lộ trình 5 ngón).
-2. ☐ Đo `R_sensor` theo tải cho ≥ 5 mẫu sensing element tự chế.
-3. ☐ Đo ENOB thực của chuỗi ADC + MUX.
-4. ☐ Đo tốc độ khung và độ trễ end-to-end thực tế.
-5. ☐ Ghi toàn bộ vào `research/bench/` và `research/evidence/SOURCE_LEDGER.csv` (loại `raw_measurement`).
-6. ☐ Sau đó mới chạy `research/protocols/06_glove_hand_GATE_experiment.md`.
+1. [ ] Chốt cấu hình 1 hay 2 (hoặc lộ trình 1 → 2) — và chốt `DEC-SCOPE-005` (3 ngón như bản nộp hay giữ lộ trình 5 ngón).
+2. [ ] Đo `R_sensor` theo tải cho ≥ 5 mẫu sensing element tự chế.
+3. [ ] Đo ENOB thực của chuỗi ADC + MUX.
+4. [ ] Đo tốc độ khung và độ trễ end-to-end thực tế.
+5. [ ] Ghi toàn bộ vào `research/bench/` và `research/evidence/SOURCE_LEDGER.csv` (loại `raw_measurement`).
+6. [ ] Sau đó mới chạy `research/protocols/06_glove_hand_GATE_experiment.md`.
 
 ---
 
@@ -201,11 +201,11 @@ thời gian mang/tháo (don–doff) ở mức người nhà làm được trong 
 | ADC | ESP32-S3 ADC1 12-bit (~1,51 mV/LSB danh định) | **ADS1115 16-bit rời** (62,5 µV/LSB, dải ±2,048 V) |
 | Khuếch đại | không có (cầu phân áp thụ động, `R_f ≈ R_sensor`) | **INA333 G = 10**, `R_ref = 10 kΩ` 0,1 % |
 | Đệm / bù môi trường | chưa có | MCP6001 + **SHT30** |
-| IMU | 6 IMU (góc AROM/PROM + tốc độ kéo) | **1 IMU LSM6DS3** (bù nghiêng) — ⚠️ nguồn đo góc cho GAP còn mở (**I7**) |
-| Lấy mẫu | mục tiêu 45–100 Hz, sàn 20 Hz | ⚠️ PDF ghi **cả 50 Hz** (§8.1/§9.1) **và 20 Hz** (M5/C1.10) — **I1** |
+| IMU | 6 IMU (góc AROM/PROM + tốc độ kéo) | **1 IMU LSM6DS3** (bù nghiêng) — Lưu ý: nguồn đo góc cho GAP còn mở (**I7**) |
+| Lấy mẫu | mục tiêu 45–100 Hz, sàn 20 Hz | Lưu ý: PDF ghi **cả 50 Hz** (§8.1/§9.1) **và 20 Hz** (M5/C1.10) — **I1** |
 | Lọc số | chưa định | IIR bậc 2 fc = 10 Hz + Notch 50 Hz |
 | Ngón | lộ trình 5 ngón (cấu hình 1/2) | **3 ngón** (cái/trỏ/giữa) — `DEC-SCOPE-005` |
-| Kênh vi sai | 24 kênh vi sai (cấu hình 2) | "**12 kênh vi sai**" trên 6 khớp — ⚠️ chưa rõ 12 cặp hay 12 phần tử (**I6**) |
+| Kênh vi sai | 24 kênh vi sai (cấu hình 2) | "**12 kênh vi sai**" trên 6 khớp — Lưu ý: chưa rõ 12 cặp hay 12 phần tử (**I6**) |
 | Nguồn | chưa định | LiPo 3,7 V + TP4056 + HT7333 |
 
 **Quy tắc vận hành đi kèm (PDF §9.3/§11.2):** auto-zero 3 s duỗi nghỉ đầu phiên (`V_offset` trừ trực tiếp);
@@ -214,22 +214,21 @@ vòng lặp 2 (phương sai → nhãn **"Nghi vấn"** + loại khỏi xu hướ
 
 ---
 
-## 9. Vòng lặp Thiết kế số 2 (Design Iteration 2, 2026-10-15 — `DEC-HW-006`): Tối ưu hóa kiến trúc dựa trên thực nghiệm cơ khí
+## 9. Vòng lặp thiết kế 2 (15/10/2026, `DEC-HW-006`): Tối ưu hóa mạch đo dựa trên thực nghiệm cơ khí
 
-> **Căn cứ:** Quy trình Thiết kế Kỹ thuật (Engineering Design Process) theo Thông tư số 84/2026/TT-BGDĐT.  
-> **Nguyên tắc phương pháp luận:** Không xóa bỏ kiến trúc Vòng lặp 1 (INA333 $G \approx 6.5$), mà ghi nhận trung thực quá trình thực nghiệm phát hiện vấn đề và đánh đổi kỹ thuật (Trade-off).
+Ghi nhận quá trình thực nghiệm phát hiện giới hạn bão hòa của tầng khuếch đại INA333 khi siết nẹp ngón tay và giải pháp chuyển đổi sang mạch đo trực tiếp qua ADS1115 kết hợp thuật toán xử lý tín hiệu số.
 
 ```
-[Vòng lặp 1 (Thử nghiệm ban đầu)]
+[Mạch ban đầu]
 Màng Velostat -> MUX CD74HC4067 -> Tầng INA333 (G ≈ 6.5, V_REF = 1.68V) -> ADS1115 (A0) -> ESP32-S3
-==> VẤN ĐỀ: Lực siết tĩnh của khung ốp ngón tay kéo mốc tĩnh tụt xuống < 1.42V, làm INA333 chạm sàn bão hòa
-            (kẹt ở ≈ 2838 mV). Cửa sổ tuyến tính ±0.24V quá hẹp so với biên độ thật (1.5V - 2.2V) của Velostat.
+==> Hiện tượng lỗi: Lực siết tĩnh của khung ốp ngón tay kéo mốc tĩnh tụt xuống < 1.42V, làm INA333 chạm sàn bão hòa
+    (kẹt ở ≈ 2838 mV). Cửa sổ tuyến tính ±0.24V quá hẹp so với biên độ thật (1.5V - 2.2V) của Velostat.
 
-[Vòng lặp 2 (Tối ưu hóa kiến trúc - DEC-HW-006)]
-Màng Velostat (Sandwich đồng mạ niken) + R_pullup 10 kΩ
-   -> MUX CD74HC4067 (Settling 300 µs + Dummy Read xả điện dung ký sinh)
-   -> Tầng PGA 16-bit nội bộ ADS1115 (Dải đo mở rộng toàn phần 0V - 3.3V, độ phân giải 0.125 mV/LSB)
-   -> ESP32-S3: Bộ lọc số DSP 4 bước (Dummy Read -> Subtracted Dead-band 180 mV -> Adaptive Drift Tracking -> Lọc EMA & F_net vi sai)
+[Mạch cải tiến - DEC-HW-006]
+Màng Velostat (kẹp dây đồng mạ niken) + điện trở kéo lên 10 kΩ
+   -> MUX CD74HC4067 (thời gian trễ 300 µs và đọc nháp để xả điện tích ký sinh)
+   -> Tầng PGA 16-bit tích hợp trong ADS1115 (dải đo mở rộng toàn phần 0V - 3.3V, bước lượng tử 0.125 mV/LSB)
+   -> ESP32-S3: Lọc số 4 bước (Đọc nháp -> Khóa vùng chết 180 mV -> Tự động bám mốc tĩnh -> Lọc EMA và tính lực vi sai)
 ```
 
 **Bảng so sánh tối ưu hóa giữa 2 vòng lặp:**

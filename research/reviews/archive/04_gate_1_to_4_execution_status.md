@@ -21,7 +21,7 @@ Three additional adversarial searches attacked the exact mechanism. They found t
 
 **Gate 1 disposition:** `OPEN`. The candidate is not killed, but this is a bounded screen, not a systematic review, so no GAP CONFIRMED (proof of absence) is permitted. Novelty must be framed narrowly per `CLM-NOV-003`: the plantar perturbation-injection integrity estimator + longitudinal-false-alert + coverage combination, explicitly citing the industrial-SHM and conformal-abstention prior patterns.
 
-## Step 2 — reference readiness: **BLOCKED by owner/open infrastructure decision**
+## Step 2 — reference readiness: **BLOCKED by trưởng nhóm/open infrastructure decision**
 
 No actual force plate, multi-axis load-cell, traceable load reference, availability date, sampling specification, synchronization trigger, or calibration record exists in this repository. Therefore no 3D-GRF/COP validation plan can be considered operational.
 
@@ -32,7 +32,7 @@ reference type/model:
 axes available:
 calibration certificate or traceability locator:
 sampling rate and clock/trigger plan:
-availability/access owner and date:
+availability/access trưởng nhóm and date:
 coordinate-system convention:
 permitted reference-load fixture for bench phase:
 ```

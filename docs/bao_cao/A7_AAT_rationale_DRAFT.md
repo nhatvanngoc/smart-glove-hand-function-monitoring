@@ -1,8 +1,8 @@
 # A.7 — Cơ sở khoa học của "tập chủ động có ý thức" và hệ quả measurement (BẢN NHÁP)
 
-> **Trạng thái:** `DRAFT` — chủ dự án chốt giữ nguyên bản nháp (2026-09-19). Phạm vi đã duyệt là E4+E5+E6 (`DEC-SCOPE-003`), nhưng **giai đoạn này chỉ làm cơ sở lý thuyết**; bản chính thức sẽ viết sau khi §1.4–§7.3 của `docs/02` được duyệt nội dung.
+> **Trạng thái:** `DRAFT` — nhóm nghiên cứu chốt giữ nguyên bản nháp (2026-09-19). Phạm vi đã duyệt là E4+E5+E6 (`DEC-SCOPE-003`), nhưng **giai đoạn này chỉ làm cơ sở lý thuyết**; bản chính thức sẽ viết sau khi §1.4–§7.3 của `docs/02` được duyệt nội dung.
 > **Không** đưa ví dụ thành tích hội thi (ROBO065T/ISEF 2025) vào hồ sơ nộp — chỉ lưu trong `research/`.
-> **Nguồn:** viết lại từ đề xuất của chủ dự án ngày 2026-09-19, sau khi kiểm toán từng tuyên bố tại
+> **Nguồn:** viết lại từ đề xuất của nhóm nghiên cứu ngày 2026-09-19, sau khi kiểm toán từng tuyên bố tại
 > `research/reviews/2026-09-19_active_assisted_scope_options.md` §2.
 > **Quy tắc áp dụng:** không nâng mức bằng chứng; số nào có `(verify)` là **chưa được xác minh**, phải hoặc tìm nguồn hoặc bỏ.
 > **Phạm vi thiết bị (nguyên trạng):** găng tay **đo và theo dõi**. Không có bộ phận chấp hành, không kéo/gập ngón tay hộ người bệnh.
@@ -81,7 +81,7 @@
 1. Đề tài **không** phải thiết bị tập, **không** tác động lực lên ngón tay (trừ khi `DEC-SCOPE-002` đổi phạm vi).
 2. Không có số liệu lâm sàng: mọi phát biểu về neuroplasticity là **cơ sở chọn chỉ số**, không phải kết quả.
 3. Effort Index và RAL **chưa được kiểm chứng**; nếu `GATE A′` fail, mục 4 loại bỏ chỉ số đó và báo cáo ghi rõ đã loại.
-4. Không đo góc khớp tuyệt đối; không ADC → N, không ADC → độ (theo `AGENTS.md`).
+4. Không đo góc khớp tuyệt đối; không quy đổi tùy tiện từ ADC sang Newton hoặc độ khi chưa có chuẩn lực.
 5. Ý tưởng AAT/AAN **không phải của đề tài** — là nền tảng có sẵn trong y văn, đề tài dùng để **đo**, có trích dẫn ở mục Tài liệu tham khảo.
 
 ---

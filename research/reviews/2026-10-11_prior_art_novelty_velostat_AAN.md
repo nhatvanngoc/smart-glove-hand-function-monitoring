@@ -1,7 +1,7 @@
 # GAP 2 — Rà soát prior art / patent cho tổ hợp "Velostat + mảng vi sai hai vách + exoskeleton ngón tay + AAN"
 
-> **Ngày:** 2026-10-11 · **Người thực hiện:** agent phiên Arena (2c6c537b)
-> **Lý do:** sau khi chốt `CLM-HW-005` (tổng hợp 5 trục lý do chọn Velostat làm trụ cột AAN, xem `docs/02_Theoretical_Foundation.md` §7.3 + §10 mục 8), chủ dự án yêu cầu **tách riêng bước thứ hai**: "chạy research tìm bằng chứng novelty" cho đúng tổ hợp mà đề tài định claim — không dừng ở văn献 chung chung.
+> **Ngày:** 2026-10-11 · **Người thực hiện:** nhóm nghiên cứu
+> **Lý do:** sau khi chốt `CLM-HW-005` (tổng hợp 5 trục lý do chọn Velostat làm trụ cột AAN, xem `docs/02_Theoretical_Foundation.md` §7.3 + §10 mục 8), nhóm nghiên cứu yêu cầu **tách riêng bước thứ hai**: "chạy research tìm bằng chứng novelty" cho đúng tổ hợp mà đề tài định claim — không dừng ở văn献 chung chung.
 > **Quan hệ với tài liệu trước:** đây là **tiếp nối** của `research/reviews/2026-09-19_prior_art_novelty_gate1.md` (Ứng viên A/B/C/D), **không phải** một lượt rà soát độc lập từ đầu. Mọi kết luận của gate1 (đặc biệt bảng mục 0 và `CLM-NOV-003`/`CLM-NOV-004`) vẫn có hiệu lực; file này chỉ **bổ sung** bằng chứng mới tìm được cho đúng góc "Velostat" + "AAN" mà `CLM-HW-005` vừa nêu.
 > **Cảnh báo bằng chứng (bắt buộc đọc):** đây là **web_search qua Google-indexed patent pages (Google Patents cơ bản) + bài báo học thuật**, **KHÔNG PHẢI** một lượt tra cứu bằng sáng chế có hệ thống qua Espacenet/WIPO Patentscope/USPTO advanced search theo mã IPC/CPC. Mục 2 trong danh sách "bắt buộc" của gate1 (tra IPC A61B5/11, A61B5/22, A61B5/10, G01L1/14, A61H1/02 một cách có hệ thống) **vẫn CHƯA hoàn thành**. Không kết luận nào dưới đây được phép trình bày như "đã xác nhận novelty" hay dùng câu "chưa ai làm".
 
@@ -54,12 +54,12 @@ Truy vấn trực tiếp Google Patents cho `(velostat) AND (glove OR exoskeleto
 
 ## 4. Việc còn thiếu trước khi được coi là "đã rà soát novelty" (bổ sung vào danh sách gate1 mục 3)
 
-1. ☐ Đọc toàn văn `SRC-FINGER-EXO-BIDIR-FSR-DICKMANN-2021` (đặc biệt phần Methods/Hình 9 nói về "custom-built mechanical enclosure") để xác nhận có phải kiến trúc "hai vách đối diện + preload" hay không, và đối chiếu thuật toán điều khiển lực của họ với thuật toán AAN (force-sharing) của đề tài.
-2. ☐ Tra cứu có hệ thống qua **Espacenet** hoặc **WIPO Patentscope** (không chỉ Google-indexed web_search) với tổ hợp từ khoá `velostat OR "piezoresistive film"` + `exoskeleton OR glove` + `finger OR hand` + mã IPC/CPC đã gắn cờ: `G06F3/014`, `A41D19/00`, `G01L1/20`, và bổ sung `A61H1/02` (thiết bị phục hồi chức năng chi trên), `A61B5/11` (đo chuyển động cơ thể).
-3. ☐ Kiểm tra trạng thái pháp lý (legal status) của CA3048964A1 — pending/granted/abandoned — trước khi trích dẫn chính thức trong hồ sơ.
-4. ☐ Đưa kết quả này vào lane R5 (Novelty challenger) cùng với gate1, theo đúng quy trình `research/protocols/ISEF_REVIEW_ORCHESTRATION.md`, trước khi chủ dự án chốt `DEC-NOV-001`.
+1. [ ] Đọc toàn văn `SRC-FINGER-EXO-BIDIR-FSR-DICKMANN-2021` (đặc biệt phần Methods/Hình 9 nói về "custom-built mechanical enclosure") để xác nhận có phải kiến trúc "hai vách đối diện + preload" hay không, và đối chiếu thuật toán điều khiển lực của họ với thuật toán AAN (force-sharing) của đề tài.
+2. [ ] Tra cứu có hệ thống qua **Espacenet** hoặc **WIPO Patentscope** (không chỉ Google-indexed web_search) với tổ hợp từ khoá `velostat OR "piezoresistive film"` + `exoskeleton OR glove` + `finger OR hand` + mã IPC/CPC đã gắn cờ: `G06F3/014`, `A41D19/00`, `G01L1/20`, và bổ sung `A61H1/02` (thiết bị phục hồi chức năng chi trên), `A61B5/11` (đo chuyển động cơ thể).
+3. [ ] Kiểm tra trạng thái pháp lý (legal status) của CA3048964A1 — pending/granted/abandoned — trước khi trích dẫn chính thức trong hồ sơ.
+4. [ ] Đưa kết quả này vào lane R5 (Novelty challenger) cùng với gate1, theo đúng quy trình `research/protocols/ISEF_REVIEW_ORCHESTRATION.md`, trước khi nhóm nghiên cứu chốt `DEC-NOV-001`.
 
-## 5. Kết luận ngắn (trung thực — để báo cáo cho chủ dự án)
+## 5. Kết luận ngắn (trung thực — để báo cáo cho nhóm nghiên cứu)
 
 - **KHÔNG tìm thấy** một nguồn (bài báo hoặc bằng sáng chế) nào mô tả **chính xác** tổ hợp "Velostat + mảng vi sai hai vách có preload + hand/finger exoskeleton + điều khiển AAN tách lực chủ động/co-contraction" — tính tới lượt tìm kiếm này.
 - **NHƯNG** từng thành phần của tổ hợp đó đều **đã có tiền lệ riêng lẻ**: Velostat trong cấu hình đối xứng/vi sai (CA3048964A1 — khác lĩnh vực: huyết áp); cặp cảm biến áp điện trở kiểu FSR đo lực hai chiều trên khung cứng finger exoskeleton (Dickmann 2021 — rất gần, chưa rõ chi tiết hình học); đọc vi sai áp điện trở trên flexible hand exoskeleton (Zheng 2026 — khác đại lượng đo, là góc chứ không phải lực).
