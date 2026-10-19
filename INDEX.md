@@ -1,9 +1,10 @@
-#  INDEX — Sơ đồ file của dự án
+# INDEX — Sơ đồ file của dự án
 
-> **Đề tài (`DEC-TITLE-003`, 2026-10-11):** Nghiên cứu và phát triển **găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ** (hồ sơ đã nộp vẫn dùng tên cũ `DEC-TOPIC-019`, xem README header)
-> **Học sinh:** Văn Ngọc Nhật Anh — THPT Quảng Trị
-> **Cập nhật:** 2026-10-11 (đồng bộ bản đề cương mới `de_cuong/` + đọc `research/notebooklm_sync/`; AAN nâng thành trụ cột thứ 4 — `DEC-SCOPE-006`)
-> **Trạng thái:** cơ sở lý thuyết & thiết kế hoàn tất; nhóm nghiên cứu đã tự thực hiện bring-up phần cứng thật (`DEC-PHASE-002`), **chưa đạt chuẩn GATE 0 chính thức** (`research/bench/logs/` vẫn trống theo schema).
+> **Hướng đề tài hiện hành:** găng hỗ trợ tập phục hồi vận động tinh sau đột quỵ; chức năng tiến triển từ gập–duỗi có trợ giúp, tự động chuyển AAN theo ngưỡng, tới phối hợp ba ngón gắp–nhấc–di chuyển–đặt thìa. Tên làm việc chưa phải tên cuối.
+> **Cập nhật:** 2026-10-19 · Thẩm quyền: [`research/context/CURRENT_DESIGN_BASELINE.md`](research/context/CURRENT_DESIGN_BASELINE.md), `DEC-REHAB-001` và `DECISION_LOG.md`.
+> **Cảm biến/hệ thống:** 3 Flex sensor (mỗi ngón cái–trỏ–giữa một chiếc) theo dõi gập–duỗi; Velostat ghi áp lực/tiếp xúc tương đối; camera theo dõi thìa/vùng đích/kết quả. Nếu cả 3 Flex cùng đi qua MUX 16 kênh thì còn tối đa 13 kênh cho Velostat/ô tham chiếu; map cuối mở. Orange Pi 5 Pro dự kiến xử lý thị giác; chưa benchmark; RL không thuộc phạm vi. Không yêu cầu KTV chuyển mode. Servo cuốn dây trực tiếp trên tang; an toàn, hồi/duỗi và điều khiển độc lập còn mở.
+> **Bằng chứng:** bench/phantom trước; không thử bệnh nhân/claim hiệu quả lâm sàng/home use đã xác nhận. Các chỉ số kỹ thuật là mục tiêu tới khi có log; không tuyên bố novelty/“đầu tiên”. Hồ sơ đã nộp giữ nguyên.
+> **Drive:** nguồn `11A2.docx` và PDF người dùng cung cấp vẫn nguyên trạng. DOCX review riêng dựa trên draft cũ, hiện không đại diện cho hướng mới.
 
 ---
 
@@ -11,7 +12,7 @@
 
 ```
 .
-├── README.md                      ← Giới thiệu, vấn đề, novelty, kiến trúc, setup
+├── README.md                      ← Tóm tắt định hướng và ranh giới hiện hành
 ├── INDEX.md                       ← File này
 ├── LICENSE
 ├── requirements.txt               ← numpy, matplotlib, scikit-learn
@@ -21,19 +22,21 @@
 │   ├── generate_full_finger_modular.py ← Script FreeCAD Python sinh tham số toàn bộ ngón tay
 │   └── render_full_finger.py          ← Script kết xuất đồ họa trực quan 4 góc nhìn
 ├── de_cuong/
-│   ├── DE_CUONG_NGHIEN_CUU.pdf / .docx (= _BAN_MOI, MD5 trùng) ← [Trọng tâm] BẢN ĐỀ CƯƠNG MỚI NHẤT (16 tr., tạo 2026-10-03) — có Mục 10 (AAN+RAL trên giàn+phantom); chưa rõ đã nộp lại hay chỉ là bản song song (`DEC-SYNC-002`)
+│   ├── DE_CUONG_NGHIEN_CUU.pdf / .docx (= _BAN_MOI, MD5 trùng) ← bản 2026-10-03, lịch sử; phần AAN/lực/phantom-only superseded bởi baseline 2026-10-19
 │   ├── DE_CUONG_NGHIEN_CUU_COBROWSE.docx ← bản rút gọn/khác (40 KB, chưa đọc chi tiết)
 │   └── build_docx.py / make_figures.py / make_plots.py / write_section1.py / figures/ / tikz/ ← script dựng bản PDF/docx ở trên
 ├── docs/
 │   ├── DE_CUONG.pdf / DE_CUONG.txt    ← [Trọng tâm] BẢN ĐÃ NỘP TRƯỜNG (15 tr., 2026-09-26) + trích text tra cứu
 │   ├── DE_CUONG_NOP_TRUONG.md         ← Đề cương nộp trường (bản md; danh tính đã điền từ PDF)
-│   ├── 01_Topic_Definition.md         ← Đề tài, RQ 2 tầng, novelty, pipeline, killer experiment
-│   ├── 02_Theoretical_Foundation.md   ← CƠ SỞ LÝ THUYẾT (…+ §11 ghi chú định nghĩa theo bản nộp)
-│   ├── 03_Literature_Gap_Analysis_Plan.md ← Kế hoạch rà soát khoảng trống 2011–2026
-│   ├── 04_Hardware_Architecture.md    ← Bố trí kênh, MUX, ngân sách nhiễu (…+ §8 cấu hình đã nộp ADS1115+INA333)
-│   ├── 05_De_Cuong_Dang_Ky_DRAFT.md   ← Outline nội bộ (không nộp)
-│   ├── 06_Co_Cau_Co_Khi_Exoskeleton.md ← [Trọng tâm] THIẾT KẾ CƠ CẤU CƠ KHÍ KHUNG NGOÀI (Khớp rãnh trượt bù 13.5mm, Preload Velostat)
-│   ├── OUTLINE_BAOCAO_VISEFD.md       ← Khung báo cáo toàn văn A/B/C theo mẫu ViSEF
+│   ├── 01_Topic_Definition.md         ← Định nghĩa đề tài hiện hành theo baseline 2026-10-19
+│   ├── 02_Theoretical_Foundation.md   ← Lý thuyết tham khảo; định nghĩa project-specific cũ đã superseded
+│   ├── 03_Literature_Gap_Analysis_Plan.md ← Hồ sơ prior-art nội bộ; không dùng để tuyên bố novelty trong đề cương
+│   ├── 04_Hardware_Architecture.md    ← Kiến trúc cảm biến; mô tả actuator AAN cũ đã superseded
+│   ├── 05_De_Cuong_Dang_Ky_DRAFT.md   ← Outline cũ — superseded, giữ để truy vết
+│   ├── 06_Co_Cau_Co_Khi_Exoskeleton.md ← Khung/nẹp CAD; không xác nhận actuator AAN
+│   ├── DE_CUONG_A_B_C_DRAFT_2026-10-19.md ← Bản A/B/C đang cập nhật theo lộ trình rehab + AAN tự động + bài tập thìa; chưa duyệt/nộp
+│   ├── 11A2_CAP_NHAT_DU_THAO_2026-10-19.docx ← Bản Word review cũ; chưa đồng bộ hướng mới, không phải bản nộp
+│   ├── OUTLINE_BAOCAO_VISEFD.md       ← Outline cũ — superseded
 │   └── bao_cao/
 │       ├── A1_ly_do_chon_de_tai.md    ← Tiêu chí A của ViSEF
 │       ├── A2_muc_tieu.md
@@ -49,12 +52,15 @@
 │   ├── claims/CLAIM_LEDGER.csv    ← Claim + cấp bằng chứng + trạng thái
 │   ├── evidence/SOURCE_LEDGER.csv ← Nguồn thật/candidate + trạng thái xác minh
 │   ├── context/
-│   │   ├── DECISION_LOG.md        ← Quyết định chính thức (DEC-*)
-│   │   ├── PROJECT_SNAPSHOT.md    ← Bản nén ngữ cảnh hiện tại
+│   │   ├── CURRENT_DESIGN_BASELINE.md ← Hướng chức năng hiện hành, AAN tự động, cảm biến/camera và ranh giới bằng chứng
+│   │   ├── IMPLEMENTATION_PIPELINE.md   ← Pipeline triển khai/kiểm chứng đề xuất, thresholds vẫn mở
+│   │   ├── DECISION_LOG.md        ← Quyết định chính thức (DEC-*), gồm lịch sử và supersession
+│   │   ├── PROJECT_SNAPSHOT.md    ← Bản nén ngữ cảnh với cập nhật hiện hành đầu trang
 │   │   ├── CONVERSATION_2026-08-25.md     ← Bản nén hội thoại (đề tài cũ, lịch sử)
 │   │   └── CONVERSATION_2026-09-13.md     ← Bản nén hội thoại (pivot sang găng tay)
 │   ├── protocols/
-│   │   ├── 06_glove_hand_GATE_experiment.md   ← [Trọng tâm] GATE experiment CHO ĐỀ TÀI HIỆN TẠI
+│   │   ├── 06_glove_hand_GATE_experiment.md   ← GATE đo; AAN cũ superseded, các GATE cần rà soát
+│   │   ├── 09_AAN_spool_phantom_and_conditional_volunteer.md ← AAN hiện hành; khung thử có điều kiện
 │   │   ├── ISEF_REVIEW_ORCHESTRATION.md       ← Phản biện 6-lane + adjudication
 │   │   ├── 04_orangepi5pro_mega2560_bringup_tests.md ← Lưu ý: DI SẢN (Mega), giữ làm tham khảo
 │   │   └── 05_velostat_stiffness_GATE_experiment.md  ← Lưu ý: SUPERSEDED (DFU) — không dùng
@@ -102,7 +108,7 @@
 
 ## Lưu ý: Lịch sử quan trọng (đã xử lý)
 
-- **2026-10-11:** Đọc toàn bộ repo + setup môi trường (10/11 check); đọc toàn văn `research/notebooklm_sync/` (10 file) → phát hiện bản đề cương mới chưa đồng bộ `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` (2026-10-03, 16tr, Mục 10 = cơ cấu AAN trên giàn đo + phantom). Theo chỉ đạo của nhóm ("AAN là một trong những trụ cột hạt nhân"): `DEC-SYNC-002` (công nhận bản đề cương mới) + `DEC-SCOPE-006` (nâng AAN thành trụ cột kỹ thuật thứ 4, **ranh giới an toàn phantom-only không đổi, không có ngoại lệ**) + `DEC-PHASE-002` (ghi nhận nhóm đã tự thực hiện đo kiểm phần cứng thực tế — chưa đạt chuẩn GATE 0 chính thức) + `DEC-TITLE-003` (đề xuất các phương án tên). Cập nhật README (§1, §6.1 mới, §8, §10, §11, lịch sử), quy định an toàn (§2 ranh giới AAN + cảnh báo cấp bằng chứng của notebooklm_sync), DECISION_LOG (+5), CLAIM_LEDGER (+3), SOURCE_LEDGER (+6).
+- **HISTORICAL — 2026-10-11 (phần phạm vi đã superseded 2026-10-19):** đồng bộ bản đề cương `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` và ghi nhận AAN là trụ cột kỹ thuật (`DEC-SCOPE-006`), khi đó còn giới hạn phantom-only. Phạm vi thử hiện hành được thay bằng `DEC-SCOPE-007`/`DEC-AAN-002`: AAN là mục tiêu chính, servo cuốn dây trực tiếp, phantom trước và tình nguyện viên chỉ sau đánh giá an toàn/phê duyệt. Các ghi nhận khác về bring-up (`DEC-PHASE-002`) và hồ sơ/tên vẫn cần đọc trong decision log theo ngày. Cập nhật README (§1, §6.1 mới, §8, §10, §11, lịch sử), quy định an toàn (§2 ranh giới AAN + cảnh báo cấp bằng chứng của notebooklm_sync), DECISION_LOG (+5), CLAIM_LEDGER (+3), SOURCE_LEDGER (+6).
 - **2026-08-25:** đề tài "đệm khí thích ứng + AAC" bị **xóa toàn bộ** theo DEC-TOPIC-003 (lịch sử còn trong git).
 - **2026-08-26:** chốt Hướng C — lót giày Velostat theo dõi độ cứng mô gan chân (sàng lọc DFU).
 - **2026-08-28:** **PIVOT** — bỏ DFU vì GATE 3 (Usefulness) yếu; chuyển sang **găng tay theo dõi chức năng bàn tay sau đột quỵ** (DEC-TOPIC-018).

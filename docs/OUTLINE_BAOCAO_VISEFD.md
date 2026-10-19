@@ -1,5 +1,7 @@
 # OUTLINE BÁO CÁO TOÀN VĂN — ViSEF
 
+> **SUPERSEDED 2026-10-19 — internal outline only.** This outline predates `DEC-REHAB-001`. The current design is assisted flexion/extension → automatic threshold-based AAN → three-digit spoon task, using Flex, Velostat and task vision. See `research/context/CURRENT_DESIGN_BASELINE.md` and the active A/B/C draft. Do not reuse historical control thresholds or claims; preserve submitted/history files unchanged.
+
 ## Đề tài: Nghiên cứu và phát triển găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`)
 
 > **Học sinh:** Văn Ngọc Nhật Anh (11A2) + Nguyễn Duy Quân (12A1) — THPT Quảng Trị · GVHD: Lê Công Long

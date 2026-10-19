@@ -1,155 +1,59 @@
 # 01 — Định nghĩa đề tài
 
-> **Ngày cập nhật:** 2026-09-13
-> **Học sinh:** Văn Ngọc Nhật Anh — THPT Quảng Trị
-> **Nguồn gốc quyết định:** `research/context/DECISION_LOG.md` (DEC-TOPIC-018, DEC-TOPIC-019, DEC-HW-003, DEC-HW-004).
-> **Trạng thái bằng chứng:** tài liệu **định hướng + thiết kế**. Mọi tuyên bố về độ chính xác/độ nhạy/tương quan lâm sàng là **giả thuyết** cho đến khi qua GATE experiment. Chưa có kết quả đo.
+> **Cập nhật:** 2026-10-19 · **Hướng hiện hành:** `DEC-REHAB-001` cùng các quyết định kỹ thuật đang hiệu lực trong [`research/context/DECISION_LOG.md`](../research/context/DECISION_LOG.md).
+> **Tên đang dùng để phát triển nội dung, chưa phải tên nộp cuối:** *Nghiên cứu và phát triển găng tay hỗ trợ phục hồi chức năng sau đột quỵ cho vận động tinh.*
+> Đây là hướng thiết kế/nghiên cứu; không khẳng định nguyên mẫu đã hoàn thành, đã thử trên bệnh nhân, đã an toàn hoặc đã chứng minh hiệu quả lâm sàng.
 
----
+## 1. Vấn đề và mục tiêu người dùng
 
-## 1. Tên đề tài
+Đề tài hướng tới người trung niên sau đột quỵ gặp khó khăn khi vận động tinh bàn tay và có nhu cầu luyện tập tại nhà. “Tại nhà” là bối cảnh sử dụng mong muốn, chưa phải khả năng sử dụng tại nhà đã được xác nhận. Mục tiêu chức năng là phát triển găng tay có thể hỗ trợ người tập theo lộ trình từ vận động ngón cơ bản tới thao tác phối hợp nhiều ngón với một vật thể.
 
-> **Cập nhật `DEC-TITLE-003` (2026-10-11):** tên hiển thị đổi để phản ánh AAN là trụ cột thứ 4 (`DEC-SCOPE-006`). Hồ sơ đã nộp (`docs/DE_CUONG.pdf` 26/09, `de_cuong/DE_CUONG_NGHIEN_CUU.pdf` 03/10) vẫn dùng tên cũ `DEC-TOPIC-019` cho tới khi nộp lại. **Lưu ý khi dùng tên mới:** cụm "hỗ trợ vận động" phải luôn đi kèm câu giới hạn phạm vi (chỉ trên giàn đo + mô hình tay giả, không tác động lực lên người thật) — không được đứng một mình.
+## 2. Chức năng cốt lõi dự kiến
 
-**Tiếng Việt (chính thức, từ `DEC-TITLE-003`):**
+Hệ thống dự kiến có ba giai đoạn liên tiếp:
 
-> **Nghiên cứu và phát triển găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ**
+1. **Hỗ trợ gập–duỗi ngón:** khi người tập chưa tự khởi động hoặc hoàn thành chuyển động, cơ cấu hỗ trợ vận động theo chu kỳ/biên độ đã được thiết kế. Khả năng tạo cả gập lẫn duỗi an toàn còn phụ thuộc vào cơ cấu hồi/nhả dây và phải được kiểm chứng.
+2. **Chuyển tự động sang AAN:** bộ điều khiển tự chuyển khi các đặc trưng vận động/tín hiệu đạt quy tắc ngưỡng đã xác định trước. Không yêu cầu KTV nhấn nút chuyển chế độ trong quá trình sử dụng. Tín hiệu và giá trị ngưỡng, số lần lặp, cửa sổ quan sát, hysteresis và trạng thái lỗi còn mở; phải xác lập bằng hiệu chuẩn/bench/phantom, không đặt sau khi xem kết quả.
+3. **Luyện thao tác vận động tinh:** người tập phối hợp ngón cái, trỏ và giữa để gắp thìa, nhấc lên, di chuyển đến vị trí đích đã định, rồi thả. Camera theo dõi thìa/vùng đích, nhận biết tiến trình và kết quả nhìn thấy được, sau đó đưa phản hồi trực quan tức thời. Thìa và mục tiêu cụ thể cần được chuẩn hóa trước thử nghiệm.
 
-**Tiếng Anh (dùng khi nộp ISEF/ViSEF bản tiếng Anh):**
+Mục đích là xây dựng một bài tập có chức năng rõ ràng, không phải chỉ ghi dữ liệu cảm biến hay chỉ trình diễn AI. Tập phối hợp ba ngón là lựa chọn thiết kế; nhận định nó giúp phục hồi thần kinh tốt hơn các bài khác là giả thuyết, chưa được chứng minh bởi dự án.
 
-> A glove with directional piezoresistive sensing for quantitative hand motor-function assessment, longitudinal monitoring, and assist-as-needed movement support (bench/phantom-verified) in post-stroke rehabilitation.
+## 3. Vai trò cảm biến và xử lý
 
-**Pitch 1 câu (nói với giám khảo):**
+- **Flex sensor:** dùng ba cảm biến, mỗi ngón cái–trỏ–giữa một cảm biến, để theo dõi biến thiên gập–duỗi/tư thế từng ngón. Cần hiệu chuẩn từng cảm biến trên vị trí lắp thật; không mặc định điện trở đầu ra đã là góc giải phẫu chính xác.
+- **Velostat:** ghi nhận thay đổi áp lực/tiếp xúc tại vị trí cảm biến. Tín hiệu được dùng theo dạng tương đối để bổ sung bằng chứng về nỗ lực/tương tác ngón; Velostat không trực tiếp “đọc ý định”, không đo góc và không cho phép suy lực tuyệt đối theo Newton.
+- **Camera:** nhận diện/vị trí thìa và vùng đích, theo dõi vật qua các pha gắp–di chuyển–đặt và xác định kết quả thị giác. Camera không đo lực ngón và không thay thế thang đo phục hồi chức năng.
+- **Bộ xử lý:** Orange Pi 5 Pro dự kiến chạy thị giác máy tính để định vị thìa/vùng đích và theo dõi trạng thái tác vụ; có thể đánh giá mô hình độ sâu đơn ảnh như Depth Anything nếu bài tập cần thông tin độ sâu. Muốn tọa độ metric phải hiệu chuẩn camera và tỷ lệ cảnh. ESP32-S3 dự kiến quét cảm biến và thực hiện state machine/lệnh servo có giới hạn, nhận trạng thái tác vụ từ Orange Pi; đường giao tiếp này cần xác nhận/benchmark. RL không nằm trong phạm vi đã chốt.
+- **Phân bổ kênh:** phạm vi ba ngón và mục tiêu một CD74HC4067/16 kênh vẫn giữ. Bản đồ phải phân bổ rõ cả Velostat và Flex; nếu tổng số cảm biến cần đọc vượt 16 thì phải thiết kế lại số kênh/phần cứng, không giả định có sẵn kênh phụ.
 
-> "Sau đột quỵ, bệnh nhân phải tự tập tay ở nhà nhưng kỹ thuật viên chỉ gặp họ 1–3 tháng một lần — quãng giữa là một **hộp đen**. Em làm một **găng tay** có **khung cứng** với các **sensing element chế tạo từ vật liệu Velostat** trên vách khung; ngón tay ép vào vách nào thì hệ thống biết lực và **hướng** chuyển động của ngón đó, từ đó **dựng lại bàn tay 3D** và vẽ **đường cong chức năng tay theo tuần** để kỹ thuật viên theo dõi từ xa — không dùng IMU, chi phí thấp, dùng được tại nhà."
+## 4. AAN và cơ cấu
 
----
+1. AAN là mục tiêu điều khiển chính: người dùng chủ động hoặc cố gắng thực hiện, hệ thống chỉ bổ sung trợ lực theo quy tắc đã đặt.
+2. Dự kiến kết hợp tín hiệu Flex (chuyển động) và Velostat (áp lực/tiếp xúc tương đối); trạng thái camera cung cấp ngữ cảnh pha tác vụ/kết quả. Bộ điều khiển suy luận trạng thái từ dữ liệu, không xem một cảm biến đơn lẻ là “ý định” hoàn chỉnh.
+3. Cơ cấu hiện hành là servo cuốn dây câu cá trực tiếp trên tang cuốn, không dùng lò xo trợ lực/SEA hoặc khớp bốn khâu.
+4. Không quy đổi Velostat sang Newton; không dùng `F_assist=max(0,F_target−F_active)` và không khôi phục ngưỡng 5 N đã rút.
+5. Tang, dây, neo, hồi/nhả, servo, điều khiển mở ngón, quy tắc ngưỡng, đo lực độc lập và giới hạn vận hành còn cần thiết kế/kiểm chứng. Một servo cuốn dây theo một chiều không tự chứng minh khả năng gập–duỗi hai chiều hay điều khiển ba ngón độc lập.
 
-## 2. Vấn đề (problem-first)
+## 5. Phạm vi phần cứng, chi phí và khối lượng
 
-- Sau đột quỵ, phục hồi chức năng phụ thuộc vào **luyện tập chủ động, lặp lại, kéo dài tại nhà**.
-- Kỹ thuật viên VLTL-PHCN hướng dẫn trong giai đoạn đầu, sau đó bệnh nhân **tự tập không có giám sát trực tiếp**.
-- Nếu quá trình này không được duy trì hoặc tập sai kỹ thuật mà không được phát hiện:
-  - **Nhẹ:** co cứng, mỏi cơ cục bộ, đau, sưng viêm, chững lại không tiến triển.
-  - **Nặng:** biến dạng khớp, co rút (contracture) khó hồi phục, chèn ép thần kinh ngoại vi.
-- Công cụ đánh giá hiện có (FMA, ARAT, Box & Block Test, Jamar, E-Link) chỉ cho **một ảnh chụp tại thời điểm đo**, tại cơ sở y tế, chi phí cao → **không theo dõi được liên tục**.
+- Ba ngón mục tiêu: cái, trỏ, giữa.
+- 16 kênh analog mục tiêu qua một CD74HC4067. Nếu ba Flex cùng đi qua MUX thì dự kiến dành 3 kênh Flex và tối đa 13 kênh còn lại cho Velostat/ô tham chiếu; bản đồ cuối cùng còn mở, 13 không mặc nhiên là số phần tử Velostat.
+- Mục tiêu khối lượng 80–120 g áp dụng cho cụm đeo tay, không gồm bộ xử lý/pin/servo đặt ngoài tay; chưa đo.
+- Ước tính vật tư cụm đeo 1,0–1,3 triệu VNĐ; ước tính hệ thống/giàn thử E2E khoảng 5,5 triệu VNĐ khi tận dụng thiết bị lab; đều là ước tính, cần BOM/báo giá. Không dùng giới hạn cũ <1,5 triệu VNĐ cho toàn hệ thống.
 
-## 3. Khoảng trống & bằng chứng
+## 6. Kiểm chứng và ranh giới kết luận
 
-| Nguồn | Nội dung dùng cho đề tài |
-|---|---|
-| Amin K.R. et al., *IEEE OJEMB* (2024), DOI 10.1109/OJEMB.2024.3523442 | Hội đồng chuyên gia: công cụ đánh giá hiện tại hạn chế; theo dõi định lượng **giữa các lần tái khám** có ý nghĩa thay đổi cuộc sống và tiết kiệm chi phí; bài toán này là ví dụ điển hình cho nhiều lĩnh vực PHCN |
-| OTHER study (2026), DOI 10.1080/09638288.2026.2643929 | Theo dõi hoạt động tại nhà + coaching từ xa cải thiện chức năng sinh hoạt và tự quản lý sau đột quỵ |
-| Phỏng vấn KTVVLTL-PHCN (DEC-CLINICAL-001) | Xác nhận nguyên văn: giữa hai lần tái khám là **"hộp đen"**; thiết bị tại nhà chỉ hữu ích nếu chỉ số **có ý nghĩa lâm sàng + đủ tin cậy + bổ sung chứ không thay thế** đánh giá lâm sàng |
-| Ý kiến chuyên gia PHCN độc lập thứ hai (DEC-CLINICAL-002, phcn-online.com) | "Đáng đặt chân và nghiên cứu" |
-| Systematic review về AI smart glove (2026, 101 bài 2011–2025) | Phần lớn nguyên mẫu **chưa được kiểm chứng lâm sàng**; tồn tại drift, suy giảm tín hiệu theo thời gian, hiệu chỉnh lại, thiếu chuẩn dữ liệu, ergonomics, thời lượng pin |
-| Wearable arm-use monitoring (PMC9901039, medRxiv 2023) | Cảm biến đeo cổ tay **không** ghi được chuyển động ngón và **không** phân biệt được vận động có mục đích |
+- Giai đoạn hiện hành: rà soát cơ khí/an toàn, đo cảm biến, thử bàn và phantom; ghi log thô, trạng thái camera, trạng thái chế độ, lệnh servo và kết quả tác vụ.
+- Chỉ số kỹ thuật dự kiến: tỷ lệ gắp/đặt thìa thành công, thời gian, số lần rơi/thử lại, đặc trưng chuyển động ngón, trợ lực khi nào/bao nhiêu theo lệnh, độ đúng trạng thái camera và hành vi chuyển chế độ tự động. Chỉ số sẽ được chốt trước khi thử; không trình bày mục tiêu thành kết quả.
+- Có thể xem xét thử có cấp nguồn trên người trưởng thành khỏe mạnh sau khi phantom đạt đánh giá an toàn và có đủ phê duyệt cần thiết; đây không phải hoạt động đã được phép hay đã thực hiện. Không thử bệnh nhân trong phạm vi hiện tại.
+- Tỷ lệ hoàn thành tác vụ không đồng nghĩa hiệu quả phục hồi sau đột quỵ. Muốn khẳng định phục hồi rõ rệt cần nghiên cứu dọc trên người bệnh, thước đo chuyên môn và phê duyệt phù hợp.
+- Không tuyên bố novelty/“đầu tiên”, chẩn đoán, an toàn được chứng nhận, hiệu quả lâm sàng hay đã xác nhận sử dụng tại nhà.
 
-**Khoảng trống (đã thu hẹp sau lượt rà soát prior art 2026-09-19 — phát biểu ở giao điểm hẹp, không dùng câu *chưa có hệ thống nào*):** đã có nguyên mẫu găng theo dõi dài ngày + đánh giá chức năng tay từ 2006 (`SRC-LOWCOST-GLOVE-2006`), app tablet đo khéo léo tay đã có MDC/ICC trên người đột quỵ năm 2021 (`SRC-MULTITOUCH-APP-2021`), và trong nước đã có găng robot theo dõi từ xa do sinh viên làm 2026 (`SRC-VNM-TL-GLOVE-2026`). Chưa tìm thấy hệ thống nào **kết hợp đủ 4** yếu tố: (i) lực **có hướng** tại từng lóng ngón qua vách khung; (ii) chỉ số có khung MDC/ICC rõ ràng cho theo dõi tiến triển; (iii) tự cờ hóa khi dữ liệu không đủ tin; (iv) chi phí linh kiện phổ thông. **Lưu ý quy tắc bằng chứng:** đây là *chưa tìm thấy*, không phải *không tồn tại* — chưa được đưa vào báo cáo cho tới khi xong tra cứu bằng sáng chế theo IPC và đọc toàn văn 5 nguồn hệ trọng (review §3).
+## 7. Hồ sơ và tài liệu điều khiển
 
----
-
-## 4. Điểm mới (nói trung thực — theo đúng mức ViSEF)
-
-> **`DEC-NOV-001` — ĐÃ CHỐT 2026-10-11 (nhóm nghiên cứu):** bảng dưới đây là mức novelty **chính thức** của đề tài — tầng **tổ hợp + phương pháp lập luận**, KHÔNG phải tầng nguyên lý vật lý/cơ khí. Lý do nhóm nghiên cứu nêu: *"nếu mới hoàn toàn thì học sinh THPT sao làm được"* — đây đúng là chuẩn novelty mà ISEF/ViSEF chấp nhận (xem `CLM-NOV-006`/`CLM-NOV-007`, ví dụ ROBO065T giải Tư ISEF 2025 dùng 100% công nghệ có sẵn). Được phép dùng câu *"first to integrate A+B cho [nhóm người dùng cụ thể]"* khi kèm số liệu tự đo. **Cảnh báo bắt buộc giữ:** quyết định này chốt ở mức **phán đoán/khung**, không phải ở mức "đã rà soát prior art đầy đủ" — 3 việc còn nợ (đọc toàn văn 5 nguồn hệ trọng, tra bằng sáng chế theo IPC có hệ thống qua Espacenet/WIPO, lane R5 độc lập) **vẫn phải làm xong trước khi nộp hồ sơ chính thức** (xem `docs/03` §7, `research/context/DECISION_LOG.md` DEC-NOV-001).
-
-| # | Thành phần | Mức mới | Ghi chú |
-|---|---|---|---|
-| 1 | **Cảm biến hướng qua vách khung cứng** — mã hóa hướng chuyển động của lóng ngón bằng áp lực lên vách khung, không dùng IMU/flex sensor | ~~Ứng viên chính (vật lý/cơ khí)~~ → **CẢI TIẾN cấu hình + phương pháp lập luận** (hạ bậc sau lượt rà soát prior art 2026-09-19) | **Đã rà lượt 1** (`research/reviews/2026-09-19_prior_art_novelty_gate1.md`): nguyên lý *vách + áp điện trở → hướng* đã có từ 2014–2015 (`SRC-SIDEWALL-PIEZO-2015`: lõi linh hoạt + 4 vách elastomer, phân biệt shear 4 hướng không cần xử lý tín hiệu phức tạp); kiến trúc *vỏ cứng khớp nối + da áp điện trở trên 16 bề mặt chức năng* đã có năm 2026 (`SRC-ARTGLOVE-2026`) nhưng họ đo góc bằng encoder. Phần còn lại của đề tài: **suy DẤU gập/duỗi chỉ từ mẫu kích hoạt trên vách có preload — không encoder/IMU/camera**. Bắt buộc trích cả 4 nguồn; các nguồn mới đọc abstract → **chưa** được viết là đã chốt |
-| 2 | **Cặp sensing element đối xứng (differential pair)** giảm thành phần drift/nhiệt đồng pha | Kỹ thuật — **KHÔNG mới** | Nguyên lý dummy-gauge/Wheatstone đã có từ lâu; bằng chứng bổ sung (2026-09-19): đặt 2 phần tử ở 2 bên đốt ngón để tách thành phần lực đã có từ 2020 (`SRC-OPENPAD-FINGER-2020`). Chỉ là execution tốt |
-| 3 | **Theo dõi dọc tại nhà + tái tạo bàn tay 3D để chuyên gia xem từ xa**, kèm **cờ từ chối kết luận khi dữ liệu không đủ tin** | **Ứng viên chính** (nâng bậc sau lượt rà soát prior art 2026-09-19) | Khoảng trống chỉ còn ở **giao điểm hẹp**: đã có găng làm *extended monitoring + functional hand assessment* từ 2006 (`SRC-LOWCOST-GLOVE-2006`) và app tablet đo chức năng tay đã chuẩn hóa MDC/ICC trên người đột quỵ năm 2021 (`SRC-MULTITOUCH-APP-2021`) → **vẫn cấm** câu hệ thống đầu tiên; phần chưa tìm thấy ai làm là *lực hướng + khung MDC/ICC + tự phát hiện mất tin cậy* |
-| 4 | **INT8 quantized trên NPU RK3588** | Triển khai kỹ thuật | Không mới về thuật toán |
-
-**Câu định vị dùng khi bị hỏi "cái này có gì mới?":**
-
-> *(bản cập nhật 2026-09-19: bản cũ nói cái-mới-nằm-ở-cơ-chế-đo-lực-có-hướng đã bị prior art thu hẹp — xem `research/reviews/2026-09-19_prior_art_novelty_gate1.md`)*
-> "Cái mới không phải là găng tay + AI, và cũng không phải ý tưởng dùng vách để đo hướng — ý đó đã có trong cảm biến xúc giác từ 2015. Cái mới là: em dùng **các vách có kéo trước + đọc vi sai để lấy DẤU gập/duỗi mà không cần IMU hay encoder**, rồi em **kiểm chứng bằng MDC/ICC xem chỉ số đó có đủ tin để kết luận về tiến triển hay không** — và hệ thống **tự nhận khi nó không đủ tin**."
-
----
-
-## 5. Câu hỏi nghiên cứu (RQ 2 tầng)
-
-**RQ chính (quyết định đề tài sống/chết):**
-
-> R1. Tín hiệu lực-hướng thu được từ mảng sensing element trên khung găng tay có **đủ ổn định và đủ nhạy** để phát hiện **thay đổi chức năng bàn tay thật** theo tuần, **vượt trên** biên độ drift/nhiễu của chính hệ thống đo — đồng thời **không tạo cảnh báo thay đổi giả** không?
-
-**RQ phụ:**
-
-> R2. Từ trường lực-hướng rời rạc đó có thể **suy luận hướng gập/duỗi của từng khớp ngón** và **tái tạo mô hình bàn tay 3D** đủ trung thực để chuyên gia đọc được không?
-> R3. Các chỉ số trích xuất có **tương quan** với công cụ đánh giá lâm sàng chuẩn (Box & Block Test / lực kế / ARAT) ở mức đủ để dùng làm thông tin bổ sung không?
-
-**Điều KHÔNG hỏi (và do đó không claim):** hệ thống không đo lực tuyệt đối, không đo góc khớp tuyệt đối, không đo hoạt động cơ, không chẩn đoán, không thay thế đánh giá lâm sàng.
-
----
-
-## 6. Pipeline hệ thống
-
-```
-Bàn tay người dùng
-   ↓ [bài tập chuẩn: gập / duỗi / cầm nắm / chạm ngón]
-Khung găng in 3D + mảng sensing element (Velostat + copper tape)
-   ↓ [ép vào vách khung → điện trở thay đổi]
-CD74HC4067 (MUX 16 kênh ×1–2)
-   ↓ [1 kênh analog, chọn MUX bằng chân EN]
-ESP32-S3 (ADC1 12-bit + trung bình N mẫu)
-   ↓ [frame + CRC → BLE/UART]
-Orange Pi 5 Pro (RK3588)
-   ├─ Bù ảnh hưởng drift (ô tham chiếu + cặp đối xứng)
-   ├─ Trích đặc trưng → vector lực theo khớp
-   ├─ Suy luận hướng gập/duỗi → tái tạo bàn tay 3D
-   ├─ Mô hình INT8 (RKNN) trên NPU
-   └─ Cảnh báo "dữ liệu không đáng tin" khi mất tính hợp lệ
-   ↓
-Đường cong chức năng theo tuần (digital trajectory)
-   ↓
-Dashboard → KTV / bác sĩ theo dõi từ xa → can thiệp sớm
-```
-
----
-
-## 7. Killer experiment (GATE)
-
-Thí nghiệm này quyết định đề tài sống hay chết, và **phải chạy trên bench/phantom, không cần người tham gia**:
-
-> **GATE C:** Với cùng một phantom, đo lặp qua nhiều phiên/ngày. Thay đổi tín hiệu khi **cố ý thay đổi mức chức năng mô phỏng** phải **lớn hơn có ý nghĩa thống kê** so với biến thiên drift/nhiễu của cùng hệ thống trong cùng khung thời gian.
-> Nếu **không** → mọi kết luận longitudinal là vô nghĩa → dừng, báo thẳng, không viết báo cáo như thể thành công.
-
-Chi tiết đầy đủ 7 cổng (GATE 0 và GATE A → GATE F): [`research/protocols/06_glove_hand_GATE_experiment.md`](../research/protocols/06_glove_hand_GATE_experiment.md).
-
----
-
-## 8. Phần cứng (chốt 2026-09-13 — xem `docs/04_Hardware_Architecture.md`)
-
-| Thành phần | Lựa chọn | Lý do |
-|---|---|---|
-| Sensing element | Velostat + copper tape + cấu trúc sandwich, do tác giả chế tạo | Rẻ, mềm, làm được dạng dải trên vách khung |
-| Khung | Găng in 3D (PLA/TPU) + khung cứng định vị từng lóng ngón | Tạo vách ép để lấy hướng |
-| MUX | CD74HC4067 (16 kênh) × 1–2 | 12–24 kênh với 4–5 GPIO |
-| ADC / MCU | **ESP32-S3** (ADC1 12-bit, 240 MHz, BLE 5, logic 3.3 V) | Thay Arduino Mega 2560 (10-bit, cồng kềnh, không wireless) |
-| Edge | Orange Pi 5 Pro RK3588 (NPU ~6 TOPS) | Suy luận INT8 tại chỗ, không phụ thuộc mạng |
-| Tham chiếu | Load cell + HX711 (bench) | Ground truth lực cho GATE |
-
----
-
-## 9. Lộ trình
-
-| Tầng | Nội dung | Điều kiện |
-|---|---|---|
-| 0 | Rà soát prior art + chốt bố trí kênh | hiện tại |
-| 1 | Chế tạo sensing element + GATE 0 (repeatability) | có Velostat |
-| 2 | GATE A/B (hướng + tái tạo 3D) trên phantom | sau tầng 1 |
-| 3 | **GATE C** (sensitivity to change) — tiêu chí sống còn | sau tầng 2 |
-| 4 | GATE D/E (longitudinal không báo giả, tự kiểm tra lỗi) | sau tầng 3 |
-| 5 | Người khỏe tình nguyện (mô phỏng hạn chế) | **chỉ sau khi có IRB/SRC** |
-| 6 | Pilot bệnh nhân | cần bệnh viện đối tác + IRB |
-
----
-
-## 10. Sai lầm phải tránh (tự nhắc)
-
-1. Biến đề tài thành **robot phục hồi chức năng** → sai hướng, sai an toàn, trùng đề tài khác.
-2. Nói "thay thế Fugl-Meyer/ARAT" → sai và phản tác dụng với giám khảo y khoa.
-3. Nói "đo chính xác lực/góc" khi chưa hiệu chuẩn → mất điểm trung thực.
-4. Nói "loại bỏ drift" → sai về kỹ thuật; chỉ được nói "giảm ảnh hưởng drift".
-5. Gọi "cảm biến Velostat" như thể Velostat là cái cảm biến → sai thuật ngữ (xem `GLOSSARY.md`).
-6. Đưa số liệu chưa đo vào báo cáo → vi phạm nguyên tắc liêm chính khoa học.
+- [`CURRENT_DESIGN_BASELINE.md`](../research/context/CURRENT_DESIGN_BASELINE.md)
+- [`DECISION_LOG.md`](../research/context/DECISION_LOG.md)
+- [`IMPLEMENTATION_PIPELINE.md`](../research/context/IMPLEMENTATION_PIPELINE.md) — pipeline triển khai đề xuất.
+- [`research/protocols/09_AAN_spool_phantom_and_conditional_volunteer.md`](../research/protocols/09_AAN_spool_phantom_and_conditional_volunteer.md)
+- [`docs/DE_CUONG_A_B_C_DRAFT_2026-10-19.md`](DE_CUONG_A_B_C_DRAFT_2026-10-19.md) — bản làm việc, chưa duyệt/nộp.
+- Hồ sơ đã nộp và nguồn Drive lịch sử được giữ nguyên; bản DOCX review trước đây chưa đồng bộ với hướng mới.

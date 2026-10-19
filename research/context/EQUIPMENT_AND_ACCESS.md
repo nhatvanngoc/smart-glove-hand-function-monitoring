@@ -1,7 +1,8 @@
 # Kiểm kê thiết bị & quyền truy cập (2026-09-19)
 
 > **Nguồn:** lời khai của nhóm nghiên cứu trong đối thoại 2026-09-19. Agent **không kiểm kê vật lý** được — ô "xác nhận" dưới đây để nhóm nghiên cứu tự điền.
-> File này **chỉ dùng để lập kế hoạch**, không phải bằng chứng trong báo cáo (mọi con số chi phí phải đến từ hoá đơn/báo giá thật — Phụ lục A `docs/05`).
+> File này **chỉ dùng để lập kế hoạch**, không phải bằng chứng trong báo cáo.
+> **Cập nhật hiệu lực 2026-10-19:** AAN là mục tiêu chính; cơ cấu là servo cuốn dây câu cá trực tiếp trên tang. Hướng chức năng hiện tại là assisted flexion/extension → tự động chuyển AAN theo ngưỡng → tập gắp/di chuyển/đặt thìa bằng ba ngón; Flex theo dõi gập–duỗi, Velostat đo áp lực/tiếp xúc tương đối, camera theo dõi vật/đích/tác vụ. Orange Pi 5 Pro là máy tính thị giác dự kiến, chưa benchmark. Không cần KTV để chuyển mode. Các dòng BOM bên dưới là lịch sử và không tự xác nhận hiện trạng thiết bị. Tang, hồi/nhả, đo lực tham chiếu, ngưỡng và giới hạn an toàn còn mở. Không dùng Velostat để xác nhận Newton; 5 N đã rút. Xem `CURRENT_DESIGN_BASELINE.md`.
 
 ## 1. Thiết bị
 
@@ -10,7 +11,7 @@
 | Velostat (film áp trở) | **Đã có** | GATE 0 → C: mọi sensing element | *[điền: mấy tấm, kích thước, lô]* |
 | Băng đồng (copper tape) | **Đã có** | điện cực của sensing element | *[điền: độ dài]* |
 | ESP32-S3 | **Đã có** | GATE 0 §3 (đo `R_max`, ENOB, `fps_meas`) + bring-up 12 kênh | *[điền: loại board — còn chân ADC1 tự do?]* |
-| Orange Pi 5 Pro (RK3588) | **Đã có** | trạm đo E2E + camera đối chứng + thực nghiệm E1–E4 (INT8 chỉ dưới cổng bằng chứng) | trưởng nhóm 2026-09-29: đã có; đã test INT8 + xử lý ảnh OK *(cần bổ sung: RAM? nguồn + thẻ? model/latency INT8?)* |
+| Orange Pi 5 Pro (RK3588) | **Đã có** (owner inventory 2026-09-29; re-check current condition before testing) | proposed host for spoon/target/task-state computer vision and visual-feedback pipeline; no claim of tested model/metric depth/latency | Earlier note says INT8/image processing was tried, but model, software, end-to-end latency and current configuration need traceable benchmark; do not treat as proof of current rehabilitation function |
 | CD74HC4067 (MUX 16:1) | [Chưa xác định] chưa nêu | GATE 0 §3 trở lên — **món duy nhất ở Lớp 1 có thể còn thiếu** | *[điền]* |
 | DMM chính = FNIRSI 2C23T (10.000 count, DCV ±(0,5%+3), R ±(0,5%+3) theo datasheet) | **Đã có** | GATE 0: `R`/`V` gốc; C1.3–C1.9; M6 | trưởng nhóm 2026-09-29: chốt spec theo datasheet 2C23T; DMM rời chỉ làm máy phụ (đo đồng thời), không cần tra model |
 | FNIRSI 2C23T: scope 2ch/10MHz/50MSa/s/20mV/div min + gen 1Hz–2MHz/0,1–3,3V | **Đã có** | C1.1 (chứng kiến) · M1 · M5/C1.10 · spec sheet E1–E4 · test chuỗi mV (qua chia áp) | spec đã xác minh 2026-09-29 → notebook M-checklist L1–L5 |
@@ -19,7 +20,7 @@
 | Load cell + HX711 | [Chưa xác định] (mua sau) | GATE A/B/C: lực động khi ngón đang chuyển | *chưa cần cho GATE 0* |
 | Khung đỡ + vít M5 + êcu hãm + lò xo | [Chưa xác định] | preload cơ khí (biến số `F_p`) | *[điền]* |
 | INA333 + ADS1115 + MCP6001 + SHT30 + LSM6DS3 *(mới từ bản nộp 2026-09-26)* | [Chưa xác định] | chuỗi đo đã nộp (`CLM-HW-003`) | *[điền sau khi `DEC-HW-005` chốt]* |
-| Khung nhôm 2020 + trượt tuyến tính + vít me + phanh từ + servo Bowden *(rig E4/E5 theo bản nộp)* | [Chưa xác định] (mua sau) | rig RAL + phantom (§10 PDF) | *chưa cần cho GATE 0* |
+| Khung nhôm 2020 + trượt tuyến tính + vít me + phanh từ + servo Bowden *(rig AAN/RAL cũ — SUPERSEDED)* | [Chưa xác định] (mua sau) | Phương án rig cũ; chưa xác nhận khả năng tái dùng cho tang cuốn dây câu | *chưa cần cho GATE 0; thiết kế lại theo protocol 09* |
 | Silicone y tế Shore A 25–30 *(phantom theo bản nộp)* | [Chưa xác định] (mua sau) | đúc phantom tay giả | *đối chiếu tài liệu mô mềm trước khi chốt độ cứng* |
 
 **Ghi chú kỹ thuật quan trọng cho GATE 0:** lực chuẩn **không** cần load cell. Với mỗi khối lượng `m` đã cân, `F = m·g` là chuẩn cơ bản hơn lực kế lò xo

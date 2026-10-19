@@ -1,6 +1,8 @@
 # 02 — Cơ sở lý thuyết (Theoretical Foundation)
 
-> **Ngày:** 2026-09-13 · **Cập nhật 2026-09-19:** thêm §1.4–§1.6, §3.4, §5.4, §7.3, §8.3 (cơ sở lý thuyết cho phương án *tập chủ động có trợ lực* — nhóm nghiên cứu duyệt phạm vi E4+E5+E6, **giai đoạn này chỉ làm lý thuyết**, chưa chốt ngưỡng, chưa viết script) · **Đề tài:** Găng tay thông minh hỗ trợ đánh giá & theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ.
+> **Ngày:** 2026-09-13 · **Bản lý thuyết lịch sử:** các định nghĩa project-specific và mô tả AAN trong nội dung dưới đây phản ánh các phương án cũ.
+> **SUPERSEDED / CURRENT SCOPE — 2026-10-19:** Nội dung bên dưới là lý thuyết và phương án lịch sử; không coi các công thức EI/GAP/RAL, suy luận Velostat→độ/Newton, lò xo/khớp 4 khâu, `F_assist`, 5 N, novelty claim hoặc KTV workflows là thiết kế hiện hành. Hướng mới là găng luyện vận động tinh theo lộ trình hỗ trợ gập–duỗi → tự động chuyển AAN theo ngưỡng → tập gắp thìa bằng ba ngón, với Flex (gập–duỗi), Velostat (áp lực/tiếp xúc tương đối) và camera (vật/đích/kết quả). Xem `research/context/CURRENT_DESIGN_BASELINE.md` và `docs/01_Topic_Definition.md`; tái sử dụng lý thuyết chỉ sau khi đối chiếu nguồn và phạm vi. Không suy diễn kết quả về neuroplasticity hoặc phục hồi lâm sàng.
+> **Đề tài:** găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay sau đột quỵ.
 >
 > **Quy ước bằng chứng (đọc trước khi dùng):**
 > - [Kiến thức nền] **CHUẨN (standard):** kiến thức đã được thiết lập rộng rãi. **Vẫn phải đối chiếu tài liệu gốc (trang/chương) trước khi trích dẫn chính thức.**

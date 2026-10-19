@@ -1,40 +1,34 @@
 # 04 — Kiến trúc phần cứng
 
 > **Ngày:** 2026-09-13 · **Quyết định liên quan:** DEC-HW-003 (ESP32-S3 thay Mega 2560), DEC-HW-004 (bố trí kênh).
+> **Cập nhật hiệu lực 2026-10-19:** kiến trúc chức năng dự kiến gồm Flex sensor theo dõi gập–duỗi, Velostat đo biến thiên áp lực/tiếp xúc tương đối, camera theo dõi thìa/vùng đích/kết quả tác vụ và AAN tự chuyển chế độ theo ngưỡng đã chốt trước. Orange Pi 5 Pro là nền tảng CV dự kiến, chưa benchmark. Ba ngón mục tiêu; 16 kênh qua một CD74HC4067 cần phân bổ lại cho cả Flex và Velostat. AAN dùng servo cuốn dây câu cá trực tiếp trên tang; không lò xo/khớp 4 khâu; hồi/duỗi và an toàn còn mở. Không suy Newton từ Velostat, không dùng `F_assist=max(0,F_target−F_active)` hoặc 5 N. Xem [`CURRENT_DESIGN_BASELINE.md`](../research/context/CURRENT_DESIGN_BASELINE.md) và protocol 09. Phần mô tả cấu hình lịch sử bên dưới đã superseded, không phải bằng chứng thử nghiệm.
 > **Trạng thái:** **thiết kế trên giấy**. Mọi con số về nhiễu/độ phân giải/tốc độ khung dưới đây là **ngân sách dự kiến (design budget)**, phải **đo lại trên bench** trước khi đưa vào báo cáo.
 > **Không** được trích các số trong tài liệu này như kết quả thực nghiệm.
 
 ---
 
-## 1. Sơ đồ tổng thể
+## 1. Sơ đồ chức năng hiện hành (thiết kế dự kiến; chưa tích hợp/benchmark)
 
+```text
+3 Flex sensors (one/digit) ─┐
+                            ├─> 16-channel acquisition budget ─> ESP32-S3
+Velostat pressure/contact ──┘      (1× CD74HC4067; reserve 3 Flex inputs; exact Velostat map OPEN)
+                                  │ sensor features/status
+                                  │
+Fixed camera ─> spoon/target/task vision ─> Orange Pi 5 Pro
+                 (depth model candidate: Depth Anything; metric scale needs calibration)
+                                  │ task state / confidence
+                                  ▼
+             ESP32-S3: automatic threshold state machine + bounded actuator command
+                                  │
+                    servo winds fishing line directly on spool
+                                  │
+             three-digit assisted spoon grasp / transfer / placement
+                                  │
+          visual task feedback: success / retry / placement state (camera/Orange Pi)
 ```
-        ┌──────────── Mảng sensing element (12–24 kênh) ────────────┐
-        │  Velostat + copper tape, dán trên vách khung in 3D        │
-        └───────────────────────────┬───────────────────────────────┘
-                                    │ tín hiệu tương tự
-                        ┌───────────▼───────────┐
-                        │  CD74HC4067 (16:1)     │  ×1 (cấu hình 12 kênh)
-                        │  chọn kênh bằng 4 GPIO │  ×2 (cấu hình 24 kênh,
-                        └───────────┬───────────┘   chọn chip bằng chân EN)
-                                    │ 1 đường analog
-                        ┌───────────▼───────────────────────────┐
-                        │  ESP32-S3                             │
-                        │  · ADC1 12-bit + lấy trung bình N mẫu │
-                        │  · quét kênh → frame + CRC            │
-                        │  · BLE 5 (không dây) / UART (bench)   │
-                        └───────────┬───────────────────────────┘
-                                    │
-                        ┌───────────▼───────────────────────────┐
-                        │  Orange Pi 5 Pro (RK3588)             │
-                        │  · bù ảnh hưởng drift                 │
-                        │  · trích đặc trưng → vector lực       │
-                        │  · suy luận hướng khớp → bàn tay 3D   │
-                        │  · mô hình INT8 (RKNN) trên NPU       │
-                        └───────────┬───────────────────────────┘
-                                    │
-                        Dashboard theo tuần (KTV/bác sĩ)
-```
+
+**Boundary:** camera estimates task/object state, not finger force. Velostat provides relative pressure/contact-related evidence, not semantic intent, angle or Newtons. Flex provides bend/posture information. Any metric 3D coordinate from monocular depth needs calibration. Exact thresholds, channel allocation, timing, control law, return/release and end-to-end performance are open. This diagram is a proposed architecture, not a validated device.
 
 ---
 
@@ -72,7 +66,7 @@
 | CH7 | Ngón út – PIP | phía lòng bàn tay | |
 | CH8 | Ngón cái – MCP | vách đối diện (opposition) | |
 | CH9 | Ngón cái – IP | vách đối diện | |
-| CH10 | Lòng bàn tay (khối thenar) | pháp tuyến | lực cầm nắm |
+| CH10 | Lòng bàn tay (khối thenar) | pháp tuyến | tín hiệu áp trở khi tiếp xúc/cầm nắm |
 | CH11 | **Ô tham chiếu** | trên nẹp cổ tay, không chịu tải người dùng | đo trôi hệ thống |
 
 **Hạn chế của cấu hình 1 (phải nói thẳng):** mỗi khớp chỉ có **một vách** ⇒ chỉ biết *độ lớn*, chưa phân biệt được **dấu** gập/duỗi một cách chắc chắn. Dấu được suy ra từ **so sánh với đường nền (baseline) động**, kém tin cậy hơn đo vi sai.
@@ -91,7 +85,7 @@ Mỗi khớp có **cặp sensing element đối xứng** trên hai vách đối 
 
 Với 24 kênh dùng **2 × CD74HC4067**: cả hai MUX đưa tín hiệu về **cùng một chân ADC1**, chọn bằng chân **EN** (chỉ một chip hoạt động tại mỗi thời điểm) → tránh phải dùng ADC2 (ADC2 dùng chung tài nguyên với Wi-Fi).
 
-> **Nguyên tắc thiết kế cơ khí đi kèm:** mỗi sensing element phải được **kéo trước (preload)** một lực nhỏ, xác định, để tín hiệu có cả nhánh dương và nhánh âm quanh điểm làm việc. Không preload thì không đo được chiều.
+> **Nguyên tắc thiết kế cơ khí đi kèm:** preload là biến số cơ khí cần kiểm tra để tạo điểm làm việc ổn định cho sensing element. Giá trị preload và đáp ứng của từng phần tử phải được xác định bằng phép thử bench có tham chiếu độc lập; Velostat chỉ cho tín hiệu tương đối và không tự xác nhận preload theo Newton. Không mô tả preload hay hướng từ tín hiệu như kết quả trước khi kiểm chứng.
 > 
 > *Chi tiết triển khai cơ cấu cơ khí nẹp ngón, khoang âm preload $9.5 \times 6.8 \times 1.2\,\text{mm}$, bản lề Print-in-Place và khớp rãnh trượt tự lựa bù 13.5mm: xem tài liệu chuyên sâu [`docs/06_Co_Cau_Co_Khi_Exoskeleton.md`](06_Co_Cau_Co_Khi_Exoskeleton.md) và thư mục CAD 3D [`3d_model/custom_exo/full_finger_modular/`](../3d_model/custom_exo/full_finger_modular/). Riêng bài toán đóng/mở vỏ nẹp quanh một đốt ngón (để bệnh nhân tự đeo/tháo một tay) đang được thử nghiệm song song, chưa tích hợp chính thức — xem [`3d_model/custom_exo/fixation_mechanisms_benchmark/README.md`](../3d_model/custom_exo/fixation_mechanisms_benchmark/README.md).*
 
@@ -108,9 +102,9 @@ Velostat (R_sensor thay đổi theo lực)
 ```
 
 **Chọn R_f:** độ nhạy `dV/dR` cực đại khi `R_f ≈ R_sensor`. Vì R_sensor của sensing element tự chế **chưa được đo** [Thông tin], quy trình bắt buộc là:
-1. Đo R_sensor ở các mức tải khác nhau (bench, có load cell tham chiếu).
-2. Chọn R_f nằm giữa dải làm việc (dự kiến hàng chục kΩ — [Thông tin] phải đo).
-3. Ghi lại đường cong `ADC ↔ lực` cho từng sensing element (không dùng chung một đường cong cho mọi kênh).
+1. Đo R_sensor trên bench qua các mức tải được tạo/xác định bằng thiết bị tham chiếu độc lập đã kiểm tra.
+2. Chọn R_f nằm giữa dải điện trở làm việc sau khi đo (giá trị dự kiến chỉ là design budget, phải xác nhận).
+3. Ghi lại đường cong `ADC ↔ điều kiện/tải tham chiếu` để mô tả đáp ứng của từng sensing element. Không dùng đường cong đó để báo cáo lực Newton từ Velostat trong găng nếu chưa có phương pháp hiệu chuẩn và uncertainty phù hợp.
 
 ### 4.2 Ngân sách nhiễu (dự kiến — phải đo lại)
 
@@ -214,9 +208,11 @@ vòng lặp 2 (phương sai → nhãn **"Nghi vấn"** + loại khỏi xu hướ
 
 ---
 
-## 9. Vòng lặp thiết kế 2 (15/10/2026, `DEC-HW-006`): Tối ưu hóa mạch đo dựa trên thực nghiệm cơ khí
+## 9. Vòng lặp thiết kế 2 (15/10/2026, `DEC-HW-006`): ghi nhận bring-up mạch đo
 
-Ghi nhận quá trình thực nghiệm phát hiện giới hạn bão hòa của tầng khuếch đại INA333 khi siết nẹp ngón tay và giải pháp chuyển đổi sang mạch đo trực tiếp qua ADS1115 kết hợp thuật toán xử lý tín hiệu số.
+> **Giới hạn diễn giải:** số liệu/quan sát dưới đây là ghi nhận kỹ thuật, không tự động là GATE pass hay phép đo lực tuyệt đối. Tên cũ `F_net`/“lực vi sai” chỉ được hiểu là tín hiệu vi sai tương đối, không phải Newton; cần đối chiếu log gốc và cấu hình trước khi dùng trong báo cáo.
+
+Ghi nhận quá trình thử mạch phát hiện bão hòa INA333 khi siết nẹp và đề xuất chuyển sang mạch đo ADS1115 kết hợp xử lý số. Tình trạng kiểm chứng chính thức được theo dõi tại `research/context/DECISION_LOG.md` và các log bench.
 
 ```
 [Mạch ban đầu]
@@ -228,7 +224,7 @@ Màng Velostat -> MUX CD74HC4067 -> Tầng INA333 (G ≈ 6.5, V_REF = 1.68V) -> 
 Màng Velostat (kẹp dây đồng mạ niken) + điện trở kéo lên 10 kΩ
    -> MUX CD74HC4067 (thời gian trễ 300 µs và đọc nháp để xả điện tích ký sinh)
    -> Tầng PGA 16-bit tích hợp trong ADS1115 (dải đo mở rộng toàn phần 0V - 3.3V, bước lượng tử 0.125 mV/LSB)
-   -> ESP32-S3: Lọc số 4 bước (Đọc nháp -> Khóa vùng chết 180 mV -> Tự động bám mốc tĩnh -> Lọc EMA và tính lực vi sai)
+   -> ESP32-S3: Lọc số 4 bước (đọc nháp -> khóa vùng chết 180 mV -> bám mốc tĩnh -> EMA và tính tín hiệu vi sai tương đối)
 ```
 
 **Bảng so sánh tối ưu hóa giữa 2 vòng lặp:**

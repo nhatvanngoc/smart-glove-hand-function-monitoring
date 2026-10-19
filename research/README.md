@@ -2,6 +2,8 @@
 
 Thư mục này giữ ngữ cảnh dài hạn, provenance truy vấn, claim/evidence ledger và quy trình phản biện. Mục tiêu: mỗi lần tiếp tục dự án có thể phục hồi trạng thái bằng artifact thay vì dựa vào trí nhớ hội thoại.
 
+> **Current authority (2026-10-19):** use [`context/CURRENT_DESIGN_BASELINE.md`](context/CURRENT_DESIGN_BASELINE.md), the latest dated rows in `context/DECISION_LOG.md`, [`context/IMPLEMENTATION_PIPELINE.md`](context/IMPLEMENTATION_PIPELINE.md) for the proposed build/test order, and [`protocols/09_AAN_spool_phantom_and_conditional_volunteer.md`](protocols/09_AAN_spool_phantom_and_conditional_volunteer.md). The function is progressive: assisted finger flexion/extension → automatic threshold-based transition to AAN → three-digit spoon grasp/transfer/placement. Flex tracks bend/posture; Velostat gives relative pressure/contact evidence; camera tracks object/target/task result and visual feedback; Orange Pi 5 Pro is proposed for vision but unbenchmarked. No therapist action for mode switching, no RL scope. Exact thresholds remain open. Servo direct spool; phantom first; powered healthy-volunteer testing conditional after successful safety review and required approvals. No patient testing, clinical-effectiveness or novelty/“first” claim.
+
 ## Cấu trúc
 
 ```text
@@ -26,6 +28,7 @@ Các đường dẫn `research/cache/`, `downloads/`, `generated/`, và `queries
 
 ## Quy trình mỗi phiên
 
+0. Với đề cương nộp trường, đọc `context/CURRENT_SUBMISSION_2026-10-17.md`, `../AGENTS.md`, `skills/vietnamese-proposal-writing/SKILL.md` và `tooling/WRITING_STYLE_PROFILE.md` trước. Xác định đúng bản Drive/revision đang làm; không mặc định bản Markdown trong repo là mới nhất.
 1. Đọc `context/PROJECT_SNAPSHOT.md`, các decision còn mở và claim `BLOCKED/CONFLICTED/UNVERIFIED`.
 2. Log truy vấn trước hoặc ngay sau khi tìm kiếm:
 

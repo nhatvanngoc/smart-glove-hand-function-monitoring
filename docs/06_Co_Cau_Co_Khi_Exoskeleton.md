@@ -2,6 +2,7 @@
 
 > **Ngày lập:** 2026-10-04  
 > **Quyết định liên quan:** DEC-MECH-001 (Thiết kế nẹp ngón tay dạng mở bụng ngón có thanh gài), DEC-MECH-002 (Cơ cấu Print-in-Place toàn bộ bằng nhựa FDM), DEC-MECH-003 (Khớp rãnh trượt tự lựa bù sai số trục xoay giải phẫu), DEC-MECH-004 (Đốt ngoài cùng hở đầu ngón Open-Tip).  
+> **Cập nhật hiệu lực 2026-10-19:** tài liệu này mô tả khung/nẹp cơ khí, không xác nhận actuator đã tích hợp. Hướng chức năng là hỗ trợ gập–duỗi rồi tự động AAN và tập phối hợp ba ngón gắp thìa; actuator dự kiến là servo cuốn dây câu cá trực tiếp trên tang, không lò xo/khớp 4 khâu. Cơ cấu hồi/nhả để duỗi, điều khiển ba ngón và tương thích với cảm biến Flex/Velostat còn mở. Xem [`CURRENT_DESIGN_BASELINE.md`](../research/context/CURRENT_DESIGN_BASELINE.md) và protocol 09. Các phương án actuator cũ bên dưới là lịch sử, chưa xác nhận tích hợp.
 > **Trạng thái:** **Mô hình CAD tham số 3D hoàn chỉnh & Đã xuất STL/STEP/FCStd** ([`3d_model/custom_exo/full_finger_modular/`](../3d_model/custom_exo/full_finger_modular/)).  
 > **Công cụ thiết kế:** FreeCAD 1.1 Python API (`3d_model/generate_full_finger_modular.py`).
 

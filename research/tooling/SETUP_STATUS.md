@@ -21,6 +21,18 @@ Authoritative full hashes and URLs: `tools/research_sources.lock.json`.
 - Environment check result (re-run 2026-09-27): **10/11** required/target checks pass; only `pdflatex` fails. `miktexsetup` remains an optional warning.
 - Third-party checkouts + 4 skill links re-verified 2026-09-27 via `bootstrap_research_tooling.sh` (all `READY`, pinned commits match lock file).
 
+## Current workspace verification (2026-10-17)
+
+Re-run in the Arena workspace for the proposal-writing session:
+
+- `bash scripts/bootstrap_research_tooling.sh` — completed; the five repositories match the full commit pins in `tools/research_sources.lock.json`; all four local skill links resolve.
+- `python3 -m venv .venv` and `.venv/bin/python -m pip install -r requirements.txt` — completed; NumPy, Matplotlib and scikit-learn import successfully. `.venv/` and `.tools/` are local/ignored, not committed dependencies.
+- `.venv/bin/python scripts/check_research_environment.py` — **10/11** checks pass. The sole required/target failure is `pdflatex` not installed; optional `miktexsetup` is also absent. No TeX distribution was installed in this run. PDF/LaTeX rendering therefore remains unavailable here; this does not block research ledger, Markdown or Python analysis work.
+- `bash scripts/bootstrap_research_tooling.sh --check` — all pinned checkouts passed.
+- Current Drive intake was read, not modified: see `research/context/CURRENT_SUBMISSION_2026-10-17.md`.
+
+Reproduce the setup with the commands above. Do not claim `--strict` passes until a TeX runtime is installed and the check is rerun.
+
 ## Topic-related note (2026-08-25)
 
 - All air-cushion/AAC artifacts (docs, cad, diagrams, simulation, pipeline, experiments, outputs, src, input baseline report, SOFA scripts) were **deleted** per DEC-TOPIC-003. No old smoke experiments remain; new experiment scripts will be added when the hardware/bench work begins.
