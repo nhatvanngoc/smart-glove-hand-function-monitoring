@@ -1,3 +1,19 @@
+# Project snapshot — current summary 2026-10-19 (owner update)
+
+> **Current authority:** `research/context/CURRENT_DESIGN_BASELINE.md` and the latest owner decisions in `research/context/DECISION_LOG.md`, including `DEC-REHAB-001`. Historical entries below are retained for traceability; do not treat superseded proposals as active instructions.
+>
+> **Current functional direction:** a glove intended to support fine-motor rehabilitation practice for middle-aged people after stroke, with home practice as a design target (not validated home use). The intended progression is assisted finger flexion/extension → automatic threshold-based transition to AAN → coordinated thumb/index/middle spoon grasp, lift, transfer and placement at a defined target. No KTV/therapist action is required to switch modes. Exact features/thresholds/windows/hysteresis/fallback remain OPEN.
+>
+> **Sensor and vision roles:** owner confirmed three Flex sensors, one per thumb/index/middle finger, for bend/posture; Velostat provides local pressure/contact-related relative evidence, not semantic intent, angle or absolute force; camera follows spoon/target/task completion and provides immediate visual feedback. Orange Pi 5 Pro is the proposed vision-compute platform; no vision/depth/latency benchmark or RL capability is claimed. If all sensors share the 16-channel CD74HC4067, reserve 3 Flex channels and at most 13 remain for Velostat/reference inputs; exact map is open.
+>
+> **AAN/mechanics:** primary control objective; servo winds fishing line directly on a spool, no spring/SEA or four-bar linkage. Return/release and active extension, three-finger actuation independence, force reference and thresholds are unresolved. Velostat not Newton; old `F_assist` equation and 5 N criterion withdrawn.
+>
+> **Evidence boundary:** bench/phantom first. Powered healthy-volunteer tests only conditional after safety assessment/required approvals. No patient testing, clinical-effectiveness, neuroplasticity, validated home-use, safety certification or novelty/“first” claim. Task measures (placement success, time, drops/retries, transition behavior, vision accuracy) are engineering outcomes, not clinical recovery results. Working title is provisional. Active A/B/C draft: `docs/DE_CUONG_A_B_C_DRAFT_2026-10-19.md`; source Drive files and submitted documents remain unchanged.
+
+> **HISTORICAL — superseded for current proposal scope on 2026-10-19.** Notes below preserve earlier owner decisions and technical proposals; follow the current authority above when they conflict.
+
+---
+
 # Project snapshot — 2026-09-19 (lượt rà soát prior art 1) · nền 2026-09-13 · cập nhật 2026-10-13 (DEC-GATE-002, DEC-ARCH-001: AAN + Velostat + RL + Orange Pi 5 Pro Edge Intelligence)
 
 > Bản nén ngữ cảnh để phiên sau khôi phục trạng thái **bằng artifact**, không dựa vào trí nhớ hội thoại.

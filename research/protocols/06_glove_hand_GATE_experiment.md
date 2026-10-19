@@ -1,13 +1,14 @@
 # 06 — GATE experiment: Găng tay đánh giá, theo dõi & hỗ trợ (AAN) chức năng bàn tay sau đột quỵ
 
-> **Ngày soạn:** 2026-09-13 · **Cập nhật cấu trúc lớn: 2026-10-13** (thống nhất trong nhóm nghiên cứu, xem `DEC-GATE-002` ở `DECISION_LOG.md`).
+> **Ngày soạn:** 2026-09-13 · **Cập nhật cấu trúc lớn:** 2026-10-13.
+> **CẢNH BÁO HIỆU LỰC (2026-10-19):** toàn bộ GATE trong tài liệu này được thiết kế cho đề tài monitoring/đo cũ và chưa tái ánh xạ sang chức năng mới `DEC-REHAB-001`. Các phần AAN, cơ cấu, luật điều khiển, ngưỡng lực và thử nghiệm người đã lỗi thời khi trái với baseline hiện hành. Không dùng lò xo, khớp 4 khâu, công thức `F_assist`, 5 N hoặc giá trị số AAN cũ. Hiện hành: hỗ trợ gập–duỗi → tự động chuyển AAN theo ngưỡng → tập task thìa, dùng Flex, Velostat và camera theo vai trò riêng. Dùng protocol 09 làm khung AAN/bench-phantom mới; các GATE cảm biến cũ chỉ là tài liệu tham khảo cần thiết kế lại, không phải GATE pass hay protocol hiện hành.
 > **Trạng thái:** CHỜ vật liệu + phần cứng (Velostat, khung in 3D, ESP32-S3, CD74HC4067, load cell).
 > **Đây là thí nghiệm quyết định đề tài sống hay chết.** Không có GATE pass ⇒ không viết kết luận.
 >
 > **Lý do tái cấu trúc (2026-10-13):** `DEC-SCOPE-006` (2026-10-11) đã chốt AAN là **trụ cột kỹ thuật thứ 4**, ngang hàng với mảng cảm biến/bộ ba chỉ số/lớp tự kiểm chuẩn — nhưng bảng GATE ở bản cũ của file này **chỉ kiểm chứng nhánh ĐO** (0/A/B/C), còn phần AAN chỉ nằm rải rác dưới tên phụ "GATE A′"/"GATE RAL" trong `07_ral_phantom_and_ktv_interview.md`, không có vị thế ngang hàng. Từ bản này: **hai nhánh song song**, mỗi nhánh có cổng sống còn (trọng tâm) riêng. Đồng thời, **GATE F (INT8/NPU) bị tạm hoãn** — xem §4 — cho tới khi chốt được nhiệm vụ phù hợp nhất cho Orange Pi 5 Pro.
 >
-> **Nguyên tắc bắt buộc (không đổi):**
-> - Toàn bộ GATE ở cả hai nhánh chạy trên **bench/phantom**, **không cần người tham gia** ⇒ không cần IRB cho các cổng này (`DEC-SCOPE-003`/`DEC-SCOPE-006` — ranh giới an toàn phantom-only không có ngoại lệ).
+> **Nguyên tắc hồ sơ:**
+> - GATE bench/phantom là giai đoạn đầu. Thử AAN có tác động lực trên tình nguyện viên chỉ có thể được xem xét sau đánh giá an toàn đạt và đủ phê duyệt/chấp thuận; xem protocol 09. Nội dung cũ trong file này khẳng định phantom-only tuyệt đối đã bị superseded.
 > - Mọi log phải lưu thô, có timestamp, có mã phiên, vào `research/bench/` (và bản gốc không bị sửa).
 > - Ngưỡng PASS/FAIL phải **chốt trước khi đo** và ghi vào file này; cấm chỉnh ngưỡng sau khi thấy kết quả. Các ngưỡng đánh dấu **ĐỀ XUẤT — CHƯA CHỐT** là kế thừa nguyên trạng từ `07_ral_phantom_and_ktv_interview.md` (nhóm nghiên cứu hoãn chốt từ 2026-09-19), không phải số liệu agent tự bịa ra ở bản cập nhật này.
 

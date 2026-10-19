@@ -1,5 +1,7 @@
 # A.7 — Cơ sở khoa học của "tập chủ động có ý thức" và hệ quả measurement (BẢN NHÁP)
 
+> **SUPERSEDED 2026-10-19 — draft/archive only.** This text predates `DEC-REHAB-001`; do not reuse as current proposal wording. Current direction: assisted finger flexion/extension → automatic threshold-based AAN → three-digit spoon grasp/lift/transfer/placement; Flex tracks bend/posture, Velostat relative pressure/contact, camera tracks object/target/task outcome and visual feedback. Thresholds, channel map and implementation remain open. See `research/context/CURRENT_DESIGN_BASELINE.md` and `docs/DE_CUONG_A_B_C_DRAFT_2026-10-19.md`. Preserve this historical draft and all submitted files unchanged.
+
 > **Trạng thái:** `DRAFT` — nhóm nghiên cứu chốt giữ nguyên bản nháp (2026-09-19). Phạm vi đã duyệt là E4+E5+E6 (`DEC-SCOPE-003`), nhưng **giai đoạn này chỉ làm cơ sở lý thuyết**; bản chính thức sẽ viết sau khi §1.4–§7.3 của `docs/02` được duyệt nội dung.
 > **Không** đưa ví dụ thành tích hội thi (ROBO065T/ISEF 2025) vào hồ sơ nộp — chỉ lưu trong `research/`.
 > **Nguồn:** viết lại từ đề xuất của nhóm nghiên cứu ngày 2026-09-19, sau khi kiểm toán từng tuyên bố tại

@@ -1,5 +1,7 @@
 # A.1 — Lý do chọn đề tài
 
+> **SUPERSEDED 2026-10-19 — draft/archive only.** This text predates `DEC-REHAB-001`; do not reuse as current proposal wording. Current direction: assisted finger flexion/extension → automatic threshold-based AAN → three-digit spoon grasp/lift/transfer/placement; Flex tracks bend/posture, Velostat relative pressure/contact, camera tracks object/target/task outcome and visual feedback. Thresholds, channel map and implementation remain open. See `research/context/CURRENT_DESIGN_BASELINE.md` and `docs/DE_CUONG_A_B_C_DRAFT_2026-10-19.md`. Preserve this historical draft and all submitted files unchanged.
+
 Đột quỵ là nguyên nhân hàng đầu gây tàn tật lâu dài tại Việt Nam và trên toàn cầu. Tỷ lệ hiện mắc đột quỵ tại Việt Nam lên đến 1.541 trên 100.000 dân [1]. Trong số các di chứng sau đột quỵ, tổn thương vận động chi trên là di chứng phổ biến, ảnh hưởng đến khoảng 80% người bệnh trong giai đoạn sớm [2], làm hạn chế nhiều hoạt động sinh hoạt hằng ngày.
 
 Để khắc phục các di chứng, phục hồi chức năng bàn tay đòi hỏi sự luyện tập kiên trì tại nhà giữa các lần tái khám. Tuy nhiên, qua tham khảo kỹ thuật viên vật lý trị liệu cho thấy, các công cụ đánh giá hiện nay như FMA hay Box and Block Test chỉ cung cấp kết quả tại một thời điểm đánh giá, chưa phản ánh quá trình bệnh nhân vận động tại nhà, khó theo dõi liên tục. Khuyết điểm này cũng được một hội đồng chuyên gia xác định năm 2024 [3]. Nghiên cứu gần đây cho thấy theo dõi hoạt động kết hợp hỗ trợ từ xa có thể cải thiện khả năng vận động và tự quản lý của người bệnh sau đột quỵ [4].

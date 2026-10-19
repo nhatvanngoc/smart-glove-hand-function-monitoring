@@ -1,5 +1,7 @@
 # A.6 — Phương pháp nghiên cứu
 
+> **SUPERSEDED 2026-10-19 — draft/archive only.** This text predates `DEC-REHAB-001`; do not reuse as current proposal wording. Current direction: assisted finger flexion/extension → automatic threshold-based AAN → three-digit spoon grasp/lift/transfer/placement; Flex tracks bend/posture, Velostat relative pressure/contact, camera tracks object/target/task outcome and visual feedback. Thresholds, channel map and implementation remain open. See `research/context/CURRENT_DESIGN_BASELINE.md` and `docs/DE_CUONG_A_B_C_DRAFT_2026-10-19.md`. Preserve this historical draft and all submitted files unchanged.
+
 - **Tổng quan tài liệu:** Rà soát y văn về di chứng vận động sau đột quỵ, công cụ đánh giá chức năng bàn tay, đặc tính kỹ thuật Velostat, và các hệ thống theo dõi tại nhà; đối chiếu prior art + bằng sáng chế trước khi chốt mức mới.
 
 - **Tham khảo ý kiến (ẩn danh):** Kỹ thuật viên vật lý trị liệu – phục hồi chức năng phản biện giao thức đo trên giấy (phiếu + ghi chép); ý kiến là bằng chứng nhu cầu, không phải bằng chứng kết quả.

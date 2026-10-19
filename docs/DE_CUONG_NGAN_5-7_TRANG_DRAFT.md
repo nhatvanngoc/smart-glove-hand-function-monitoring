@@ -1,5 +1,7 @@
 # ĐỀ CƯƠNG NGHIÊN CỨU KHOA HỌC KỸ THUẬT (BẢN NGẮN - NỘP TRƯỜNG)
 
+> **SUPERSEDED 2026-10-19 — draft/archive only.** This text predates `DEC-REHAB-001`; do not reuse as current proposal wording. Current direction: assisted finger flexion/extension → automatic threshold-based AAN → three-digit spoon grasp/lift/transfer/placement; Flex tracks bend/posture, Velostat relative pressure/contact, camera tracks object/target/task outcome and visual feedback. Thresholds, channel map and implementation remain open. See `research/context/CURRENT_DESIGN_BASELINE.md` and `docs/DE_CUONG_A_B_C_DRAFT_2026-10-19.md`. Preserve this historical draft and all submitted files unchanged.
+
 > **CẬP NHẬT 2026-10-13:** Ban KHKT đã ra thông báo chính thức yêu cầu đề cương nộp vòng trường theo
 > đúng 6 mục khác với cấu trúc A-D dưới đây (Tên dự án / Lý do chọn đề tài / Mục tiêu nghiên cứu /
 > Ý tưởng và nội dung nghiên cứu / Sản phẩm-kết quả dự kiến / Tính khả thi), hạn nộp 17h 18/10/2026.

@@ -1,5 +1,7 @@
 # 03 — Kế hoạch phân tích khoảng trống nghiên cứu (2011–2026)
 
+> **Project reporting rule (2026-10-19):** this internal prior-art file is retained for tracking only. Do not lift its legacy candidate-gap statements into a submission; do not claim novelty/“first,” and keep “not found” distinct from “does not exist.” The current design direction is the progressive assisted-flexion → automatic-threshold AAN → three-digit spoon task with Flex, Velostat and camera; see `research/context/CURRENT_DESIGN_BASELINE.md`. The existing matrix was written for an earlier monitoring/force-sensing scope. Add a new targeted review lane for AAN threshold transitions, Flex+Velostat roles/placement, task-oriented vision for spoon/object transfer, hand exoskeletons and home rehabilitation before making any novelty statement. No current novelty conclusion is approved.
+
 > **Ngày:** 2026-09-19 (lượt rà soát 1) · **Trạng thái:** **ĐÃ CHẠY LƯỢT ĐẦU — CHƯA HOÀN TẤT.**
 > Kết quả lượt 1: `research/reviews/2026-09-19_prior_art_novelty_gate1.md` (ma trận §5 đã điền, 24 nguồn mới vào ledger, 3 nguồn `UNVERIFIED` đã xác minh danh tính thư mục).
 > **Chưa hoàn tất** vì: (i) cả 24 nguồn mới đều chưa đọc toàn văn (20 `READ_ABSTRACT`, 4 `UNVERIFIED` = mới thấy snippet); (ii) tra bằng sáng chế mới ở mức 1 truy vấn, **chưa** tra theo IPC; (iii) chưa có lane R5 độc lập adjudicate.

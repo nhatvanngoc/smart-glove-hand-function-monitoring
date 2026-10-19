@@ -1,6 +1,6 @@
 # ĐỀ CƯƠNG DỰ ÁN DỰ THI KHKT CẤP TRƯỜNG
 
-> **Trạng thái: DỰ THẢO, soạn 2026-10-13 - chưa chốt, chờ nhóm nghiên cứu duyệt trước khi nộp.**
+> **SUPERSEDED 2026-10-19:** đây là bản nháp lịch sử, giữ nguyên để truy vết. Hướng hiện hành là gập–duỗi có trợ giúp → tự động chuyển AAN theo ngưỡng → tập phối hợp ba ngón gắp/di chuyển/đặt thìa, với Flex, Velostat và camera theo vai trò riêng. Xem [`DE_CUONG_A_B_C_DRAFT_2026-10-19.md`](DE_CUONG_A_B_C_DRAFT_2026-10-19.md) và baseline; không dùng nội dung cũ như bản hiện hành.
 > File này bám sát đúng 6 mục của "THÔNG BÁO về việc nộp đề cương các dự án đã đăng ký tham gia
 > KHKT cấp trường" (ảnh chụp thông báo, nhận 2026-10-13): Tên dự án - Lý do chọn đề tài - Mục tiêu
 > nghiên cứu - Ý tưởng và nội dung nghiên cứu - Sản phẩm/kết quả dự kiến - Tính khả thi.
