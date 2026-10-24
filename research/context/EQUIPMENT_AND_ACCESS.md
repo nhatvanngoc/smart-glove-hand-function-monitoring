@@ -1,6 +1,18 @@
 # Kiểm kê thiết bị & quyền truy cập (2026-09-19)
 
-## Kiểm kê cập nhật 2026-10-23 — dùng cho bước mua linh kiện
+## Kiểm kê cập nhật 2026-10-24 — ĐÃ CHỐT TOÀN BỘ DANH MỤC VÀ KIẾN TRÚC PHẦN CỨNG (`DEC-HW-008`)
+
+Chủ dự án đã chính thức chốt mã linh kiện, thông số và phương án phân bổ 2 cụm (đai hông và đeo tay):
+
+| Linh kiện / Module | Mã / Thông số kỹ thuật chốt | Vị trí lắp đặt | Vai trò chức năng |
+|---|---|---|---|
+| **Cảm biến uốn cong (Flex)** | **3x ZD10-100** (Dài 100 mm, dày <0,25 mm, $R > 10	ext{ M}\Omega 	o 20-50	ext{ k}\Omega$, >1 triệu lần uốn) | Mu nẹp 3 ngón (kéo dài qua khớp MCP về mu bàn tay) | Đo góc gập ngón liên tục ($0^\circ - 90^\circ$); cầu phân áp $R_{\text{ref}} = 47	ext{ k}\Omega - 100	ext{ k}\Omega$ |
+| **Động cơ trợ lực (Servo)** | **3x MG90S** (Bánh răng kim loại, 13,4 g, $22,8 	imes 12,2 	imes 28,5	ext{ mm}$, mô-men $1,8 - 2,2	ext{ kg}\cdot	ext{cm}$) | Cụm nẹp cổ tay | Tang cuốn 14 mm sinh lực kéo ~25 N (vượt mức yêu cầu 3–6 N để gập ngón) |
+| **Cảm biến thị giác** | **Camera OV13855** (13 MP, MIPI-CSI 4-lane cho Orange Pi 5 Pro) | Giá đỡ bàn tập / chân đế bao quát cảnh gắp thìa | Cung cấp luồng ảnh RGB cho mô hình Depth Anything V2 ước lượng độ sâu 3D |
+| **Khối nguồn chính** | **Khối Pin Li-ion 2S (2 cell 18650, 7,4 V danh định)** | Hộp điều khiển đai hông | Cung cấp năng lượng di động, an toàn y sinh |
+| **Mạch hạ áp** | **Module Buck DC-DC XL4005 (Dòng tải đỉnh 5A)** | Hộp điều khiển đai hông | Hạ áp từ 7,4V xuống 5V sạch cấp cho Orange Pi 5 Pro và 5V động lực cho Servo |
+| **Phân bổ 2 cụm & Cáp nối** | **Chiều dài cáp: 50 cm** từ cẳng tay về đai hông | Cáp bẹ mềm bọc dù (~10–11 lõi) | Giảm 70% khối lượng trên tay (còn ~80–90g), chống mỏi và chống sụt cổ tay |
+
 
 Theo chủ dự án, hai hạng mục chính còn cần mua là **3 cảm biến Flex** và **module camera**. ADS1115 đã được chủ dự án xác nhận có trong trao đổi trước. Không dùng lại dòng “ADS1115 chưa xác nhận” hoặc cấu hình 11 kênh trong bảng lịch sử phía dưới để lập danh sách mua hiện tại.
 
