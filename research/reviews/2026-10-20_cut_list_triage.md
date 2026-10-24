@@ -1,0 +1,51 @@
+# Thẩm định danh sách 16 mục "xem xét loại bỏ / cắt giảm" — 2026-10-20
+
+**Bối cảnh.** Chủ dự án đưa danh sách 16 hạng mục xếp theo 3 cấp độ rủi ro khi ra hội đồng (ViSEF/ISEF), và link bản báo cáo hiện hành trên Drive: `11A2_ban_gop_hoan_thien.docx` (ID `1f8zHjhmekds0TzaTcMi9UqzywXxLHb_B`, 1.083.233 B). Đối chiếu cho thấy bản đó **ghép từ chính đề cương A/B/C** của dự án (A.1, A.2.1, A.3, B.1 bốn tầng, C.4 năm mốc, C.5) nên phần lớn các mục trong danh sách nhắm vào **câu chữ của bản ghép**, không phải của `docs/DE_CUONG_A_B_C_BAN_NOP_2026-10-20.md`.
+
+**Hai chỗ danh sách sai so với hồ sơ repo:**
+
+1. Mục 4 nói 3 cảm biến Flex là *"linh kiện ảo do AI tự thêm vào kịch bản gộp, trong repository và phòng lab hoàn toàn không có"*. Sai về nguồn gốc: `research/context/PROJECT_SNAPSHOT.md` ghi **"owner confirmed three Flex sensors, one per thumb/index/middle finger, for bend/posture"**, và `DEC-CHMAP-001` (**PA-2**, chủ dự án duyệt 2026-10-20) là 3 Flex + 6 Velostat + 2 REF = 11 kênh. Bản ghép của chủ dự án cũng giữ Flex ở A.3 nội dung (1) và B.1 Tầng 1. **Phần đúng của mục 4:** `research/context/EQUIPMENT_AND_ACCESS.md` **không có dòng nào cho Flex** → tình trạng sở hữu và giá chưa được xác nhận. Đây là việc phải điền, không phải lý do để cắt thiết kế.
+2. Mục 2 kết luận phải bỏ "đọc nháp" vì *"đọc thanh ghi số qua I²C không thể xả tụ tương tự"*. Nửa đầu đúng (cơ chế "xả điện tích dư trên tụ ký sinh" là giải thích sai cho ADC delta-sigma), nửa sau sai: với ADS1115, **lần chuyển đổi đầu tiên sau khi đổi kênh vẫn chứa mẫu của kênh cũ trong bộ lọc số**, nên bỏ lần đọc đầu là khuyến cáo đúng. Đã sửa cơ chế, **giữ** thao tác đọc nháp. Con số thay thế 30–50 µs trong danh sách cũng là ước đoán chưa đo nên không được nhận vào.
+
+**Một phát hiện ngoài danh sách, nghiêm trọng hơn:** `EQUIPMENT_AND_ACCESS.md` ghi **CD74HC4067 = "[Chưa xác định] chưa nêu — món duy nhất ở Lớp 1 có thể còn thiếu"**, và ADS1115 nằm trong nhóm "[Chưa xác định]". Toàn bộ cấu hình 11 kênh (PA-2) và mọi con số tốc độ khung phụ thuộc hai linh kiện này. Phải xác nhận trước mốc 1.
+
+## Bảng thẩm định
+
+| # | Hạng mục | Kết luận | Đã làm / còn chờ |
+|---|---|---|---|
+| 1 | FSM 7 chế độ (`SAFE_STOP`/`FAULT`/`INVALID`/`EVAL`…) | **Đồng ý một phần** | Đã bỏ "servo quá dòng" khỏi `FAULT` (không có shunt); `FAULT` nay chỉ gồm điều kiện phần mềm phát hiện được (mất phản hồi, mất đồng bộ, vượt hành trình). Đã thêm câu nói rõ nguyên mẫu **không có** shunt đo dòng, encoder góc, rơ-le ngắt nguồn; an toàn khi mất nguồn dựa vào chốt chặn cơ khí và ngàm bẩy mở nẹp. **Chờ quyết định:** có thu về chu trình 3 pha (Nghỉ → Đo nỗ lực → Kéo trợ lực) không |
+| 2 | "Đọc nháp xả tụ ADS1115 300 µs" | **Đồng ý một phần — danh sách sai nửa sau** | Đã viết lại đúng cơ chế delta-sigma (bỏ lần chuyển đổi đầu sau đổi kênh + thời gian xác lập RC), **giữ** đọc nháp, đánh dấu 300 µs là tham số chưa đo. Không nhận con số 30–50 µs |
+| 3 | Vùng chết 180 mV "ghim phẳng 0,00 mV" | **Đồng ý — rủi ro thật** | Đã thêm đoạn: 180 mV **cao hơn** dải nhiễu nền đã ghi nhận 50–135 mV, có nguy cơ triệt tiêu tín hiệu nỗ lực sớm của người yếu cơ và làm hỏng phép đo EI → ngưỡng chưa đạt, phải xác định lại theo phân bố nhiễu từng kênh. Không nhận con số 20–50 mV vì chưa đo |
+| 4 | Bỏ 3 cảm biến Flex | **Không đồng ý với lý do nêu** | Flex có trong `PROJECT_SNAPSHOT` (owner confirmed) và `DEC-CHMAP-001` PA-2 (đã duyệt). Bỏ Flex thì mất nguồn đo gập–duỗi từng ngón, GAP mất đại lượng trong găng, cấu hình 11 kênh về 8. **Chờ chủ dự án xác nhận:** đã có 3 Flex chưa, giá bao nhiêu → điền vào `EQUIPMENT_AND_ACCESS` và BOM ở C.3 |
+| 5 | RL INT8 trên NPU Orange Pi 5 Pro | **Đã loại trước đó** | `DEC-EDGE-001` + `DEC-RL-001/002`. Bản nộp quét 0 kết quả với INT8/NPU/RKNN/RL. Phương án thay thế của danh sách (điều khiển tỷ lệ theo ngưỡng vi sai hoặc bảng tra trên ESP32) khớp nội dung bản nộp đang mô tả |
+| 6 | Mech 9 "22 giây và 50 chu kỳ" | **Đồng ý** | Repo không có biên bản. Bản nộp vốn ghi "ghi nhận sơ bộ, chưa có biên bản đo"; **bản ghép lại viết thành kết quả** ("đạt thời gian tự thao tác 22 giây… đảm bảo độ bền mỏi sau 50 chu kỳ" ở C.5) trong khi Mốc 2 vẫn ghi "sẽ đo" → tự mâu thuẫn. Đã thêm câu: nếu không có biên bản trước khi nộp thì chuyển thành chỉ tiêu kiểm nghiệm của mốc 2, Mech 9 chỉ giới thiệu như phương án hình học khắc phục lỗi gãy của Mech 8. **Chờ trả lời:** Mech 9 đã in và bấm giờ thật chưa |
+| 7 | Viện dẫn Penfield (1937) và Hebb (1949) | **Không đồng ý bỏ trích dẫn** | Chính chủ dự án viết đoạn A.2.1 đó ngày 2026-10-20, và bản mẫu `11A2.pdf` có mục "2.1 Đại diện vỏ não và cơ chế phản hồi Hebbian". Danh sách phê phán "viện dẫn Hebb cho Dashboard web" — **bản nộp không có chữ Dashboard**; chữ đó ở B.1 của bản ghép. Đã sửa phần của mình: gọi đúng tên "phản hồi thị giác thời gian thực, cho người tập tự quan sát nỗ lực phát lực". Việc cần làm ở bản ghép là bỏ/giảm chữ "Dashboard", không phải bỏ Hebb |
+| 8 | Nhánh thị giác 8 trạng thái, trễ ≤ 20 ms | **Đồng ý một phần** | Bản nộp chưa từng đặt ≤ 20 ms cho thị giác (đó là trễ cảm biến → lệnh servo); bản ghép gộp hai số nên mới vô lý. Đã thêm: 30 khung hình/giây → một chu kỳ phơi sáng 33,3 ms, nên ≤ 20 ms không áp dụng cho nhãn tác vụ. Nhánh thị giác **đã** nằm ở mốc 3 và mọi chỉ số "chưa xác định", đúng như đề xuất của danh sách. **Lưu ý chưa chốt:** `DEC-GATE-005` (13/10) từng chốt Zero-Camera, camera quay lại qua `DEC-VIS-001` đang OPEN |
+| 9 | "Duỗi ngón bằng nhả dây chủ động theo độ đàn hồi tự nhiên" | **Vấn đề có thật — chờ quyết định** | `DEC-MECH-007` (chủ dự án chọn 20/10): 3 tang + servo nhả dây chủ động, **không** lò xo/SEA/khớp bốn khâu. Đề xuất thêm dải nẹp đàn hồi mu tay = đảo quyết định đó. Ba phương án: (a) giữ nguyên và ghi rõ giới hạn "với người co cứng cơ gập, duỗi thụ động có thể không đủ"; (b) thêm leaf spring mu tay, sửa `DEC-MECH-007`; (c) tuyên bố trợ lực duỗi ngoài phạm vi nguyên mẫu |
+| 10 | "Hộp số servo tự nhả tự do khi mất nguồn" | **Đồng ý** | Đã bỏ mọi ngụ ý tự nhả; ghi rõ hộp số tỉ số truyền lớn không quay ngược trục khi ngắt điện, hành vi nhả lúc mất nguồn **phải đo**, đường thoát an toàn là chốt mở nhanh trên từng đốt nẹp và thời gian tháo sẽ đo ở mốc 2 |
+| 11 | Tự động tính GAP = PROM − AROM theo độ | **Đồng ý** | Đã thêm: găng tay không có cảm biến góc tuyệt đối nên phần mềm không tự xuất ra góc theo độ; thước đo góc ngoài là nguồn tham chiếu |
+| 12 | Kênh REF cổ tay bù dão cơ học | **Đồng ý** | Đã định vị lại trong bảng kênh: REF theo dõi trôi nền và điều kiện môi trường (ẩm mồ hôi, tĩnh điện), làm cổng kiểm soát chất lượng để loại phiên đo; nói rõ **không** bù được dão tải của ngón vì ô tham chiếu không chịu tải |
+| 13 | "Chỉ số kiểm chuẩn đăng ký trước (pre-registered)" | **Đồng ý về thuật ngữ** | Đã thay 3 chỗ bằng "tiêu chí kỹ thuật và mục tiêu thiết kế, chốt trước khi đo". Giữ nguyên nguyên tắc chốt trước khi đo vì đó là điểm mạnh trước hội đồng |
+| 14 | "Thử nghiệm bóc tách (ablation study)" | **Đồng ý** | Bản nộp không dùng chữ ablation (bản ghép có). Đã đổi thành "đánh giá độ nhạy riêng của từng nguồn đo" |
+| 15 | "Đã thử nghiệm giàn trục trượt, load cell, tay giả silicone" | **Đồng ý** | Đã thêm đoạn tình trạng thiết bị ở C.3: Velostat, băng đồng, ESP32-S3, Orange Pi 5 Pro, đồng hồ đo, bộ tạo tín hiệu **đã có**; giàn trục trượt, load cell, khối lượng chuẩn, silicone **mua/chế tạo ở mốc 1**; CD74HC4067 và ADS1115 **chưa xác nhận**; đến nay mới đo trên breadboard và bằng đồng hồ số, **chưa có buổi đo nào trên giàn cơ học** |
+| 16 | Các đoạn rào đón về IRB và thử nghiệm trên người | **Đồng ý một phần — không cần sửa** | Bản nộp đã khẳng định phạm vi benchtop ở C.3 và C.5; IRB chỉ xuất hiện một lần ở C.6 như hướng phát triển, có ghi rõ "ngoài phạm vi đề tài này" |
+
+## Hệ quả về độ dài
+
+Bản nộp tăng **5.723 → 6.315 từ** (147 đoạn, 6 bảng) do 6 đoạn giải thích mới. Ước tính **~13,8 trang nội dung** kể cả 7 hình — vẫn trong trần 14 trang nhưng **chỉ còn ~0,2 trang dự phòng**. Nếu chèn hình lớn hơn 1/3 trang thì sẽ tràn; ba cách xử lý: chèn 2 hình trên một trang, hạ giãn dòng còn 1,15, hoặc chuyển 2 đoạn giải thích an toàn (mục 1 và 10) xuống dạng chú thích bảng.
+
+## Cập nhật sau khi chủ dự án trả lời (chiều 2026-10-20)
+
+Ba trong bốn điểm chờ quyết định đã được chốt và áp dụng vào cả bản nộp lẫn bản mô tả:
+
+- **Mục 1 — máy trạng thái:** chủ dự án chọn **thu về 3 pha** (Nghỉ → Đo nỗ lực → Kéo trợ lực). Bảng quy tắc 7 trạng thái bị bỏ, SAFE_STOP và FAULT gộp vào pha Nghỉ, ASSIST/EVAL/AAN/TASK gộp vào hai pha còn lại. Yêu cầu của `DEC-EDGE-001` vẫn được giữ: kiểm soát chất lượng phiên đo chuyển thành **cờ loại phiên đo** kèm lý do, không phải một pha, và không có thuật toán tự gắn nhãn. → `DEC-AAN-003`.
+- **Mục 4 — cảm biến Flex:** chủ dự án xác nhận **chưa có 3 Flex, phải mua ở mốc 1**, nhưng thiết kế **vẫn giữ** Flex kết hợp Velostat. Vậy kết luận thẩm định đứng: không cắt Flex; việc phải làm là điền tình trạng và giá vào danh mục thiết bị. Cùng lúc **CD74HC4067 được xác nhận đã có và đã chạy thử**, xóa cảnh báo "món duy nhất ở Lớp 1 có thể còn thiếu"; **ADS1115 vẫn chưa xác nhận** → còn nợ. → `DEC-HW-007`.
+- **Mục 6 — Mech 9:** chủ dự án xác nhận **đã in nhưng chưa bấm giờ**, nên con số 22 giây chưa từng được đo và bị rút khỏi mọi văn bản; thời gian tự đeo và độ bền mỏi thành chỉ tiêu của mốc 2. Các mốc 55–80 s, 40–65 s và 28 s của Mech 1–8 giữ nguyên nhãn "ghi nhận sơ bộ, chưa có biên bản". → `DEC-MECH-009`.
+
+Còn **một điểm chưa trả lời**: mục 9 — duỗi ngón ở người co cứng cơ gập (giữ `DEC-MECH-007` kèm ghi giới hạn / thêm dải nẹp đàn hồi mu tay / tuyên bố trợ lực duỗi ngoài phạm vi nguyên mẫu). Hai văn bản hiện giữ nguyên `DEC-MECH-007` và ghi rõ giới hạn.
+
+Ngoài ra chủ dự án chỉ đạo viết lại phần A và B theo giọng của báo cáo mẫu cấp quốc gia → `DEC-PROP-013`, kéo theo **vấn đề độ dài**: bản nộp lên ~15,9 trang, vượt trần 14 trang; biến thể 13 pt / 1,15 (~13,2 trang) đã dựng sẵn chờ chọn.
+
+## Không sửa
+
+`11A2_ban_gop_hoan_thien.docx` trên Drive là tệp của chủ dự án, **không bị chỉnh sửa**. Các mục 6, 7, 8, 14 cần sửa **ở bản ghép** chứ không phải ở bản nộp: C.5 đang tuyên bố Mech 9 "đạt 22 giây / đảm bảo độ bền mỏi 50 chu kỳ"; B.1 có chữ "Dashboard"; A.4 có "pre-registered"; mốc Tích hợp có "ablation study"; A.4 gộp "trễ ≤ 20 ms" với nhánh thị giác.
