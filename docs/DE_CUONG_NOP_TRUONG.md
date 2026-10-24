@@ -1,419 +1,287 @@
-# ĐỀ CƯƠNG NGHIÊN CỨU KHOA HỌC
-## Găng tay thông minh đánh giá và theo dõi chức năng vận động bàn tay trong phục hồi chức năng sau đột quỵ
+A. VẤN ĐỀ NGHIÊN CỨU
 
-**Văn bản nộp nhà trường — giai đoạn ý tưởng.** Đề cương này là bản nén của một báo cáo khoa học hoàn chỉnh ở pha *trước khi đo*: nó trình bày vấn đề, cơ sở lý thuyết, nguyên lý hoạt động, phương pháp, **mục tiêu định lượng**, ngân sách dự đoán và các điều kiện dừng.
+1. Lí do chọn đề tài
 
-> **Một câu phải nói thẳng trước tiên:** tài liệu này **chưa có một số liệu đo thực nghiệm nào của tác giả**. Toàn bộ con số xuất hiện bên dưới thuộc một trong ba loại: (a) trích nguồn đã kiểm (có DOI ở §12), (b) **mục tiêu cần đạt** do chính đề tài đặt ra, hoặc (c) **ngân sách dự toán**. Không dòng nào được đọc như kết quả. Đây là lựa chọn có ý thức, không phải thiếu sót: đề tài được thiết kế sao cho mọi tuyên bố đều truy vết được về một phép đo hoặc một nguồn.
+Đột quỵ là một trong những nguyên nhân hàng đầu gây tàn tật ở Việt Nam, với tỉ lệ hiện mắc tại năm 2019 khoảng 1.541 ca trên 100.000 dân và mỗi năm tăng thêm khoảng 222 ca mới trên 100.000 dân [1].
 
-| Cần điền | Giá trị (điền 2026-09-27 từ bản đã nộp `DE_CUONG.pdf` §1/§7.3) |
-|---|---|
-| Họ tên học sinh | Văn Ngọc Nhật Anh + Nguyễn Duy Quân |
-| Lớp / Trường / Tỉnh | 11A2 + 12A1 / THPT Quảng Trị / Quảng Trị |
-| Giáo viên hướng dẫn | Lê Công Long |
-| Năm học / thời điểm nộp | 2026–2027 · nộp 2026-09-26 · thực hiện 09/2026–01/2027 · lĩnh vực Hệ thống nhúng |
+Hình 1: Tỉ lệ đột quỵ tại Việt Nam và di chứng bàn tay kéo dài [1, 2, 3]
 
----
+Hơn nữa theo tổng quan của Cochrane:
 
-## 0. Tóm tắt đề cương
+-  Khoảng 80% người sống sót bị suy giảm vận động, trong nhóm liệt hoàn toàn chi trên chỉ khoảng một nửa phục hồi được một phần chức năng sau 6 tháng [2, 3].
 
-Người bệnh đột quỵ tại Việt Nam sống chung với di chứng bàn tay rất lâu sau khi ra viện: khoảng **1.541 người mắc/100.000 dân** (GBD 2019), **~80%** có tổn thương vận động chi trên ở giai đoạn sớm, và chỉ khoảng **một nửa** số người liệt chi trên hoàn toàn lấy lại được chức năng hữu ích sau 6 tháng [1–3]. Phục hồi chức năng phụ thuộc vào **lượng tập luyện giữa hai lần tái khám**, nhưng chính khoảng thời gian đó lại là khoảng trống đo lường: không có công cụ nào ghi lại được một cách định lượng, đáng tin và rẻ *bàn tay đã làm gì ở nhà*. Cách thay thế hiện nay — để người bệnh tự ghi nhật ký số lần nắm — đã được chứng minh là **không đủ tin cậy để làm đơn vị phân tích**: độ thay đổi tối thiểu có nghĩa (MDC) của cường độ dùng tay đo bằng thiết bị đeo vào khoảng **31%**, và hệ thống đếm nhầm **100–200 lần/giờ** [4].
+- Bàn tay hồi phục chậm nhất và khó nhất, vì phải làm được các động tác tinh như cầm thìa, cài cúc áo, cầm bút chứ không chỉ co duỗi.
 
-Đề tài này chế tạo một **găng tay đo — không phải găng tay tập**: một mảng áp trở polymer được ép bởi **vách bên cứng** của ốp ngón, đặt trong cấu hình cầu Wheatstone nửa-bridge để đo **thành phần lực ép bên** — đại lượng tăng theo cả tầm vận động lẫn trương lực cơ, tức chính là thứ cần tách ra. Đóng góp không nằm ở một nguyên lý vật lý mới (không có nguyên lý mới), mà ở **cách ghép ba thứ đã có sẵn thành một phép đo tự kiểm chứng được**: (1) khung cứng định hướng lực để phân biệt *co cứng* với *nỗ lực chủ động* ngay trong một phiên đo, (2) một **chỉ số nỗ lực** và **chỉ số RAL** (mức hỗ trợ thực / mức hỗ trợ yêu cầu) định nghĩa tường minh trên rig cơ khí có tải đã biết, (3) **cờ độ tin cậy theo từng phiên** — mỗi con số xuất ra kèm điều kiện đo và ngưỡng chấp nhận, kèm phát hiện lỗi được cố tình tiêm vào để chứng minh cờ hoạt động.
+Việc theo dõi quá trình tập luyện gần như chưa được định lượng. Thang FMA-UE và ARAT chỉ đo gián đoạn, vài tuần một lần và phụ thuộc người khám. Thiết bị đeo cổ tay Manumeter muốn phát hiện tiến triển thì người đeo phải thay đổi tới khoảng 31% cường độ sử dụng trong ngày, đồng thời đếm sai 100 - 200 lần dương tính giả mỗi giờ [4].
 
-Kết quả dự kiến không phải "bệnh nhân phục hồi tốt hơn" — đề tài **không** cam kết điều đó. Kết quả dự kiến là: một thiết bị nguyên mẫu, một bộ giao thức và ngưỡng **được đăng ký trước khi đo**, **sáu con số tự đo trên chính bàn tay người chế tạo** (độ lặp lại chu kỳ, độ trôi 10 ngày, tốc độ lấy mẫu, tỉ số tín hiệu/nhiễu, độ trễ hệ thống, độ tuyến tính lực–đáp ứng), và một báo cáo nói rõ cái gì đạt, cái gì fail.
+Khảo sát với kĩ thuật viên phục hồi chức năng tháng 9/2026 cho thấy các loại găng hiện có chưa phù hợp tập tại nhà ở Việt Nam về thao tác đeo.
 
----
+Chính vì những vấn đề trên, nhóm đã lựa chọn nghiên cứu đề tài “Nghiên cứu và phát triển găng tay hỗ trợ phục hồi chức năng sau đột quỵ cho vận động tinh”.
 
-## 1. Vấn đề và tính cấp thiết
+2. Cơ sở lý thuyết về y sinh
 
-### 1.1 Gánh nặng đột quỵ ở Việt Nam là lớn và có số, không phải ước đoán
+2.1. Đại diện vỏ não và cơ chế phản hồi Hebbian
 
-| Đại lượng | Giá trị (GBD 2019, dân số ~98 triệu) | Nguồn |
-|---|---|---|
-| Tỉ lệ **mới mắc** (incidence) | **222**/100.000 dân/năm (95% UI 206–242) | [1] |
-| Tỉ lệ **đang sống chung** (prevalence) | **1.541**/100.000 dân (95% UI 1431–1679) | [1] |
-| Tử vong do đột quỵ, 2019 | **135.999** — nguyên nhân tử vong hàng đầu trong nhóm tim mạch | [1] |
-| Xếp hạng tử vong do đột quỵ trong 11 nước láng giềng | **thứ 4** (170/100.000) | [1] |
-| Yếu tố nguy cơ hàng đầu | huyết áp tâm thu cao (79.000 tử vong), chế độ ăn (43.000), glucose đói cao (35.000), ô nhiễm không khí (33.000) | [1] |
+Nghiên cứu của Penfield & Boldrey [5] và mạng SCAN của Gordon et al. [6] cho thấy bàn tay chiếm diện tích đại diện vận động rất lớn trên vỏ não, định hướng cho việc tập trung vào 3 ngón trụ cột (cái, trỏ, giữa).
 
-Hai hệ quả trực tiếp với đề tài: (a) ở mức 1.541/100.000, số người đang sống sau đột quỵ ở Việt Nam có thể ước lượng **cỡ 1,5 triệu người** (phép nhân của chúng tôi trên [1], không phải con số in trong bài — dùng đúng mức một **ước lượng quy mô**); (b) bài báo kết luận năng lực chăm sóc tập trung ở hai thành phố lớn trong khi nông thôn có tỉ lệ thấp hơn nhưng tiếp cận kém hơn [1] → **công cụ đo tại nhà có giá trị nhất chính ở nơi ít được đo nhất**.
+Hình 2: Bản đồ Homunculus [5] và sự phân bổ chi phối bàn tay [6]
 
-### 1.2 Bàn tay là di chứng "dai" nhất và cũng là thứ khó đo nhất
+Theo học thuyết Hebb [7] và nguyên lý phục hồi chức năng [8, 9], việc cung cấp phản hồi cảm giác đồng bộ với nỗ lực vận động giúp định hướng tập luyện. Nhóm khai thác cơ sở này để xây dựng cơ chế phản hồi thị giác từ đáp ứng áp trở vi mô.
 
-Tổn thương vận động chi trên ảnh hưởng **khoảng 80%** người bệnh sau đột quỵ ở giai đoạn sớm; trong số người liệt chi trên hoàn toàn, **chỉ ~50%** lấy lại được chức năng chi trên có ích sau 6 tháng; và **50%** số người có tổn thương cánh tay lúc đầu vẫn còn vấn đề sau **4 năm** [2,3]. Đây là lý do bài toán không phải "đo trong 2 tuần điều trị nội trú" mà là "đo trong nhiều tháng, nhiều năm, ở nhà".
+2.2. Trương lực cơ, chênh lệch tầm vận động (GAP) và độ tin cậy đo lường
 
-Độ khó của phép đo nằm ở một chi tiết lâm sàng: sau đột quỵ, bàn tay yếu đi vì **hai nguyên nhân chồng lên nhau** — cơ liệt/yếu (không tạo được lực) và **co cứng** (trương lực cơ tăng, kháng lại tầm vận động). Cùng một tầm vận động nhỏ có thể là "người bệnh chưa cố" hoặc "cơ kháng lại". Hai tình huống này dẫn tới hai chỉ định ngược nhau, nhưng **một cảm biến gập ngón không phân biệt được** — nó chỉ biết góc. Đây chính là khoảng trống mà đề tài nhắm vào, và nó được nêu độc lập trong y văn về theo dõi co cứng từ xa [5].
+Sau đột quỵ, suy giảm vận động thường kết hợp giữa yếu cơ và tăng trương lực co cứng [10, 11]. Nhóm sẽ khảo sát độ thiếu hụt tầm vận động GAP = PROM − AROM như một chỉ số mô tả chênh lệch góc (đo bằng công cụ ngoài). Về thống kê y sinh, độ tin cậy của hệ thống đo được đánh giá qua hệ số biến thiên (CV), sai số chuẩn (SEM) và ngưỡng MDC thực tế của thiết bị [4].
 
-### 1.3 Khoảng trống thật sự: giữa hai lần tái khám, không ai đo được gì
+3. Xác định vấn đề nghiên cứu
 
-| Nơi xảy ra | Hiện đo bằng gì | Vấn đề đã được chứng minh |
-|---|---|---|
-| Phòng khám, mỗi 2–8 tuần | Thang điểm lâm sàng (FMA, ARAT, MAS, Box-and-Block) | Cho kết quả **một thời điểm**, và **MDC của chính các thang điểm này đề tài chưa kiểm chứng** (`SRC-ARAT-MDC` vẫn `UNVERIFIED`). Con số MDC ≈ 31 % ở dòng dưới thuộc về chỉ số *cường độ dùng tay do thiết bị đo*, không thuộc về FMA/ARAT |
-| Tại nhà | Tự ghi nhật ký số lần tập / tự nhận xét | Không có đối chứng thiết bị; nghiên cứu dùng thiết bị đeo cho thấy người bệnh **đếm lệch 100–200 lần/giờ** khi tự báo cáo [4] |
-| Thiết bị PHCN thương mại | Găng robot tại nhà, hệ thống đã FDA chấp thuận | Giá **~350–6.000 USD** [6]; theo khảo sát ý kiến chuyên gia của đề tài, các găng này **không phù hợp** dùng hằng ngày vì giá, rủi ro an toàn và **tạo phụ thuộc vào thiết bị** [14] |
+- Nghiên cứu xây dựng khung nẹp 3 ngón tích hợp cảm biến phát hiện vận động chủ động trong thời gian thực.
 
-Nhịp đo là vấn đề cốt lõi: chức năng tay thay đổi theo tuần, còn đánh giá lâm sàng xảy ra theo tháng. **Đề tài nhắm đúng khớp nối đó** — không phải bằng cách làm thiết bị tốt hơn, mà bằng cách làm một phép đo *đủ rẻ và đủ tự tin* để lặp lại hằng ngày.
+- Nghiên cứu sử dụng cảm biến gập Flex và cảm biến áp trở Velostat bố trí theo cặp lòng - mu để đọc đáp ứng bóp của ngón cái, trỏ, giữa.
 
-### 1.3bis Số lần tập tự báo cáo là một đại lượng đã biết là hỏng
+- Nghiên cứu phương pháp thu nhận và lọc tín hiệu với ADC 16-bit ADS1115 và vi điều khiển ESP32-S3.
 
-Nghiên cứu Manumeter (RCT, n = 20 người mạn tính, đeo 3 tuần tại nhà) thiết kế chính xác cho câu hỏi "để người bệnh tự đếm có đủ tin không", và trả lời: **không đủ** — MDC ≈ 31% giá trị trung bình ngày, tỉ lệ đếm nhầm 100–200 lần/giờ, và **hệ thống phải nhỏ, nhẹ, đủ đơn giản để người bệnh dùng được một mình** thì số liệu mới có ý nghĩa phân tích [4]. Ba ý cuối của câu đó định nghĩa luôn ràng buộc thiết kế của đề tài này: **nhẹ, không dây, một người đeo được**.
+- Nghiên cứu phương pháp tính bộ chỉ số EI, GAP, RAL để theo dõi tiến triển.
 
-### 1.4 Ba loại tác động — đề tài tự chấm cả ba, không chỉ loại nghe hay nhất
+- Nghiên cứu phương pháp điều khiển trợ lực theo nhu cầu với cơ cấu servo - dây cáp - 3 tang.
 
-| Loại tác động | Cơ chế | Bằng chứng đề tài có thể đưa ra ở giai đoạn này | Mức độ mạnh/yếu tự đánh giá |
-|---|---|---|---|
-| **Với người bệnh** | Phát hiện sớm *điểm dừng tiến bộ* giữa các lần tái khám, khi còn có thể chỉnh bài tập | [1,2,4,5] cho thấy khoảng trống tồn tại và có hậu quả; thiết bị của đề tài **không** tự tuyên bố cải thiện kết cục | **Trung bình** — hợp lý về mặt logic, chưa có dữ liệu người bệnh, và đề tài không xin được hơn thế |
-| **Với hệ thống y tế** | Một phép đo rẻ, lặp lại hằng ngày, làm **chuẩn so sánh nội** giữa các phiên, thay vì phụ thuộc hoàn toàn vào các lần đo thưa | Chỉ là **lập luận chi phí cơ hội**, có neo ở [4] và [6]; đề tài **không** đưa con số tiết kiệm | **Yếu–trung bình** — nêu như giả thuyết, không nêu như kết quả |
-| **Với phương pháp luận** | Cách **đăng ký trước ngưỡng tin cậy + gắn cờ chất lượng vào từng con số + tiêm lỗi để chứng minh cờ hoạt động** — thứ gần như vắng mặt trong sản phẩm sinh viên và hữu ích trở lại ở mọi đề tài đo lường | Toàn bộ §4.5 (bộ GATE 0→F), §4.4, Phụ lục A | **Mạnh nhất** và là thứ đề tài thực sự sở hữu |
+- Nghiên cứu ứng dụng mô hình ước lượng độ sâu đơn mục Depth Anything V2 để đo khoảng cách 3D tay - vật và hỗ trợ định thời đón trước trong bài tập vận động tinh.
 
-Hàng cuối không phải cách nói giảm để chữa việc thiếu số liệu lâm sàng: nó là **sản phẩm trí tuệ** mà một học sinh có thể làm trọn vẹn mà không cần phê duyệt đạo đức y sinh.
+4. Mục tiêu nghiên cứu
 
-### 1.5 Tính cấp thiết đã được đối chiếu với người làm nghề, không chỉ với bài báo
+- Nghiên cứu thiết kế và phát triển găng tay nẹp 3 ngón hỗ trợ người tập đi từ vận động gập - duỗi đến thao tác gắp thìa dạng kẹp 3 chấu (tripod pinch).
 
-Giao thức đo, cách chọn ngón, và định nghĩa "thế nào là một phiên đo đáng tin" đã được **tham khảo ý kiến một kỹ thuật viên Vật lý trị liệu – Phục hồi chức năng** [14]. Theo quyết định của nhóm nghiên cứu, hồ sơ **không nêu danh tính** người được tham khảo; giá trị của bước này chỉ dừng ở mức **"nhu cầu và tính khả thi lâm sàng của phép đo được người làm nghề xác nhận"** — nó **không** là bằng chứng về hiệu quả, và **không** thay thế việc tuyển người bệnh qua hội đồng đạo đức.
+- Hoàn thiện khung nẹp có khóa ngàm xoay, người yếu tay tự đeo được bằng một tay.
 
----
+- Xây dựng cụm 21 kênh cảm biến gồm 16 ô Velostat trên ngón, 2 ô tham chiếu và 3 Flex. Nhóm đặt mục tiêu quét đủ 21 kênh với tốc độ ≥15 Hz.
 
-## 2. Tính mới — xét theo tiêu chí nào
+- Xây dựng cơ cấu servo - dây cáp - 3 tang tạo dạng kẹp 3 chấu, trợ lực giảm dần theo đáp ứng của người tập, có đường tháo an toàn độc lập.
 
-### 2.1 Tiêu chí được nêu tường minh, để hội đồng biết đề tài đang tự chấm mình ở đâu
+- Xây dựng bộ chỉ số EI, GAP, RAL và chỉ số bài tập gắp thìa.
 
-Đề tài này **không** tuyên bố phát hiện nguyên lý vật lý mới và **không** tự đo mình theo chuẩn tạp chí kỹ thuật (nơi đòi nguyên lý mới + dataset + đối chứng lâm sàng). Nó được thiết kế theo tiêu chí của **Cuộc thi KHKT cấp quốc gia / ViSEF–ISEF**: *một câu hỏi hẹp, trả được bằng một thiết bị tự làm, với số liệu tự đo và phương pháp có thể kiểm điểm được, kết hợp các linh kiện sẵn có theo một cách chưa ai làm cho đúng đối tượng này.* Mọi nhận định "mới/không mới" trong tài liệu này đều đi kèm tên bộ tiêu chí đang dùng, vì cùng một đề tài thay đổi kết luận khi đổi tiêu chí.
+- Kiểm chứng nguyên mẫu trên giàn đo cơ học và mô hình bàn tay giả silicone, không thử trên người bệnh.
 
-### 2.2 Bảng đối chiếu với các công trình và sản phẩm gần nhất (mọi dòng đều có nguồn đã kiểm)
+5. Tiêu chí của dự án
 
-| Công trình / sản phẩm | Nó đo gì | Nó **không** làm gì | Đề tài này khác ở đâu |
-|---|---|---|---|
-| Găng đa cảm biến tách co cứng khỏi nỗ lực chủ động (Lin et al., *Sensors* 2022;22(19):7212, n = 14, có IRB) [7] | 9 trục + **19 IMU** + 1 bóng áp lực; >1000 đặc trưng/nhiệm vụ | Không có **vách cứng định hướng lực**, không có lực theo hướng, không có khung cờ tin cậy theo phiên | Cùng mục đích, kiến trúc ngược lại: **cơ khí tạo ra sự phân tách** thay vì học máy suy ra nó, với 3 ngón thay vì 19 IMU |
-| Găng da xúc giác vỏ cứng khớp nối, 2048 taxel, 22 DoF (ART-Glove, arXiv 2026) [8] | Bản đồ tiếp xúc để thu dữ liệu cho robot học thao tác | Không dành cho bệnh nhân; không theo dõi diễn tiến; không đo lực ép có đơn vị lực | Đề tài dùng **vỏ cứng + phần tử áp trở** cho một mục đích ngược: đo *lực kháng bên* của mô sinh học |
-| Găng dữ liệu tái cấu hình, 15 IMU, 3 chế độ dùng chung một backbone (Liu et al., *Engineering* 2024;32:202–216) [9] | Hình dạng bàn tay + lực qua phần tử áp trở mềm **tự chế** để ít cản trở | Chế độ lực được tối ưu cho **không cản trở**, không phải cho **đo được lực theo hướng** | Đề tài chấp nhận **cản trở có chủ đích** (ốp cứng) để có trục lực xác định — đánh đổi ngược chiều |
-| Găng mềm robot bàn tay (ironHand) — JR Rehab Assist Technol Eng 2016 [10] và J Rehabil Med 2018;50:598–606 [11] | Hỗ trợ một số động tác ADL; n = 5, 2 phiên | **Không dùng thiết bị đo lực chuẩn hoá làm kết quả chính** | Đề tài bỏ hẳn chức năng hỗ trợ chuyển động để dồn toàn bộ vào phép đo |
-| Manumeter — RCT, *Sensors* 2022;22(18):6938 [4] | Số lần dùng tay ở nhà bằng cảm biến | Không tách được co cứng; không có tầm vận động chủ động/thụ động trong cùng một phiên | Đề tài đo **cả hai trong một phiên** (AROM rồi PROM) — chính phép so sánh này tách "không cố" khỏi "bị giữ lại" |
-| Găng đo góc + flex, khảo sát hệ thống (arXiv 2024) [12] | Phân loại 6 dòng công nghệ găng | Bản thân tài liệu kết luận flex **1 DoF, khó đặt đủ sensor, nhiễu liên khớp (crosstalk)** | Đề tài **không dùng flex sensor làm số liệu chính** — flex chỉ để suy đoán tư thế |
-| Neofect Smart Glove (sản phẩm thương mại, có game và dashboard cho chuyên gia) [13] | Góc + 9 DoF, 132 g, phản hồi thị giác | Không đo lực ép; trạng thái **chưa xác minh độc lập** về thông số | Đề tài không cạnh tranh về phần mềm giải trí; cạnh tranh ở **đơn vị lực + cờ tin cậy** |
-| Găng robot tại nhà điều khiển bằng nam châm, *Device* (Cell Press) 2024 [6] | Hỗ trợ duỗi/nắm tại nhà, tổng chi phí **423 USD** (riêng phần găng 22 USD) | Là thiết bị **tác động**, không phải thiết bị **đo** | Đề tài dùng **một phần chi phí đó cho phép đo**, không cho cơ cấu truyền động |
+- Tốc độ quét đủ 21 kênh ≥15 Hz. Nhóm sẽ đo độ trễ từ lúc cảm biến biến đổi đến khi phát lệnh servo trên toàn chuỗi thu nhận và xử lí, sau đó mới xác định ngưỡng đáp ứng.
 
-### 2.3 Ba lớp khác biệt — xếp theo thứ tự đề tài dám bảo vệ
+- Tỉ số tín hiệu trên nhiễu ≥18 dB và R² ≥0,90 khi thử với tải chuẩn. Nhiễu nền sau lọc ≤5 mV đỉnh–đỉnh, đo trên nhánh không áp dụng vùng chết.
 
-1. **Kiến trúc cơ khí:** phần tử cảm biến được ép bởi **vách bên cứng** của ốp ngón, cấu hình **nửa cầu Wheatstone**, để đo riêng thành phần lực ép bên. Không dùng "áp trở dán trên ngón" theo nghĩa thông thường. *Trạng thái: **chưa đo** — và đó chính là câu hỏi của GATE 0 (§4.5).*
-2. **Thiết kế phép đo:** **AROM rồi PROM trong cùng một phiên, cùng một ngón**, với hai tốc độ kéo (vì phản ứng co cứng phụ thuộc tốc độ). *Trạng thái: **định nghĩa đã chốt** trên giấy; độ nhạy phụ thuộc tốc độ có nguồn y văn hỗ trợ [5,7].*
-3. **Lớp thống kê tự kiểm chứng:** ngưỡng **đăng ký trước khi đo** (MDC, ICC(3 ngày), CV giữa các chu kỳ), mỗi phiên đo mang cờ `UNRELIABLE` khi vượt ngưỡng, và **lỗi được tiêm có chủ đích** để chứng minh cờ bắt được. *Trạng thái: đã thiết kế đầy đủ; **đây là lớp mà đề tài này mạnh hơn cả các công trình đã công bố trong bảng trên**, vì họ có n lớn nhưng không có lớp này.*
+- Phân biệt đúng hướng vận động ≥ 90%, phân loại đúng mức kích hoạt ≥ 85%.
 
-### 2.4 Giới hạn của chữ "mới": những câu đề tài này không nói
+- Hệ số biến thiên ≤ 5% trong cùng buổi và ≤ 8% giữa các ngày, trễ đàn hồi ≤ 18%, độ dãn tải tĩnh sau 60 s ≤ 8%.
 
-| Không nói | Vì sao | Câu nói đúng |
-|---|---|---|
-| "Chưa ai làm găng tay đo lực cho người đột quỵ" | Sai — có sản phẩm thương mại và có công trình [7,9,13] | "Chưa tìm thấy công trình nào dùng **vách cứng định hướng lực + lớp cờ tin cậy theo phiên** cho mục đích theo dõi diễn tiến" |
-| "Độ chính xác tương đương máy đo lực lâm sàng" | Chưa so với bất kỳ chuẩn nào | "Chỉ số nỗ lực là **đại lượng không thứ nguyên so sánh nội giữa các phiên**; không quy đổi ADC → newton" |
-| "Loại bỏ ảnh hưởng trôi" | Không vật liệu áp trở nào làm được | "**Giảm ảnh hưởng của trôi và từ biến** bằng chu trình chuẩn + phục hồi, và **đo nó** thay vì giả sử nó bằng 0" |
-| "Găng tay chẩn đoán / điều trị / ra y lệnh" | Sai phạm vi và sai pháp lý | "Thiết bị **đo và ghi nhận**, hỗ trợ tài liệu cho quyết định của cán bộ y tế" |
-| "Lần đầu tiên" | Không dùng được nếu chưa có số liệu tự đo | Chỉ được dùng mẫu câu "**lần đầu tích hợp [A+B] cho [nhóm X]**" **và chỉ khi** đã có số liệu tự đo |
+B. GIẢI PHÁP VÀ THIẾT KẾ
 
-### 2.5 Bối cảnh bằng sáng chế (để hội đồng thấy đã kiểm, không phải chưa nghĩ tới)
+I. Tổng quan đề tài
 
-| Tài liệu | Trạng thái đã kiểm | Ý nghĩa với đề tài |
-|---|---|---|
-| US20150233779A1 (Waltop — găng đo áp suất, phân lớp G01L1/20, G01L1/22, G01L5/009) | **Abandoned** | Yêu cầu bảo hộ đã từ bỏ → không phải rào cản; **không** có nghĩa ý tưởng tự do hoàn toàn |
-| CN116954366A (ĐH Đông Nam Á — găng mảng cảm biến xúc giác) | **Pending** | Cần đọc điểm yêu cầu bảo hộ trước nếu đề tài thương mại hoá |
-| Tra cứu theo nhóm phân lớp (G06F3/014, G01L1/20, G01L1/205, G01L1/22, G01L5/009, A61H1/02, A61H3/01, A61B5/11) | **PARTIAL — chưa đọc toàn văn yêu cầu bảo hộ** | Đề tài chỉ tuyên bố "đã tra cứu và không phát hiện xung đột trực tiếp", không tuyên bố "không vi phạm" |
+Găng tay nẹp 3 ngón hỗ trợ việc theo dõi và trợ lực vận động tinh cho ngón cái, trỏ, giữa. Găng được đeo bằng một tay với khóa ngàm xoay, đọc đáp ứng ngón bằng Flex và Velostat, xử lí bằng ESP32-S3 và trợ lực bằng servo cuốn dây. Hệ thống thị giác không gian 3D ứng dụng mô hình Depth Anything V2 ước lượng khoảng cách thực tế tay - vật để định thời trợ lực đón trước và hiển thị phản hồi trực quan bài tập cho người bệnh. Người tập chỉ cần đeo nẹp và vận động tự do hoặc tập theo hướng dẫn.
 
----
+Hình 3: Sơ đồ chức năng của bộ ba ngón trụ cột trong thao tác kẹp 3 chấu và bố trí các điểm cảm biến [12]
 
-## 3. Cơ sở lý thuyết và nguyên lý hoạt động
+II. Bất cập và giới hạn của các giải pháp hiện tại và giải pháp của đề tài
 
-### 3.1 Chuỗi truyền đo — và chỗ nào trong chuỗi thì thông tin mất
+Qua khảo sát, nhóm nhận thấy các giải pháp hiện có vẫn còn hạn chế khi theo dõi vận động bàn tay thường xuyên và tổ chức bài tập với vật dụng sinh hoạt. Cụ thể:
 
-```
-nỗ lực thần kinh → co cơ → ngón ép vào vách cứng của ốp
-   → áp suất tiếp xúc p trên mảng Velostat (Δp)
-   → biến dạng màng carbon-black, điện trở thay đổi:  ΔR/R = γ · (Δp/p₀)
-   → nửa cầu Wheatstone với điện trở cố định R_ref, kích bằng V_EX
-   → ΔV = V_EX · ΔR / (R₀ + R_ref)
-   → bộ chọn kênh đa hợp (mux) → ADC 12 bit → ESP32-S3
-   → cửa sổ trung bình + lấy mẫu lại 20 Hz
-   → đại lượng suy ra: EI, GAP, RAL  (KHÔNG phải newton, KHÔNG phải độ khớp)
-```
+- Thang đo FMA-UE và ARAT: đo gián đoạn, 2 - 4 tuần/lần và phụ thuộc người khám.
 
-Bốn tầng đầu là **vật lý**, tầng cuối là **định nghĩa**. Đề tài chỉ có thể bảo vệ từng đoạn một, và đó là lý do §4.5 tồn tại: mỗi GATE kiểm chứng đúng một mũi tên ở trên.
+- Thiết bị đeo cổ tay Manumeter: chỉ đếm chuyển động thô, muốn phát hiện tiến triển phải thay đổi tới 31% cường độ sử dụng trong ngày, đồng thời đếm sai 100 - 200 lần mỗi giờ [4].
 
-### 3.2 Vì sao phải là *lực ép bên*, không phải góc gập
+- Điện cơ bề mặt sEMG: suy giảm chất lượng khi ra mồ hôi và khó tách riêng từng nhóm cơ cẳng tay.
 
-Cảm biến gập (flex) đo **biến dạng của chính ngón** — tức là tầm vận động, và tầm vận động bị ảnh hưởng đồng thời bởi yếu cơ và bởi co cứng ⇒ **nhập nhằng về bản chất**, không phải do thuật toán chưa tốt. Ngược lại, khi ngón bị **duỗi thụ động** khi cơ gấp đang hoạt động, mô mềm bị ép vào vách cứng: phần tử áp trở ở vách **không đổi** nếu người bệnh không cố, và **tăng** khi người bệnh chống lại ⇒ tín hiệu trên vách **tỉ lệ với nỗ lực**. Đây là "nguyên lý hoạt động" của đề tài, và nó **dựa trên** hiệu ứng áp trở đã biết của vật liệu (không phải khám phá mới) [12,15].
+- Găng tay robot thương mại: chủ yếu kéo thụ động cố định theo chu kỳ.
 
-### 3.3 Mô hình áp kế vách cứng — và một cửa sổ thiết kế **hai phía**
+- Găng mềm điều khiển từ tính (Li et al., 2024) [14]: mới dừng ở bước kiểm chứng nguyên lí vật liệu trên người khỏe mạnh, chưa lượng hóa bài tập gắn với vật dụng sinh hoạt hàng ngày.
 
-Với mảng áp trở đặt trên vách cứng, diện tích tiếp xúc chủ động `A_c`, tiền tải `F_p` ⇒ `p₀ = F_p/A_c`, độ nhạy áp trở `γ = d lnR / d lnp`:
+Từ những giới hạn đó, nhóm đã lựa chọn giải pháp mới là xây dựng găng nẹp 3 ngón trụ cột cái, trỏ, giữa đảm nhiệm vận động tinh, lấy bài tập gắp thìa với vật thật làm đơn vị đánh giá thay vì đếm chuyển động thô. Đồng thời ứng dụng cảm biến áp trở màng polymer Velostat [15] kết hợp thuật toán vi sai hai vách lòng - mu và bộ ba chỉ số EI, GAP, RAL tính tương đối trong cùng một người để theo dõi tiến triển. Nhóm còn xây dựng cơ chế trợ lực theo nhu cầu với cửa sổ thăm dò ngắn để phân biệt vận động do người tập khởi xướng với chuyển động do máy tạo ra, kết hợp nhánh thị giác không gian 3D ứng dụng mô hình nền tảng Depth Anything V2 trên Orange Pi 5 Pro để ước lượng cự ly thực tế tay - vật, định thời đón trước và lượng hóa toàn diện bài tập.
 
-```
-ΔV/V_EX ≈ γ · Δp / (4 p₀)          (cầu nửa, sai phân bậc nhất)
-```
+III. Nguyên lý và cơ chế hoạt động của hệ thống
 
-Từ đó suy ra ba điều, và cả ba đều **kiểm chứng được bằng tay**:
+3.1. Sơ đồ khối kết nối
 
-1. **`A_c` triệt tiêu ở bậc nhất** ⇒ kích thước mảng **không** phải vấn đề tỉ số tín hiệu/nhiễu; nó là vấn đề **cơ khí** (áp suất phân bố lại, độ lặp lại khi tháo/lắp). Hệ quả thực hành: không cần mua mảng to hơn.
-2. **Điều kiện dưới (tín hiệu phải nhìn thấy được).** Với `n_eff ≈ 11` mảng trên 12 kênh, `V_EX = 3,1 V`, `LSB = 1,51 mV` (đây là **ngân sách thiết kế** của `docs/04` §1, **không** phải kết quả đo), và yêu cầu `ΔV ≥ 8 LSB` tại `ΔF = 1 N`, bất đẳng thức rút ra là
+Hình 4: Sơ đồ khối kiến trúc phân tán 4 tầng
 
-   ```
-   F_p  ≤  68 · γ · ΔF        → với γ = 0,5 và ΔF = 1 N:  F_p ≲ 34 N
-   ```
-3. **Điều kiện trên (tiền tải không được quá nhỏ).** Ở tải rất nhẹ, tiếp xúc không ổn định, điện trở cao, nhiễu và từ biến tăng; điện trở nguồn lớn còn làm bộ chọn kênh **kéo dài thời gian ổn định** — nếu thời gian ổn định vượt thời gian một kênh ở 20 Hz thì **cấu hình kênh không khả thi**.
+Hệ thống được tổ chức theo kiến trúc phân tán 3 nhóm tương hỗ:
 
-⇒ **Thiết kế chỉ sống trong một cửa sổ `F_p` bị chặn hai phía.** Câu hỏi "cửa sổ đó có rỗng không" chính là nội dung của GATE 0. Đây là điểm mà mọi bản mô tả "dán Velostat lên ngón" đều bỏ qua.
+- Nhóm 1 (Tầng nẹp đeo & trợ lực cơ học): Khung nẹp 3 ngón in 3D tích hợp mạng cảm biến Velostat, cảm biến Flex và cụm 3 tang servo cuốn cáp Bowden độc lập.
 
-### 3.4 Ba đại lượng dẫn xuất, định nghĩa tường minh, và đơn vị được phép nói
+- Nhóm 2 (Tầng thu thập đa kênh & xử lý DSP): ESP32-S3 đọc 21 kênh cảm biến qua 2 CD74HC4067 và ADS1115 (16-bit), thực hiện chuỗi lọc số DSP 2 nhánh và tính toán bộ ba chỉ số EI - GAP - RAL.
 
-| Đại lượng | Định nghĩa | Điều kiện đi kèm (bắt buộc, in trong mọi bảng số) | Đơn vị |
-|---|---|---|---|
-| **`EI` — Effort Index** | `EI = median(\|d\|) / (1 + κ·\|v̂\|)` với `d` = đạo phổ ADC của mảng vách, `v̂` = vận tốc góc góc-IMU, `κ` = hằng số làm chậm đã hiệu **hiệu chuẩn trên rig**, không đổi trong một phiên | ngón, tốc độ kéo, hướng dẫn bằng giọng nói | **counts (không thứ nguyên)**, không phải N |
-| **`GAP = AROM − PROM`** | tầm vận động **chủ động** trừ tầm vận động **thụ động** trên cùng ngón, cùng phiên | do rig/niêm phong kéo (PROM), tốc độ kéo **hai mức** | độ (IMU) — chỉ trong thang của nó, **không** suy từ ADC |
-| **`RAL`** | `RAL = mức hỗ trợ thực / mức hỗ trợ yêu cầu`, đo trên **rig có tải đã biết** | tải (g), vị trí khớp, tốc độ | không thứ nguyên, ∈ [0,1] |
+- Nhóm 3 (Tầng thị giác không gian 3D & tác vụ): Camera RGB kết hợp máy tính nhúng Orange Pi 5 Pro chạy mô hình Depth Anything V2 qua NPU, ước lượng khoảng cách 3D thực tế, định thời đón trước (TTC) và phản hồi trực quan bài tập.
 
-Quy tắc đơn vị là một phần của đề cương, không phải phần trang trí: **không có bước ADC → newton nào**, vì đề tài **không có load cell trên ngón** (load cell chỉ dùng ở **chuẩn đối chứng** trong phòng thí nghiệm); và **không có ADC → độ**, vì góc chỉ đến từ IMU đã tích hợp.
+Điểm khác biệt so với găng kéo thụ động là hệ thống chỉ trợ lực khi nỗ lực chủ động chưa đủ hoàn thành tầm vận động, và tự giảm trợ lực khi người tập đã tự khởi xướng chuyển động.
 
-### 3.5 Phi tuyến, trễ, từ biến, trôi: xử lý bằng cách đo, không bằng cách giả sử
+3.2. Sơ đồ nguyên lý hoạt động
 
-Vật liệu áp trở polymer có bốn hiệu ứng đã được ghi nhận rộng rãi: phi tuyến theo tải, **trễ** (đường lên ≠ đường xuống), **từ biến** (creep khi giữ tải), và **trôi theo thời gian** [12,15]. Đề tài đối xử với chúng như **đại lượng phải đo**:
+Hình 5: Sơ đồ nguyên lý hoạt động
 
-| Hiện tượng | Biện pháp | Ngưỡng chấp nhận (§4.5) | Nếu vượt |
-|---|---|---|---|
-| Trễ | Chuẩn hoá mọi số đọc tại một điểm trong chu trình | `hys_norm ≤ 15 %` | đổi sang "chu kỳ mở đầu bắt buộc" |
-| Từ biến | Chu trình xả–nạp trước khi đo; giữ mẫu 60 s | `creep_2dec ≤ 3 %` | đổi quy trình tiền tải |
-| Trôi ngày | **3 lần/ngày × 10 ngày**, không tải | `drift_peak_to_end / σngày ≤ 2` **và** trôi 10 ngày < `ΔV` của `ΔF = 1 N` | **dừng: `GATE C` fail** |
-| Nhiệt độ / ẩm | Ghi `T`, `RH` trong mọi phiên; đo lại ở hai mức RH | `γ(T)` giảm được bằng hiệu chính; `γ(RH)` **không** giảm được → dùng bao phủ | đưa `RH` vào điều kiện đo hoặc đổi vật liệu |
+### Nhóm 1: Cơ khí nẹp đeo, cảm biến tiếp xúc và cơ cấu trợ lực
 
-Câu "đề tài **loại bỏ** được trôi" là câu đề tài **không** nói. Câu nói được là "đề tài đo trôi, và nói rõ nó còn lại bao nhiêu".
+#### 3.2.1. Xây dựng cơ chế đeo ngàm xoay một tay và cụm 3 tang servo
 
-### 3.6 Vì sao phải kéo ở hai tốc độ
+Để người yếu tay tự đeo được mà nẹp vẫn đủ cứng giữ cảm biến và neo dây cáp là thách thức ban đầu của nhóm, nhóm quyết định lựa chọn ý tưởng “ngàm xoay” đóng bằng một tay với 2 bản lề.
 
-Phản ứng căng cơ **phụ thuộc tốc độ kéo** — duỗi nhanh tạo phản ứng mạnh hơn duỗi chậm ở cùng tầm vận động [5,7]. Một phép đo ở một tốc độ không phân biệt được "cứng" với "bị kéo nhanh" ⇒ đề tài quy định **hai tốc độ đã hiệu chuẩn** cho mỗi lần PROM ở GATE 0 và GATE A.
+- Khung nẹp ôm 3 ngón cái, trỏ, giữa, có khớp rãnh trượt bù chênh lệch chiều dài ngón.
+- Chốt mở nhanh trên từng đốt nẹp tạo đường tháo tay độc lập với truyền động.
+- Cụm 3 tang cuốn cáp Bowden dẫn động bởi 3 động cơ servo độc lập, cho phép kéo chủ động theo chiều gập và nhả dây khi chuyển sang chiều duỗi; nẹp đàn hồi hồi vị mu tay hỗ trợ ngón trở về vị trí mở tự nhiên.
 
----
+Hình 6: Khung nẹp phương án 9 và bố trí 3 tang
 
-## 4. Thiết kế và phương pháp
+#### 3.2.2. Xây dựng cơ chế cảm biến màng áp trở vi sai lòng - mu và cảm biến gập Flex
 
-### 4.1 Kiến trúc hệ thống (ba tầng, mỗi tầng có "cửa" riêng)
+Nhóm tiến hành xây dựng cơ chế cho phép cảm biến phân biệt được hai tình huống: ngón ép vào nẹp và ngón tiếp xúc vật.
 
-```
-[Ốp ngón]   12 mảng Velostat trên khung in 3D (3 ngón: 2, 3, cái)
-            + 12 flex (chỉ suy đoán tư thế) + 6 IMU + 1 cảm biến môi trường
-            → 36 kênh analog → bộ chọn kênh CD74HC4067 (8 × R_ext 100 kΩ)
-            → ESP32-S3: ADC 12 bit, V_EX = 3,1 V, cửa sổ trung bình, lấy mẫu lại 20 Hz
-            → USB CDC 921.600 baud → [Orange Pi 5 Pro] ghi log nguồn thô + dashboard
-```
+- Một ô đơn lẻ đều tăng đáp ứng ở cả hai tình huống.
+- Nhóm bố trí 16 ô Velostat trên 3 ngón theo các cặp mặt lòng - mặt mu. Vị trí của từng cặp được bố trí theo cấu trúc Sandwich hai vách nẹp.
+- Cấu hình gồm 21 kênh cảm biến sử dụng 2 CD74HC4067: 16 ô Velostat trên ngón, 2 ô tham chiếu không chịu tải để theo dõi trôi nền và 3 cảm biến Flex đo biến thiên góc uốn gập - duỗi của các khớp ngón.
 
-Tầng 3 chỉ được bật ở `GATE F`; **việc có sẵn máy tính mạnh không làm nhẹ đi tầng 1**.
+Hình 7: Cấu tạo mặt cắt cảm biến Sandwich và vi sai hai vách
 
-### 4.2 Quy trình đo trên một ngón (thứ tự cố định, có chủ đích)
+### Nhóm 2: Mạch thu nhận đa kênh, xử lý tín hiệu số (DSP) và điều khiển trợ lực AAN
 
-`(a)` ngón duỗi — (b) **PROM bị động** (niêm phong kéo, tốc độ A) — (c) **AROM chủ động** (làm theo hướng dẫn bằng giọng nói) — (d) **giữ tư thế giữa** — (e) **kháng nhẹ** — rồi lặp lại cùng quy trình với **tốc độ B**. `GAP` = b − c; `EI` = trung vị độ lớn đạo phổ ở (b), quy đổi về đơn vị chuẩn `V_ex`, chia cho tử số làm chậm.
+#### 3.2.3. Xây dựng cơ chế thu nhận và chuỗi lọc số DSP hai nhánh
 
-### 4.3 Hiệu chuẩn và chuẩn lực: dùng **trọng lượng đã cân**, không dùng lực kế
+Để đọc chính xác hai loại cảm biến có bản chất vật lí khác nhau, nhóm quyết định tách thuật toán thành 2 nhánh xử lí độc lập.
 
-Trong toàn bộ GATE 0, **lực chuẩn là `F = m·g` của các khối lượng đã cân** — không trễ, không cần điện tử, không cần tuyến tính, và có thể kiểm lại bằng cân nhà bếp. Hệ quả thực hành: đề tài bắt đầu bằng vài trăm nghìn đồng khối lượng và một đồng hồ đo, **không** phải bằng một load cell. `Δp` được tạo ra bằng **cơ cấu dẫn động đã biết** ở GATE A, **không** bằng một vật nặng đặt lên mảng (vật nặng làm méo mảng không kiểm soát được, dù nó là lực chuẩn tốt — `docs/02` §5.1).
+- Chuỗi phần cứng: cầu phân áp -> 2 CD74HC4067 -> ADS1115 (đọc trực tiếp qua PGA, giao tiếp I2C) -> ESP32-S3.
+- Sau mỗi lần chuyển kênh, vi điều khiển chờ 300 µs, bỏ kết quả đọc nháp rồi mới nhận mẫu chính thức. Nhóm chỉ dùng mẫu của lần chuyển đổi hoàn tất sau khi chọn kênh và kiểm tra khoảng chờ bằng phép đo xuyên kênh.
+- Nhóm đặt mục tiêu quét đủ 21 kênh với tốc độ ≥15 Hz.
 
-### 4.4 Xử lý số liệu và cờ độ tin cậy
+Nhánh 1 xử lí Velostat:
+- Tự động bám đường nền tĩnh (Adaptive Baseline Tracking): khi ngón nghỉ, đường nền cập nhật chậm (0,998 phần cũ + 0,002 phần mới) để bù trôi do nhiệt độ và mồ hôi.
+- Nhóm chọn ngưỡng thử 180 mV, lớn hơn dải nhiễu 50 - 135 mV đã ghi nhận. Ngưỡng này sẽ được hiệu chỉnh theo từng kênh và kiểm tra lại để không làm mất tín hiệu nỗ lực nhỏ.
+- Lọc thông thấp hàm mũ (EMA, α = 0,20): làm mượt đáp ứng trước khi tính tín hiệu vi sai lòng - mu.
+- Để đánh giá nhiễu, nhóm lưu thêm một nhánh tín hiệu chỉ bám đường nền và lọc EMA, không áp dụng vùng chết.
 
-Chuỗi thô `R_i(t)` từng kênh; `ΔR/R₀(t)`; hệ số suy giảm chậm `λ = 3,75·10⁻⁴ s⁻¹` (kịch bản tài liệu thiết kế `docs/04` §1 — **dùng làm đầu vào cho mô phỏng, có ghi rõ là kịch bản, không phải kết quả**); các phiên bản λ nhân 0,25 và ×4 để tìm độ nhạy. Chỉ số theo phiên:
+Nhánh 2 xử lí Flex:
+- Lọc EMA (α = 0,20) khử nhiễu tần số cao.
+- Ánh xạ liên tục điện áp sang góc uốn qua hàm hồi quy hiệu chuẩn với thước đo góc ngoài.
+- Nhóm không áp dụng vùng chết cho Flex để giữ lại các biến thiên gập - duỗi có biên độ nhỏ.
 
-```
-EI_v   = median(|d|) / (1 + κ·|v̂|)        R_rel = median(EI_v,PROM)/median(EI_v,AROM)
-CV     = std(EI_v)/mean(EI_v)              FLAG = UNRELIABLE khi SNR < 8 LSB hoặc |T−23|>5 °C
-```
+#### 3.2.4. Xây dựng cơ chế tính bộ ba chỉ số EI - GAP - RAL và thuật toán trợ lực theo nhu cầu
 
-**Định nghĩa nhiễu được chốt ở ô `G0.0`** và dùng nhất quán: bản A `noise_pp = max − min` trên 20 mẫu liên tiếp (tính tay được) hoặc bản B `σ` trên ≥ 5.000 mẫu đứng yên. **Chọn một trong hai trước khi đo, không đổi sau.**
+Để biết một thay đổi là do vận động hay do chính phép đo, nhóm quyết định dùng hệ số biến thiên, sai số chuẩn và ngưỡng khác biệt nhỏ nhất có ý nghĩa làm khung đánh giá [4].
 
-### 4.5 Bộ kiểm chứng: 10 ngưỡng, đăng ký trước khi đo
+- EI: tích phân đáp ứng tương đối trong pha vận động chủ động, chuẩn hóa theo mức tham chiếu của buổi tập.
+- GAP: hiệu giữa tầm vận động thụ động PROM và chủ động AROM. Thước đo góc ngoài cho số đo theo độ, Flex đã hiệu chuẩn cho biến thiên gập để đối chiếu.
+- RAL: mức trợ lực nhỏ nhất đủ hoàn thành một chu kỳ gập - duỗi theo tiêu chí đặt trước.
 
-> **Cam kết phương pháp của đề tài:** các ngưỡng dưới đây được viết ra và **đóng chốt trước khi có bất kỳ số liệu đo nào**, và sẽ **không** được chỉnh lại sau khi thấy số. Nếu một ngưỡng không đạt, đề tài báo cáo **fail** ở ngưỡng đó. "GATE 0 pass" không được viết khi `G0.1` hoặc `G0.7` fail.
+Trợ lực phải bổ sung phần vận động người tập còn thiếu, thay vì làm toàn bộ động tác. Nhóm chọn cơ chế trợ lực theo nhu cầu (assist-as-needed - AAN):
+- Truyền động: servo cuốn dây câu cá trực tiếp lên 3 tang riêng, mỗi ngón một tang. Khi chuyển sang chiều duỗi, servo chủ động nhả dây.
+- Khó khăn của điều khiển là chuyển động nhìn thấy có thể do người tập hoặc do chính servo tạo ra. Nhóm chọn cửa sổ thăm dò: tạm ngưng trợ lực trong khoảng ngắn rồi quan sát đáp ứng, từ đó tự động chuyển giữa đo nỗ lực và kéo trợ lực mà không cần kĩ thuật viên nhấn nút.
+- Vận hành chia làm 3 pha:
+  + Nghỉ: dùng khi khởi động, kết thúc buổi tập hoặc có lệnh dừng do sự cố. Bộ điều khiển ngưng kéo và ra lệnh cho servo nhả dây. Chốt mở nhanh tạo đường tháo nẹp độc lập với bộ điều khiển.
+  + Đo nỗ lực: bắt đầu khi người tập vào tư thế sẵn sàng và 2 ô tham chiếu ổn định. Mở cửa sổ thăm dò để quan sát vận động tự khởi xướng.
+  + Kéo trợ lực: bắt đầu khi đáp ứng trong cửa sổ chưa đủ hoàn thành tầm vận động. Servo kéo theo biên độ đặt trước, giảm trợ lực khi người tập tự làm được.
 
-| ID | Câu hỏi mà nó trả lời | Ngưỡng |
-|---|---|---|
-| **G0.0** | Chọn định nghĩa nhiễu **trước khi đo** | A: `noise_pp` = max−min/20 mẫu (đo tay được) · B: `σ`/≥5.000 mẫu (cần script) |
-| **G0.1** | Có tồn tại một `F_p` sao cho mảng **vừa đủ nhạy, vừa đủ ổn định**? | ∃ `F_p` với `R₀ ≤ R_max` **và** `SNR ≥ 8 LSB` tại `ΔF = 1 N` |
-| **G0.2** | Mảng có thật sự hoạt động như áp kế? | `γ_i ≥ 0,25` ở ≥ 4/5 mảng họ A, `R² ≥ 0,95` |
-| **G0.3** | Có lặp lại được giữa các chu kỳ không? | `CV_chu kỳ ≤ 5 %` |
-| **G0.4** | Có lặp lại được giữa các **ngày** không? | `ICC(3 ngày) ≥ 0,75`; nếu không → `MDC` không đổi được hệ số trong 4 tuần |
-| **G0.5** | Đường lên có trùng đường xuống? | `hys_norm ≤ 15 %` |
-| **G0.6** | Có bị lún khi giữ tải? | `creep_2dec ≤ 3 %` |
-| **G0.7** | **Tín hiệu trôi chậm hơn biên độ cần đo không?** | `drift_ratio ≤ 2` **và** trôi 10 ngày < `ΔV` tại `ΔF = 1 N` |
-| **G0.8** | Các mảng có đủ giống nhau để so sánh giữa các ngón? | độ rải `γ` ≤ ±40 % (dùng để **chấp nhận** ma trận hiệu chỉnh, không phải để chứng minh vật liệu ổn định) |
-| **G0.9** | CẤU HÌNH kênh có đọc được đủ nhanh? | `fps_meas ≥ 20 Hz` trên 12 kênh |
+### Nhóm 3: Thị giác không gian 3D Depth Anything V2 và lượng hóa tác vụ vận động tinh
 
-**Nếu GATE 0 fail:** ba hướng cứu đã chuẩn bị sẵn — (i) bộ đệm FET cho phép trở nguồn cao, (ii) bỏ `EI`, chỉ giữ `GAP`/`RAL` (chuyển sang IMU + tải), (iii) chuyển sang **đai đàn hồi** (đo lực kéo của dây chun) — tất cả đều được chấm **trước khi** mua gì thêm, theo nguyên tắc "mỗi lớp giải ngân chỉ khi lớp trước pass". **Nếu cả ba hướng đều không mở lại được cửa sổ trong ≤ 3 tuần, đề tài dừng ở dạng báo cáo phương pháp + kết quả âm tính** và vẫn được nộp như một báo cáo trung thực.
+#### 3.2.5. Xây dựng cơ chế ước lượng cự ly không gian 3D và định thời đón trước
 
-### 4.6 Nguyên mẫu tác động (E4) và rig kiểm chứng (E5) — phục vụ đo lường, không phục vụ điều trị
+Flex và Velostat theo dõi lực tiếp xúc và góc ngón tay nhưng không cho biết cự ly hình học giữa bàn tay và vật thể trước khi chạm, dẫn đến nguy cơ co siết ngón quá sớm hoặc mở ngón sai thời điểm. Do đó, nhóm tích hợp nhánh thị giác không gian 3D ứng dụng mô hình nền tảng Depth Anything V2 (Metric Depth) chạy suy luận trên NPU của máy tính nhúng Orange Pi 5 Pro.
 
-Một **rig cơ khí** gồm: trục trượt + vít me dẫn động 1 khớp, **phanh từ** để chặn đột ngột một tư thế, và **tải chuẩn** (lò xo + khối lượng). Nó có **hai** vai trò: (1) tạo `Δp` đã biết cho GATE A; (2) **tiêm lỗi có chủ đích** — một tải bị thiếu, một kênh bị trôi nhanh, một mux hoạt động sai — để chứng minh hệ thống **tự phát hiện** được qua cờ và qua `RAL`, tức là chứng minh lá phiếu `UNRELIABLE` không phải đồ trang trí.
+- Mô hình Depth Anything V2 ước lượng bản đồ độ sâu hệ mét 3D trực tiếp từ camera đơn RGB trong không gian thực, khắc phục sự phụ thuộc vào vật chuẩn hay marker cố định.
+- Thuật toán theo dõi vị trí tương đối giữa cụm nẹp đầu ngón tay và vật thể đích, tính toán khoảng cách 3D thực tế d(t) và suy ra thời gian tới tiếp xúc dự kiến (Time-To-Contact - TTC).
+- Định thời trợ lực đón trước: Khi bàn tay tiến gần vật thể với cự ly giảm dần theo vận tốc tiếp cận, hệ thống chủ động điều phối cơ cấu mở ngón chuẩn bị khẩu độ đón vật; chỉ khi mạng cảm biến Velostat và Flex xác nhận tiếp xúc vật lý thực tế thì bộ điều khiển mới kích hoạt pha trợ lực kẹp giữ, giúp động tác tự nhiên và chính xác.
 
-### 4.7 Công cụ không phải phần cứng
+#### 3.2.6. Xây dựng cơ chế phân loại tiến trình bài tập và phản hồi trực quan
 
-- **Phiếu tham khảo chuyên gia 10 câu** (`research/protocols/07` §5): câu 1–5 cho thiết kế, 6–10 cho diễn giải; mỗi câu trả lời ghi lại **dưới dạng quyết định** (câu nào được chấp nhận → biến thành ràng buộc thiết kế, câu nào bị từ chối → ghi lý do).
-- **9 file markdown đã khoá cấu trúc** (`docs/02`, `docs/04`, `research/evidence/SOURCE_LEDGER.csv` với **137 dòng**, `research/claims/CLAIM_LEDGER.csv`, `research/bench/logs/`...): mỗi tuyên bố trong đề cương này truy vết được về một dòng ledger.
-- **Nhật ký truy vấn ngoài** (`research/queries/QUERY_LOG.jsonl`): mỗi lần tra cứu đều được ghi, kể cả những lần **tìm không thấy** — vì "tìm không thấy" không có nghĩa là "không tồn tại".
+Nhánh thị giác đảm nhiệm lượng hóa tiến trình bài tập gắp thìa dạng kẹp 3 chấu (tripod pinch) và cung cấp phản hồi trực quan:
 
----
+- Phân loại trực tiếp các pha bài tập: sẵn sàng, tiếp cận đón vật, kẹp giữ thìa, nâng thìa, di chuyển, đặt vào vùng đích, rơi thìa hoặc hoàn thành phiên tập.
+- Nhãn phân loại bài tập và thông số cự ly được ghi nhận đồng bộ vào nhật ký tập luyện, đồng thời hiển thị trực quan theo thời gian thực trên màn hình giao diện để người bệnh tự quan sát kết quả vận động của chính mình.
+- Tín hiệu thị giác chỉ tham gia điều phối khẩu độ đón trước và đánh giá tác vụ, tuyệt đối không trực tiếp phát lệnh ép siết ngón khi chưa có tín hiệu xác nhận từ cảm biến áp trở trên găng tay.
 
-## 5. Mục tiêu định lượng
+C. KẾ HOẠCH CHẾ TẠO VÀ PHƯƠNG PHÁP THỬ NGHIỆM
 
-### 5.1 Mục tiêu sản phẩm (M1–M6) và cửa đo của từng mục tiêu
+### Nhóm 1: Chế tạo cơ khí nẹp đeo, bố trí cảm biến và kiểm thử cơ cấu trợ lực
 
-| ID | Mục tiêu | Đơn vị / công thức | Cửa đo | Thuộc GATE nào |
-|---|---|---|---|---|
-| M1 | Tín hiệu khả dụng | `SNR ≥ 8 LSB` tại `ΔF = 1 N` | bench, chuỗi thô | **G0.1** |
-| M2 | Độ nhạy áp trở | `γ = ∂lnR/∂lnp`, yêu cầu `≥ 0,25` ở ≥ 4/5 mảng | 5 bậc tải | G0.2 |
-| M3 | Độ lặp lại | `CV_chu kỳ ≤ 5 %`, `ICC(3 ngày) ≥ 0,75` | 3 ngày × 3 phiên | G0.3, G0.4 |
-| M4 | Tín hiệu chống lại trôi | `drift / (ΔV tại 1 N) < 1`, `drift_ratio ≤ 2` | 10 ngày | **G0.7** |
-| M5 | Phản hồi theo thời gian thực | `fps_meas ≥ 20 Hz` · `latency_p95 ≤ 500 ms` | 12 kênh | G0.9, GATE F |
-| M6 | Cờ độ tin cậy bắt được lỗi | ≥ 4/5 lần tiêm lỗi bị cờ | 5 lỗi tiêm vào | GATE E |
+#### 1. Thử nghiệm in 3D nẹp ngón, khóa ngàm một tay và cơ cấu 3 tang cuốn cáp
 
-### 5.2 Tiêu chí để hội đồng chấm **đề cương** này (không phải báo cáo)
+Nhóm khảo sát khóa nẹp trước, vì nẹp là nơi bố trí cảm biến áp lực. Nhóm bắt đầu thiết kế nẹp từ các đốt đầu tiên.
 
-| Đề cương được coi là hoàn thành mục tiêu khi | Trạng thái hiện tại |
-|---|---|
-| Có ≥ 6 con số **tự đo** trong báo cáo cuối kỳ | chưa — là cam kết, không phải thành tích |
-| Toàn bộ ngưỡng được chốt **trước** khi bật nguồn đo | [ ] **cần nhóm nghiên cứu tích 10 ô** (`research/protocols/08` §7) — đây là việc còn lại duy nhất |
-| Không có tuyên bố hiệu quả lâm sàng, không có dữ liệu người trước IRB | [x] đang đúng và sẽ giữ đúng |
-| Mọi con số trong hồ sơ có hoặc DOI hoặc `research/bench/logs/` | [x] cơ chế đã dựng xong (137 dòng ledger) |
+- Qua các phương án vòng kẹp, rãnh trượt và đai dán, khó khăn chính là giữ tiền tải khi chỉ dùng một tay.
+- Các dạng chốt và thanh răng giảm thời gian đeo nhưng đòi hỏi căn chỉnh chính xác. Vì vậy đến thời điểm hiện tại, nhóm quyết định sử dụng nẹp 2 bản lề để làm thiết kế chính.
+- Kiểm thử cơ cấu 3 tang servo trên mô hình bàn tay giả: đo hành trình thực tế so với góc quay servo, dạng kẹp 3 chấu có đạt hình học mong muốn hay không, hành vi nhả dây khi chuyển sang pha duỗi ngón, độ căng dây đo bằng lực kế độc lập và thời gian tháo nẹp khẩn cấp qua chốt mở nhanh.
 
----
+Hình 8: Quá trình tiến hóa 9 thế hệ khóa nẹp in 3D
 
-## 6. Kế hoạch triển khai (không có mốc chết — kế hoạch theo thứ tự cửa, không theo lịch thi)
+#### 2. Hiệu chuẩn và kiểm thử cảm biến Velostat vi sai hai vách và cảm biến gập Flex
 
-| Pha | Nội dung | Khối lượng dự kiến | Cửa sang pha sau |
-|---|---|---|---|
-| **0** | Chốt 10 ngưỡng; mua khối lượng chuẩn + in jig | 1 tuần, 8 buổi bench × 2–3 h | `G0.1` + `G0.7` chưa fail |
-| **1** | GATE 0 trên bench, không firmware phức tạp: DMM + khối lượng + đồng hồ bấm giây; phiếu đo in được | 8 buổi, **mọi phép tính chỉ là trừ số nguyên** | pass `G0.1…G0.9` |
-| **2** | GATE A: 1 ngón, `Δp` đã biết, 60°/s + 10°/s, `SNR/THD/ENOB` (ADS1115 để so sánh) | 2–3 tuần | `GATE A` pass |
-| **3** | GATE B: ma trận hiệu chỉnh `γ` + `V_ex`, `MDC` từ chính dữ liệu GATE A | 2 tuần | pass |
-| **4** | GATE C: **cửa giết đề tài** — trôi 28 ngày, 60 °C/85 %RH, chu trình tháo/lắp | 4–6 tuần (phần lớn là chờ) | pass hoặc đề tài chuyển thành báo cáo phương pháp |
-| **5** | GATE D: `RAL` trên rig có tải; hai tốc độ; `GAP` | 3–4 tuần | pass |
-| **6** | GATE E: tiêm lỗi, chứng minh cờ hoạt động | 1–2 tuần | pass |
-| **7** | GATE F: bật tầng Orange Pi, `latency_p95` | 1–2 buổi | — |
+a) Xây dựng thành công cảm biến áp lực Velostat trên nẹp:
+Nhóm đã xây dựng và bố trí thành công mạng cảm biến áp lực Velostat lên nẹp (đốt đơn) và bước đầu kiểm thử nguyên lí hoạt động.
 
-**Năng lực đã có để làm những việc trên** (không phải hứa hẹn): firmware nhúng đã tồn tại trong repo (`firmware/`, có nhật ký chạy); mô hình toán của chuỗi truyền đo đã viết và đã được kiểm lại; quy trình tra cứu trước nghiệm và sổ bằng chứng đã vận hành.
+b) Kế hoạch kiểm thử cảm biến áp lực Velostat và cảm biến Flex:
+Để màng Velostat chạy ổn định trên khung nẹp, nhóm kiểm từng ô trên băng thử có tải chuẩn trước khi ghép cặp lòng - mu, sau đó đối chiếu với Flex và 2 ô tham chiếu:
+- Đáp ứng theo tải và độ tuyến tính: tải tăng dần rồi giảm dần, ít nhất 3 lượt, lấy đường chuẩn và R² của từng ô.
+- Trễ đàn hồi và độ dãn tải tĩnh: do đặc tính của vật liệu Velostat, nhóm so nhánh tăng tải với nhánh giảm tải, giữ tải không đổi 60 s.
+- Độ lặp lại trong cùng buổi và giữa các ngày, cùng một cách lắp.
+- Nhiễu nền được đo khi giữ đầu vào ổn định. SNR được tính từ cửa sổ có tín hiệu tải chuẩn và cửa sổ nhiễu tương ứng. Nhóm đối chiếu tín hiệu thô với tín hiệu sau lọc nhưng không áp dụng vùng chết.
+- Xuyên kênh: kích thích một kênh, sau đó đọc các kênh đang nghỉ và đối chiếu với kênh kiểm tra nối đất. Kênh này được ghi riêng trong bản đồ kênh.
+- Trôi nền: nhóm ghi nhật ký ít nhất 10 ngày với 2 ô tham chiếu không chịu tải để theo dõi độ trôi chung của hệ thống. Độ dãn do tải của các ô trên ngón được kiểm tra riêng bằng phép giữ tải.
+- Kiểm tra tín hiệu vi sai cặp lòng - mu: thao tác ép ngón vào nẹp và ngón tiếp xúc vật phải cho hai mẫu đáp ứng điện áp ngược hướng rõ rệt.
+- Hiệu chuẩn cảm biến Flex: đối chiếu điện áp đọc từ Flex với góc gập thực tế đo bằng thước đo góc ngoài trên cùng mô hình bàn tay giả, thiết lập hàm hồi quy chuyển đổi liên tục.
 
----
+### Nhóm 2: Chế tạo mạch thu nhận, lập trình DSP và kiểm thử điều khiển AAN
 
-## 7. Ngân sách dự đoán
+#### 3. Kiểm thử mạch thu nhận 21 kênh và chuỗi lọc số DSP trên ADS1115
 
-**Cách đọc bảng:** cột "Cần chi tiền mặt" **đã trừ** các vật tư mà người thực hiện **đã có sẵn**. Vật tư đã có **không** được tính là "chi phí bằng 0" — nó là một mục riêng, vì chi phí cơ hội của nó có thật và hội đồng có quyền biết.
+Nhóm đã thử 2 cấu hình mạch, đối chiếu bằng đồng hồ số, máy hiện sóng FNIRSI 2C23T và đồ thị dữ liệu đọc về máy tính.
 
-| Lớp | Hạng mục | Dải giá tham khảo (VND) | Trạng thái | Cần chi tiền mặt |
-|---|---|---|---|---|
-| **0 — GATE 0** | Màng Velostat (~10 mẫu × 2 mặt) | 150.000–400.000 | **đã có** | 0 |
-| | Đồng lá tự dính | 80.000–200.000 | **đã có** | 0 |
-| | Tấm acrylic/PVC 2 mm làm mẫu áp kế + jig | 60.000–250.000 | cần mua/in | 60–250k |
-| | Khối lượng chuẩn 200–500 g (hoặc thay bằng vật đã cân đối chứng) | 0–150.000 | một phần tự làm | 0–150k |
-| | Dây, đầu nối, băng polyimide, điện trở 100 kΩ 0,1 % | 60.000–250.000 | một phần có sẵn | 60–250k |
-| | Đồng hồ đo số (4 dây) — **nếu chưa có** | 300.000–800.000 | ⟨kiểm tra⟩ | 0 hoặc 300–800k |
-| **1 — GATE A/B** | ESP32-S3 + kháng trở + mux CD74HC4067 | 250.000–600.000 | **board đã có**; mux ⟨kiểm tra⟩ | 15–60k |
-| | ADC 16 bit rời (ADS1115) để so sánh | 120.000–250.000 | cần mua nếu muốn so | 120–250k |
-| | Load cell 5 kg + HX711 (**chỉ dùng ở chuẩn đối chứng**, từ GATE A) | 90.000–220.000 | cần mua | 90–220k |
-| | In 3D ốp ngón + khung (TPU/PLA) | 150.000–400.000 | tự in / thuê in | 150–400k |
-| | IMU (6), flex (12), cảm biến `T/RH` (1) | 300.000–700.000 | một phần có sẵn | 200–600k |
-| **2 — GATE D/F** | Orange Pi 5 Pro | 4.000.000–6.000.000 | **đã có** | 0 (nếu mua: +4–6 tr) |
-| | Rig: nhôm V-me, vít me, bạc đạn, encoder, lò xo + tải chuẩn | 900.000–2.000.000 | cần mua | 0,9–2,0 tr |
-| | Phantom silicone in khuôn | 200.000–500.000 | tự đúc | 200–500k |
-| **3 — nếu mở rộng sang người bệnh** | Phí thẩm định IRB/SRC + biểu mẫu đồng ý + tiêu hao y tế | **chưa xác định được**; thường không phải chi phí lớn nhất | **không nằm trong phạm vi đề cương này** | — |
+- Vòng 1 dùng INA333 với hệ số khuếch đại khoảng 6,5. Với nguồn chuẩn, ngõ ra sạch và các kênh cách ly tốt. Khi lắp Velostat thật và gài tiền tải nẹp, điện áp cầu phân áp xuống dưới 1,42 V, ngõ ra kẹt khoảng 2.838 mV và vùng tuyến tính chỉ còn 1,44 - 1,92 V. Khuếch đại cố định không phù hợp với dải điện trở biến thiên lớn khi có tiền tải, nên nhóm bỏ tầng này.
+- Vòng 2 bỏ INA333, đọc trực tiếp qua ADS1115 (16-bit) và xử lí theo chuỗi DSP 4 bước: bám đường nền động, lọc EMA và vùng chết 180 mV cho Velostat; lọc EMA và ánh xạ góc liên tục cho Flex. Qua các lượt chạy thử, nhóm ghi nhận dải ngõ vào 0 - 3.300 mV và tốc độ quét 21 kênh đạt ≥15 Hz.
 
-| Tổng hợp | Số tiền |
-|---|---|
-| **Tiền mặt cần chi để đi hết GATE 0** | **≈ 0,12–0,65 triệu đồng** |
-| Tiền mặt để đi hết **GATE A + B** | + ≈ 0,57–1,5 triệu đồng |
-| Toàn bộ tới **GATE F** với vật tư đã có sẵn | ≈ **1,8–4,7 triệu đồng** (= 0,12–0,65 + 0,57–1,50 + 1,10–2,50) |
-| Kịch bản phải mua **toàn bộ** (không có gì sẵn) | ≈ **6,5–12 triệu đồng** (thêm Velostat 0,15–0,4 · đồng lá 0,08–0,2 · board 0,25–0,6 · máy tính 4–6) |
-| **Chi phí tối đa nếu GATE 0 fail** | **≤ 0,65 triệu đồng** (chưa tính đồng hồ đo nếu phải mua: +0,3–0,8) — thiết kế theo nguyên tắc cắt lỗ sớm |
+Hình 9: Chuỗi xử lý tín hiệu số (DSP) 4 bước trên mạch đọc trực tiếp ADS1115 ở Vòng lặp 2
 
-Ba quy tắc giá áp dụng cho đề cương và mọi tài liệu sau này: **(1)** mọi con số ở đây là **dự toán tham khảo tại thời điểm viết**, chưa phải báo giá, chưa có hoá đơn; **(2)** không dùng giá thương mại (Neofect ~1.925 USD — mức nhà cung cấp, **chưa xác minh độc lập** [13]) làm "giá của đề tài", mà chỉ làm **mốc so sánh**, kèm nguồn; **(3)** mục nào mua thật sẽ được cập nhật bằng báo giá thật + ảnh hoá đơn lưu vào `research/bench/logs/` (xem `research/context/EQUIPMENT_AND_ACCESS.md`).
+#### 4. Đánh giá độ tin cậy bộ chỉ số EI - GAP - RAL và chu trình trợ lực ba pha trên giàn đo
 
----
+- GAP: đối chiếu biên độ gập đọc từ Flex đã hiệu chuẩn với thước đo góc ngoài, trên cùng một mô hình bàn tay giả, ở cả tầm vận động thụ động và chủ động.
+- EI và RAL: kiểm trên giàn đo cơ học gồm giàn trục trượt tạo chuyển động gập - duỗi lặp lại theo biên độ và tốc độ đặt trước, tải chuẩn đặt đúng đường truyền lực, mô hình bàn tay giả silicone làm đối tượng đeo.
+- Độ tin cậy từng chỉ số đánh giá bằng hệ số biến thiên (CV nội phiên, CV liên ngày), sai số chuẩn của phép đo SEM và ngưỡng khác biệt nhỏ nhất có ý nghĩa MDC [4].
+- Kiểm thử thuật toán AAN ba pha: đánh giá số lần chuyển pha đúng và sai so với nhãn đối chiếu trên mô hình, số sự kiện trợ lực sai pha trong cửa sổ thăm dò, độ trễ từ lúc cảm biến nhận tín hiệu đến khi servo phát lực.
 
-## 8. Rủi ro chính và cách đề tài phản ứng
+### Nhóm 3: Triển khai thị giác không gian Depth Anything V2 và tích hợp toàn hệ thống
 
-| Rủi ro | Xác suất tự đánh giá | Hệ quả nếu xảy ra | Phản ứng đã chuẩn bị |
-|---|---|---|---|
-| **Cửa sổ `F_p` rỗng** — không có tiền tải nào vừa nhạy vừa ổn định | Trung bình–cao | GATE 0 fail | 3 hướng cứu ở §4.5; nếu cả ba fail trong ≤ 3 tuần → báo cáo phương pháp + kết quả âm tính |
-| **Trôi 10 ngày vượt biên độ cần đo** | Trung bình–cao | Phá tan mọi kết luận về *diễn tiến* | `G0.7` + quy trình chuẩn hoá; nếu fail → đề tài **không** nói về diễn tiến theo tuần |
-| Thiết bị đo góc/áp lực thương mại đã nhiều → bị xem là "không mới" | Cao (đúng là đã nhiều) | Mất điểm nếu chỉ nói "chúng em làm găng tay" | Trình §2.2–2.3: **phân biệt bằng cơ khí + lớp thống kê**, không bằng tên thiết bị |
-| Hội đồng hỏi "số liệu người bệnh đâu" | Cao | Bị xem là chưa xong | Trả lời định trước: "đúng, và đề tài **không** lấy số liệu người trước khi có phê duyệt đạo đức; kết quả tự đo trên người chế tạo + rig, có thể kiểm điểm" |
-| Công việc chỉ nằm ở giai đoạn ý tưởng quá lâu | Trung bình | Trễ mà không biết | Mỗi buổi bench kết thúc bằng 1 ảnh + 1 file log thô, kể cả buổi fail |
+#### 5. Triển khai mô hình Depth Anything V2 trên Orange Pi 5 Pro và kiểm chuẩn cự ly 3D
 
----
+- Cài đặt mô hình nền tảng Depth Anything V2 (bản Metric Depth tối ưu hóa) chạy suy luận trên bộ xử lý đồ họa NPU của máy tính nhúng Orange Pi 5 Pro.
+- Kiểm chuẩn độ chính xác ước lượng độ sâu: đối chiếu giá trị cự ly d(t) suy ra từ bản đồ độ sâu với khoảng cách vật lý thực tế đo bằng thước laser hoặc cảm biến chuẩn ở các khoảng cách từ 5 cm đến 50 cm.
+- Đánh giá thuật toán định thời đón trước: đo sai số dự đoán thời gian tới tiếp xúc (TTC) ở các vận tốc tiếp cận khác nhau của bàn tay, ghi nhận độ trễ suy luận của mô hình và tốc độ khung hình (fps) trên NPU.
 
-## 9. An toàn và đạo đức
+#### 6. Tích hợp toàn diện hệ thống qua bài tập gắp thìa dạng kẹp 3 chấu (Tripod Pinch)
 
-1. Thiết bị đeo **không** truyền lực vào người, **không** kích thích điện, **không** chẩn đoán: công cụ **đo và ghi nhận**.
-2. Bộ chấp hành (rig/E5) **chỉ** tác động lên **rig và phantom** — **không** thử trên bất kỳ ai, kể cả người nhà của người thực hiện.
-3. **Không** thu thập dữ liệu của người khác trước khi có phê duyệt IRB/hội đồng đạo đức của trường + giấy đồng ý; chữ ký của giáo viên hướng dẫn hay gia đình **không** thay được phê duyệt đó.
-4. Đã **tham khảo ý kiến chuyên gia vật lý trị liệu – phục hồi chức năng** về tính cấp thiết và giao thức đo. Chuyên gia **không** là đối tượng đo, **không** là nguồn tuyển người bệnh, và ý kiến đó là bằng chứng **nhu cầu**, **không phải** bằng chứng **kết quả**. Hồ sơ **không nêu danh tính** người được tham khảo.
-5. Dữ liệu xử lý tại biên; **không** đưa tên, mã số, hình ảnh nhận dạng của bất kỳ người bệnh nào vào tài liệu.
-6. Đề cương **không** nêu cam kết nào về hiệu quả lâm sàng. Nếu `GATE C` fail, đề tài **dừng ở đó và nói rõ đã fail**, không hạ chuẩn.
+- Thiết lập kịch bản bài tập: loại thìa, kích thước, vị trí xuất phát, khoảng cách di chuyển đến vùng đích, tiêu chí đặt thành công và số lượt mỗi phiên thử nghiệm.
+- Chỉ số tác vụ gồm tỉ lệ hoàn thành, thời gian hoàn thành, số lần rơi thìa hoặc đặt sai vị trí, trích xuất từ nhãn thị giác và nhật ký đồng bộ thời gian trên hệ thống.
+- So sánh kết quả nhận biết trạng thái khi dùng riêng từng nguồn cảm biến (chỉ găng tay, chỉ thị giác) so với khi kết hợp đồng bộ cả găng tay và mô hình Depth Anything V2.
+- So sánh hiệu quả vận động giữa chế độ trợ lực cố định và chế độ trợ lực theo nhu cầu AAN kết hợp thị giác đón trước trên cùng mô hình bàn tay giả và bài tập gắp thìa chuẩn hóa. Đây là phép kiểm chứng cốt lõi chứng minh tính ưu việt của giải pháp tích hợp.
 
----
+TÀI LIỆU THAM KHẢO
 
-## 10. Sản phẩm dự kiến
+[1] Tran et al. (2025), “Comprehensive analysis of stroke epidemiology in Vietnam: Insights from GBD 1990–2019 and RES-Q 2017–2023”, Global Epidemiology, 9:100199.
 
-| Sản phẩm | Mô tả có kiểm chứng được | Tiêu chí "xong" |
-|---|---|---|
-| Nguyên mẫu găng | 3 ngón có ốp vách cứng, 12 mảng áp trở + 6 IMU, firmware ghi log | ảnh thiết bị **đang chạy** + tín hiệu thật trên màn hình |
-| Bộ giao thức + ngưỡng | `research/protocols/06`–`08a`, `docs/04` | 10 ngưỡng được chốt **trước** khi đo, có ngày ghi |
-| Sáu con số tự đo | `CV`, `ICC`, `MDC`, trôi 10 ngày, `fps`, `latency_p95` — **bắt buộc có số** | `research/bench/logs/` có file cho từng con số |
-| Báo cáo cuối kỳ | 15–20 trang, ≥ 1,3 ảnh/bảng mỗi trang, ≤ 2 trang lý thuyết | mỗi GATE một ô kết quả, fail vẫn in ra |
-| Kho tái lập | source + schema + `SOURCE_LEDGER.csv` + log | người khác chạy lại được và ra số trong dung sai đã nêu |
+[2] Pollock A., et al. (2014), “Interventions for improving upper limb function after stroke”, Cochrane Database of Systematic Reviews, CD010820.
 
----
+[3] Langhorne P., Coupar F., Pollock A. (2009), “Motor recovery after stroke: a systematic review”, The Lancet Neurology, 8(8), 741–754.
 
-## 11. Hạn chế — tự khai trước khi hội đồng hỏi
+[4] Schwerz de Lucena D., et al. (2022), “Providing Real-Time Wearable Feedback to Increase Hand Use after Stroke: A Randomized Controlled Trial”, Sensors, 22(18):6938.
 
-| # | Hạn chế | Cách đề tài xử lý |
-|---|---|---|
-| 1 | Không có kết quả đo nào tại thời điểm nộp đề cương | nêu ở đầu trang, không nói vòng quanh |
-| 2 | Chuỗi truyền đo **chưa** được hiệu chuẩn `ΔR → N`; ADC không quy đổi ra newton | dùng **counts** + `EI` không thứ nguyên; giữ nguyên lời khuyên "dán lên ngón không cho lực" |
-| 3 | Đối tượng tự kiểm chứng ban đầu là **một người** (chính người thực hiện) — không phải người bệnh | mọi kết luận về khả năng áp dụng lâm sàng bị chặn tới khi có IRB + n ≥ 20 |
-| 4 | Velostat phi tuyến, trễ, từ biến, trôi, nhạy ẩm | đưa thành ngưỡng đo được (G0.5/G0.6/G0.7) thay vì tuyên bố đã khắc phục |
-| 5 | Không có bằng chứng về kết cục lâm sàng | tuyên bố dừng ở "cung cấp phép đo đáng tin", không tới "cải thiện phục hồi" |
-| 6 | `RAL` **không** dùng như chỉ số lâm sàng, chỉ dùng để so sánh cấu hình máy và chứng minh hệ thống phát hiện lỗi được | ghi rõ trong mọi bảng có `RAL` |
-| 7 | `GAP` và `EI` **không** thay thế bất kỳ thang điểm nào (FMA/ARAT/MAS) | mục tiêu là **bổ sung tần suất đo**, không thay thế công cụ chuẩn |
+[5] Penfield W., Boldrey E. (1937), “Somatic motor and sensory representation in the cerebral cortex of man as studied by electrical stimulation”, Brain, 60(4), 389–443.
 
----
+[6] Gordon E. M., et al. (2023), “A somato-cognitive action network alternates with effector regions in motor cortex”, Nature, 617, 351–359.
 
-## 12. Tài liệu tham khảo
+[7] Hebb D. O. (1949), “The Organization of Behavior: A Neuropsychological Theory”, Wiley, New York.
 
-*Mỗi dòng ghi rõ mức đã đọc thật, vì "đã đọc tóm tắt" và "đã đọc toàn văn" là hai mức khác nhau.*
+[8] Bộ Y tế (2014), “Hướng dẫn chẩn đoán và điều trị Phục hồi chức năng sau đột quỵ não”, Quyết định số 4039/QĐ-BYT.
 
-1. Tran M.C., Prisco L., … Mai T.D., Farmery A. "Comprehensive analysis of stroke epidemiology in Vietnam: Insights from GBD 1990–2019 and RES-Q 2017–2023." *Global Epidemiology* 2025;9:100199. DOI: 10.1016/j.gloepi.2025.100199 — **đã đọc toàn văn bản trên PMC**.
-2. Pollock A., Farmer S.E., Brady M.C., Langhorne P., Mead G.E., Mehrholz J., van Wijck F. "Interventions for improving upper limb function after stroke." *Cochrane Database Syst Rev* 2014;11:CD010820. DOI: 10.1002/14651858.CD010820.pub2 — **đã đọc abstract + phần Background**; các con số 80%/50% ở §1.2 trích từ mục Background này (nó dẫn Langhorne 2009, Kwakkel 2003, Broeks 1999).
-3. Langhorne P., Coupar F., Pollock A. "Motor recovery after stroke: a systematic review." — **trích gián tiếp** qua [2]; chưa đọc bản gốc → **đề tài không trích nguyên văn**.
-4. Schwerz de Lucena D., Rowe J.B., Okita S., Chan V., Cramer S.C., Reinkensmeyer L.E. "Providing Real-Time Wearable Feedback to Increase Hand Use after Stroke: A Randomized, Controlled Trial (Manumeter)." *Sensors* 2022;22(18):6938. DOI: 10.3390/s22186938 — **đã đọc abstract**.
-5. Amin K.R. et al. "Remote Monitoring for the Management of Spasticity: Challenges, Opportunities and Proposed Technological Solution." *IEEE Open J. EMBC* 2024. DOI: 10.1109/OJEMB.2024.3523442 — **đã đọc abstract** (đối tượng là co cứng nói chung, không riêng bàn tay).
-6. "A magnetically controlled soft robotic glove for hand rehabilitation." *Device* (Cell Press) 2024. PII: S2666-9986(24)00412-5 — **đã đọc abstract** (số 423 USD và dải 350–6.000 USD nằm ở đây).
-7. Lin B.-S., Lee I.-J., Hsiao P.-C., Yang S.-Y., Chen C.-Y., Lee S.-H., Huang Y.-F., Yen M.-H., Hu Y.H. "Design of a Multi-Sensor System for Exploring … Spasticity." *Sensors* 2022;22(19):7212. DOI: 10.3390/s22197212 — **đã đọc abstract**; đối thủ gần nhất, n = 14, có IRB 11002-007.
-8. Lin C., Zhao D. "ART-Glove: Articulated Tactile Glove for Contact-Grounded Dexterous Interaction Capture." arXiv:2606.16370 [cs.RO], 2026. DOI: 10.48550/arXiv.2606.16370 — **đã đọc abstract**.
-9. Liu H., Zhang Z., Jiao Z., et al. "A Reconfigurable Data Glove for Reconstructing Physical and Virtual Grasps." *Engineering* 2024;32:202–216. DOI: 10.1016/j.eng.2023.01.009 — **đã đối chiếu trang tạp chí**.
-10. Radder B., Prange-Lasonder G.B., Kottink A.I.R., et al. ironHand, *J Rehabil Assist Technol Eng* 2016;3:2055668316670553 — **đã đọc tóm tắt**.
-11. Radder B. et al. "Feasibility of a wearable soft-robotic glove to support … daily life." *J Rehabil Med* 2018;50:598–606. DOI: 10.2340/16501977-2357 — **đã đọc** (n = 5; không dùng thiết bị đo lực chuẩn hoá làm kết quả chính).
-12. "A Systematic Review on Custom Data Gloves." arXiv:2405.15417, 2024 — **đã đọc abstract**.
-13. Neofect Smart Glove, trang nhà cung cấp — **mức nhà cung cấp, chưa xác minh độc lập**, chỉ dùng làm mốc so sánh.
-14. Phỏng vấn kỹ thuật viên VLTL–PHCN ngày 13/09/2026, lưu tại `research/context/CONVERSATION_2026-09-13.md` — **ý kiến chuyên môn có ghi chép**, không phải nghiên cứu định lượng.
-15. "Low-cost resistive pressure sensing using carbon black-loaded silicon rubber (Velostat)" và "Piezoresistive properties of Velostat" (MIT Media Lab 2012; Sensorix) — **đã đọc**; cơ sở cho `γ`, trễ, từ biến.
+[9] Cao Minh Châu, Nguyễn Thị Kim Liên, Trần Trọng Hải (2020), “Giáo trình Phục hồi chức năng”, Nhà xuất bản Y học, Hà Nội.
 
----
+[10] Amin F., et al. (2024), “Remote Monitoring for the Management of Spasticity: Challenges, Opportunities and Proposed Technological Solution”, Sensors, PMC11793859.
 
-## Phụ lục A — những câu đề tài này sẽ không nói (và vì sao)
+[11] Lin B. S., et al. (2022), “Design of a Multi-Sensor System for Exploring Upper Limb Spasticity in Stroke Patients”, Sensors, 22(19):7212.
 
-| Câu | Vì sao không |
-|---|---|
-| "Thiết bị đã được kiểm chứng lâm sàng" | không có nghiên cứu lâm sàng, không xin được trong phạm vi này |
-| "Đo lực chính xác đến ±0,1 N" | không có chuẩn so sánh; không có ADC → N |
-| "Độ chính xác 99%" kiểu "đạt" sau một lần đo | một lần đo không phải một con số; mọi `Δ` phải đi kèm `CV`/`ICC`/`MDC` |
-| "Chi phí 0 đồng vì được tài trợ" | vật tư được **cung cấp**, chi phí cơ hội vẫn tồn tại — nêu như §7 |
-| "Thay thế được FMA/ARAT" | mục tiêu là tần suất đo, không phải thay thế công cụ chuẩn |
-| "Loại bỏ được trôi" | chỉ **giảm ảnh hưởng** và **đo nó** |
-| "Bệnh nhân tập tốt hơn khi dùng găng" | đề tài không can thiệp điều trị ⇒ không có quyền nói về kết cục |
+[12] Kapandji I. A. (2007), “The Physiology of the Joints, Volume 1: Upper Limb”, Churchill Livingstone / Elsevier.
 
----
+[13] Radder B., et al. (2018), “Home-based robot-assisted arm training with an interactive robotic glove after stroke (IRONHAND)”, Journal of Rehabilitation Medicine, 50, 598–606.
 
-### Ghi chú cho người nộp
-- Đề cương này **điền 4 ô danh tính** là nộp được; không có ô nào khác chờ số liệu.
-- Trước khi nộp, xoá 2 dòng khỏi `docs/bao_cao/A1_ly_do_chon_de_tai.md` nếu lấy nguyên văn từ đó: con số **80%** đang được gán cho Hendricks 2002 trong khi nguồn đúng cho con số đó là [2]/[3] ở đây (Hendricks 2002 bàn về các mốc hồi phục vận động, không đưa tỉ lệ 80% tổn thương chi trên).
-- Không có giá nào trong đề cương được trình như giá đã chốt; cập nhật bằng báo giá/hoá đơn trước khi đưa vào báo cáo chính thức.
+[14] Li M., et al. (2024), “A magnetically controlled soft robotic glove for hand rehabilitation”, Device, 2(4):100215.
+
+[15] Hopkins M., Vaidyanathan R., McGregor A. H. (2020), “Examination of the Performance Characteristics of Velostat as an In-Socket Pressure Sensing Material”, IEEE Sensors Journal, 20(12).

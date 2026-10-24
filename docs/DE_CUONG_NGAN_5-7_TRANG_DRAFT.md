@@ -97,9 +97,7 @@ xác nhận cuối cùng trước khi bật nguồn đo chính thức.)*
   tay) cho một "ảnh chụp" tại cơ sở y tế, không theo dõi được tại nhà; một số găng tay cảm biến/găng
   trợ lực đã công bố trong và ngoài nước nhưng chưa thấy tổ hợp đủ: lực có hướng qua vách khung +
   khung thống kê MDC/ICC cho theo dõi tiến triển + tự gắn cờ độ tin cậy - xem mục B.II.
-- **Giải pháp kỹ thuật:** vật liệu áp trở Velostat, khung ngón in 3D (PLA/TPU), mạch chọn kênh
-  CD74HC4067, vi điều khiển ESP32-S3, khuếch đại đo lường INA333 + ADC ADS1115, rig cơ khí AAN (lò
-  xo trợ giúp + 1 servo), xử lý tại biên trên NPU (RK3588).
+- **Giải pháp kỹ thuật:** mảng 16 phần tử cảm biến áp trở Velostat kẹp dây đồng mạ niken trên 3 ngón tay trụ cột, khung ngón in 3D (PETG/TPU), mạch chuyển mạch CD74HC4067, tầng chuyển đổi tương tự-số PGA 16-bit ADS1115 (không dùng INA333, tránh bão hòa sàn - `DEC-HW-006`), vi điều khiển ESP32-S3 xử lý tín hiệu số DSP 4 bước (bám mốc tĩnh tự động bù trôi nhiệt thân thể), kết nối USB Type-C tốc độ cao 921600 baud cấp nguồn trực tiếp 5V (`DEC-HW-007`, không dùng BLE, không pin LiPo), rig cơ khí AAN (lò xo trợ giúp + 1 servo trên phantom), xử lý tại biên trên NPU (RK3588).
 
 ### 6. Địa điểm nghiên cứu và thực nghiệm
 
@@ -206,10 +204,11 @@ không chỉ độ chính xác bám quỹ đạo [6].
 **4.1. Sơ đồ khối**
 
 ```
-Bàn tay / phantom → khung cứng + mảng Velostat trên vách từng lóng ngón
-   → ép vào vách → điện trở thay đổi → CD74HC4067 (chọn kênh)
-   → INA333 (khuếch đại đo lường) → ADS1115/ESP32-S3 (ADC)
-   → xử lý tại biên (RK3588, INT8): bù đồng pha, suy hướng gập/duỗi
+Bàn tay / phantom → khung cứng + mảng 16 phần tử Velostat trên vách từng lóng ngón
+   → ép vào vách → điện trở thay đổi → CD74HC4067 (chuyển mạch 16 kênh)
+   → ADS1115 (PGA 16-bit, dải 0–3,3V) → ESP32-S3 (DSP bám mốc tĩnh V_base)
+   → Cáp USB Type-C High-Speed Serial (921600 baud, cấp nguồn 5V trực tiếp)
+   → Xử lý tại biên (RK3588, INT8): bù đồng pha, suy hướng gập/duỗi
    → 3 chỉ số: Effort Index (EI) · GAP = PROM − AROM · RAL (mức trợ giúp cần)
    → cờ "dữ liệu không đáng tin" khi mất điều kiện hợp lệ
    → dashboard theo tuần cho kỹ thuật viên
@@ -254,10 +253,7 @@ tế, và chưa có số liệu độ bền theo chu kỳ đóng/mở - đây l�
 
 ### 2. Đã thực hiện thật: bring-up phần cứng sơ bộ
 
-Đã lắp thử trên breadboard chuỗi ESP32-S3 + ADS1115 + INA333 + CD74HC4067, sửa một lỗi cắt tín hiệu
-(clipping) của INA333 ở chế độ đơn nguồn và kiểm tra khả năng cách ly giữa các kênh bằng
-oscilloscope. Dữ liệu này chưa đạt chuẩn GATE 0 chính thức (chưa có đủ nhật ký phiên đo theo đúng
-quy trình đã đăng ký) - đây là bước dọn đường kỹ thuật, không phải kết quả GATE 0.
+Đã lắp thử trên breadboard chuỗi ESP32-S3 + ADS1115 + INA333 + CD74HC4067; phát hiện giới hạn bão hòa sàn của INA333 khi siết nẹp cơ khí tĩnh, từ đó cải tiến sang đo trực tiếp qua PGA 16-bit của ADS1115 kết hợp thuật toán DSP bám mốc tĩnh (`DEC-HW-006`), và chốt chuyển hẳn sang kết nối có dây USB-C Serial 921600 baud cấp nguồn 5V trực tiếp (`DEC-HW-007`). Dữ liệu này chưa đạt chuẩn GATE 0 chính thức (chưa có đủ nhật ký phiên đo theo đúng quy trình đã đăng ký) - đây là bước dọn đường kỹ thuật, không phải kết quả GATE 0.
 
 ### 3. Kế hoạch tiếp theo
 

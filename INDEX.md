@@ -10,7 +10,7 @@
 
 ---
 
-##  Cấu trúc hiện tại
+## Cấu trúc hiện tại
 
 ```
 .
@@ -112,16 +112,19 @@
 ## Nội dung chính từng nhóm
 
 ### `docs/` — Tài liệu đề tài
+
 - **01_Topic_Definition** [Trọng tâm cao]: tên đề tài, vấn đề, khoảng trống, novelty trung thực, RQ 2 tầng, pipeline, killer experiment, phần cứng.
 - **02_Theoretical_Foundation** [Trọng tâm cao] *(§9 "Xử lý tại biên và lượng tử hóa INT8" ĐÃ LOẠI BỎ — `DEC-EDGE-001`)*: phục hồi vận động sau đột quỵ, thang đo lâm sàng (FMA/ARAT/BBT), cơ sinh học bàn tay & lực ngón, vật lý piezoresistive của Velostat, hysteresis/creep/drift, phép đo vi sai, lượng tử hóa INT8, tuyên bố an toàn. Nhãn [Khả thi] chuẩn / [Chờ xử lý] giả thuyết / [Thông tin] cần kiểm chứng.
 - **03_Literature_Gap_Analysis_Plan** [Trọng tâm vừa]: 10 nhóm chủ đề cần rà soát + ma trận theo dõi.
 - **04_Hardware_Architecture** [Trọng tâm cao]: bố trí 12–24 kênh, MUX, ngân sách độ phân giải ADC, tốc độ khung hình, đường ống dữ liệu.
 
 ### `docs/bao_cao/` — Báo cáo theo mẫu ViSEF
+
 - **A.1–A.6**: lý do chọn đề tài, mục tiêu, tiêu chí, đối tượng & phạm vi, địa điểm, phương pháp.
 - **GLOSSARY**: phân cấp vật liệu → sensing element → mảng → hệ thống; danh sách **tuyên bố bị cấm**.
 
 ### `research/` — Hạ tầng nghiên cứu có kiểm chứng
+
 - **Ledgers**: mọi tuyên bố, nguồn, quyết định, truy vấn đều có vết. Sau lượt rà soát 1 (2026-09-19): SOURCE_LEDGER 114 dòng (24 nguồn mới), QUERY_LOG +13 bản ghi, CLAIM_LEDGER 15 dòng (CLM-NOV-003 → `CONFLICTED`, thêm CLM-NOV-005 + CLM-MET-002).
 - **Protocols**: GATE experiment cho đề tài hiện tại + phản biện ISEF 6-lane.
 - **Context**: snapshot + nhật ký quyết định + bản nén hội thoại.
