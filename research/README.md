@@ -16,6 +16,10 @@ research/
 ├── evidence/SOURCE_LEDGER.csv               # nguồn thật/candidate và trạng thái verification
 ├── protocols/ISEF_REVIEW_ORCHESTRATION.md  # vai trò phản biện 6-lane + quality gates
 ├── protocols/06_glove_hand_GATE_experiment.md # [Trọng tâm] GATE experiment CHO ĐỀ TÀI HIỆN TẠI
+├── protocols/09_AAN_spool_phantom_*.md       # AAN servo–tang hiện hành; khung bench/phantom + cổng người có điều kiện
+├── protocols/10_gate0_task_state_sheet.md    # [MỚI 2026-10-19; M3 ADOPTED 2026-10-20] Gate 0: tác vụ thìa, nhãn T_*, máy trạng thái chế độ
+├── protocols/10a_gate0_channel_map_*.md      # [2026-10-20: PA-2 ADOPTED] Gate 0: bản đồ 16 kênh + ngân sách thu thập
+├── protocols/10b_channel_map_proposed.csv    # [2026-10-20: ADOPTED_PA2] bản đồ kênh dạng máy đọc được
 ├── protocols/04_* 05_*                      # Lưu ý: DI SẢN đề tài đã bị loại — không dùng
 ├── prompts/REVIEWER_DISPATCH_TEMPLATE.md    # prompt dispatch role độc lập/adjudicator
 ├── queries/QUERY_LOG.jsonl                  # log truy vấn audit được

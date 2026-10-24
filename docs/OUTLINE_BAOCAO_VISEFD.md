@@ -1,5 +1,7 @@
 # OUTLINE BÁO CÁO TOÀN VĂN — ViSEF
 
+> **⚠ OUTLINE NÀY ĐÃ LỖI THỜI — KHÔNG DÙNG LÀM NGUỒN NỘI DUNG (2026-10-20).** > Chỉ giữ làm tham khảo bố cục. Nhiều hạng mục bên dưới đã bị các quyết định sau này bãi bỏ và **sẽ tái đưa claim đã rút vào báo cáo nếu chép lại**: (a) tầng khuếch đại INA333 và `R_ref 10 kΩ 0,1%` — đã bỏ sau vòng lặp 2, nay đọc trực tiếp qua PGA ADS1115; (b) cấu hình **12 kênh / M-02 / M-16 / M-20** — đã thay bằng **11 kênh quét trên 16 kênh CD74HC4067** theo cấu hình đã chọn; (c) **IMU LSM6DS3 + SHT30 + TP4056/HT7333/LiPo** — không có trong kiến trúc hiện hành; (d) tiêu chí **ΔF = 1 N**, **dải 0,5–10 N**, **creep 60 s @ 5 N** — tiêu chí 5 N đã rút, cảm biến áp trở không đo lực tuyệt đối; (e) mã cổng **M1–M6** và chữ **"đăng ký trước"** — đã bỏ (nay là mốc 0–3 + tích hợp, và "tiêu chí kỹ thuật / mục tiêu thiết kế chốt trước khi đo"); (f) tuyên bố **"Không can thiệp vào vận động — chỉ đánh giá/theo dõi"** — mâu thuẫn với cơ chế trợ lực theo nhu cầu đã chọn; (g) **"dashboard"** trên Orange Pi 5 Pro — Orange Pi 5 Pro nay **chỉ** là máy chủ nhánh thị giác, vai trò trạm trí tuệ biên đã rút; (h) **lực kế Jamar / E-Link / RehabReach / găng IMU thương mại** ở bảng B.2 — chưa có trong sổ nguồn, và RehabReach tự đánh dấu "cần xác minh". > **Bản thay thế để viết báo cáo:** `docs/MO_TA_DU_AN_NGON_NGU_TU_NHIEN_2026-10-20.md` (mô tả dự án bằng ngôn ngữ tự nhiên, theo bố cục A/B/C của báo cáo cấp quốc gia 2024–2025 mà chủ dự án cung cấp) và `docs/DE_CUONG_A_B_C_BAN_NOP_2026-10-20.md` (bản nộp cô đọng). > Xem `DEC-PROP-012` trong `research/context/DECISION_LOG.md`.
+
 > **SUPERSEDED 2026-10-19 — internal outline only.** This outline predates `DEC-REHAB-001`. The current design is assisted flexion/extension → automatic threshold-based AAN → three-digit spoon task, using Flex, Velostat and task vision. See `research/context/CURRENT_DESIGN_BASELINE.md` and the active A/B/C draft. Do not reuse historical control thresholds or claims; preserve submitted/history files unchanged.
 
 ## Đề tài: Nghiên cứu và phát triển găng tay hỗ trợ đánh giá, theo dõi và hỗ trợ vận động bàn tay trong phục hồi chức năng sau đột quỵ (`DEC-TITLE-003`)
@@ -161,7 +163,7 @@ ngón tì vào vách khung → nén phần tử trên vách đó → cặp vi sa
 
 - Người tập: hướng dẫn bài tập + thanh EI phản hồi tức thời.
 - KTV (ngồi nhà): timeline sự kiện E1–E4 + đường cong tuần + **báo cáo PDF tự động**; bấm vào cờ đỏ xem sóng tín hiệu; chuyển file thủ công (USB/nhắn tin) — **không claim cloud/app**.
-- Cảnh báo: chỉ khi vượt ngưỡng **và** dữ liệu ở trạng thái hợp lệ (không bị gắn "Nghi vấn").
+- Cảnh báo: chỉ khi vượt ngưỡng **và** dữ liệu ở trạng thái hợp lệ (không thuộc phiên bị loại). *(Nhãn "Nghi vấn" đã bỏ theo `DEC-EDGE-001`; thay bằng trạng thái `INVALID`.)*
 
 ### 8. Ngân sách (viết đúng phạm vi — M-21)
 
@@ -178,7 +180,7 @@ ngón tì vào vách khung → nén phần tử trên vách đó → cặp vi sa
 | "Góc quy đổi từ tín hiệu" | "Góc đo độc lập (thước đo góc ± camera)" |
 | "GAP do yếu cơ/co cứng" | "GAP ghi nhận chênh lệch; không tự suy nguyên nhân" |
 | "AAN hỗ trợ tay người bệnh…" | Mọi câu AAN chỉ viết về phantom |
-| "Suy luận INT8 < X ms" (chưa đo) | Chỉ ghi số đo thật + điều kiện đo |
+| "Suy luận INT8 < X ms" (chưa đo) | **ĐÃ LOẠI BỎ (`DEC-EDGE-001`)** — không đưa vào báo cáo; Orange Pi 5 Pro chỉ chạy nhánh thị giác |
 
 ---
 
@@ -207,7 +209,7 @@ ngón tì vào vách khung → nén phần tử trên vách đó → cặp vi sa
 - Camera ArUco đối chứng góc vs thước đo góc (sai lệch cho phép vài độ, nếu không đạt thì camera chỉ minh họa).
 
 ### 6. Kết quả tích hợp hệ thống (ESP32-S3 ↔ Orange Pi)
-- BLE 20 Hz thực đo, tỷ lệ lỗi/khung mất, trễ đầu–cuối, số phiên "Nghi vấn" đúng/sai.
+- BLE 20 Hz thực đo, tỷ lệ lỗi/khung mất, trễ đầu–cuối, số phiên bị loại đúng/sai. *("Nghi vấn" đã bỏ — `DEC-EDGE-001`.)*
 
 ### 7. Kết luận
 - Bảng đối chiếu **A.3 → kết quả đo thật** (không ô trống, không claim vượt dữ liệu — M-05).

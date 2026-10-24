@@ -35,7 +35,7 @@
 
 | Cổng | Câu hỏi | Nếu FAIL |
 |---|---|---|
-| **GATE EDGE** | Orange Pi 5 Pro (RK3588, NPU 6 TOPS) có chạy suy luận chính sách AAN & mô hình RL bù động trôi/trễ Velostat (MDP Inversion) thời gian thực ($\le 20\text{ ms}$) hoàn toàn bằng cảm biến nội tại (không camera) không? | Hạ mức xử lý biên; lùi về thuật toán bù tuyến tính tĩnh trên vi điều khiển |
+| **GATE EDGE** *(ĐÃ LOẠI BỎ — `DEC-EDGE-001`, 2026-10-20)* | Orange Pi 5 Pro (RK3588, NPU 6 TOPS) có chạy suy luận chính sách AAN & mô hình RL bù động trôi/trễ Velostat (MDP Inversion) thời gian thực ($\le 20\text{ ms}$) hoàn toàn bằng cảm biến nội tại (không camera) không? | Hạ mức xử lý biên; lùi về thuật toán bù tuyến tính tĩnh trên vi điều khiển |
 
 > **Ghi chú quyết định `DEC-GATE-003`, `DEC-GATE-004`, `DEC-GATE-005` (2026-10-13):**
 > 1. Đã chính thức loại bỏ **GATE D** (False Alarm), **GATE E** (Fault Injection) và **GATE AAN-3** (An toàn cơ học chấp hành) khỏi phạm vi tự nghiệm thu của học sinh. Các tiêu chuẩn an toàn thiết bị y sinh và chứng nhận kiểm định độ tin cậy thuộc thẩm quyền của cơ quan kiểm chuẩn/lâm sàng độc lập.
@@ -171,14 +171,16 @@
 
 ## §4. Nhiệm vụ cho Orange Pi 5 Pro — Trạm Y Sinh Biên (Edge Medical Intelligence Station) & GATE EDGE (`DEC-ARCH-001`, `DEC-GATE-005`)
 
-> **Cập nhật kiến trúc 2026-10-13 (`DEC-ARCH-001`, `DEC-GATE-005`):** Chốt vai trò của Orange Pi 5 Pro (RK3588, NPU tri-core 6 TOPS) thành **Trạm Y Sinh Biên (Edge Medical Intelligence Station)**, phân tầng xử lý rõ rệt với vi điều khiển ESP32-S3 và tuân thủ tuyệt đối quy tắc **Zero-Camera Policy** (không dùng camera ngoài hay marker ArUco; 100% xử lý dựa trên mảng cảm biến áp trở nội tại):
+> **ĐÃ LOẠI BỎ KHỎI PHẠM VI (2026-10-20, `DEC-EDGE-001`):** vai trò "trạm trí tuệ biên" của Orange Pi 5 Pro (lượng tử hóa INT8/RKNN, suy luận NPU ≤ 20 ms, mô hình RL bù trôi/trễ — GATE EDGE/M6) và nhiệm vụ "kiểm chứng thuật toán tự động gắn nhãn 'Nghi vấn'" **không còn trong phạm vi đề tài**. Orange Pi 5 Pro chỉ đảm nhận nhánh thị giác: nhận biết thìa/vùng đích, gán nhãn trạng thái tác vụ và phản hồi thị giác (`CURRENT_DESIGN_BASELINE.md`, `DEC-VIS-001`), xử lý ảnh cổ điển trước, chỉ dùng mô hình học sâu nếu benchmark trên đúng phần cứng không đạt. Việc loại phiên đo lỗi vẫn giữ nhưng dưới dạng trạng thái `INVALID` kèm ghi lý do, không phải một thuật toán gắn nhãn tự động. Nội dung bên dưới được giữ nguyên để tra cứu lịch sử, không phải việc sẽ làm.
+
+> **Cập nhật kiến trúc 2026-10-13 (`DEC-ARCH-001`, `DEC-GATE-005`)** — *khối cập nhật dưới đây ĐÃ LOẠI BỎ theo `DEC-EDGE-001` (2026-10-20), chỉ giữ để tra cứu:* Chốt vai trò của Orange Pi 5 Pro (RK3588, NPU tri-core 6 TOPS) thành **Trạm Y Sinh Biên (Edge Medical Intelligence Station)**, phân tầng xử lý rõ rệt với vi điều khiển ESP32-S3 và tuân thủ tuyệt đối quy tắc **Zero-Camera Policy** (không dùng camera ngoài hay marker ArUco; 100% xử lý dựa trên mảng cảm biến áp trở nội tại):
 > - **ESP32-S3 (Tầng chấp hành & An toàn cứng - Hard Real-Time):** Thu thập tín hiệu ADC đa kênh qua CD74HC4067 + ADS1115, quản lý ngắt mẫu, đọc cảm biến vi sai hai vách, giám sát dòng tải động cơ và ngắt khẩn cấp cơ khí nếu lực vượt $5\text{ N}$. Tần số lấy mẫu duy trì $\ge 100\text{ Hz}$.
 > - **Orange Pi 5 Pro (Tầng trí tuệ biên đa nhân - Edge AI & Inversion Layer):** Tận dụng kiến trúc 3 nhân NPU và công cụ lượng tử hóa RKNN INT8 để chạy 3 nhiệm vụ song song:
 >   1. **Nhân NPU 1 — Bù trừ phi tuyến động cho Velostat (RL Sensor Inversion qua MDP):** Tiếp nhận dữ liệu điện trở thô từ M1/GATE 0, mô hình hóa các trạng thái quá khứ để chạy chính sách bù trễ (hysteresis), từ biến (creep) và trôi dạt nhiệt theo thời gian thực dưới dạng mô hình nơ-ron hồi quy lượng tử hóa sang `.rknn`. Chuyển hóa tín hiệu áp trở phi tuyến thành đường lực tuyến tính ổn định qua hàng trăm giờ làm việc liên tục.
 >   2. **Nhân NPU 2 — Suy luận chính sách thích ứng AAN (Anti-Slacking Actor-Critic):** Tiếp nhận chỉ số nỗ lực $EI$ và vector vi sai, suy luận mức lực trợ lực bù $F_{assist}$ theo thời gian thực (đáp ứng trễ $\le 20\text{ ms}$) nhằm tối ưu hóa phục hồi theo nguyên lý Hebbian và triệt tiêu hiện tượng ỷ lại cơ học.
 >   3. **Nhân NPU 3 + CPU — Trạm Y Sinh Biên & Quản trị dữ liệu cục bộ an toàn (Air-gapped Edge Medical Station):** Tính toán bộ chỉ số lâm sàng (EI, GAP, RAL), tổng hợp bản đồ kích hoạt nỗ lực động thời gian thực (Kinetic Activation Map) hiển thị lên Local Telemetry Dashboard; lưu trữ bảo mật hồ sơ tiến trình phục hồi hoàn toàn nội bộ (Air-gapped Edge Privacy), không phụ thuộc đám mây.
 
-### Tiêu chí nghiệm thu GATE EDGE (Thay thế GATE F cũ):
+### Tiêu chí nghiệm thu GATE EDGE (Thay thế GATE F cũ) — **ĐÃ LOẠI BỎ (`DEC-EDGE-001`)**, không áp dụng:
 - **Độ trễ suy luận chính sách (Latency):** $\le \mathbf{20\text{ ms}}$ trên NPU RK3588 (INT8 `.rknn`).
 - **Hiệu quả bù trừ vật liệu Velostat:** Sai số trôi (drift) và trễ (hysteresis) sau bù bằng RL giảm $\ge \mathbf{60\%}$ so với tín hiệu thô trên cùng một chu kỳ tải 100 lần.
 - **Tính độc lập thời gian thực:** ESP32-S3 duy trì tần số ngắt an toàn $\ge 100\text{ Hz}$ không bị nghẽn bởi truyền thông dữ liệu hai chiều với Orange Pi.

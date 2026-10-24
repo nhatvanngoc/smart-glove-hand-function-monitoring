@@ -45,7 +45,7 @@ Ba khoảng trống định lượng được, dùng làm căn cứ chọn đề
 | M3 | Tái tạo tầm vận động **chỉ số** (không quy đổi ra độ) so với ground truth cơ khí | Đủ trung thực để trình bày không? | `GATE B` |
 | **M4**  | Phát hiện **thay đổi chức năng thật** lớn hơn biến thiên của chính hệ đo | Chỉ số có dùng để theo dõi dọc được không? | `GATE C` — **nếu fail thì dừng/đổi trục, không xin xỏ** |
 | M5 | Tự phát hiện phiên dữ liệu không tin cậy | Có báo động giả / bỏ sót không? | `GATE D`, `GATE E` |
-| M6 | Mô hình nhỏ chạy được tại biên | INT8 có đủ nhanh/đủ đúng? | `GATE F` |
+| M6 | **ĐÃ LOẠI BỎ (`DEC-EDGE-001`, 2026-10-20)** — cũ: mô hình nhỏ chạy tại biên | không còn áp dụng (INT8/NPU ngoài phạm vi) | không còn áp dụng |
 
 **Giả thuyết trung tâm ([Chờ xử lý], chưa kiểm chứng):** *với preload và hành trình chặn phù hợp, một mảng phần tử áp trở trên vách của khung cứng có thể ghi được nỗ lực co cơ ngay cả khi đầu ngón chưa dịch chuyển, và tách được nỗ lực đó khỏi lực cản co cứng nhờ sự phụ thuộc vận tốc.* Lí do giả thuyết này đứng được — xem `docs/02_Theoretical_Foundation.md` §5.5 (dự toán chuỗi đo + cửa sổ preload).
 

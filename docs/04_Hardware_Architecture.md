@@ -184,7 +184,7 @@ thời gian mang/tháo (don–doff) ở mức người nhà làm được trong 
                 → ESP32-S3 (lọc IIR bậc 2 fc = 10 Hz, Notch 50 Hz, BLE 5.0)
                 → nguồn LiPo 3,7 V qua TP4056 + LDO HT7333 (cách ly lưới điện)
                 + SHT30 bù trôi nhiệt–ẩm
-[Tầng 3 — biên] Orange Pi 5 Pro (RK3588, NPU 6 TOPS): suy luận INT8 < 15 ms,
+[Tầng 3 — biên] Orange Pi 5 Pro (RK3588): ĐÃ LOẠI BỎ suy luận INT8/NPU (DEC-EDGE-001, 2026-10-20) —
                 tính EI/GAP/RAL + dashboard
 ```
 
@@ -204,7 +204,7 @@ thời gian mang/tháo (don–doff) ở mức người nhà làm được trong 
 
 **Quy tắc vận hành đi kèm (PDF §9.3/§11.2):** auto-zero 3 s duỗi nghỉ đầu phiên (`V_offset` trừ trực tiếp);
 cảnh báo kiểm tra cơ khí khi trôi tĩnh vượt **±5 %** dải đo so với ô tham chiếu; vòng lặp 1 (`V_base` → chỉnh găng),
-vòng lặp 2 (phương sai → nhãn **"Nghi vấn"** + loại khỏi xu hướng + đo lại).
+vòng lặp 2 (phương sai → nhãn **"Nghi vấn"** + loại khỏi xu hướng + đo lại). *(Nhãn "Nghi vấn" và thuật toán gắn nhãn tự động đã loại bỏ theo `DEC-EDGE-001`, 2026-10-20; việc loại phiên đo lỗi được giữ dưới dạng trạng thái `INVALID` kèm ghi lý do.)*
 
 ---
 

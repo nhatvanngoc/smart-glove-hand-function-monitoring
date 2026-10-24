@@ -98,3 +98,43 @@ Bảng prior art · mức-đã-đọc của nguồn · kiểm định thống k�
 ## 5. Kết luận một câu
 
 **Đọc xong benchmark, vị thế của đề tài bạn tốt hơn tôi đoán: về phương pháp, bạn đang ở trên mức của một báo cáo đã đoạt giải Nhất quốc gia + giải Tư ISEF; về vật thật và con số, bạn đang ở 0.** Toàn bộ khoảng cách còn lại nằm ở đúng một chỗ — `GATE 0` chưa chạy vì chưa có 9 ngưỡng được chốt — và đó là việc của nhóm nghiên cứu, không phải việc của tôi.
+
+---
+
+## 6. Cập nhật 2026-10-20: bản A/B v4 đã mượn gì từ mẫu, và tự kiểm theo §4.4
+
+Chủ dự án cung cấp lại chính báo cáo này (Drive `1_FB9Ym7XILqLDueLZ6h-BrK83OIVoxoB`, `BCTT - QG .pdf`) làm **mẫu viết** cho phần A và B của đề cương (`DEC-PROP-013`), rồi nhận xét *"nó vẫn chưa khoa học lắm"*. Ghi rõ phạm vi mượn để không lẫn giữa **hình thức** (nên mượn) và **chuẩn bằng chứng** (không được mượn).
+
+### 6.1 Bốn thứ đã mượn — tất cả là hình thức
+
+1. **Bố cục:** A 7 mục (lý do / xác định vấn đề / mục tiêu / tiêu chí dự án / đối tượng và phạm vi / địa điểm / phương pháp), B 7 mục, C 5 mục, TLTK cuối.
+2. **Giọng văn:** đoạn văn xuôi liền mạch ~58 từ/đoạn, thuật ngữ được giải thích bằng lời, không nhãn trạng thái, không mã nội bộ.
+3. **Quy ước trình bày:** đánh số "Hình n" / "Bảng n", bullet dạng "- Phương pháp … dùng để …".
+4. **Cách tách "Mục tiêu nghiên cứu" khỏi "Tiêu chí của dự án"** thành hai mục riêng.
+
+### 6.2 Năm thứ KHÔNG mượn (đã kiểm lại trên bản v4)
+
+| # | Điều §4.4 dặn không bắt chước | Trạng thái bản v4 |
+|---|---|---|
+| 1 | Đo 1 lần/điểm rồi tuyên bố "đạt" | **Không vi phạm.** Mọi con số mang nhãn *đã đo có biên bản* / *ghi nhận sơ bộ* / *mục tiêu chưa đo*; hiện chưa có con số nào ở mức "đã đo có biên bản" |
+| 2 | Trộn construct trong một chữ ("accuracy") | **Đã chặn.** Velostat không quy ra Newton; EI là chỉ số tương đối; GAP không phải chẩn đoán; ≤ 20 ms chỉ cho đường cảm biến → lệnh servo, không cho nhãn thị giác (sửa ở lượt rà soát 16 mục) |
+| 3 | Dán log thô vào báo cáo | **Không áp dụng.** Quy tắc: log thô ở repo, báo cáo chỉ lấy thống kê + 1 đồ thị |
+| 4 | Đánh giá mô hình học bằng 2 ví dụ minh hoạ | **Không áp dụng nữa** — vai trò edge-AI đã rút (`DEC-EDGE-001`); nhánh thị giác sẽ báo cáo độ đúng + tỷ lệ nhãn không xác định + độ trễ, đo ở mốc 3 |
+| 5 | TLTK toàn blog / Wikipedia / 0 DOI | **Ta hơn:** 15 mục, phần lớn là bài báo phản biện (*Nature*, *Lancet Neurology*, *Cochrane*, *Sensors*, *Brain*, *IEEE Sensors J.*). **Còn nợ:** [2] QĐ 4039, [3] Cao Minh Châu, [6] Langhorne chưa verify toàn văn; **[8] Amin 2024 mâu thuẫn** (sổ nguồn ghi *IEEE OJEMB*, bản PDF ghi *Sensors*/PMC11793859) |
+
+### 6.3 Ba chỗ bản v4 còn giữ thói quen của mẫu — đề nghị sửa
+
+1. **A.7 Phương pháp nghiên cứu** đang là danh sách 5 phương pháp theo lối mẫu: nêu tên phương pháp nhưng **không buộc vào câu hỏi nào, không nêu dụng cụ, số lần lặp hay đại lượng đầu ra**. Nên viết lại để mỗi phương pháp gắn với một câu hỏi cụ thể và một loại bằng chứng nó tạo ra. Chi phí ~+0,2 trang.
+2. **A.4 Tiêu chí** nêu ngưỡng nhưng "cách đo" nằm ở bảng C.3, người đọc phải lật. Thêm một dòng chỉ chỗ hoặc một cột ngắn. Chi phí ~0 trang.
+3. **C.3 và C.4 trùng nhau một phần** (chỉ số nào đo ở mốc nào xuất hiện hai lần). Gộp được ~0,3 trang — bù lại đúng phần phình ra ở mục 1.
+
+Kiểm tra thêm: **không có tiêu đề nào của bản v4 chứa kết luận định trước** (mẫu đặt "Xây dựng **thành công** …" làm tiêu đề mục C.1–C.3); tiêu đề C.1/C.2/C.3 của ta đều trung tính.
+
+### 6.4 Hai lỗi của mẫu nhìn thấy được trong bản trích văn bản
+
+- Giữa tiêu đề **"3. Mục tiêu nghiên cứu"** và **"4. Tiêu chí của dự án"** trong phần thân bài **không có chữ nào**; có thể mục tiêu được trình bày bằng hình/bảng mà bộ trích văn bản không đọc được, nhưng nếu đúng là trống thì đó là lỗi nặng ở một báo cáo giải Nhất.
+- **B và C lặp lại cùng nội dung:** B.4 "Xây dựng thuật toán theo dõi đồng tử" ↔ C.1 "Xây dựng thuật toán theo dõi hướng nhìn của đồng tử"; B.5 "Xây dựng hệ thống điều khiển xe lăn bằng đồng tử" ↔ C.2 "Xây dựng **thành công** hệ thống điều khiển xe lăn bằng đồng tử". Không có ranh giới giữa *thiết kế* và *kết quả thử nghiệm*.
+
+### 6.5 Kết luận cho lượt này
+
+Nhận xét của chủ dự án trùng với kết luận §4.1 của bản benchmark: **chuẩn của hội đồng không phải độ chặt khoa học**, nên mượn hình thức của mẫu là hợp lý, nhưng mượn chuẩn bằng chứng của mẫu là tự hạ mình. Điều mẫu có mà ta chưa có vẫn là **vật thật và con số đã đo** — 7 ô hình của bản v4 hiện đều là placeholder, và chưa có buổi đo nào có biên bản.

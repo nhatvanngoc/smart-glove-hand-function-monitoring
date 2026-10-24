@@ -98,18 +98,20 @@ Cho tới khi đủ điều kiện: không tuyển, không đeo thử có lực,
 
 ## 7. Các mục còn mở trước protocol thực thi
 
+> **Cập nhật 2026-10-19 (lượt tài liệu):** các dòng dưới đây vẫn `OPEN` — chưa có mục nào được chốt. Cột trạng thái nay trỏ tới **bản đề xuất** đã soạn trong lượt này ([`10_gate0_task_state_sheet.md`](10_gate0_task_state_sheet.md), [`10a_gate0_channel_map_and_acquisition_budget.md`](10a_gate0_channel_map_and_acquisition_budget.md), [`10b_channel_map_proposed.csv`](10b_channel_map_proposed.csv), [`docs/07_Vision_TaskState_Architecture.md`](../../docs/07_Vision_TaskState_Architecture.md), [`docs/08_Software_Firmware_Roadmap.md`](../../docs/08_Software_Firmware_Roadmap.md)). Bản đề xuất không thay thế quyết định của chủ dự án và không điền bất kỳ ngưỡng nào.
+
 | Hạng mục | Trạng thái |
 |---|---|
 | Hình học tang, mounting | OPEN |
 | Loại dây, route, neo, hồi/nhả và duỗi ngón | OPEN |
-| Servo, nguồn và control mapping | OPEN |
-| Mức điều khiển độc lập ngón cái/trỏ/giữa | OPEN |
-| Kênh Flex/Velostat trong giới hạn 16 và scan timing | OPEN |
-| Vị trí Velostat đo tương tác nào; đối chứng ngón–nẹp | OPEN |
-| Hiệu chuẩn Flex và camera/world coordinates | OPEN |
-| Logic chuyển mode tự động; đặc trưng, threshold, window, hysteresis, fallback | OPEN — chưa điền số |
-| Camera/model, task labeling, occlusion, latency | OPEN |
+| Servo, nguồn và control mapping | OPEN — câu hỏi tách nguồn servo khỏi mạch analog và nhiễu đóng cắt ở `10a` §7.6 |
+| Mức điều khiển độc lập ngón cái/trỏ/giữa | OPEN — câu hỏi "một tang hay ba tang" và hệ quả tới dáng cầm tripod nêu ở `10` §7 |
+| Kênh Flex/Velostat trong giới hạn 16 và scan timing | OPEN — 4 phương án phân bổ + bản đồ CH0–CH15 đề xuất ở `10a` §2–§3 / `10b`; ngân sách quét ở `10a` §5 là `[TÍNH TOÁN]` từ ghi nhận bring-up, phải đo lại |
+| Vị trí Velostat đo tương tác nào; đối chứng ngón–nẹp | OPEN — vị trí đề xuất (cặp lòng/mu) ở `10b`; phép đối chứng phải chạy ở Gate 1 theo `10a` §4 |
+| Hiệu chuẩn Flex và camera/world coordinates | OPEN — phương pháp tham chiếu ứng viên cho Flex ở `10a` §4; bản ghi hiệu chuẩn camera/tỷ lệ ở `docs/07` §5 |
+| Logic chuyển mode tự động; đặc trưng, threshold, window, hysteresis, fallback | OPEN — chưa điền số; khung trạng thái + ràng buộc bất biến ở `10` §4, năm phương pháp phân biệt tự nguyện/máy ở `10` §5, quy tắc đóng băng cấu hình ở `docs/08` §1 |
+| Camera/model, task labeling, occlusion, latency | OPEN — đặc tả detector cắm được + ánh xạ nhãn `T_*` + phiếu benchmark (mọi ô để trống) ở `docs/07` |
 | Force/tension reference + calibration | OPEN |
-| Stop/release behavior và bench hazard review | OPEN |
-| Acceptance/stop criteria của phantom task | OPEN — chốt trước thử |
+| Stop/release behavior và bench hazard review | OPEN — 8 câu hỏi kỹ thuật phải kiểm tra trên board trước khi cấp nguồn ở `10a` §7; nguyên tắc nhả không chỉ dựa phần mềm giữ nguyên ở §3.2 |
+| Acceptance/stop criteria của phantom task | OPEN — chốt trước thử; khung nhãn kết quả và cấu trúc phiên ở `10` §2.4/§2.6/§3, bảng đăng ký trước ở đề cương A/B/C §C.4 |
 | Participant determination/approval | OPEN; không tuyển hay actuator test |

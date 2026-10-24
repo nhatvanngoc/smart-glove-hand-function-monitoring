@@ -1,14 +1,22 @@
 # Project snapshot — current summary 2026-10-19 (owner update)
 
+> **Cập nhật giai đoạn 2026-10-23:** chủ dự án xác nhận đề cương đã hoàn tất; nguồn final là `LV1_11A2_12A1 ky.signed.pdf` (`DEC-PROP-020`, `SRC-OWNER-FINAL-2026-10-23`). Dùng [nguồn hiện hành](CURRENT_SUBMISSION_2026-10-17.md) và phần đầu [kiểm kê](EQUIPMENT_AND_ACCESS.md) thay cho các ghi chú cũ bên dưới. Bước tiếp theo là Flex/camera và bố trí nguyên mẫu. Hộp đeo hông + servo trên tay mới là đề xuất; chưa chốt phân bố bo mạch, vị trí camera hay nguồn. Không sửa PDF final, không tự xác nhận kết quả thử nghiệm từ việc chốt đề cương.
+
+> **Nguồn đề cương cập nhật 2026-10-21:** chủ dự án chỉ định [DE_CUONG_NOP_TRUONG.docx](https://docs.google.com/document/d/1VgzlaKYlQj55yCP45YoJ2KSRm10LV9m3/edit) là bản mới nhất sau khi tự sửa văn phong (`DEC-PROP-019`). Dùng tệp này cho các lượt biên tập tiếp theo; các bản Markdown/DOCX do agent dựng trước đó không phải bản phản chiếu của nó. Lượt này chỉ đọc và cập nhật nguồn/profile, không xác nhận thêm kết quả thử nghiệm. Cập nhật thiết kế DSP 2 nhánh trong văn bản mới được ghi nhận riêng tại `research/reviews/2026-10-21_owner_draft_intake.md`; các câu hỏi thiết bị/an toàn/bằng chứng vẫn theo hồ sơ đã có.
+
 > **Current authority:** `research/context/CURRENT_DESIGN_BASELINE.md` and the latest owner decisions in `research/context/DECISION_LOG.md`, including `DEC-REHAB-001`. Historical entries below are retained for traceability; do not treat superseded proposals as active instructions.
 >
 > **Current functional direction:** a glove intended to support fine-motor rehabilitation practice for middle-aged people after stroke, with home practice as a design target (not validated home use). The intended progression is assisted finger flexion/extension → automatic threshold-based transition to AAN → coordinated thumb/index/middle spoon grasp, lift, transfer and placement at a defined target. No KTV/therapist action is required to switch modes. Exact features/thresholds/windows/hysteresis/fallback remain OPEN.
 >
-> **Sensor and vision roles:** owner confirmed three Flex sensors, one per thumb/index/middle finger, for bend/posture; Velostat provides local pressure/contact-related relative evidence, not semantic intent, angle or absolute force; camera follows spoon/target/task completion and provides immediate visual feedback. Orange Pi 5 Pro is the proposed vision-compute platform; no vision/depth/latency benchmark or RL capability is claimed. If all sensors share the 16-channel CD74HC4067, reserve 3 Flex channels and at most 13 remain for Velostat/reference inputs; exact map is open.
+> **Sensor and vision roles:** owner confirmed three Flex sensors, one per thumb/index/middle finger, for bend/posture; Velostat provides local pressure/contact-related relative evidence, not semantic intent, angle or absolute force; camera follows spoon/target/task completion and provides immediate visual feedback. Orange Pi 5 Pro is the proposed vision-compute platform; no vision/depth/latency benchmark or RL capability is claimed. If all sensors share the 16-channel CD74HC4067, reserve 3 Flex channels and at most 13 remain for Velostat/reference inputs; exact map is open. **Cập nhật 2026-10-20 (chủ dự án xác nhận):** 3 cảm biến Flex **chưa có**, phải mua ở mốc 1; thiết kế vẫn giữ 3 Flex + 6 Velostat + 2 REF nên cấu hình 11 kênh không đổi. Bộ chuyển mạch CD74HC4067 **đã có và đã chạy thử**. Tình trạng ADS1115 vẫn chưa xác nhận.
 >
-> **AAN/mechanics:** primary control objective; servo winds fishing line directly on a spool, no spring/SEA or four-bar linkage. Return/release and active extension, three-finger actuation independence, force reference and thresholds are unresolved. Velostat not Newton; old `F_assist` equation and 5 N criterion withdrawn.
+> **AAN/mechanics:** primary control objective; servo winds fishing line directly on a spool, no spring/SEA or four-bar linkage. Return/release and active extension, three-finger actuation independence, force reference and thresholds are unresolved (2026-10-20: direction adopted — three separate spools with active servo release, `DEC-MECH-007`; motor count, travel, unpowered release, mass and force reference still open). Velostat not Newton; old `F_assist` equation and 5 N criterion withdrawn.
 >
 > **Evidence boundary:** bench/phantom first. Powered healthy-volunteer tests only conditional after safety assessment/required approvals. No patient testing, clinical-effectiveness, neuroplasticity, validated home-use, safety certification or novelty/“first” claim. Task measures (placement success, time, drops/retries, transition behavior, vision accuracy) are engineering outcomes, not clinical recovery results. Working title is provisional. Active A/B/C draft: `docs/DE_CUONG_A_B_C_DRAFT_2026-10-19.md`; source Drive files and submitted documents remain unchanged.
+
+> **Lượt tài liệu 2026-10-19 (agent thực hiện theo chỉ đạo chủ dự án: hoàn thiện hồ sơ trước, code sau).** Đã soạn bộ artifact Gate 0 và hồ sơ thiết kế đi kèm, tất cả ở mức `PROPOSED`: `research/protocols/10_gate0_task_state_sheet.md` (thông số tác vụ thìa, nhãn trạng thái `T_*`, máy trạng thái chế độ, 5 phương pháp phân biệt vận động tự nguyện vs do actuator tạo, sơ đồ ngón↔cảm biến↔actuator), `10a_gate0_channel_map_and_acquisition_budget.md` + `10b_channel_map_proposed.csv` (4 phương án phân bổ 16 kênh, bản đồ CH0–CH15, ngân sách quét nhãn `[TÍNH TOÁN]`, 8 câu hỏi kỹ thuật phải kiểm tra trước khi cấp nguồn), `docs/07_Vision_TaskState_Architecture.md` (detector cắm được, OpenCV cổ điển trước, phiếu benchmark để trống), `docs/08_Software_Firmware_Roadmap.md` (lộ trình F0–F6). Đề cương `docs/DE_CUONG_A_B_C_DRAFT_2026-10-19.md` được bổ sung §C.4 (đăng ký trước chỉ số/ngưỡng, mọi ô ngưỡng `OPEN`) và §C.5 (thứ tự triển khai công cụ). **Không một ngưỡng hay thông số tác vụ nào được điền; không chạy code/firmware/benchmark; không đo phần cứng; không sửa hồ sơ đã nộp hay file nguồn trên Drive; chưa commit GitHub theo yêu cầu chủ dự án.** Việc mới phát hiện cần kiểm tra: giới hạn điện áp đầu vào ADS1115 so với ghi nhận "đọc 0–3,3 V" (`CLM-HW-006`), và bảng tốc độ khung cũ ở `docs/04` §5 không áp dụng cho chuỗi ADS1115 hiện hành (`CLM-ACQ-002`).
+
+> **2026-10-20 (ba quyết định của chủ dự án trong session).** (1) `DEC-CHMAP-001` **ADOPTED = PA-2**: 3 Flex qua CD74HC4067 + 6 Velostat (cặp lòng/mu cho cái–trỏ–giữa) + 2 ô tham chiếu = 11 kênh quét, 5 kênh dự phòng; PA-3a chỉ còn là kiểm tra phần cứng tuỳ chọn. (2) `DEC-TASK-002` **ADOPTED = M3**: cửa sổ "thăm dò tự nguyện" (tạm ngưng trợ lực một khoảng ngắn rồi đo đáp ứng) — là **chọn phương pháp**, chưa kiểm chứng; độ dài cửa sổ, tiêu chí dừng và rà an toàn còn `OPEN`. (3) `DEC-MECH-007` **ADOPTED**: **ba tang cuốn riêng** + **servo nhả dây chủ động** để duỗi, không lò xo/khớp bốn khâu; chưa quyết một động cơ hay ba động cơ, chưa cân lại khối lượng 80–120 g. Theo chỉ đạo, DOCX review đã được dựng lại từ `docs/DE_CUONG_A_B_C_DRAFT_2026-10-19.md` → `exports/11A2_CAP_NHAT_DU_THAO_2026-10-20.docx` (script `scripts/build_abc_review_docx.py`); **đây là bản rà soát, không phải bản duyệt toàn văn, không phải bản nộp**. `DEC-TASK-001`, `DEC-VIS-001`, `DEC-IMPL-001/002`, `DEC-ACQ-001` vẫn chờ; **chưa viết code/firmware nào**.
 
 > **HISTORICAL — superseded for current proposal scope on 2026-10-19.** Notes below preserve earlier owner decisions and technical proposals; follow the current authority above when they conflict.
 
@@ -100,12 +108,16 @@ Mạch thu nhận   :
     -> Đọc trực tiếp qua PGA 16-bit nội bộ ADS1115 (0 - 3.3V, 0.125 mV/LSB)
     -> ESP32-S3: Bộ lọc số DSP 4 bước (Dummy read -> Dead-band 180 mV -> Adaptive drift tracking -> EMA & F_net vi sai)
 MCU             : ESP32-S3 (ngắt phần cứng ALRT 100 Hz, BLE 5, logic 3.3 V)
-Edge            : Orange Pi 5 Pro RK3588 (NPU 6 TOPS) — Trạm Y Sinh Biên (RL Inversion MDP bù trôi/trễ + suy luận AAN thời gian thực <= 20 ms)
+Edge            : Orange Pi 5 Pro RK3588 — [ĐÃ LOẠI BỎ vai trò Trạm Y Sinh Biên / RL Inversion / INT8 — DEC-EDGE-001, 2026-10-20]
+                  chỉ còn nhánh thị giác: thìa/vùng đích, nhãn trạng thái tác vụ, phản hồi thị giác
 Tham chiếu bench: Load cell + HX711 (GATE A trở đi; GATE 0 dùng khối lượng chuẩn, F = m·g)
 Zero-Camera     : 100% cảm biến nội tại, không dùng camera ngoài (DEC-GATE-005)
 ```
 
-## 6. Hệ thống 6 GATE kiểm chứng (CHỐT — DEC-GATE-002, 003, 004, 005)
+## 6. Hệ thống GATE kiểm chứng (chốt 2026-10-13 với 6 cổng — DEC-GATE-002, 003, 004, 005; **nay còn 5 cổng** sau khi bỏ GATE EDGE theo DEC-EDGE-001, 2026-10-20)
+
+> **ĐÃ LOẠI BỎ KHỎI PHẠM VI (2026-10-20, `DEC-EDGE-001`):** vai trò "trạm trí tuệ biên" của Orange Pi 5 Pro (lượng tử hóa INT8/RKNN, suy luận NPU ≤ 20 ms, mô hình RL bù trôi/trễ — GATE EDGE/M6) và nhiệm vụ "kiểm chứng thuật toán tự động gắn nhãn 'Nghi vấn'" **không còn trong phạm vi đề tài**. Orange Pi 5 Pro chỉ đảm nhận nhánh thị giác: nhận biết thìa/vùng đích, gán nhãn trạng thái tác vụ và phản hồi thị giác (`CURRENT_DESIGN_BASELINE.md`, `DEC-VIS-001`), xử lý ảnh cổ điển trước, chỉ dùng mô hình học sâu nếu benchmark trên đúng phần cứng không đạt. Việc loại phiên đo lỗi vẫn giữ nhưng dưới dạng trạng thái `INVALID` kèm ghi lý do, không phải một thuật toán gắn nhãn tự động. Nội dung bên dưới được giữ nguyên để tra cứu lịch sử, không phải việc sẽ làm.
+
 
 Chi tiết tại `research/protocols/06_glove_hand_GATE_experiment.md`:
 
@@ -119,9 +131,9 @@ Chi tiết tại `research/protocols/06_glove_hand_GATE_experiment.md`:
 - **GATE AAN-2 (CỔNG SỐNG CÒN NHÁNH AAN)** (M5): Đường cong tải $RAL$ ổn định ($ICC \ge 0,75$) & Triệt tiêu hiện tượng ỷ lại ($PR \ge 50\%$) — **fail ⇒ không dừng đề tài, chỉ hạ nhãn AAN xuống "trợ lực cố định phân bậc"**.
 
 **Trạm Y Sinh Biên (Edge Medical Intelligence Station - Orange Pi 5 Pro):**
-- **GATE EDGE** (M6): Chạy mô hình RL bù động trôi/trễ Velostat (MDP Inversion) và suy luận chính sách AAN thời gian thực ($\le 20\text{ ms}$ INT8 `.rknn`) — 100% cảm biến nội tại, không dùng camera.
+- **GATE EDGE** (M6) — **ĐÃ LOẠI BỎ 2026-10-20 (`DEC-EDGE-001`)**, nội dung cũ giữ để tra cứu: chạy mô hình RL bù động trôi/trễ Velostat (MDP Inversion) và suy luận chính sách AAN thời gian thực ($\le 20\text{ ms}$ INT8 `.rknn`) — 100% cảm biến nội tại, không dùng camera.
 
-> **Đã loại bỏ:** GATE D, GATE E, GATE AAN-3 (thuộc thẩm quyền kiểm định y tế lâm sàng độc lập — `DEC-GATE-003`); hủy GATE B cũ gộp vào GATE A (`DEC-GATE-004`).
+> **Đã loại bỏ:** GATE D, GATE E, GATE AAN-3 và **GATE EDGE/M6** (`DEC-EDGE-001`, 2026-10-20 — lượng tử hóa INT8, suy luận NPU và mô hình RL trên Orange Pi 5 Pro) (thuộc thẩm quyền kiểm định y tế lâm sàng độc lập — `DEC-GATE-003`); hủy GATE B cũ gộp vào GATE A (`DEC-GATE-004`).
 
 > **Lưu ý: 2026-09-27 — ngưỡng ĐÃ NỘP là M1–M6 + C1.1–C1.10** (PDF §5.2/§11.1, `CLM-MET-005`, chờ `DEC-METRIC-002` phê chuẩn):
 > R² ≥ 0,90 (thay 0,95) · liên ngày CV ≤ 8 % trên phantom (thay ICC ≥ 0,75) · hys ≤ 18 % (thay 15 %) ·
@@ -159,7 +171,7 @@ Chi tiết tại `research/protocols/06_glove_hand_GATE_experiment.md`:
      * Trạm Y Sinh Biên: `GATE EDGE (M6)`
    - Loại bỏ GATE D, GATE E, GATE AAN-3 vì thẩm quyền kiểm định y tế lâm sàng thuộc phòng kiểm chuẩn độc lập, học sinh không tự cấp chứng nhận (`DEC-GATE-003`).
    - Hủy bỏ GATE B (tái tạo góc 3D do phi thực tế), gộp toàn bộ vào GATE A mới (nhận diện hướng gập/duỗi vi sai $\ge 90\%$ & bản đồ kích hoạt nỗ lực động $\ge 85\%$) (`DEC-GATE-004`).
-   - Chốt Hướng 1: M1/GATE 0 làm baseline cơ lý thô trên băng thử, M6/GATE EDGE chạy RL Inversion trên Orange Pi 5 Pro để bù trừ trôi/trễ thời gian thực.
+   - Chốt Hướng 1: M1/GATE 0 làm baseline cơ lý thô trên băng thử, M6/GATE EDGE chạy RL Inversion trên Orange Pi 5 Pro để bù trừ trôi/trễ thời gian thực — **nội dung này đã bị loại bỏ ngày 2026-10-20 (`DEC-EDGE-001`)**.
    - Chốt **Zero-Camera Policy**: Không dùng camera ngoài hay marker ArUco; 100% cảm biến nội tại (`DEC-GATE-005`).
    - Đã đồng bộ toàn bộ vào `research/context/DECISION_LOG.md`, `research/protocols/06_glove_hand_GATE_experiment.md`, `docs/DE_CUONG_NOP_BAN_KHKT_2026-10-18.md` và git (`origin/main`).
    5. **Nợ đồng bộ xuyên repo (phát hiện khi rà soát, chưa sửa):** nhiều file khác vẫn còn nhắc tên

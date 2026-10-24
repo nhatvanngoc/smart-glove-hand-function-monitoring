@@ -69,7 +69,7 @@ Chính vì khoảng trống đó, tôi lựa chọn nghiên cứu đề tài **"
 | M3 | Tái tạo tầm vận động dưới dạng chỉ số tương đối, đối chiếu với chuẩn cơ khí đã biết | GATE B |
 | M4 (quan trọng nhất) | Chứng minh hệ thống phát hiện được thay đổi chức năng mô phỏng thật, lớn hơn nhiễu/trôi của chính nó | GATE C - nếu fail thì dừng, không viết tiếp như đã thành công |
 | M5 | Tự gắn cờ phiên đo "không đáng tin" khi dữ liệu không đạt điều kiện | GATE D/E |
-| M6 | Chạy được mô hình nhận dạng rút gọn (lượng tử hóa INT8) tại biên, không phụ thuộc mạng | GATE F |
+| M6 | **ĐÃ LOẠI BỎ (`DEC-EDGE-001`, 2026-10-20)** — cũ: mô hình nhận dạng rút gọn lượng tử hóa INT8 tại biên | không còn áp dụng |
 
 ### 4. Tiêu chí của dự án (cam kết trước khi đo, không đổi sau khi thấy số)
 
@@ -266,7 +266,7 @@ quy trình đã đăng ký) - đây là bước dọn đường kỹ thuật, kh
 | P1 | GATE 0: đặc tính điện trở theo áp suất, chọn điện trở tải | có sensing element ổn định |
 | P2 | GATE A/B: suy luận hướng + tầm vận động chỉ số | sau P1 đạt |
 | P3 | GATE C (sống còn, quan trọng nhất) trên rig + phantom | sau P2 đạt |
-| P4 | GATE D/E/F: cờ tin cậy + mô hình INT8 tại biên | sau P3 đạt |
+| P4 | **ĐÃ LOẠI BỎ (`DEC-EDGE-001`)** — cũ: GATE D/E/F, cờ tin cậy + mô hình INT8 tại biên | không còn áp dụng |
 | P5 | Viết báo cáo, số liệu, poster | song song P4 |
 
 ---

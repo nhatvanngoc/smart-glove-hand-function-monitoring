@@ -379,7 +379,11 @@ Tính trung thực của hồ sơ nằm ở chỗ: **không được dùng số 
 
 ---
 
-## 9. Xử lý tại biên và lượng tử hóa INT8
+## 9. Xử lý tại biên và lượng tử hóa INT8 — **ĐÃ LOẠI BỎ KHỎI PHẠM VI (`DEC-EDGE-001`, 2026-10-20)**
+
+> **ĐÃ LOẠI BỎ KHỎI PHẠM VI (2026-10-20, `DEC-EDGE-001`):** vai trò "trạm trí tuệ biên" của Orange Pi 5 Pro (lượng tử hóa INT8/RKNN, suy luận NPU ≤ 20 ms, mô hình RL bù trôi/trễ — GATE EDGE/M6) và nhiệm vụ "kiểm chứng thuật toán tự động gắn nhãn 'Nghi vấn'" **không còn trong phạm vi đề tài**. Orange Pi 5 Pro chỉ đảm nhận nhánh thị giác: nhận biết thìa/vùng đích, gán nhãn trạng thái tác vụ và phản hồi thị giác (`CURRENT_DESIGN_BASELINE.md`, `DEC-VIS-001`), xử lý ảnh cổ điển trước, chỉ dùng mô hình học sâu nếu benchmark trên đúng phần cứng không đạt. Việc loại phiên đo lỗi vẫn giữ nhưng dưới dạng trạng thái `INVALID` kèm ghi lý do, không phải một thuật toán gắn nhãn tự động. Nội dung bên dưới được giữ nguyên để tra cứu lịch sử, không phải việc sẽ làm.
+
+
 
 ### 9.1 Vì sao phải xử lý tại biên
 - Bệnh nhân lớn tuổi, không chuyên công nghệ → thiết bị phải hoạt động **không phụ thuộc mạng**.

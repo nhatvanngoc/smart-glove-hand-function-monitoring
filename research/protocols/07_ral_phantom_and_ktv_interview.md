@@ -42,7 +42,11 @@
 **Nếu FAIL (RAL):** RAL chỉ là thông số bench, **không** được quảng bá thành chỉ số lâm sàng.
 **Nếu FAIL (chống ỷ lại):** AAN hiện tại **không** được gọi là "trợ lực theo nhu cầu/thích ứng" — chỉ được gọi trung thực là "trợ lực cố định phân bậc"; vẫn giữ được làm sản phẩm (lò xo chia nấc vẫn hữu ích), chỉ phải đổi câu quảng bá.
 
-## 3b. Ứng dụng Học tăng cường (Reinforcement Learning - RL) chuyên sâu trong AAN và bù trừ Velostat (`DEC-ARCH-001`)
+## 3b. Ứng dụng Học tăng cường (Reinforcement Learning - RL) chuyên sâu trong AAN và bù trừ Velostat (`DEC-ARCH-001`) — **ĐÃ LOẠI BỎ (`DEC-RL-001/002`, `DEC-EDGE-001`)**
+
+> **ĐÃ LOẠI BỎ KHỎI PHẠM VI (2026-10-20, `DEC-EDGE-001`):** vai trò "trạm trí tuệ biên" của Orange Pi 5 Pro (lượng tử hóa INT8/RKNN, suy luận NPU ≤ 20 ms, mô hình RL bù trôi/trễ — GATE EDGE/M6) và nhiệm vụ "kiểm chứng thuật toán tự động gắn nhãn 'Nghi vấn'" **không còn trong phạm vi đề tài**. Orange Pi 5 Pro chỉ đảm nhận nhánh thị giác: nhận biết thìa/vùng đích, gán nhãn trạng thái tác vụ và phản hồi thị giác (`CURRENT_DESIGN_BASELINE.md`, `DEC-VIS-001`), xử lý ảnh cổ điển trước, chỉ dùng mô hình học sâu nếu benchmark trên đúng phần cứng không đạt. Việc loại phiên đo lỗi vẫn giữ nhưng dưới dạng trạng thái `INVALID` kèm ghi lý do, không phải một thuật toán gắn nhãn tự động. Nội dung bên dưới được giữ nguyên để tra cứu lịch sử, không phải việc sẽ làm.
+
+
 
 > **Định vị kỹ thuật:** RL trong đề tài này không phải là thuật ngữ hình thức, mà giải quyết trực tiếp 2 bài toán điều khiển phi tuyến và tối ưu thích ứng mà các giải thuật cổ điển không đáp ứng được:
 
