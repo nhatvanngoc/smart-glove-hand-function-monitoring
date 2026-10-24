@@ -1,0 +1,95 @@
+\documentclass[tikz, border=12pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usetikzlibrary{positioning, calc, arrows}
+
+% Bảng màu pastel chuẩn BCTT-QG
+\definecolor{greenBg}{RGB}{242, 250, 245}
+\definecolor{greenBorder}{RGB}{46, 125, 50}
+\definecolor{greenTitle}{RGB}{27, 94, 32}
+
+\definecolor{blueBg}{RGB}{242, 247, 255}
+\definecolor{blueBorder}{RGB}{37, 99, 235}
+\definecolor{blueTitle}{RGB}{30, 58, 138}
+
+\definecolor{amberBg}{RGB}{254, 248, 240}
+\definecolor{amberBorder}{RGB}{217, 119, 6}
+\definecolor{amberTitle}{RGB}{160, 75, 5}
+
+\definecolor{purpleBg}{RGB}{248, 245, 255}
+\definecolor{purpleBorder}{RGB}{124, 58, 237}
+\definecolor{purpleTitle}{RGB}{95, 30, 180}
+
+\definecolor{arrowColor}{RGB}{51, 65, 85}
+
+\begin{document}
+\begin{tikzpicture}[
+  >=stealth,
+  font=\sffamily,
+  baseNode/.style={
+    line width=0.9pt,
+    rounded corners=6pt,
+    text width=4.0cm,
+    minimum height=2.2cm,
+    align=center,
+    inner sep=6pt
+  },
+  arrowMain/.style={
+    ->,
+    line width=1.2pt,
+    draw=arrowColor
+  },
+  arrowDash/.style={
+    ->,
+    dashed,
+    line width=1.1pt,
+    draw=arrowColor
+  },
+  tagLbl/.style={
+    font=\footnotesize,
+    fill=white,
+    inner sep=2.5pt,
+    rounded corners=2pt,
+    draw=gray!30,
+    line width=0.4pt,
+    text=arrowColor
+  }
+]
+
+% 1. HÀNG KHỐI CHÍNH (Cùng kích thước, cùng cao độ)
+\node[baseNode, fill=greenBg, draw=greenBorder] (hand) at (-5.3, 0) {
+  {\bfseries\small\color{greenTitle} BÀN TAY MANG NẸP}\\[3pt]
+  {\footnotesize 16 Ô Velostat vi sai lòng--mu\\3 Cảm biến gập Flex}
+};
+
+\node[baseNode, fill=blueBg, draw=blueBorder] (ctrl) at (0, 0) {
+  {\bfseries\small\color{blueTitle} BỘ ĐIỀU KHIỂN}\\[3pt]
+  {\footnotesize Vi điều khiển ESP32-S3\\Lọc số DSP \& Thuật toán AAN}
+};
+
+\node[baseNode, fill=amberBg, draw=amberBorder] (act) at (5.3, 0) {
+  {\bfseries\small\color{amberTitle} TRỢ LỰC CƠ HỌC}\\[3pt]
+  {\footnotesize 3 Động cơ Servo \& Tang cáp\\Nẹp đàn hồi hồi vị mu tay}
+};
+
+% 2. KHỐI THỊ GIÁC ĐÓN TRƯỚC (Căn giữa phía trên)
+\node[baseNode, fill=purpleBg, draw=purpleBorder, text width=4.6cm] (vision) at (0, 3.0) {
+  {\bfseries\small\color{purpleTitle} THỊ GIÁC ĐÓN TRƯỚC}\\[3pt]
+  {\footnotesize Camera RGB + Depth Anything V2\\Ước lượng độ sâu 3D \& Định thời TTC}
+};
+
+% 3. CÁC MŨI TÊN LIÊN KẾT CHÍNH
+\draw[arrowMain] (hand.east) -- node[tagLbl, above=1pt] {Tín hiệu Lực \& Góc} (ctrl.west);
+\draw[arrowMain] (ctrl.east) -- node[tagLbl, above=1pt] {Lệnh servo AAN} (act.west);
+\draw[arrowMain] (vision.south) -- node[tagLbl, right=2pt] {Khẩu độ \& TTC đón trước} (ctrl.north);
+
+% Camera quan sát từ nẹp bàn tay đến khối thị giác
+\draw[arrowDash] (hand.north) |- node[tagLbl, pos=0.75, above=1pt] {Quan sát cự ly 3D tay -- vật} (vision.west);
+
+% 4. VÒNG PHẢN HỒI CƠ HỌC (Midway chuẩn xác ở đáy)
+\draw[arrowDash] (act.south) -- ++(0, -0.75cm) coordinate (pAct) -- ($(pAct) - (10.6cm, 0)$) node[tagLbl, midway, below=2pt] {Vòng cơ học: Trợ lực kéo gập ngón / Nhả cáp duỗi ngón} -- (hand.south);
+
+\end{tikzpicture}
+\end{document}

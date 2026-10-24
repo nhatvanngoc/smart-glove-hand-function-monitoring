@@ -1,0 +1,70 @@
+\documentclass[tikz, border=12pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usetikzlibrary{positioning, calc, arrows}
+
+% Clean Scientific Pipeline Colors
+\definecolor{blueBg}{RGB}{242, 247, 255}
+\definecolor{blueBorder}{RGB}{37, 99, 235}
+\definecolor{titleNavy}{RGB}{30, 58, 138}
+\definecolor{arrowColor}{RGB}{51, 65, 85}
+
+\begin{document}
+\begin{tikzpicture}[
+  >=stealth,
+  font=\sffamily,
+  stepNode/.style={
+    draw=blueBorder,
+    line width=0.9pt,
+    fill=blueBg,
+    rounded corners=6pt,
+    text width=3.2cm,
+    minimum height=1.9cm,
+    align=center,
+    inner sep=6pt
+  },
+  pipeArrow/.style={
+    ->,
+    line width=1.3pt,
+    draw=arrowColor
+  }
+]
+
+% 4 BƯỚC XỬ LÝ SỐ DSP ĐĂNG ĐỐI
+% Bước 1: Thu nhận ADC trực tiếp
+\node[stepNode] (s1) at (0, 0) {
+  {\bfseries\small\color{titleNavy} BƯỚC 1}\\[2pt]
+  {\bfseries\footnotesize ĐỌC ADS1115}\\[2pt]
+  {\scriptsize 21 Kênh quét $\ge$15 Hz\\Dải đo 0 -- 3.300 mV}
+};
+
+% Bước 2: Bám đường nền động
+\node[stepNode, right=22pt of s1] (s2) {
+  {\bfseries\small\color{titleNavy} BƯỚC 2}\\[2pt]
+  {\bfseries\footnotesize BÁM ĐƯỜNG NỀN}\\[2pt]
+  {\scriptsize Tự động khử trôi tĩnh\\do nhiệt độ \& mồ hôi}
+};
+
+% Bước 3: Lọc số phân nhánh
+\node[stepNode, right=22pt of s2] (s3) {
+  {\bfseries\small\color{titleNavy} BƯỚC 3}\\[2pt]
+  {\bfseries\footnotesize LỌC SỐ 2 NHÁNH}\\[2pt]
+  {\scriptsize Velostat: Ngưỡng 180 mV\\Flex: Lọc EMA $\alpha=0,20$}
+};
+
+% Bước 4: Tính toán bộ chỉ số
+\node[stepNode, right=22pt of s3] (s4) {
+  {\bfseries\small\color{titleNavy} BƯỚC 4}\\[2pt]
+  {\bfseries\footnotesize TÍNH CHỈ SỐ}\\[2pt]
+  {\scriptsize Nỗ lực chủ động EI\\Chênh lệch góc GAP}
+};
+
+% MŨI TÊN NỐI TIẾP
+\draw[pipeArrow] (s1.east) -- (s2.west);
+\draw[pipeArrow] (s2.east) -- (s3.west);
+\draw[pipeArrow] (s3.east) -- (s4.west);
+
+\end{tikzpicture}
+\end{document}

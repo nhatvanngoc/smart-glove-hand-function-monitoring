@@ -1,0 +1,356 @@
+\documentclass[border=15pt,tikz]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+\usepackage[T5,T1]{fontenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, fit, backgrounds, shadows}
+
+\definecolor{techblue}{RGB}{18, 60, 105}
+\definecolor{techdark}{RGB}{15, 25, 40}
+\definecolor{accentblue}{RGB}{30, 110, 175}
+\definecolor{softblue}{RGB}{236, 244, 252}
+\definecolor{borderblue}{RGB}{150, 185, 220}
+
+\definecolor{tealgray}{RGB}{240, 248, 245}
+\definecolor{tealdeep}{RGB}{16, 90, 70}
+\definecolor{tealborder}{RGB}{140, 200, 180}
+
+\definecolor{amberbg}{RGB}{254, 250, 240}
+\definecolor{amberdark}{RGB}{155, 85, 10}
+\definecolor{amberborder}{RGB}{235, 195, 120}
+
+\definecolor{purpbg}{RGB}{248, 243, 253}
+\definecolor{purpdark}{RGB}{90, 35, 120}
+\definecolor{purpborder}{RGB}{195, 165, 225}
+
+\definecolor{redpower}{RGB}{205, 35, 35}
+\definecolor{grayline}{RGB}{110, 120, 130}
+
+\begin{document}
+\begin{tikzpicture}[
+    font=\small,
+    >=Latex,
+    card/.style={
+        draw=borderblue,
+        fill=white,
+        rounded corners=8pt,
+        line width=1.1pt,
+        inner sep=8pt,
+        drop shadow={opacity=0.06, shadow xshift=2pt, shadow yshift=-2pt}
+    },
+    blocktitle/.style={
+        font=\bfseries\normalsize,
+        text=techblue,
+        align=center
+    },
+    chip/.style={
+        draw=techblue!60,
+        fill=softblue,
+        rounded corners=5pt,
+        line width=0.9pt,
+        font=\bfseries\footnotesize,
+        text=techdark,
+        align=center,
+        inner sep=5pt
+    },
+    chipsub/.style={
+        draw=tealborder,
+        fill=tealgray,
+        rounded corners=5pt,
+        line width=0.9pt,
+        font=\bfseries\footnotesize,
+        text=tealdeep,
+        align=center,
+        inner sep=5pt
+    },
+    bus/.style={
+        line width=1.8pt,
+        draw=accentblue,
+        ->
+    },
+    buslabel/.style={
+        font=\scriptsize\bfseries,
+        fill=white,
+        inner sep=2pt,
+        rounded corners=2pt,
+        text=techdark
+    },
+    powerline/.style={
+        line width=1.2pt,
+        draw=redpower,
+        densely dashed,
+        ->
+    }
+]
+
+    % ==========================================
+    % TIÊU ĐỀ CHÍNH
+    % ==========================================
+    \node[anchor=center] (MAIN_TITLE) at (10.5, 8.0) {
+        \begin{tabular}{c}
+            {\Large\bfseries\color{techblue} HÌNH 4: SƠ ĐỒ KẾT NỐI HỆ THỐNG PHẦN CỨNG} \\
+            {\footnotesize\bfseries\color{grayline} KIẾN TRÚC PHẦN CỨNG GĂNG TAY ROBOT (3 NGÓN CHỦ ĐẠO: CÁI -- TRỎ -- GIỮA)}
+        \end{tabular}
+    };
+
+    % ==========================================
+    % CỘT 1: NẸP 3 NGÓN & CƠ CẤU TRỢ LỰC (x = 0)
+    % ==========================================
+    \node[card, fill=amberbg!30, draw=amberborder, minimum width=5.6cm, minimum height=11.6cm] (COL1) at (0, 1.2) {};
+    \node[blocktitle, text=amberdark, anchor=north] at (COL1.north) [yshift=-8pt] {1. NẸP 3 NGÓN \& TRỢ LỰC};
+
+    % Minh họa đồ họa 3 ngón tay
+    \begin{scope}[shift={(0, 4.4)}]
+        \draw[draw=amberborder, fill=white, rounded corners=6pt, line width=0.8pt] (-2.5, -1.45) rectangle (2.5, 1.3);
+        \node[font=\bfseries\scriptsize, text=amberdark] at (0, 1.05) {NẸP KHUNG 3 NGÓN TAY};
+        
+        % Ngón cái
+        \draw[fill=softblue, draw=techblue, line width=0.9pt, rounded corners=4pt] (-2.1, -1.1) rectangle (-0.9, 0.65);
+        \node[font=\bfseries\scriptsize, text=techblue] at (-1.5, 0.4) {Ngón Cái};
+        \fill[redpower!85] (-1.8, 0.0) circle (2.5pt); \fill[redpower!85] (-1.2, 0.0) circle (2.5pt);
+        \fill[redpower!85] (-1.5, -0.35) circle (2.5pt);
+        \draw[tealdeep, line width=2.2pt] (-1.5, -0.95) -- (-1.5, -0.55);
+        \node[font=\tiny\bfseries, text=tealdeep] at (-1.5, -0.75) [right] {Flex};
+
+        % Ngón trỏ
+        \draw[fill=softblue, draw=techblue, line width=0.9pt, rounded corners=4pt] (-0.6, -1.1) rectangle (0.6, 0.8);
+        \node[font=\bfseries\scriptsize, text=techblue] at (0, 0.55) {Ngón Trỏ};
+        \fill[redpower!85] (-0.3, 0.15) circle (2.5pt); \fill[redpower!85] (0.3, 0.15) circle (2.5pt);
+        \fill[redpower!85] (-0.3, -0.25) circle (2.5pt); \fill[redpower!85] (0.3, -0.25) circle (2.5pt);
+        \draw[tealdeep, line width=2.2pt] (0, -0.95) -- (0, -0.45);
+        \node[font=\tiny\bfseries, text=tealdeep] at (0, -0.7) [right] {Flex};
+
+        % Ngón giữa
+        \draw[fill=softblue, draw=techblue, line width=0.9pt, rounded corners=4pt] (0.9, -1.1) rectangle (2.1, 0.9);
+        \node[font=\bfseries\scriptsize, text=techblue] at (1.5, 0.65) {Ngón Giữa};
+        \fill[redpower!85] (1.2, 0.2) circle (2.5pt); \fill[redpower!85] (1.8, 0.2) circle (2.5pt);
+        \fill[redpower!85] (1.2, -0.2) circle (2.5pt); \fill[redpower!85] (1.8, -0.2) circle (2.5pt);
+        \draw[tealdeep, line width=2.2pt] (1.5, -0.95) -- (1.5, -0.4);
+        \node[font=\tiny\bfseries, text=tealdeep] at (1.5, -0.65) [right] {Flex};
+
+        % 5 ô cảm biến áp lực lòng bàn tay / mu tay (tổng cộng 11 + 5 = 16 ô)
+        \fill[redpower!85] (-1.0, -1.3) circle (2.5pt);
+        \fill[redpower!85] (-0.5, -1.3) circle (2.5pt);
+        \fill[redpower!85] (0.0, -1.3) circle (2.5pt);
+        \fill[redpower!85] (0.5, -1.3) circle (2.5pt);
+        \fill[redpower!85] (1.0, -1.3) circle (2.5pt);
+    \end{scope}
+
+    % Khối tổng hợp cảm biến (y = 2.0)
+    \node[chip, fill=white, draw=amberborder, text=techdark, minimum width=5.0cm] (SENSOR_SUM) at (0, 2.0) {
+        \begin{tabular}{l}
+            \textbf{$\bullet$ 16 Điểm Áp Lực Velostat} (Lòng/mu) \\
+            \textbf{$\bullet$ 3 Dải Cảm Biến Flex} (Góc gập 3 ngón) \\
+            \textbf{$\bullet$ 2 Điểm Đo Chuẩn} (Bù trôi nhiệt)
+        \end{tabular}
+    };
+
+    % Khối Truyền Động Cơ Học Bowden (y = -0.3)
+    \node[chipsub, fill=white, draw=tealdeep!70, minimum width=5.0cm] (BOWDEN_BOX) at (0, -0.3) {
+        \begin{tabular}{c}
+            {\bfseries\color{tealdeep} DÂY CÁP BOWDEN (DYNEEMA)} \\
+            {\scriptsize Dẫn truyền lực kéo gập nẹp 3 ngón} \\
+            {\scriptsize Tích hợp chốt mở nhanh an toàn}
+        \end{tabular}
+    };
+
+    % Khối Cụm Động Cơ Servo (y = -2.5)
+    \node[chipsub, fill=white, draw=tealdeep, minimum width=5.0cm] (ACTUATOR_BOX) at (0, -2.5) {
+        \begin{tabular}{c}
+            {\bfseries\color{tealdeep} CỤM 3 ĐỘNG CƠ SERVO} \\
+            {\scriptsize 3 Tang cuốn cáp trợ lực độc lập}
+        \end{tabular}
+    };
+
+    % Dây liên kết cơ học trong Cột 1
+    \draw[line width=1.4pt, draw=tealdeep!80, dashed, ->] (ACTUATOR_BOX.north) -- (BOWDEN_BOX.south)
+        node[midway, right=2pt, font=\tiny\bfseries, text=tealdeep] {Cuộn cáp};
+    \draw[line width=1.4pt, draw=tealdeep!80, dashed, ->] (BOWDEN_BOX.north) -- (SENSOR_SUM.south)
+        node[midway, right=2pt, font=\tiny\bfseries, text=tealdeep] {Lực kéo gập};
+
+
+    % ==========================================
+    % CỘT 2: THU THẬP TÍN HIỆU & ESP32-S3 (x = 7.0)
+    % ==========================================
+    \node[card, fill=softblue!20, draw=borderblue, minimum width=5.6cm, minimum height=11.6cm] (COL2) at (7.0, 1.2) {};
+    \node[blocktitle, text=techblue, anchor=north] at (COL2.north) [yshift=-8pt] {2. THU THẬP DỮ LIỆU \& DSP};
+
+    % Mạch MUX CD74HC4067 (y = 4.3)
+    \node[chip, minimum width=4.6cm] (MUX_BOX) at (7.0, 4.3) {
+        \begin{tabular}{c}
+            {\normalsize\bfseries 2x MUX CD74HC4067} \\
+            {\scriptsize Dồn 21 kênh tương tự $\to$ 1 kênh}
+        \end{tabular}
+    };
+
+    % Mạch ADC ADS1115 (y = 2.0)
+    \node[chip, fill=purpbg, draw=purpborder, text=purpdark, minimum width=4.6cm] (ADC_BOX) at (7.0, 2.0) {
+        \begin{tabular}{c}
+            {\normalsize\bfseries ADC 16-BIT ADS1115} \\
+            {\scriptsize Lấy mẫu chuyển đổi tương tự $\to$ số}
+        \end{tabular}
+    };
+
+    % Vi điều khiển ESP32-S3 (y = -0.3)
+    \node[chip, fill=techblue, text=white, draw=techdark, minimum width=4.4cm] (ESP_BOX) at (7.0, -0.3) {
+        \begin{tabular}{c}
+            {\normalsize\bfseries VI ĐIỀU KHIỂN ESP32-S3} \\
+            {\scriptsize Xử lý số tín hiệu DSP (bám nền, vùng chết)} \\
+            {\scriptsize Tính toán bộ ba chỉ số: EI -- GAP -- RAL}
+        \end{tabular}
+    };
+
+    % Điều khiển Servo PWM (y = -2.5)
+    \node[chipsub, minimum width=4.6cm] (PWM_OUT) at (7.0, -2.5) {
+        \begin{tabular}{c}
+            {\bfseries CỔNG PHÁT 3 XUNG PWM} \\
+            {\scriptsize Điều khiển góc quay 3 Servo trợ lực}
+        \end{tabular}
+    };
+
+    % Bus nội bộ cột 2
+    \draw[bus] (MUX_BOX.south) -- (ADC_BOX.north) 
+        node[midway, buslabel] {1 Kênh Analog};
+    
+    \draw[bus] (ADC_BOX.south) -- (ESP_BOX.north) 
+        node[midway, buslabel, text=purpdark] {Bus I2C};
+
+    \draw[bus, draw=tealdeep] (ESP_BOX.south) -- (PWM_OUT.north) 
+        node[midway, buslabel, text=tealdeep] {Góc kéo Servo (AAN)};
+
+
+    % ==========================================
+    % CỘT 3: THỊ GIÁC AI (ORANGE PI 5 PRO) (x = 14.0)
+    % ==========================================
+    \node[card, fill=tealgray!30, draw=tealborder, minimum width=5.6cm, minimum height=11.6cm] (COL3) at (14.0, 1.2) {};
+    \node[blocktitle, text=tealdeep, anchor=north] at (COL3.north) [yshift=-8pt] {3. THỊ GIÁC AI \& TÁC VỤ};
+
+    % Camera RGB USB (y = 4.3)
+    \node[chip, fill=white, draw=techdark, minimum width=4.6cm] (CAM_BOX) at (14.0, 4.3) {
+        \begin{tabular}{c}
+            {\normalsize\bfseries CAMERA RGB (USB)} \\
+            {\scriptsize Quan sát bàn tay \& vật thể (thìa, cốc)}
+        \end{tabular}
+    };
+
+    % Depth Anything V2 (y = 2.0)
+    \node[chipsub, fill=purpbg!60, draw=purpdark, minimum width=4.6cm] (DEPTH_BOX) at (14.0, 2.0) {
+        \begin{tabular}{c}
+            {\normalsize\bfseries DEPTH ANYTHING V2} \\
+            {\scriptsize Ước lượng bản đồ độ sâu Metric 3D}
+        \end{tabular}
+    };
+
+    % Orange Pi 5 Pro (y = -0.3)
+    \node[chip, fill=tealdeep, text=white, draw=techdark, minimum width=4.4cm] (OPI_BOX) at (14.0, -0.3) {
+        \begin{tabular}{c}
+            {\normalsize\bfseries ORANGE PI 5 PRO (NPU)} \\
+            {\scriptsize Phân tích thị giác \& Dự đoán ý định} \\
+            {\scriptsize Điều phối tiến trình bài tập}
+        \end{tabular}
+    };
+
+    % Cổng HDMI Out (y = -2.5)
+    \node[chip, fill=white, draw=techblue, minimum width=4.6cm] (HDMI_OUT) at (14.0, -2.5) {
+        \begin{tabular}{c}
+            {\bfseries CỔNG XUẤT HÌNH ẢNH (HDMI)} \\
+            {\scriptsize Xuất dữ liệu đồ họa hiển thị}
+        \end{tabular}
+    };
+
+    % Bus nội bộ cột 3
+    \draw[bus] (CAM_BOX.south) -- (DEPTH_BOX.north) 
+        node[midway, buslabel] {Luồng Video};
+    
+    \draw[bus, draw=purpdark] (DEPTH_BOX.south) -- (OPI_BOX.north) 
+        node[midway, buslabel, text=purpdark] {Depth Map 3D};
+
+    \draw[bus] (OPI_BOX.south) -- (HDMI_OUT.north) 
+        node[midway, buslabel] {Tín hiệu hiển thị};
+
+
+    % ==========================================
+    % CỘT 4: HIỂN THỊ & NGUỒN CẤP (x = 20.8)
+    % ==========================================
+    \node[card, fill=purpbg!25, draw=purpborder, minimum width=5.4cm, minimum height=11.6cm] (COL4) at (20.8, 1.2) {};
+    \node[blocktitle, text=purpdark, anchor=north] at (COL4.north) [yshift=-8pt] {4. HIỂN THỊ \& NGUỒN CẤP};
+
+    % Khối Pin Li-ion (y = 4.3)
+    \node[chip, fill=amberbg, draw=amberborder, text=amberdark, minimum width=4.6cm] (BATTERY_BOX) at (20.8, 4.3) {
+        \begin{tabular}{c}
+            {\normalsize\bfseries KHỐI PIN LI-ION} \\
+            {\scriptsize Nguồn 7.4V / 12V DC an toàn}
+        \end{tabular}
+    };
+
+    % 2x Module Hạ Áp Buck (y = 2.0)
+    \node[chip, fill=redpower!10, draw=redpower, text=redpower, minimum width=4.6cm] (BUCK_BOX) at (20.8, 2.0) {
+        \begin{tabular}{c}
+            {\normalsize\bfseries 2x MODULE BUCK DC-DC} \\
+            {\bfseries Ray 5V:} Servo, Orange Pi 5 \\
+            {\bfseries Ray 3.3V:} ESP32-S3, Cảm biến
+        \end{tabular}
+    };
+
+    % Mạch Giám Sát & Ngắt Khẩn Cấp (y = -0.3)
+    \node[chip, fill=white, draw=redpower!60, text=redpower, minimum width=4.6cm] (BMS_BOX) at (20.8, -0.3) {
+        \begin{tabular}{c}
+            {\normalsize\bfseries BẢO VỆ NGUỒN \& AN TOÀN} \\
+            {\scriptsize Mạch BMS ngắt quá dòng} \\
+            {\scriptsize Nút ngắt khẩn cấp phần cứng}
+        \end{tabular}
+    };
+
+    % Màn hình Dashboard (y = -2.5)
+    \node[chip, fill=white, draw=techblue, minimum width=4.6cm] (SCREEN_BOX) at (20.8, -2.5) {
+        \begin{tabular}{c}
+            {\normalsize\bfseries MÀN HÌNH DASHBOARD} \\
+            {\scriptsize Phản hồi sinh học thị giác} \\
+            {\scriptsize Lực ép, góc uốn \& diễn biến bài tập}
+        \end{tabular}
+    };
+
+    % Liên kết nội bộ cột 4
+    \draw[powerline, line width=1.4pt] (BATTERY_BOX.south) -- (BUCK_BOX.north)
+        node[midway, right=2pt, font=\tiny\bfseries, text=redpower] {V\_bat};
+    \draw[powerline, line width=1.4pt] (BUCK_BOX.south) -- (BMS_BOX.north);
+
+
+    % ==========================================
+    % CÁC ĐƯỜNG KẾT NỐI LIÊN CỘT (HOÀN TOÀN TÁCH BIỆT)
+    % ==========================================
+
+    % 1. Cáp 21 kênh: Cảm biến -> MUX (Cột 1 -> Cột 2)
+    \draw[bus, line width=2pt, draw=amberdark] (SENSOR_SUM.east) -- ++(0.5, 0) |- (MUX_BOX.west)
+        node[pos=0.28, right=2pt, font=\scriptsize\bfseries, text=amberdark, fill=white, inner sep=2pt, rounded corners=2pt] {Cáp bẹ 21 kênh};
+
+    % 2. Xung PWM: Cột 2 -> Cột 1 (Thẳng hàng ngang, y = -2.5)
+    \draw[bus, line width=2pt, draw=tealdeep] (PWM_OUT.west) -- (ACTUATOR_BOX.east)
+        node[midway, above=4pt, buslabel, text=tealdeep] {\textbf{3 Xung PWM}};
+
+    % 3. Bus UART/USB: Cột 2 <-> Cột 3 (Thẳng hàng ngang, y = -0.3)
+    \draw[bus, line width=2.2pt, draw=techblue, <->] (ESP_BOX.east) -- (OPI_BOX.west)
+        node[midway, above=4pt, buslabel, text=techblue] {\textbf{Bus UART / USB}};
+
+    % 4. Cáp HDMI: Cột 3 -> Cột 4 (Thẳng hàng ngang, y = -2.5)
+    \draw[bus, line width=2pt, draw=techdark] (HDMI_OUT.east) -- (SCREEN_BOX.west)
+        node[midway, above=4pt, buslabel, text=techdark] {\textbf{Cáp HDMI}};
+
+
+    % ==========================================
+    % HỆ THỐNG PHÂN PHỐI NGUỒN CẤP
+    % ==========================================
+    % Ray nguồn chạy phía dưới sơ đồ (y = -4.2)
+    \coordinate (PWR_BUS) at (20.8, -4.2);
+    \draw[powerline, line width=1.5pt] (BMS_BOX.east) -- ++(0.3, 0) |- (PWR_BUS)
+        -- (-0.8, -4.2) node[pos=0.5, above=2pt, font=\scriptsize\bfseries, text=redpower, fill=white, inner sep=2pt, rounded corners=2pt] {\textbf{Đường cấp nguồn Ray DC (5V \& 3.3V)}};
+
+    % Rẽ nhánh nguồn lên từng khối
+    \draw[powerline] (0, -4.2) -- (ACTUATOR_BOX.south);
+    \draw[powerline] (7.0, -4.2) -- (PWM_OUT.south);
+    \draw[powerline] (14.0, -4.2) -- (HDMI_OUT.south);
+    \draw[powerline] (20.8, -4.2) -- (SCREEN_BOX.south);
+
+\end{tikzpicture}
+\end{document}

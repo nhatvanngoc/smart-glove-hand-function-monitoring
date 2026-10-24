@@ -1,0 +1,83 @@
+\documentclass[tikz, border=12pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usetikzlibrary{positioning, calc, arrows}
+
+% Bảng màu pastel tinh tế theo chuẩn BCTT-QG
+\definecolor{greenBg}{RGB}{242, 250, 245}
+\definecolor{greenBorder}{RGB}{46, 125, 50}
+\definecolor{greenTitle}{RGB}{27, 94, 32}
+
+\definecolor{blueBg}{RGB}{242, 247, 255}
+\definecolor{blueBorder}{RGB}{37, 99, 235}
+\definecolor{blueTitle}{RGB}{30, 58, 138}
+
+\definecolor{purpleBg}{RGB}{248, 245, 255}
+\definecolor{purpleBorder}{RGB}{124, 58, 237}
+\definecolor{purpleTitle}{RGB}{95, 30, 180}
+
+\definecolor{arrowColor}{RGB}{51, 65, 85}
+
+\begin{document}
+\begin{tikzpicture}[
+  >=stealth,
+  font=\sffamily,
+  tierBlock/.style={
+    line width=1.0pt,
+    rounded corners=6pt,
+    text width=14.0cm,
+    minimum height=1.9cm,
+    align=center,
+    inner sep=8pt
+  },
+  flowArrow/.style={
+    ->,
+    line width=1.3pt,
+    draw=arrowColor
+  },
+  biArrow/.style={
+    <->,
+    line width=1.3pt,
+    draw=arrowColor
+  },
+  tagLbl/.style={
+    font=\footnotesize\bfseries,
+    fill=white,
+    inner sep=3.0pt,
+    rounded corners=3pt,
+    draw=gray!35,
+    line width=0.5pt,
+    text=arrowColor
+  }
+]
+
+% 3 NHÓM KIẾN TRÚC PHÂN TÁN
+% Tầng 1: Đeo & Cơ cấu trợ lực (Wearable & Actuation)
+\node[tierBlock, fill=greenBg, draw=greenBorder] (t1) at (0, 0) {
+  {\bfseries\normalsize\color{greenTitle} NHÓM 1: TẦNG NẸP ĐEO \& CƠ CẤU TRỢ LỰC BÀN TAY}\\[4pt]
+  {\small Khung nẹp 3 ngón in 3D (ngàm xoay một tay) \quad $\bullet$ \quad 16 Ô Velostat vi sai lòng--mu \quad $\bullet$ \quad 3 Flex uốn ngón\\[2pt]
+  Cụm 3 tang cuốn cáp Bowden điều khiển độc lập \quad $\bullet$ \quad Nẹp đàn hồi hồi vị mu tay \& Chốt mở nhanh}
+};
+
+% Tầng 2: Thu thập đa kênh & Xử lý số DSP (Sensing & DSP)
+\node[tierBlock, fill=blueBg, draw=blueBorder, below=30pt of t1] (t2) {
+  {\bfseries\normalsize\color{blueTitle} NHÓM 2: TẦNG THU NHẬP ĐA KÊNH, XỬ LÝ DSP \& ĐIỀU KHIỂN AAN}\\[4pt]
+  {\small 2 MUX CD74HC4067 (21 kênh quét $\ge$15 Hz) \quad $\bullet$ \quad ADC ADS1115 (16-bit, I2C trực tiếp)\\[2pt]
+  Vi điều khiển ESP32-S3: Lọc số DSP 2 nhánh, tính bộ ba chỉ số EI -- GAP -- RAL \& Thuật toán AAN 3 pha}
+};
+
+% Tầng 3: Thị giác không gian 3D Depth Anything V2 (Vision Pre-Actuation)
+\node[tierBlock, fill=purpleBg, draw=purpleBorder, below=30pt of t2] (t3) {
+  {\bfseries\normalsize\color{purpleTitle} NHÓM 3: TẦNG THỊ GIÁC KHÔNG GIAN 3D \& LƯỢNG HÓA TÁC VỤ}\\[4pt]
+  {\small Camera góc nhìn cố định \quad $\bullet$ \quad Máy tính nhúng Orange Pi 5 Pro chạy mô hình Depth Anything V2\\[2pt]
+  Ước lượng độ sâu hệ mét 3D, tính thời gian tiếp xúc TTC hỗ trợ đón trước \& Phản hồi trực quan bài tập thìa}
+};
+
+% MŨI TÊN LIÊN KẾT ĐĂNG ĐỐI
+\draw[flowArrow] (t1.south) -- node[tagLbl] {Tín hiệu tương tự 21 kênh (Áp lực vi sai \& Góc gập ngón)} (t2.north);
+\draw[biArrow] (t2.south) -- node[tagLbl] {Lệnh trợ lực đón trước AAN $\longleftrightarrow$ Khẩu độ ngón tay \& Định thời TTC} (t3.north);
+
+\end{tikzpicture}
+\end{document}

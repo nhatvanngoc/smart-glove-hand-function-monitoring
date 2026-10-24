@@ -1,0 +1,75 @@
+\documentclass[tikz, border=10pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+\usepackage[T5]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usetikzlibrary{positioning, calc, arrows.meta}
+
+% Academic Tech Colors
+\definecolor{cNavy}{RGB}{27, 54, 93}
+\definecolor{cRed}{RGB}{185, 28, 28}
+\definecolor{cTeal}{RGB}{15, 118, 110}
+\definecolor{cGreen}{RGB}{4, 120, 87}
+\definecolor{cBlue}{RGB}{37, 99, 235}
+
+\begin{document}
+\begin{tikzpicture}[
+  >=Stealth,
+  font=\sffamily,
+  phaseNode/.style 2 args={
+    draw=#1!90!black,
+    line width=1.3pt,
+    fill=#1!6,
+    rounded corners=6pt,
+    text width=#2,
+    align=center,
+    inner sep=6pt
+  },
+  flowArrow/.style={
+    ->,
+    line width=1.6pt,
+    draw=#1!90!black,
+    -{Stealth[length=3.4mm, width=2.2mm]}
+  }
+]
+
+% =========================================================================
+% 4 GIAI ĐOẠN TIẾN HÓA CƠ KHÍ KHÓA NẸP
+% =========================================================================
+
+% Giai đoạn 1: Vòng kẹp & Đai Velcro (Phương án 1-3)
+\node[phaseNode={cRed}{3.1cm}] (p1) at (0, 0) {
+  {\bfseries\small\color{cRed} PHƯƠNG ÁN 1 -- 3}\\[3pt]
+  {\footnotesize Vòng kẹp chữ C, rãnh trượt đuôi én, đai dán}\\[3pt]
+  {\scriptsize\bfseries\color{cRed} 55 -- 80 s $\bullet$ Khó giữ tải}
+};
+
+% Giai đoạn 2: Chốt & Thanh răng (Phương án 4-6)
+\node[phaseNode={cRed!80!black}{3.1cm}, right=18pt of p1] (p2) {
+  {\bfseries\small\color{cRed!80!black} PHƯƠNG ÁN 4 -- 6}\\[3pt]
+  {\footnotesize Chốt xuyên ngang, thanh răng rút}\\[3pt]
+  {\scriptsize\bfseries\color{cRed!80!black} 40 -- 65 s $\bullet$ Cần căn chỉnh}
+};
+
+% Giai đoạn 3: Bản lề 1 trục & Ngàm đàn hồi (Phương án 8)
+\node[phaseNode={cTeal}{3.1cm}, right=18pt of p2] (p3) {
+  {\bfseries\small\color{cTeal} PHƯƠNG ÁN 8}\\[3pt]
+  {\footnotesize Bản lề một trục, ngàm đàn hồi}\\[3pt]
+  {\scriptsize\bfseries\color{cTeal} 28 s $\bullet$ Mỏi sau 50 chu kỳ}
+};
+
+% Giai đoạn 4: Bản lề kép & Quai kẹp ngàm đôi (Phương án 9 - Tối ưu)
+\node[phaseNode={cGreen}{3.4cm}, right=18pt of p3] (p4) {
+  {\bfseries\small\color{cGreen} PHƯƠNG ÁN 9 (CHỌN)}\\[3pt]
+  {\footnotesize Bản lề kép, quai kẹp ngàm đôi (Toggle Clasp)}\\[3pt]
+  {\scriptsize\bfseries\color{cGreen} 18 s $\bullet$ Bền $>$500 chu kỳ}
+};
+
+% Mũi tên tiến trình
+\draw[flowArrow=cRed] (p1.east) -- (p2.west);
+\draw[flowArrow=cTeal] (p2.east) -- (p3.west);
+\draw[flowArrow=cGreen] (p3.east) -- (p4.west);
+
+\end{tikzpicture}
+\end{document}

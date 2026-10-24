@@ -1,0 +1,118 @@
+\documentclass[tikz, border=12pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+\usepackage[T5]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usetikzlibrary{positioning, calc, arrows.meta}
+
+% Academic Tech Colors
+\definecolor{cNavy}{RGB}{27, 54, 93}      % Tầng 1: Đeo
+\definecolor{cTeal}{RGB}{15, 118, 110}    % Tầng 2: Xử lý
+\definecolor{cSlate}{RGB}{51, 65, 85}     % Tầng 3: Trợ lực
+\definecolor{cGreen}{RGB}{4, 120, 87}     % Tầng 4: Thị giác
+
+\begin{document}
+\begin{tikzpicture}[
+  >=Stealth,
+  font=\sffamily,
+  % Modern block style
+  block/.style 2 args={
+    draw=#1!90!black,
+    line width=1.4pt,
+    fill=#1!6,
+    rounded corners=6pt,
+    text width=#2,
+    align=center,
+    inner sep=8pt
+  },
+  % Arrows
+  arrow/.style={
+    ->,
+    line width=1.8pt,
+    draw=#1!90!black,
+    -{Stealth[length=3.6mm, width=2.4mm]}
+  },
+  biarrow/.style={
+    <->,
+    line width=1.8pt,
+    draw=#1!90!black,
+    {Stealth[length=3.6mm, width=2.4mm]}-{Stealth[length=3.6mm, width=2.4mm]}
+  },
+  fbarrow/.style={
+    ->,
+    line width=1.4pt,
+    dashed,
+    draw=#1!85!black,
+    -{Stealth[length=3.6mm, width=2.4mm]}
+  },
+  % Label on arrow
+  lbl/.style={
+    font=\small\bfseries,
+    fill=white,
+    inner sep=3.5pt,
+    rounded corners=3pt,
+    draw=gray!35,
+    line width=0.7pt,
+    text=#1!95!black
+  }
+]
+
+% =========================================================================
+% 4 TẦNG KIẾN TRÚC HỆ THỐNG
+% =========================================================================
+
+% TẦNG 1: THIẾT BỊ ĐEO TAY
+\node[block={cNavy}{13.8cm}] (t1) at (0, 0) {
+  {\bfseries\large\color{cNavy} TẦNG 1: THIẾT BỊ ĐEO TAY}\\[4pt]
+  {\normalsize Khung nẹp 3 ngón in 3D \quad $\bullet$ \quad 3 Cảm biến Flex \quad $\bullet$ \quad 6 Ô Velostat vi sai}
+};
+
+% TẦNG 2: THU THẬP & XỬ LÝ SỐ
+\node[block={cTeal}{13.8cm}, below=32pt of t1] (t2) {
+  {\bfseries\large\color{cTeal} TẦNG 2: THU THẬP \& XỬ LÝ SỐ (ESP32-S3)}\\[4pt]
+  {\normalsize Mạch MUX CD74HC4067 (16:1) \quad $\bullet$ \quad ADC 16-bit ADS1115 (I$^2$C)}
+};
+
+% TẦNG 3: TRỢ LỰC CƠ HỌC
+\node[block={cSlate}{6.5cm}, below left=36pt and 0.4cm of t2.south] (t3) {
+  {\bfseries\large\color{cSlate} TẦNG 3: TRỢ LỰC CƠ HỌC}\\[4pt]
+  {\normalsize 3 Động cơ Servo \& Tang cuốn cáp}
+};
+
+% TẦNG 4: THỊ GIÁC & PHẢN HỒI
+\node[block={cGreen}{6.5cm}, below right=36pt and 0.4cm of t2.south] (t4) {
+  {\bfseries\large\color{cGreen} TẦNG 4: THỊ GIÁC \& PHẢN HỒI}\\[4pt]
+  {\normalsize Camera USB $\bullet$ Orange Pi 5 Pro $\bullet$ Màn hình}
+};
+
+% =========================================================================
+% CÁC ĐƯỜNG LIÊN KẾT CHÍNH
+% =========================================================================
+
+% T1 -> T2
+\draw[arrow=cNavy] (t1.south) -- (t2.north);
+\node[lbl=cNavy] at ($(t1.south)!0.5!(t2.north)$) {Tín hiệu tương tự (Áp lực \& Góc uốn)};
+
+% T2 -> T3
+\draw[arrow=cSlate] (t2.south -| t3.north) -- (t3.north);
+\node[lbl=cSlate] at ($(t2.south -| t3.north)!0.5!(t3.north)$) {Lệnh điều khiển Servo};
+
+% T2 <-> T4
+\draw[biarrow=cGreen] (t2.south -| t4.north) -- (t4.north);
+\node[lbl=cGreen] at ($(t2.south -| t4.north)!0.5!(t4.north)$) {Giao tiếp UART / USB};
+
+% =========================================================================
+% VÒNG PHẢN HỒI (FEEDBACK)
+% =========================================================================
+
+% Vòng phản hồi cơ học (T3 -> T1)
+\draw[fbarrow=cSlate] (t3.west) -- ++(-1.4cm, 0) |- (t1.west);
+\node[lbl=cSlate, rotate=90] at ($(t3.west) + (-1.4cm, 0) !0.5! ($(t1.west) + (-1.4cm, 0)$)$) {Lực kéo trợ lực gập ngón};
+
+% Vòng phản hồi thị giác (T4 -> T1 / Người bệnh)
+\draw[fbarrow=cGreen] (t4.east) -- ++(1.4cm, 0) |- (t1.east);
+\node[lbl=cGreen, rotate=-90] at ($(t4.east) + (1.4cm, 0) !0.5! ($(t1.east) + (1.4cm, 0)$)$) {Màn hình phản hồi trực quan};
+
+\end{tikzpicture}
+\end{document}
